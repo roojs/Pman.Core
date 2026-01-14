@@ -517,10 +517,10 @@ class Pman_Core_NotifySend extends Pman
             $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
             $helo_hostname = $ff->Mail['helo'];
             
-            if ($is_ipv6) {
+            if ($is_ipv6 && !empty($this->server_ipv6)) {
                 // Extract last hex segment from IPv6 address (e.g., 2400:8901:e001:52a::22a -> 22a)
                 // Handle compressed zeros (::) by splitting and taking the rightmost part
-                $ipv6_parts = explode('::', $smtp_host);
+                $ipv6_parts = explode('::', $this->server_ipv6->ipv6_addr_str);
                 $right_part = end($ipv6_parts);
                 if (empty($right_part)) {
                     // Address ends with ::, get last segment from left part
@@ -713,13 +713,11 @@ class Pman_Core_NotifySend extends Pman
             $emailHeaders = $email['headers'];
 
             if($use_ipv6 && $this->server_ipv6->is_spam_rejecting && $is_ipv6) {
-                $fromArr = explode("@", $emailHeaders['From']);
-                $parts = explode(".", $dom);
-                if(count($parts) > 1) {
-                    array_pop($parts);
+                $emailHeaders['From'] = $this->addDomainToEmail($emailHeaders['From'], $dom);
+              
+                if (!empty($emailHeaders['Reply-To'])) {
+                    $emailHeaders['Reply-To'] = $this->addDomainToEmail($emailHeaders['Reply-To'], $dom);
                 }
-                $fromArr[0] .= ('+' . implode("-", $parts));
-                $emailHeaders['From'] = implode("@", $fromArr);
                 $this->debug("IPv6: Spam rejecting, changing from address to {$emailHeaders['From']}");
             }
             
@@ -870,9 +868,9 @@ class Pman_Core_NotifySend extends Pman
 
                         // is spamhaus AND 
                         // IPv6 already exists AND 
-                        // the ip is not already spam rejecting AND 
-                        // the ip does not have a reverse pointer
-                        if($is_spamhaus && !$this->server_ipv6->is_spam_rejecting && !$this->server_ipv6->ipHasReversePtr()) {
+                        // this ip mapping is not already spam rejecting AND 
+                        // this ip mapping does not have a reverse pointer
+                        if($is_spamhaus && !$this->server_ipv6->is_spam_rejecting && !$this->server_ipv6->has_reverse_ptr) {
                             $old = clone($this->server_ipv6);
                             $this->server_ipv6->is_spam_rejecting = 1;
                             $this->server_ipv6->update($old);
@@ -1121,6 +1119,27 @@ class Pman_Core_NotifySend extends Pman
         }
         
         return $socket_options;
+    }
+    
+    /**
+     * Add domain identifier to email address for spam rejection tracking
+     * 
+     * Takes an email address and domain, and modifies the local part by adding
+     * a "+" suffix with the domain parts (excluding TLD) joined by "-"
+     * 
+     * @param string $str The email address (e.g., "user@example.com")
+     * @param string $domain The domain to extract parts from (e.g., "example.com")
+     * @return string Modified email address (e.g., "user+example@example.com")
+     */
+    function addDomainToEmail($str, $domain)
+    {
+        $fromArr = explode("@", $str);
+        $parts = explode(".", $domain);
+        if(count($parts) > 1) {
+            array_pop($parts);
+        }
+        $fromArr[0] .=  '+' . implode("-", $parts);
+        return implode("@", $fromArr);
     }
     
     function errorHandler($msg)
