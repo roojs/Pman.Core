@@ -285,6 +285,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // try to use pre-configured IPv6 addresses
             $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
             if($ipv6 = $cnsi->findOrCreateIpv6ForMx($mx, $this->id, $allocation_reason)) {
+                echo "using ipv6: " . $ipv6->ipv6_addr_str . "\n";
                 return $ipv6;
             }
         }
