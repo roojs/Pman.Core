@@ -498,7 +498,6 @@ class Pman_Core_NotifySend extends Pman
         $mx_ip_map = $this->convertMxsToIpMap($mxs, $use_ipv6);
 
         var_dump($mx_ip_map);
-        die('test');
                         
         foreach($mx_ip_map as $smtp_host => $mx) {
             
