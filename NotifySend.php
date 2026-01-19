@@ -816,6 +816,10 @@ class Pman_Core_NotifySend extends Pman
             
             $fail = true;
             $failedIp = $smtp_host;
+            // remove the failed ip from the list of valid ipv4 addresses
+            if(in_array($smtp_host, $validIpv4s)) {
+                $validIpv4s = array_diff($validIpv4s, array($smtp_host));
+            }
             break;
         }
         
@@ -863,15 +867,19 @@ class Pman_Core_NotifySend extends Pman
                     $allocation_reason .= "; Spamhaus detected: yes";
 
                     // blacklist the ipv4 host which return spamhaus
-                    $this->server->checkSmtpResponse($errmsg, $core_domain, $failedIp);
-                    
-                    // no IPv6 can be set up -> don't retry
-                    // IPv6 set up successfully
-                    if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
-                        $this->debug("IPv6: Setup successful, will retry");
-                        $shouldRetry = true;
-                    } else {
-                        $this->debug("IPv6: Setup failed");
+                    if($this->server->checkSmtpResponse($errmsg, $core_domain, $failedIp)) {
+                        // if there is no more valid ipv4 hosts left
+                        if(empty($validIpv4s)) {
+                            // try to set up ipv6
+                            if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
+                                // IPv6 set up successfully
+                                $this->debug("IPv6: Setup successful, will retry");
+                                $shouldRetry = true;
+                            } else {
+                                // no IPv6 can be set up -> don't retry
+                                $this->debug("IPv6: Setup failed");
+                            }
+                        }
                     }
                 }
                 // not spamhaus OR IPv6 already exists
