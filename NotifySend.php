@@ -853,6 +853,7 @@ class Pman_Core_NotifySend extends Pman
                     $allocation_reason .= "; Email: " . $w->to_email;
                     $allocation_reason .= "; Spamhaus detected: yes";
 
+                    // blacklist the ipv4 host which return spamhaus
                     $this->server->checkSmtpResponse($errmsg, $core_domain, $failedIp);
                     
                     // no IPv6 can be set up -> don't retry
