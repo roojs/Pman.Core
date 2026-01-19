@@ -1101,17 +1101,20 @@ class Pman_Core_NotifySend extends Pman
                 }
             }
             
-            // Also check hostname lookup (gethostbyname) as hosts file might override A record
-            $hostname_ip = @gethostbyname($mx);
-            if (!empty($hostname_ip) && filter_var($hostname_ip, FILTER_VALIDATE_IP)) {
-                $ipv4_map[$hostname_ip] = $mx;
-                $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
-            }
+            // // Also check hostname lookup (gethostbyname) as hosts file might override A record
+            // $hostname_ip = @gethostbyname($mx);
+            // if (!empty($hostname_ip) && filter_var($hostname_ip, FILTER_VALIDATE_IP)) {
+            //     $ipv4_map[$hostname_ip] = $mx;
+            //     $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
+            // }
             
         }
         
         // Merge maps: IPv6 first, then IPv4 (each group preserves MX priority order)
         $mx_ip_map = $ipv6_map + $ipv4_map;
+
+        var_dump($mx_ip_map);
+        die('test');
         
         // If no IPs resolved, fall back to hostnames
         if (empty($mx_ip_map)) {
