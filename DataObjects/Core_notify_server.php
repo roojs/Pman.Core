@@ -442,7 +442,22 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
     function isBlacklistedByIp($ip)
     {
-
+        if(!$this->id) {
+            return false;
+        }
+        static $cache = array();
+        if (isset( $cache[$this->id . '-'. $ip])) {
+            return  $cache[$this->id . '-'. $ip];
+        }
+        $bl = DB_DataObject::factory('core_notify_blacklist');
+        $bl->server_id = $this->id;
+        $bl->ip = $bl->sqlValue("INET6_ATON('" . $this->escape($ip) . "')");
+        if ($bl->count()) {
+            $cache[$this->id . '-'. $ip] = true;
+            return true;
+        }
+        $cache[$this->id . '-'. $ip] = false;
+        return false;
     }
     
     
