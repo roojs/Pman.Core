@@ -455,7 +455,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      * @param string $email The email address
      * @return bool True if the server is blacklisted, false otherwise
      */
-    function isBlacklisted($email)
+    function isBlacklisted($ip)
     {
         if (!$this->id) {
             return false;
@@ -463,11 +463,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         // return current server id..
         static $cache = array();
-         // get the domain..
-        $ea = explode('@',$email);
-        $dom = strtolower(array_pop($ea));
-        if (isset( $cache[$this->id . '-'. $dom])) {
-            return  $cache[$this->id . '-'. $dom];
+        if (isset( $cache[$this->id . '-'. $ip])) {
+            return  $cache[$this->id . '-'. $ip];
         }
         
         $cd = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
