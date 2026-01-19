@@ -1116,6 +1116,9 @@ class Pman_Core_NotifySend extends Pman
             $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
         }
 
+        var_dump($mx_ip_map);
+        die('test');
+
         // skip any blacklisted ip for this server
         $bl = DB_DataObject::factory('core_notify_blacklist');
         $bl->server_id = $this->server->id;
