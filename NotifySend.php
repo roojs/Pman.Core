@@ -1067,7 +1067,10 @@ class Pman_Core_NotifySend extends Pman
      */
     function convertMxsToIpMap($mxs, $use_ipv6 = false)
     {
-        $mx_ip_map = array();
+        // Separate arrays to maintain ordering: IPv6 first, then IPv4
+        // Each group preserves MX priority order (original order of $mxs)
+        $ipv6_map = array();
+        $ipv4_map = array();
         
         foreach ($mxs as $mx) {
             $mx_use_ipv6 = $use_ipv6;
@@ -1080,7 +1083,7 @@ class Pman_Core_NotifySend extends Pman
                         continue;
                     }
 
-                    $mx_ip_map[$record['ipv6']] = $mx;
+                    $ipv6_map[$record['ipv6']] = $mx;
                     
                 }
             }
@@ -1094,18 +1097,21 @@ class Pman_Core_NotifySend extends Pman
                         continue;
                     }
                     $dns_ips[] = $record['ip'];
-                    $mx_ip_map[$record['ip']] = $mx;
+                    $ipv4_map[$record['ip']] = $mx;
                 }
             }
             
             // Also check hostname lookup (gethostbyname) as hosts file might override A record
             $hostname_ip = @gethostbyname($mx);
             if (!empty($hostname_ip) && filter_var($hostname_ip, FILTER_VALIDATE_IP)) {
-                $mx_ip_map[$hostname_ip] = $mx;
+                $ipv4_map[$hostname_ip] = $mx;
                 $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
             }
             
         }
+        
+        // Merge maps: IPv6 first, then IPv4 (each group preserves MX priority order)
+        $mx_ip_map = $ipv6_map + $ipv4_map;
         
         // If no IPs resolved, fall back to hostnames
         if (empty($mx_ip_map)) {
