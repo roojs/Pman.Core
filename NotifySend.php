@@ -1099,6 +1099,7 @@ class Pman_Core_NotifySend extends Pman
         $bl->selectAdd();
         $bl->selectAdd('INET6_NTOA(ip) as ip_str');
         $blacklistedIps = $bl->fetchAll('ip_str');
+        var_dump($blacklistedIps);
         foreach($mx_ip_map as $ip => $mx) {
             if(in_array($ip, $blacklistedIps)) {
                 unset($mx_ip_map[$ip]);
