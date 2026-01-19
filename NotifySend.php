@@ -505,9 +505,6 @@ class Pman_Core_NotifySend extends Pman
             }
         }
 
-        var_dump($validIpv4s);
-        die('test');
-
         // ip address that failed the SMTP check
         $failedIp = false;
                         
