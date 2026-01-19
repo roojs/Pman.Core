@@ -1124,6 +1124,7 @@ class Pman_Core_NotifySend extends Pman
         $blacklistedIps = $bl->fetchAll('ip_str');
         foreach($mx_ip_map as $ip => $mx) {
             if(in_array($ip, $blacklistedIps)) {
+                $this->debug("DNS: Blacklisted IP: $ip");
                 unset($mx_ip_map[$ip]);
             }
         }
