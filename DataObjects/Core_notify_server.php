@@ -484,7 +484,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         $ff->Mail['helo'] = $this->helo;
     }
-    function checkSmtpResponse($errmsg, $core_domain)
+    function checkSmtpResponse($errmsg, $core_domain, $ip = false)
     {
         if (!$this->id) {
             return false;
