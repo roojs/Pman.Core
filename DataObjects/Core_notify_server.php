@@ -488,7 +488,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      * Check if the email is blacklisted
      * @param string $errmsg The error message from the SMTP server
      * @param object $core_domain The core_domain object
-     * @param string|false $failedIp The IP address that failed the SMTP check
+     * @param string|false $failedIp The IP address that failed the SMTP check (only set ipv4 host which return spamhaus)
      * @return bool True if the email is blacklisted, false otherwise
      */
     function checkSmtpResponse($errmsg, $core_domain, $failedIp = false)
