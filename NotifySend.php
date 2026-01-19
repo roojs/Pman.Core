@@ -857,7 +857,8 @@ class Pman_Core_NotifySend extends Pman
             if(!empty($smtpcode) && $smtpcode > 500) {
                 // spamhaus - not using ipv6 -> try setting up ipv6
                 if($is_spamhaus && empty($this->server_ipv6)) {
-                    $this->debug("IPv6: Spamhaus detected (code: $smtpcode), attempting IPv6 setup");
+                    $shouldRetry = true;
+                    $this->debug("IPv6: Spamhaus detected (code: $smtpcode)");
                     // Build allocation reason with error details
                     $allocation_reason = "SMTP Code: " . $smtpcode;
                     if (!empty($res->userinfo['smtptext'])) {
