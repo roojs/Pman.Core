@@ -882,8 +882,9 @@ class Pman_Core_NotifySend extends Pman
                     }
                     $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
                     DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
+                    
                     // blacklisted
-                    if($this->server->checkSmtpResponse($errmsg, $core_domain, $failedIp)) {
+                    if($this->server->checkSmtpResponse($errmsg, $core_domain)) {
                         $shouldRetry = true;
                     }
                 }
