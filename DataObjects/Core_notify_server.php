@@ -433,7 +433,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                     break;
                 }
             }
-            if ($blacklisted) {
+
+            // if some ipv4 addresses are not blacklisted, set the good server to this server
+            if (!$blacklisted) {
                 $good = $s;
                 break;
             }
