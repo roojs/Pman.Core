@@ -441,6 +441,12 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     }
     
     
+    /**
+     * Check if this server is blacklisted for the given email and ip
+     * @param string $email The email address
+     * @param string|false $ip The IP address
+     * @return bool True if the server is blacklisted, false otherwise
+     */
     function isBlacklisted($email, $ip = false)
     {
         if (!$this->id) {
