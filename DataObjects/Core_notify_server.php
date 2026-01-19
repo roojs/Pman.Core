@@ -467,12 +467,11 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             return  $cache[$this->id . '-'. $ip];
         }
         
-        $cd = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
-        
         $bl = DB_DataObject::factory('core_notify_blacklist');
         $bl->server_id = $this->id;
+        $bl->ip = $bl->sqlValue("INET6_ATON('" . $this->escape($ip) . "')");
         if ($bl->count()) {
-            $cache[$this->id . '-'. $dom] = true;
+            $cache[$this->id . '-'. $ip] = true;
             return true;
         }
         
