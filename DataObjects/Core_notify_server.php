@@ -500,7 +500,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $bl->server_id = $this->id;
         $bl->domain_id = $core_domain->id;
         if($failedIp) {
-            $bl->ip = $failedIp;
+            $bl->ip = $bl->sqlValue("INET6_ATON('" . $this->escape($failedIp) . "')");
         }
         if ($bl->count()) {
             return true;
