@@ -377,7 +377,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
-    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false, $server_ipv6 = null)
+    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false, $server_ipv6 = null, $validIpv4s = array())
     {
         if (!$this->id) {
             return;
