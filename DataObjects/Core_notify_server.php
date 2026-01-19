@@ -377,15 +377,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
-    /**
-     * Update the notify server to the next server
-     * @param object $cn The notify object
-     * @param string|false $when The time to update the notify server
-     * @param bool $allow_same Allow the same server
-     * @param object|false $server_ipv6 The server ipv6 object
-     * @param array|false $validIpv4s The list of valid ipv4 addresses
-     * @return bool True if the server is updated, false otherwise
-     */
     function updateNotifyToNextServer( $cn , $when = false, $allow_same = false, $server_ipv6 = null, $validIpv4s = false)
     {
         if (!$this->id) {
@@ -425,17 +416,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $good = false;
         while ($offset  != $start) {
             $s = $servers[$offset];
-            // check if the server is blacklisted by all valid ipv4 addresses
-            $blacklisted = true;
-            foreach($validIpv4s as $ip) {
-                if (!$s->isBlacklisted($ip)) {
-                    $blacklisted = false;
-                    break;
-                }
-            }
-
-            // if some ipv4 addresses are not blacklisted, set the good server to this server
-            if (!$blacklisted) {
+            if (!$s->isBlacklisted($email)) {
                 $good = $s;
                 break;
             }
@@ -458,14 +439,14 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $w->update($pp);
         return true;
     }
+
+    function isBlacklistedByIp($ip)
+    {
+
+    }
     
     
-    /**
-     * Check if this server is blacklisted for the given ip
-     * @param string $ip The ip address
-     * @return bool True if the server is blacklisted, false otherwise
-     */
-    function isBlacklisted($ip)
+    function isBlacklisted($email)
     {
         if (!$this->id) {
             return false;
@@ -473,15 +454,20 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         // return current server id..
         static $cache = array();
-        if (isset( $cache[$this->id . '-'. $ip])) {
-            return  $cache[$this->id . '-'. $ip];
+         // get the domain..
+        $ea = explode('@',$email);
+        $dom = strtolower(array_pop($ea));
+        if (isset( $cache[$this->id . '-'. $dom])) {
+            return  $cache[$this->id . '-'. $dom];
         }
+        
+        $cd = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
         
         $bl = DB_DataObject::factory('core_notify_blacklist');
         $bl->server_id = $this->id;
-        $bl->ip = $bl->sqlValue("INET6_ATON('" . $this->escape($ip) . "')");
+        $bl->domain_id = $cd->id;
         if ($bl->count()) {
-            $cache[$this->id . '-'. $ip] = true;
+            $cache[$this->id . '-'. $dom] = true;
             return true;
         }
         
