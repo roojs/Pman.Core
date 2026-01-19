@@ -425,7 +425,14 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $good = false;
         while ($offset  != $start) {
             $s = $servers[$offset];
-            if (!$s->isBlacklisted($email, $validIpv4s)) {
+            $blacklisted = true;
+            foreach($validIpv4s as $ip) {
+                if (!$s->isBlacklisted($ip)) {
+                    $blacklisted = false;
+                    break;
+                }
+            }
+            if ($blacklisted) {
                 $good = $s;
                 break;
             }
@@ -451,8 +458,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     
     
     /**
-     * Check if this server is blacklisted for the given email and ip
-     * @param string $email The email address
+     * Check if this server is blacklisted for the given ip
+     * @param string $ip The ip address
      * @return bool True if the server is blacklisted, false otherwise
      */
     function isBlacklisted($ip)
