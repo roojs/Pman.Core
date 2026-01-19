@@ -416,7 +416,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $good = false;
         while ($offset  != $start) {
             $s = $servers[$offset];
-            if (!$s->isBlacklisted($email)) {
+            if (!$s->isBlacklisted($email, $validIpv4s)) {
                 $good = $s;
                 break;
             }
