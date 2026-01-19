@@ -876,7 +876,6 @@ class Pman_Core_NotifySend extends Pman
                             if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
                                 // IPv6 set up successfully
                                 $this->debug("IPv6: Setup successful, will retry");
-                                $shouldRetry = true;
                             } else {
                                 // no IPv6 can be set up -> don't retry
                                 $this->debug("IPv6: Setup failed");
