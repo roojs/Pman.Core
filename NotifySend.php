@@ -878,6 +878,7 @@ class Pman_Core_NotifySend extends Pman
                                 $this->debug("IPv6: Setup successful, will retry");
                             } else {
                                 // no IPv6 can be set up -> don't retry
+                                $shouldRetry = false;
                                 $this->debug("IPv6: Setup failed");
                             }
                         }
