@@ -1096,7 +1096,9 @@ class Pman_Core_NotifySend extends Pman
         $bl->server_id = $this->server->id;
         $bl->whereAdd('ip IS NOT NULL');
         $bl->whereAdd('ip != 0x0');
-        $bl->fetch();
+        $bl->selectAdd();
+        $bl->selectAdd('INET6_NTOA(ip) as ip_str');
+        $blacklistedIps = $bl->fetchAll('ip_str');
         var_dump($bl);
         die('test');
         
