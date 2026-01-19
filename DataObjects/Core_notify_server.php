@@ -441,7 +441,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     }
     
     
-    function isBlacklisted($email)
+    function isBlacklisted($email, $ip = false)
     {
         if (!$this->id) {
             return false;
@@ -452,8 +452,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
          // get the domain..
         $ea = explode('@',$email);
         $dom = strtolower(array_pop($ea));
-        if (isset( $cache[$this->id . '-'. $dom])) {
-            return  $cache[$this->id . '-'. $dom];
+        if (isset( $cache[$this->id . '-'. $dom . '-' . $ip])) {
+            return  $cache[$this->id . '-'. $dom . '-' . $ip];
         }
         
         $cd = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
@@ -461,8 +461,11 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $bl = DB_DataObject::factory('core_notify_blacklist');
         $bl->server_id = $this->id;
         $bl->domain_id = $cd->id;
+        if($ip) {
+            $bl->ip = $bl->sqlValue("INET6_ATON('" . $this->escape($ip) . "')");
+        }
         if ($bl->count()) {
-            $cache[$this->id . '-'. $dom] = true;
+            $cache[$this->id . '-'. $dom . '-' . $ip] = true;
             return true;
         }
         
