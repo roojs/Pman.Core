@@ -425,6 +425,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $good = false;
         while ($offset  != $start) {
             $s = $servers[$offset];
+            // check if the server is blacklisted by all valid ipv4 addresses
             $blacklisted = true;
             foreach($validIpv4s as $ip) {
                 if (!$s->isBlacklisted($ip)) {
