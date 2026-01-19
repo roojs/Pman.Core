@@ -280,13 +280,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             return false;
         }
 
-        echo "trying to set up ipv6 for domain: " . $this->domain . " with mxs: " . implode(', ', $mxs) . "\n";
         foreach($mxs as $mx) {
-            echo "trying mx: $mx\n";
             // try to use pre-configured IPv6 addresses
             $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
             if($ipv6 = $cnsi->findOrCreateIpv6ForMx($mx, $this->id, $allocation_reason)) {
-                echo "using ipv6: " . $ipv6->ipv6_addr_str . " for mx: $mx\n";
                 return $ipv6;
             }
         }
