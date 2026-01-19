@@ -806,6 +806,7 @@ class Pman_Core_NotifySend extends Pman
             }
             
             $fail = true;
+            $failedIp = $smtp_host;
             break;
         }
         
