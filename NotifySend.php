@@ -497,8 +497,7 @@ class Pman_Core_NotifySend extends Pman
         $use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
         $mx_ip_map = $this->convertMxsToIpMap($mxs, $use_ipv6);
 
-        var_dump($mx_ip_map);
-        die('test');
+        $failedIp = false;
                         
         foreach($mx_ip_map as $smtp_host => $mx) {
             
