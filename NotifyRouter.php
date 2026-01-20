@@ -12,11 +12,13 @@ class Pman_Core_NotifyRouter
 
     var $debug_str = '';
     
-    function __construct($host, $localhost, $socket_options = array())
+    function __construct($host, $localhost, $socket_options = array(), $debug_handler = null)
     {
         $this->host = $host;
         $this->localhost = $localhost;
         $this->socket_options = $socket_options;
+        var_dump($debug_handler);
+        die('test');
     }
         // $this->debug_str = '';
         // $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
