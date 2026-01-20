@@ -18,8 +18,8 @@ class Pman_Core_NotifyRouter
     }
     
     /**
-     * Return a Mailer object
-     * @return Mail
+     * Return a Mail_smtp object
+     * @return Mail_smtp
      */
     function toMailer()
     {
