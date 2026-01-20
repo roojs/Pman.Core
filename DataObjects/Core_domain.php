@@ -281,6 +281,11 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         foreach($mxs as $mx) {
+            // skip if the mx has no AAAA record
+            $aaaa_records = dns_get_record($mx, DNS_AAAA);
+            if(empty($aaaa_records)) {
+                continue;
+            }
             // try to use pre-configured IPv6 addresses
             $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
             if($ipv6 = $cnsi->findOrCreateIpv6ForMx($mx, $this->id, $allocation_reason)) {
