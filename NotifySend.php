@@ -907,8 +907,8 @@ class Pman_Core_NotifySend extends Pman
                     }
                     $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
 
-                    // blacklist detection only if not spamhaus
-                    if(!$is_spamhaus) {
+                    // blacklist detection only if not using IPv6
+                    if(empty($this->server_ipv6)) {
                         DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
 
                         // blacklisted
