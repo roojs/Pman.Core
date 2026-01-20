@@ -847,7 +847,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->debug("No more valid ipv4 addresses left for server (id: {$this->server->id}), trying to set up ipv6");
 
                 // Build allocation reason with error details
-                $allocation_reason = "No more valid ipv4 addresses left for server (id: {$this->server->id}), trying to set up ipv6";
+                $allocation_reason = "No more valid ipv4 addresses left for server (id: {$this->server->id})";
                 $allocation_reason .= "; Email: " . $w->to_email;
                 $allocation_reason .= "; Spamhaus detected: yes";
 
