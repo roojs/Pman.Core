@@ -902,13 +902,18 @@ class Pman_Core_NotifySend extends Pman
                             $this->server_ipv6->update($old);
                             $this->debug("IPv6: Set spam rejecting for " . $this->server_ipv6->ipv6_addr_str);
                         }
+
+                        if($is_spam)
                     }
                     $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
-                    DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
 
-                    // blacklisted
-                    if($this->server->checkSmtpResponse($errmsg, $core_domain)) {
-                        $shouldRetry = true;
+                    if(!$is_spamhaus) {
+                        DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
+
+                        // blacklisted
+                        if($this->server->checkSmtpResponse($errmsg, $core_domain)) {
+                            $shouldRetry = true;
+                        }
                     }
                 }
             }
