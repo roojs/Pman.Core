@@ -835,10 +835,11 @@ class Pman_Core_NotifySend extends Pman
             $bl->selectAdd();
             $bl->selectAdd('INET6_NTOA(ip) as ip_str');
             $blacklistedIps = $bl->fetchAll('ip_str');
+
+            $is_spamhaus = false;
             foreach($validIps as $ip) {
                 if(in_array($ip, $blacklistedIps)) {
-                    $this->debug("DNS: Blacklisted IP: $ip");
-                    unset($validIps[$ip]);
+                    $is_spamhaus = true;
                 }
             }
         }
