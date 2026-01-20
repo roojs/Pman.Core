@@ -497,10 +497,10 @@ class Pman_Core_NotifySend extends Pman
         $use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
         $mx_ip_map = $this->convertMxsToIpMap($mxs, $use_ipv6);
 
-        // get list of valid ipv4 addresses
-        $validIpv4s = array();
+        // get list of valid ip addresses
+        $validIps = array();
         foreach($mx_ip_map as $ip => $mx) {
-            $validIpv4s[] = $ip;
+            $validIps[] = $ip;
         }
 
         // ip address that failed the SMTP check
