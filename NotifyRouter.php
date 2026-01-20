@@ -12,8 +12,12 @@ class Pman_Core_NotifyRouter
 
     var $debug_str = '';
     
-    function __construct($smtp_host, $mx)
+    function __construct($host, $localhost, $socket_options = array())
     {
+        $this->host = $host;
+        $this->localhost = $localhost;
+        $this->socket_options = $socket_options;
+    }
         // $this->debug_str = '';
         // $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
         
@@ -64,7 +68,6 @@ class Pman_Core_NotifyRouter
         // if ($is_ipv6) {
         //     $mailer_host = '[' . $smtp_host . ']';
         // }
-    }
     
     /**
      * Return a Mail_smtp object
