@@ -17,6 +17,10 @@ class Pman_Core_NotifyRouter
         $this->socket_options = $socket_options;
     }
     
+    /**
+     * Return an array of settings for the Mail::factory('smtp', $settings) call
+     * @return array
+     */
     function toSettings()
     {
         return array(
