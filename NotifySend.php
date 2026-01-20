@@ -1139,9 +1139,14 @@ class Pman_Core_NotifySend extends Pman
         // domain the of existing ipv6 mapping: outlook.com
         // -> skip this mx host
         else {
-            var_dump($this->server_ipv6->domain_id_domain);
-            var_dump($this->server_ipv6->has_reverse_ptr);
-            var_dump($mx_ip_map);
+            if($this->server_ipv6->has_reverse_ptr) {
+                foreach($mx_ip_map as $ip => $mx) {
+                    if(str_ends_with($mx, $this->server_ipv6->domain_id_domain)) {
+                        $this->debug("DNS: Skipping host $mx because it has a suffix matching the domain of the ipv6 mapping: " . $this->server_ipv6->domain_id_domain);
+                        unset($mx_ip_map[$ip]);
+                    }
+                }
+            }
             die('test');
         }
         
