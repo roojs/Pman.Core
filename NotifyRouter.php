@@ -34,11 +34,11 @@ class Pman_Core_NotifyRouter
                 'security_level' => 1
             )
         );
-    }
-        
+
         // Check if we're using IPv6 and prepare HELO hostname
         $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
         $helo_hostname = $ff->Mail['helo'];
+    }
         
         // if ($is_ipv6 && !empty($this->server_ipv6)) {
         //     // Extract last hex segment from IPv6 address (e.g., 2400:8901:e001:52a::22a -> 22a)
