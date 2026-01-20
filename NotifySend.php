@@ -384,8 +384,6 @@ class Pman_Core_NotifySend extends Pman
         $ipv6->autoJoin();
         $ipv6->selectAdd('INET6_NTOA(ipv6_addr) as ipv6_addr_str');
         if (!empty($w->ipv6_id) && $ipv6->get($w->ipv6_id)) {
-            var_dump($ipv6->toArray());
-            die('test');
             $this->server_ipv6 = $ipv6;
             $this->debug("IPv6: Loaded existing IPv6 for domain_id={$w->domain_id}, address=" . ($ipv6->ipv6_addr_str ?: 'NOT SET'));
         } else {
