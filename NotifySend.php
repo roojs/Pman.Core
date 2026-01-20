@@ -828,22 +828,9 @@ class Pman_Core_NotifySend extends Pman
 
         // Not using IPv6 and no valid ipv4 addresses left
         if(!$use_ipv6 && empty($validIps)) {
-            // check if any ipv4 address is blacklisted due to spamhaus
-            $bl = DB_DataObject::factory('core_notify_blacklist');
-            $bl->server_id = $this->server->id;
-            $bl->whereAdd('ip IS NOT NULL');
-            $bl->whereAdd('ip != 0x0');
-            $bl->selectAdd();
-            $bl->selectAdd('INET6_NTOA(ip) as ip_str');
-            $blacklistedIps = $bl->fetchAll('ip_str');
 
-            $is_spamhaus = false;
-            foreach($mx_ip_map as $ip => $mx) {
-                if(in_array($ip, $blacklistedIps)) {
-                    $is_spamhaus = true;
-                }
-            }
-
+            var_dump($this->isAnyIpv4Blacklisted);
+            die('test');
             if($is_spamhaus) {
                 $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
 
