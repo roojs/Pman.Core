@@ -1083,6 +1083,9 @@ class Pman_Core_NotifySend extends Pman
                         
                     }
                 }
+
+                // only resolve IPv6 addresses, skip IPv4
+                continue;
             }
             
             // Resolve IPv4 addresses (A records)
