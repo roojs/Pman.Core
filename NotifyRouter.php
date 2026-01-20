@@ -12,7 +12,7 @@ class Pman_Core_NotifyRouter
 
     var $debug_str = '';
     
-    function __construct($host, $localhost, $socket_options = array(), $debug_handler = null)
+    function __construct($host, $localhost, $socket_options = array(), $debug_handler = null, $debug = 0)
     {
         $this->host = $host;
         $this->localhost = $localhost;
@@ -87,8 +87,12 @@ class Pman_Core_NotifyRouter
         ));
     }
 
-    function debug()
+    function debug($str)
     {
-        
+        if (empty($this->cli_args['debug'])) {
+            return;
+            
+        }
+        echo $str . "\n";
     }
 }
