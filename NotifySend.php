@@ -562,7 +562,7 @@ class Pman_Core_NotifySend extends Pman
             }
 
             require_once 'Pman/Core/NotifyRouter.php';
-            $notifyRouter = new Pman_Core_NotifyRouter($mailer_host, $helo_hostname, $socket_options, array($this, 'debugHandler'), $this->debug, $smtp_host, $mx, $this->server_ipv6);
+            $notifyRouter = new Pman_Core_NotifyRouter(array($this, 'debugHandler'), $this->debug, $smtp_host, $mx, $this->server_ipv6);
             $mailer = $notifyRouter->toMailer();
 
             var_dump($mailer);
