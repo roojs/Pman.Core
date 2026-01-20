@@ -1148,14 +1148,6 @@ class Pman_Core_NotifySend extends Pman
                 }
             }
         }
-        
-        // If no IPs resolved, fall back to hostnames
-        if (empty($mx_ip_map)) {
-            foreach ($mxs as $mx) {
-                $mx_ip_map[$mx] = $mx;
-            }
-            $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
-        }
 
         var_dump($mx_ip_map);
         die('test');
