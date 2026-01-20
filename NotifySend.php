@@ -1132,8 +1132,8 @@ class Pman_Core_NotifySend extends Pman
                 }
             }
         }
-        // If the ipv6 mapping has a reverse pointer and the domain for that ipv6 doesn't match the suffix of a mx host,
-        // skip that mx host
+        // If the ipv6 mapping has a reverse pointer,
+        // skip the host that has a suffix matching the domain of the ipv6 mapping
         // e.g. 
         // mx host: fortuneindia-com.mail.protection.outlook.com
         // domain the of existing ipv6 mapping: outlook.com
