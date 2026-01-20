@@ -17,7 +17,7 @@ class Pman_Core_NotifyRouter
         $this->socket_options = $socket_options;
     }
     
-    function toArray()
+    function toSettings()
     {
         return array(
             'host'          => $this->host,
