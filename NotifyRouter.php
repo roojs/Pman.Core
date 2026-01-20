@@ -70,6 +70,9 @@ class Pman_Core_NotifyRouter
         if ($is_ipv6) {
             $mailer_host = '[' . $smtp_host . ']';
         }
+
+        $this->host = $mailer_host;
+        $this->localhost = $helo_hostname;
     }
     
     /**
