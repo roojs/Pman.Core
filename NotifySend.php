@@ -1110,7 +1110,7 @@ class Pman_Core_NotifySend extends Pman
             
         }
 
-        // Only use IPv6 addresses
+        // Only use IPv6 addresses if using IPv6
         $mx_ip_map = $ipv6_map;
 
         // If not using IPv6, use IPv4 addresses and skip blacklisted IPs
