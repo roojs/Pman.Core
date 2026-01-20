@@ -19,8 +19,9 @@ class Pman_Core_NotifyRouter
         $this->socket_options = $socket_options;
         $this->debug_handler = $debug_handler;
         $this->debug = $debug;
+
+        $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
     }
-        // $this->debug_str = '';
         // $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
         
         // // Prepare socket options with IPv6 binding if available
