@@ -19,6 +19,7 @@ class Pman_Core_NotifyRouter
         $this->debug_handler = $debug_handler;
 
         $this->debug = $debug;
+        $this->server_ipv6 = $server_ipv6;
 
 
         $ff = HTML_FlexyFramework::get();
