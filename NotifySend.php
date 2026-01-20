@@ -841,7 +841,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->debug("IPv6: Setup successful, will retry");
 
                 $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6, $validIps);
-                $this->errorHandler("Retry in next server at {$retry_when} - Error: $errmsg");
+                $this->errorHandler("Retry in next server at {$retry_when} - Error: $allocation_reason");
                 // Successfully passed to next server, exit
                 return;
             } else {
