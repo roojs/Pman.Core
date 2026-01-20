@@ -9,6 +9,8 @@ class Pman_Core_NotifyRouter
     var $debug = 1;
     var $debug_handler;
     var $dkim = true;
+
+    var $debug_str = '';
     
     function __construct($smtp_host, $mx)
     {
