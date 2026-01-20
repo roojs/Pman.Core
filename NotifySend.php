@@ -837,7 +837,7 @@ class Pman_Core_NotifySend extends Pman
             $blacklistedIps = $bl->fetchAll('ip_str');
 
             $is_spamhaus = false;
-            foreach($validIps as $ip) {
+            foreach($mx_ip_map as $ip => $mx) {
                 if(in_array($ip, $blacklistedIps)) {
                     $is_spamhaus = true;
                 }
