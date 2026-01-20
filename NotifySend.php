@@ -840,6 +840,7 @@ class Pman_Core_NotifySend extends Pman
                 // IPv6 set up successfully
                 $this->debug("IPv6: Setup successful, will retry");
 
+                $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $allocation_reason);
                 $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6, $validIps);
                 $this->errorHandler("Retry in next server at {$retry_when} - Error: $allocation_reason");
                 // Successfully passed to next server, exit
