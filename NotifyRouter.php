@@ -18,8 +18,8 @@ class Pman_Core_NotifyRouter
     }
     
     /**
-     * Return an array of settings for the Mail::factory('smtp', $settings) call
-     * @return array
+     * Return a Mailer object
+     * @return Mail
      */
     function toMailer()
     {
