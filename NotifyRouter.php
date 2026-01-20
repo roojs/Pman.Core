@@ -73,6 +73,9 @@ class Pman_Core_NotifyRouter
 
         $this->host = $mailer_host;
         $this->localhost = $helo_hostname;
+
+        var_dump($this);
+        die('test');
     }
     
     /**
