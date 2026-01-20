@@ -298,6 +298,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         if(!$hasAnyAAAA) {
+            echo "No AAAA records found in the MX records for domain: {$this->domain}\n";
             return false;
         }
 
