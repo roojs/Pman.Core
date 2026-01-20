@@ -826,8 +826,8 @@ class Pman_Core_NotifySend extends Pman
             break;
         }
 
-        // Not using IPv6 and no valid ipv4 addresses left
-        if(!$use_ipv6 && empty($validIps)) {
+        // Not using IPv6 AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted
+        if(!$use_ipv6 && empty($validIps) && $this->isAnyIpv4Blacklisted) {
 
             var_dump($this->isAnyIpv4Blacklisted);
             die('test');
