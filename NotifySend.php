@@ -1165,6 +1165,7 @@ class Pman_Core_NotifySend extends Pman
         }
 
         var_dump($mx_ip_map);
+        die('test');
         
         return $mx_ip_map;
     }
