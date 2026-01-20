@@ -66,15 +66,15 @@ class Pman_Core_NotifyRouter
             $helo_hostname = preg_replace('/^([^.]+)\./', '$1-' . $last_segment . '.', $ff->Mail['helo']);
             $this->debug("IPv6: Modified HELO hostname: {$ff->Mail['helo']} -> $helo_hostname");
         }
+
+        $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
+        
+        // Format IPv6 address with brackets for PEAR Mail compatibility
+        $mailer_host = $smtp_host;
+        if ($is_ipv6) {
+            $mailer_host = '[' . $smtp_host . ']';
+        }
     }
-        
-        // $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
-        
-        // // Format IPv6 address with brackets for PEAR Mail compatibility
-        // $mailer_host = $smtp_host;
-        // if ($is_ipv6) {
-        //     $mailer_host = '[' . $smtp_host . ']';
-        // }
     
     /**
      * Return a Mail_smtp object
