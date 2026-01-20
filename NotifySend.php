@@ -825,7 +825,10 @@ class Pman_Core_NotifySend extends Pman
             break;
         }
 
-
+        // Not using IPv6 and no valid ipv4 addresses left
+        if(!$use_ipv6 && empty($validIps)) {
+            // check if any ipv4 address is blacklisted due to spamhaus
+        }
 
         var_dump($mx_ip_map);
         var_dump($validIps);
