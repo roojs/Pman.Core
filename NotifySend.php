@@ -950,6 +950,7 @@ class Pman_Core_NotifySend extends Pman
 
             // try next server
             if($shouldRetry) {
+                $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6, $validIps);
                 $this->errorHandler("Retry in next server at {$retry_when} - Error: $errmsg");
                 // Successfully passed to next server, exit
