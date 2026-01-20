@@ -1156,9 +1156,6 @@ class Pman_Core_NotifySend extends Pman
             }
             $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
         }
-
-        var_dump($mx_ip_map);
-        die('test');
         
         return $mx_ip_map;
     }
