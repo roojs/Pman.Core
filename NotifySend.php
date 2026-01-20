@@ -1132,6 +1132,15 @@ class Pman_Core_NotifySend extends Pman
                 }
             }
         }
+        // If the ipv6 mapping has a reverse pointer and the domain for that ipv6 doesn't match the suffix of a mx host,
+        // skip that mx host
+        // e.g. 
+        // mx host: fortuneindia-com.mail.protection.outlook.com
+        // domain the of existing ipv6 mapping: outlook.com
+        // -> skip this mx host
+        else {
+
+        }
         
         // If no IPs resolved, fall back to hostnames
         if (empty($mx_ip_map)) {
