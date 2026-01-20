@@ -828,35 +828,33 @@ class Pman_Core_NotifySend extends Pman
 
         // Not using IPv6 AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted
         if(!$fail && !$use_ipv6 && empty($validIps) && $this->isAnyIpv4Blacklisted) {
-            if($is_spamhaus) {
-                $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
+            $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
 
-                $errmsg=   $res->userinfo['smtpcode'] . ': ' .$res->toString();
-                if (isset($res->userinfo['smtptext'])) {
-                    $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
-                }
+            $errmsg=   $res->userinfo['smtpcode'] . ': ' .$res->toString();
+            if (isset($res->userinfo['smtptext'])) {
+                $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
+            }
 
-                var_dump($errmsg);
-                die('test');
+            var_dump($errmsg);
+            die('test');
 
-                // Build allocation reason with error details
-                $allocation_reason = "No valid ipv4 address left for server (id: {$this->server->id})";
-                $allocation_reason .= "; Email: " . $w->to_email;
-                $allocation_reason .= "; Spamhaus detected: yes";
+            // Build allocation reason with error details
+            $allocation_reason = "No valid ipv4 address left for server (id: {$this->server->id})";
+            $allocation_reason .= "; Email: " . $w->to_email;
+            $allocation_reason .= "; Spamhaus detected: yes";
 
-                // try to set up ipv6
-                if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
-                    // IPv6 set up successfully
-                    $this->debug("IPv6: Setup successful, will retry");
+            // try to set up ipv6
+            if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
+                // IPv6 set up successfully
+                $this->debug("IPv6: Setup successful, will retry");
 
-                    $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6, $validIps);
-                    $this->errorHandler("Retry in next server at {$retry_when} - Error: $allocation_reason");
-                    // Successfully passed to next server, exit
-                    return;
-                } else {
-                    // no IPv6 can be set up -> don't retry
-                    $this->debug("IPv6: Setup failed");
-                }
+                $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6, $validIps);
+                $this->errorHandler("Retry in next server at {$retry_when} - Error: $allocation_reason");
+                // Successfully passed to next server, exit
+                return;
+            } else {
+                // no IPv6 can be set up -> don't retry
+                $this->debug("IPv6: Setup failed");
             }
         }
         
