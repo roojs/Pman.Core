@@ -563,11 +563,7 @@ class Pman_Core_NotifySend extends Pman
 
             require_once 'Pman/Core/NotifyRouter.php';
             $notifyRouter = new Pman_Core_NotifyRouter($mailer_host, $helo_hostname, $socket_options);
-
-            var_dump($notifyRouter->toSettings());
-            die('test');
-            
-            $mailer = Mail::factory('smtp', $notifyRouter->toSettings());
+            $mailer = $notifyRouter->toMailer();
             
             // if the host is the mail host + it's authenticated add auth details
             // this normally will happen if you sent  Pman_Core_NotifySend['host']
