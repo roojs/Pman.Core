@@ -15,6 +15,7 @@ class Pman_Core_NotifyRouter
     function __construct($host, $localhost, $socket_options = array(), $debug_handler = null, $debug = 0, $smtp_host, $mx, $server_ipv6)
     {
         $this->host = $host;
+        $this->localhost = $localhost;
         $this->socket_options = $socket_options;
         $this->debug_handler = $debug_handler;
 
