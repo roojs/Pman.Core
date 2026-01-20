@@ -786,7 +786,7 @@ class Pman_Core_NotifySend extends Pman
             
             if ($code < 0) {
                 $this->debug("Connection error with $smtp_host: " . $res->message);
-                // remove the failed ip from the list of valid ipv4 addresses
+                // remove the failed ip from the list of valid ip addresses
                 if(in_array($smtp_host, $validIps)) {
                     $validIps = array_diff($validIps, array($smtp_host));
                 }
