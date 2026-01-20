@@ -553,7 +553,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->debug("IPv6: Modified HELO hostname: {$ff->Mail['helo']} -> $helo_hostname");
             }
             
-            $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
+            $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host, array($this, 'debugHandler'));
             
             // Format IPv6 address with brackets for PEAR Mail compatibility
             $mailer_host = $smtp_host;
