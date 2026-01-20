@@ -1108,13 +1108,8 @@ class Pman_Core_NotifySend extends Pman
             
         }
 
-        // Only use IPv6 addresses if using IPv6
-        $mx_ip_map = $ipv6_map;
-
         // If not using IPv6, use IPv4 addresses and skip blacklisted IPs
         if(!$use_ipv6) {
-            $mx_ip_map = $ipv4_map;
-
             // skip any blacklisted ip for this server
             $bl = DB_DataObject::factory('core_notify_blacklist');
             $bl->server_id = $this->server->id;
