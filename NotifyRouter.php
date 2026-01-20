@@ -17,8 +17,7 @@ class Pman_Core_NotifyRouter
         $this->host = $host;
         $this->localhost = $localhost;
         $this->socket_options = $socket_options;
-        var_dump($debug_handler);
-        die('test');
+        $this->debug_handler = $debug_handler;
     }
         // $this->debug_str = '';
         // $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
