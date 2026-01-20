@@ -280,6 +280,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             return false;
         }
 
+        $hasAnyAAAA = false;
+
         foreach($mxs as $mx) {
             // skip if the mx has no AAAA record
             $aaaa_records = dns_get_record($mx, DNS_AAAA);
@@ -287,11 +289,16 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 echo "Skipping mx: $mx (no AAAA record)\n";
                 continue;
             }
+            $hasAnyAAAA = true;
             // try to use pre-configured IPv6 addresses
             $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
             if($ipv6 = $cnsi->findOrCreateIpv6ForMx($mx, $this->id, $allocation_reason)) {
                 return $ipv6;
             }
+        }
+
+        if(!$hasAnyAAAA) {
+            return false;
         }
 
         $server = DB_DataObject::factory('core_notify_server')->findServerWithIpv6();
