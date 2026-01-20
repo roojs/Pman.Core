@@ -37,33 +37,33 @@ class Pman_Core_NotifyRouter
         // Check if we're using IPv6 and prepare HELO hostname
         $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
         $helo_hostname = $ff->Mail['helo'];
+
+        if ($is_ipv6 && !empty($this->server_ipv6)) {
+            // Extract last hex segment from IPv6 address (e.g., 2400:8901:e001:52a::22a -> 22a)
+            // Handle compressed zeros (::) by splitting and taking the rightmost part
+            $ipv6_parts = explode('::', $this->server_ipv6->ipv6_addr_str);
+            $right_part = end($ipv6_parts);
+            if (empty($right_part)) {
+                // Address ends with ::, get last segment from left part
+                $left_part = $ipv6_parts[0];
+                $segments = explode(':', $left_part);
+                $last_segment = end($segments);
+            } else {
+                $segments = explode(':', $right_part);
+                $last_segment = end($segments);
+            }
+            
+            // Remove leading zeros from last segment
+            $last_segment = ltrim($last_segment, '0');
+            if (empty($last_segment)) {
+                $last_segment = '0';
+            }
+            
+            // Modify HELO hostname: sgfs1.media-outreach.com -> sgfs1-22a.media-outreach.com
+            $helo_hostname = preg_replace('/^([^.]+)\./', '$1-' . $last_segment . '.', $ff->Mail['helo']);
+            $this->debug("IPv6: Modified HELO hostname: {$ff->Mail['helo']} -> $helo_hostname");
+        }
     }
-        
-        // if ($is_ipv6 && !empty($this->server_ipv6)) {
-        //     // Extract last hex segment from IPv6 address (e.g., 2400:8901:e001:52a::22a -> 22a)
-        //     // Handle compressed zeros (::) by splitting and taking the rightmost part
-        //     $ipv6_parts = explode('::', $this->server_ipv6->ipv6_addr_str);
-        //     $right_part = end($ipv6_parts);
-        //     if (empty($right_part)) {
-        //         // Address ends with ::, get last segment from left part
-        //         $left_part = $ipv6_parts[0];
-        //         $segments = explode(':', $left_part);
-        //         $last_segment = end($segments);
-        //     } else {
-        //         $segments = explode(':', $right_part);
-        //         $last_segment = end($segments);
-        //     }
-            
-        //     // Remove leading zeros from last segment
-        //     $last_segment = ltrim($last_segment, '0');
-        //     if (empty($last_segment)) {
-        //         $last_segment = '0';
-        //     }
-            
-        //     // Modify HELO hostname: sgfs1.media-outreach.com -> sgfs1-22a.media-outreach.com
-        //     $helo_hostname = preg_replace('/^([^.]+)\./', '$1-' . $last_segment . '.', $ff->Mail['helo']);
-        //     $this->debug("IPv6: Modified HELO hostname: {$ff->Mail['helo']} -> $helo_hostname");
-        // }
         
         // $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
         
