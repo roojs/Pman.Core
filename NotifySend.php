@@ -1175,6 +1175,7 @@ class Pman_Core_NotifySend extends Pman
         */
         // If not using IPv6, use IPv4 addresses and skip blacklisted IPs
         if(!$use_ipv6) {
+            // FIXED QUERY RESULT FOR TESTING ONLY !!!!!
             $mx_ip_map = array(
                 "52.101.144.0" => "fortuneindia-com.mail.protection.outlook.com",
                 "52.101.145.2" => "fortuneindia-com.mail.protection.outlook.com",
