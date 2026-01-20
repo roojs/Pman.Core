@@ -828,9 +828,6 @@ class Pman_Core_NotifySend extends Pman
 
         // Not using IPv6 AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted
         if(!$use_ipv6 && empty($validIps) && $this->isAnyIpv4Blacklisted) {
-
-            var_dump($this->isAnyIpv4Blacklisted);
-            die('test');
             if($is_spamhaus) {
                 $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
 
