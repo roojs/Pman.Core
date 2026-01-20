@@ -1169,11 +1169,6 @@ class Pman_Core_NotifySend extends Pman
                     unset($mx_ip_map[$ip]);
                 }
             }
-
-            // FOR TESTING ONLY !!!!!
-            $mx_ip_map = array(
-                "74.125.23.26" => "aspmx.l.google.com"
-            );
         }
         // If the ipv6 mapping has a reverse pointer and the domain of the ipv6 mapping does not match the suffix of the mx host,
         // skip the mx host
@@ -1191,6 +1186,9 @@ class Pman_Core_NotifySend extends Pman
                 }
             }
         }
+
+        var_dump($mx_ip_map);
+        die('test');
         
         return $mx_ip_map;
     }
