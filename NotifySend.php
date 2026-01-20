@@ -378,12 +378,14 @@ class Pman_Core_NotifySend extends Pman
 
         // make sure there is a correct domain_id in the notify record
         // Fetch IPv6 server configuration if available
+        DB_DataObject::debugLevel(1);
         $this->server_ipv6 = null;
         $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
         $ipv6->autoJoin();
         $ipv6->selectAdd();
         $ipv6->selectAdd('*, INET6_NTOA(ipv6_addr) as ipv6_addr_str');
         if (!empty($w->ipv6_id) && $ipv6->get($w->ipv6_id)) {
+            die('test');
             $this->server_ipv6 = $ipv6;
             $this->debug("IPv6: Loaded existing IPv6 for domain_id={$w->domain_id}, address=" . ($ipv6->ipv6_addr_str ?: 'NOT SET'));
         } else {
