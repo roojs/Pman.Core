@@ -851,9 +851,6 @@ class Pman_Core_NotifySend extends Pman
                 $allocation_reason .= "; Email: " . $w->to_email;
                 $allocation_reason .= "; Spamhaus detected: yes";
 
-                var_dump($allocation_reason);
-                die('test');
-
                 // try to set up ipv6
                 if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
                     // IPv6 set up successfully
