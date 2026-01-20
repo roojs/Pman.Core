@@ -842,6 +842,19 @@ class Pman_Core_NotifySend extends Pman
                     $is_spamhaus = true;
                 }
             }
+
+            if($is_spamhaus) {
+                $this->debug("No more valid ipv4 hosts left for server (id: {$this->server->id}), trying to set up ipv6");
+                die('test2');
+                // try to set up ipv6
+                if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
+                    // IPv6 set up successfully
+                    $this->debug("IPv6: Setup successful, will retry");
+                } else {
+                    // no IPv6 can be set up -> don't retry
+                    $this->debug("IPv6: Setup failed");
+                }
+            }
         }
 
         var_dump($mx_ip_map);
