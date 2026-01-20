@@ -1071,7 +1071,7 @@ class Pman_Core_NotifySend extends Pman
         
         foreach ($mxs as $mx) {
             if($use_ipv6) {
-                // Resolve IPv6 addresses (AAAA records) only if $use_ipv6 is true
+                // Resolve IPv6 addresses (AAAA records)
                 $ipv6_records = @dns_get_record($mx, DNS_AAAA);
                 if (!empty($ipv6_records)) {
                     foreach ($ipv6_records as $record) {
