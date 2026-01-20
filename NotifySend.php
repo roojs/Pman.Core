@@ -1140,7 +1140,9 @@ class Pman_Core_NotifySend extends Pman
         // domain the of existing ipv6 mapping: outlook.com
         // -> skip this mx host
         else {
-            var_dump($this->server_ipv6);
+            var_dump($this->server_ipv6->domain_id_domain);
+            var_dump($this->server_ipv6->has_reverse_ptr);
+            var_dump($mx_ip_map);
             die('test');
         }
         
