@@ -14,18 +14,18 @@ class Pman_Core_NotifyRouter
     
     function __construct($smtp_host, $mx)
     {
-        $this->debug_str = '';
-        $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
+        // $this->debug_str = '';
+        // $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
         
-        // Prepare socket options with IPv6 binding if available
-        $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
-            'ssl' => array(
-                'verify_peer_name' => false,
-                'verify_peer' => false, 
-                'allow_self_signed' => true,
-                'security_level' => 1
-            )
-        );
+        // // Prepare socket options with IPv6 binding if available
+        // $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
+        //     'ssl' => array(
+        //         'verify_peer_name' => false,
+        //         'verify_peer' => false, 
+        //         'allow_self_signed' => true,
+        //         'security_level' => 1
+        //     )
+        // );
         
         // // Check if we're using IPv6 and prepare HELO hostname
         // $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
