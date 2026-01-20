@@ -917,7 +917,7 @@ class Pman_Core_NotifySend extends Pman
                     if($this->server->checkSmtpResponse($errmsg, $core_domain, $failedIp)) {
                         $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: $failedIp");
                         // if there is no more valid ipv4 hosts left
-                        if(empty($validIpv4s)) {
+                        if(empty($validIps)) {
                             $this->debug("No more valid ipv4 hosts left for server (id: {$this->server->id}), trying to set up ipv6");
                             // try to set up ipv6
                             if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
@@ -969,7 +969,7 @@ class Pman_Core_NotifySend extends Pman
 
             // try next server
             if($shouldRetry) {
-                $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6, $validIpv4s);
+                $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6, $validIps);
                 $this->errorHandler("Retry in next server at {$retry_when} - Error: $errmsg");
                 // Successfully passed to next server, exit
                 return;
