@@ -835,9 +835,6 @@ class Pman_Core_NotifySend extends Pman
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
 
-            var_dump($errmsg);
-            die('test');
-
             // Build allocation reason with error details
             $allocation_reason = "No valid ipv4 address left for server (id: {$this->server->id})";
             $allocation_reason .= "; Email: " . $w->to_email;
@@ -849,7 +846,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->debug("IPv6: Setup successful, will retry");
 
                 $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6, $validIps);
-                $this->errorHandler("Retry in next server at {$retry_when} - Error: $allocation_reason");
+                $this->errorHandler("Retry in next server at {$retry_when} - Error: $errmsg");
                 // Successfully passed to next server, exit
                 return;
             } else {
