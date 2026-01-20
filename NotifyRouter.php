@@ -10,7 +10,7 @@ class Pman_Core_NotifyRouter
     var $debug_handler;
     var $dkim = true;
     
-    function __construct($host, $localhost, $socket_options = array())
+    function __construct($smtp_host, $mx)
     {
         $this->host = $host;
         $this->localhost = $localhost;
