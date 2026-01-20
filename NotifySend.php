@@ -1194,8 +1194,7 @@ class Pman_Core_NotifySend extends Pman
 
             // FOR TESTING ONLY !!!!!
             $mx_ip_map = array(
-                "74.125.23.26" => "aspmx.l.google.com",
-                "173.194.174.27" => "aspmx.l.google.com",
+                "74.125.23.26" => "aspmx.l.google.com"
             );
         }
         // If the ipv6 mapping has a reverse pointer and the domain of the ipv6 mapping does not match the suffix of the mx host,
