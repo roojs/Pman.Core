@@ -827,35 +827,11 @@ class Pman_Core_NotifySend extends Pman
         }
 
         // Not using IPv6 AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted
-        if(!$use_ipv6 && empty($validIps) && $this->isAnyIpv4Blacklisted) {
+        if(!$fail && !$use_ipv6 && empty($validIps) && $this->isAnyIpv4Blacklisted) {
             $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
 
-            if(!$fail) {
-                // Build allocation reason with error details
-                $allocation_reason = "No valid ipv4 address left for server (id: {$this->server->id})";
-            }
-            else {
-                $errmsg=   $res->userinfo['smtpcode'] . ': ' .$res->toString();
-                if (isset($res->userinfo['smtptext'])) {
-                    $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
-                }
-    
-                
-                // Check if error message contains spamhaus (case-insensitive)
-                // If spamhaus is found, continue current behavior (don't pass to next server)
-                $is_spamhaus = stripos($errmsg, 'spam') !== false 
-                    || stripos($errmsg, 'in rbl') !== false 
-                    || stripos($errmsg, 'reputation') !== false ;
-
-                if($is_spamhaus) {
-                    // Build allocation reason with error details
-                    $allocation_reason = "SMTP Code: " . $smtpcode;
-                    if (!empty($res->userinfo['smtptext'])) {
-                        $allocation_reason .= "; Error: " . $res->userinfo['smtptext'];
-                    }
-                }
-            }
-
+            // Build allocation reason with error details
+            $allocation_reason = "No valid ipv4 address left for server (id: {$this->server->id})";
             $allocation_reason .= "; Email: " . $w->to_email;
             $allocation_reason .= "; Spamhaus detected: yes";
 
