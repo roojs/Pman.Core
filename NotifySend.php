@@ -378,7 +378,6 @@ class Pman_Core_NotifySend extends Pman
 
         // make sure there is a correct domain_id in the notify record
         // Fetch IPv6 server configuration if available
-        DB_DataObject::debugLevel(1);
         $this->server_ipv6 = null;
         $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
         $ipv6->autoJoin();
