@@ -380,6 +380,7 @@ class Pman_Core_NotifySend extends Pman
         // Fetch IPv6 server configuration if available
         $this->server_ipv6 = null;
         $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
+        $ipv6->autoJoin();
         $ipv6->selectAdd();
         $ipv6->selectAdd('*, INET6_NTOA(ipv6_addr) as ipv6_addr_str');
         if (!empty($w->ipv6_id) && $ipv6->get($w->ipv6_id)) {
