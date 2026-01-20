@@ -1067,10 +1067,7 @@ class Pman_Core_NotifySend extends Pman
      */
     function convertMxsToIpMap($mxs, $use_ipv6 = false)
     {
-        // Separate arrays to maintain ordering: IPv6 first, then IPv4
-        // Each group preserves MX priority order (original order of $mxs)
-        $ipv6_map = array();
-        $ipv4_map = array();
+        $mx_ip_map = array();
         
         foreach ($mxs as $mx) {
             $mx_use_ipv6 = $use_ipv6;
