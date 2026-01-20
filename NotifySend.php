@@ -1107,16 +1107,11 @@ class Pman_Core_NotifySend extends Pman
                 // $ipv4_map[$hostname_ip] = $mx;
                 $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
             }
-
-            var_dump(@gethostbynamel($mx));
             
         }
         
         // Merge maps: IPv6 first, then IPv4 (each group preserves MX priority order)
         $mx_ip_map = $ipv6_map + $ipv4_map;
-
-        var_dump($mx_ip_map);
-        die('test');
         
         // If no IPs resolved, fall back to hostnames
         if (empty($mx_ip_map)) {
@@ -1125,8 +1120,6 @@ class Pman_Core_NotifySend extends Pman
             }
             $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
         }
-
-        var_dump($mx_ip_map);
 
         // skip any blacklisted ip for this server
         $bl = DB_DataObject::factory('core_notify_blacklist');
@@ -1144,6 +1137,7 @@ class Pman_Core_NotifySend extends Pman
         }
 
         var_dump($mx_ip_map);
+        die('test');
         
         return $mx_ip_map;
     }
