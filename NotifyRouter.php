@@ -12,7 +12,7 @@ class Pman_Core_NotifyRouter
 
     var $debug_str = '';
     
-    function __construct($host, $localhost, $socket_options = array(), $debug_handler = null, $debug = 0, $smtp_host, $mx)
+    function __construct($host, $localhost, $socket_options = array(), $debug_handler = null, $debug = 0, $smtp_host, $mx, $server_ipv6)
     {
         $this->host = $host;
         $this->socket_options = $socket_options;
