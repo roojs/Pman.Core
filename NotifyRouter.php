@@ -86,4 +86,9 @@ class Pman_Core_NotifyRouter
             'dkim'          => $this->dkim
         ));
     }
+
+    function debug()
+    {
+        
+    }
 }
