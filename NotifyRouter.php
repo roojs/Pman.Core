@@ -20,26 +20,25 @@ class Pman_Core_NotifyRouter
         $this->debug_handler = $debug_handler;
         $this->debug = $debug;
 
-        
+
         $ff = HTML_FlexyFramework::get();
 
         $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
+
+        // Prepare socket options with IPv6 binding if available
+        $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
+            'ssl' => array(
+                'verify_peer_name' => false,
+                'verify_peer' => false, 
+                'allow_self_signed' => true,
+                'security_level' => 1
+            )
+        );
     }
-        // $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
         
-        // // Prepare socket options with IPv6 binding if available
-        // $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
-        //     'ssl' => array(
-        //         'verify_peer_name' => false,
-        //         'verify_peer' => false, 
-        //         'allow_self_signed' => true,
-        //         'security_level' => 1
-        //     )
-        // );
-        
-        // // Check if we're using IPv6 and prepare HELO hostname
-        // $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
-        // $helo_hostname = $ff->Mail['helo'];
+        // Check if we're using IPv6 and prepare HELO hostname
+        $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        $helo_hostname = $ff->Mail['helo'];
         
         // if ($is_ipv6 && !empty($this->server_ipv6)) {
         //     // Extract last hex segment from IPv6 address (e.g., 2400:8901:e001:52a::22a -> 22a)
