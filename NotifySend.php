@@ -845,7 +845,6 @@ class Pman_Core_NotifySend extends Pman
 
             if($is_spamhaus) {
                 $this->debug("No more valid ipv4 hosts left for server (id: {$this->server->id}), trying to set up ipv6");
-                die('test2');
                 // try to set up ipv6
                 if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
                     // IPv6 set up successfully
