@@ -901,12 +901,11 @@ class Pman_Core_NotifySend extends Pman
                             $this->server_ipv6->is_spam_rejecting = 1;
                             $this->server_ipv6->update($old);
                             $this->debug("IPv6: Set spam rejecting for " . $this->server_ipv6->ipv6_addr_str);
-                        }
 
-                        // is_spamhaus AND
-                        // IPv6 already exists AND
-                        // this ip mapping is already spam rejecting OR has a reverse pointer
-                        if($is_spamhaus && ($this->server_ipv6->is_spam_rejecting || $this->server_ipv6->has_reverse_ptr)) {
+                            // Retry after setting spam rejecting
+                            $shouldRetry = true;
+                        }
+                        
                     }
                     $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
 
