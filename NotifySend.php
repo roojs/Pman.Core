@@ -903,12 +903,13 @@ class Pman_Core_NotifySend extends Pman
                             $this->debug("IPv6: Set spam rejecting for " . $this->server_ipv6->ipv6_addr_str);
                         }
 
-                        if($is_spam)
+                        if($is_spamhaus && ($this->server_ipv6->is_spam_rejecting || $this->server_ipv6->has_reverse_ptr)) {
                     }
                     $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
 
+                    // blacklist detection only if not spamhaus
                     if(!$is_spamhaus) {
-                                            DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
+                        DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
 
                         // blacklisted
                         if($this->server->checkSmtpResponse($errmsg, $core_domain)) {
