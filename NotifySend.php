@@ -1125,18 +1125,20 @@ class Pman_Core_NotifySend extends Pman
             $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
         }
 
-        // skip any blacklisted ip for this server
-        $bl = DB_DataObject::factory('core_notify_blacklist');
-        $bl->server_id = $this->server->id;
-        $bl->whereAdd('ip IS NOT NULL');
-        $bl->whereAdd('ip != 0x0');
-        $bl->selectAdd();
-        $bl->selectAdd('INET6_NTOA(ip) as ip_str');
-        $blacklistedIps = $bl->fetchAll('ip_str');
-        foreach($mx_ip_map as $ip => $mx) {
-            if(in_array($ip, $blacklistedIps)) {
-                $this->debug("DNS: Blacklisted IP: $ip");
-                unset($mx_ip_map[$ip]);
+        if(!$use_ipv6) {
+            // skip any blacklisted ip for this server
+            $bl = DB_DataObject::factory('core_notify_blacklist');
+            $bl->server_id = $this->server->id;
+            $bl->whereAdd('ip IS NOT NULL');
+            $bl->whereAdd('ip != 0x0');
+            $bl->selectAdd();
+            $bl->selectAdd('INET6_NTOA(ip) as ip_str');
+            $blacklistedIps = $bl->fetchAll('ip_str');
+            foreach($mx_ip_map as $ip => $mx) {
+                if(in_array($ip, $blacklistedIps)) {
+                    $this->debug("DNS: Blacklisted IP: $ip");
+                    unset($mx_ip_map[$ip]);
+                }
             }
         }
         
