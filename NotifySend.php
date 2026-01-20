@@ -1111,21 +1111,14 @@ class Pman_Core_NotifySend extends Pman
         }
         
         // Merge maps: IPv6 first, then IPv4 (each group preserves MX priority order)
-        $mx_ip_map = $ipv6_map + $ipv4_map;
+        $mx_ip_map = $ipv6_map;
 
         if($use_ipv6) {
             $mx_ip_map = $ipv6_map;
         }
-        
-        // If no IPs resolved, fall back to hostnames
-        if (empty($mx_ip_map)) {
-            foreach ($mxs as $mx) {
-                $mx_ip_map[$mx] = $mx;
-            }
-            $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
-        }
-
         if(!$use_ipv6) {
+            $mx_ip_map = $ipv4_map;
+
             // skip any blacklisted ip for this server
             $bl = DB_DataObject::factory('core_notify_blacklist');
             $bl->server_id = $this->server->id;
@@ -1140,6 +1133,14 @@ class Pman_Core_NotifySend extends Pman
                     unset($mx_ip_map[$ip]);
                 }
             }
+        }
+        
+        // If no IPs resolved, fall back to hostnames
+        if (empty($mx_ip_map)) {
+            foreach ($mxs as $mx) {
+                $mx_ip_map[$mx] = $mx;
+            }
+            $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
         }
         
         return $mx_ip_map;
