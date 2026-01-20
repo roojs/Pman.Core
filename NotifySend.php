@@ -1112,6 +1112,10 @@ class Pman_Core_NotifySend extends Pman
         
         // Merge maps: IPv6 first, then IPv4 (each group preserves MX priority order)
         $mx_ip_map = $ipv6_map + $ipv4_map;
+
+        if($use_ipv6) {
+            $mx_ip_map = $ipv6_map;
+        }
         
         // If no IPs resolved, fall back to hostnames
         if (empty($mx_ip_map)) {
@@ -1135,9 +1139,6 @@ class Pman_Core_NotifySend extends Pman
                 unset($mx_ip_map[$ip]);
             }
         }
-
-        var_dump($mx_ip_map);
-        die('test');
         
         return $mx_ip_map;
     }
