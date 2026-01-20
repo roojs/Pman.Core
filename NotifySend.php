@@ -1070,6 +1070,7 @@ class Pman_Core_NotifySend extends Pman
         $mx_ip_map = array();
         
         foreach ($mxs as $mx) {
+            // only resolve IPv6 addresses if using IPv6
             if($use_ipv6) {
                 // Resolve IPv6 addresses (AAAA records)
                 $ipv6_records = @dns_get_record($mx, DNS_AAAA);
@@ -1083,8 +1084,7 @@ class Pman_Core_NotifySend extends Pman
                         
                     }
                 }
-
-                // only resolve IPv6 addresses, skip IPv4
+                
                 continue;
             }
             
