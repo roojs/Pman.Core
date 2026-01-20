@@ -1107,6 +1107,8 @@ class Pman_Core_NotifySend extends Pman
                 // $ipv4_map[$hostname_ip] = $mx;
                 $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
             }
+
+            var_dump(@gethostbynamel($mx));
             
         }
         
