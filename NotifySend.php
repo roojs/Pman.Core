@@ -1090,13 +1090,11 @@ class Pman_Core_NotifySend extends Pman
             
             // Resolve IPv4 addresses (A records)
             $ipv4_records = @dns_get_record($mx, DNS_A);
-            $dns_ips = array();
             if (!empty($ipv4_records)) {
                 foreach ($ipv4_records as $record) {
                     if (empty($record['ip'])) {
                         continue;
                     }
-                    $dns_ips[] = $record['ip'];
                     $mx_ip_map[$record['ip']] = $mx;
                 }
             }
