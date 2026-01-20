@@ -823,6 +823,7 @@ class Pman_Core_NotifySend extends Pman
             break;
         }
 
+        var_dump($validIpv4s);
         die('test');
         
         // after trying all mxs - could not connect...
