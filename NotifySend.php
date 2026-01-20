@@ -1079,7 +1079,7 @@ class Pman_Core_NotifySend extends Pman
                             continue;
                         }
 
-                        $ipv6_map[$record['ipv6']] = $mx;
+                        $mx_ip_map[$record['ipv6']] = $mx;
                         
                     }
                 }
@@ -1097,7 +1097,7 @@ class Pman_Core_NotifySend extends Pman
                         continue;
                     }
                     $dns_ips[] = $record['ip'];
-                    $ipv4_map[$record['ip']] = $mx;
+                    $mx_ip_map[$record['ip']] = $mx;
                 }
             }
             
