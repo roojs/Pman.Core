@@ -1101,12 +1101,12 @@ class Pman_Core_NotifySend extends Pman
                 }
             }
             
-            // // Also check hostname lookup (gethostbyname) as hosts file might override A record
-            // $hostname_ip = @gethostbyname($mx);
-            // if (!empty($hostname_ip) && filter_var($hostname_ip, FILTER_VALIDATE_IP)) {
-            //     $ipv4_map[$hostname_ip] = $mx;
-            //     $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
-            // }
+            // Also check hostname lookup (gethostbyname) as hosts file might override A record
+            $hostname_ip = @gethostbyname($mx);
+            if (!empty($hostname_ip) && filter_var($hostname_ip, FILTER_VALIDATE_IP)) {
+                // $ipv4_map[$hostname_ip] = $mx;
+                $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
+            }
             
         }
         
