@@ -553,7 +553,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->debug("IPv6: Modified HELO hostname: {$ff->Mail['helo']} -> $helo_hostname");
             }
             
-            $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host, array($this, 'debugHandler'));
+            $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
             
             // Format IPv6 address with brackets for PEAR Mail compatibility
             $mailer_host = $smtp_host;
@@ -562,7 +562,7 @@ class Pman_Core_NotifySend extends Pman
             }
 
             require_once 'Pman/Core/NotifyRouter.php';
-            $notifyRouter = new Pman_Core_NotifyRouter($mailer_host, $helo_hostname, $socket_options);
+            $notifyRouter = new Pman_Core_NotifyRouter($mailer_host, $helo_hostname, $socket_options, array($this, 'debugHandler'));
             $mailer = $notifyRouter->toMailer();
 
             var_dump($mailer);
