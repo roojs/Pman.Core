@@ -560,19 +560,10 @@ class Pman_Core_NotifySend extends Pman
             if ($is_ipv6) {
                 $mailer_host = '[' . $smtp_host . ']';
             }
+
+            $notifyRouter = new Pman_Core_NotifyRouter($mailer_host, $helo_hostname, $socket_options);
             
-            $mailer = Mail::factory('smtp', array(
-                'host'    => $mailer_host,
-                'localhost' => $helo_hostname,
-                'timeout' => 15,
-                'socket_options' => $socket_options,
-                
-                 
-                //'debug' => isset($opts['debug']) ?  1 : 0,
-                'debug' => 1,
-                'debug_handler' => array($this, 'debugHandler'),
-                'dkim' => true
-            ));
+            $mailer = Mail::factory('smtp', $notifyRouter->toArray());
             
             // if the host is the mail host + it's authenticated add auth details
             // this normally will happen if you sent  Pman_Core_NotifySend['host']
