@@ -1146,6 +1146,14 @@ class Pman_Core_NotifySend extends Pman
                     unset($mx_ip_map[$ip]);
                 }
             }
+
+            // FOR TESTING ONLY !!!!!
+            foreach($mx_ip_map as $ip => $mx) {
+                if($ip == "192.178.164.27") {
+                    continue;
+                }
+                unset($mx_ip_map[$ip]);
+            }
         }
         // If the ipv6 mapping has a reverse pointer and the domain of the ipv6 mapping does not match the suffix of the mx host,
         // skip the mx host
