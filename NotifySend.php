@@ -383,8 +383,8 @@ class Pman_Core_NotifySend extends Pman
         $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
         $ipv6->autoJoin();
         $ipv6->id = $w->ipv6_id;
-        $ipv6->selectAdd();
-        $ipv6->selectAdd('*, INET6_NTOA(ipv6_addr) as ipv6_addr_str');
+        // $ipv6->selectAdd();
+        // $ipv6->selectAdd('*, INET6_NTOA(ipv6_addr) as ipv6_addr_str');
         if (!empty($w->ipv6_id) && $ipv6->find(true)) {
             var_dump($ipv6->toArray());
             die('test');
