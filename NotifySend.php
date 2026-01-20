@@ -96,6 +96,7 @@ class Pman_Core_NotifySend extends Pman
     var $poolname = 'core';
     var $server; // core_notify_server
     var $server_ipv6;
+    var $isAnyIpv4Blacklisted = false;
     var $debug;
     
     function getAuth()
