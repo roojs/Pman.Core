@@ -833,8 +833,6 @@ class Pman_Core_NotifySend extends Pman
             if(!$fail) {
                 // Build allocation reason with error details
                 $allocation_reason = "No valid ipv4 address left for server (id: {$this->server->id})";
-                $allocation_reason .= "; Email: " . $w->to_email;
-                $allocation_reason .= "; Spamhaus detected: yes";
             }
             else {
                 $errmsg=   $res->userinfo['smtpcode'] . ': ' .$res->toString();
@@ -855,9 +853,6 @@ class Pman_Core_NotifySend extends Pman
                     if (!empty($res->userinfo['smtptext'])) {
                         $allocation_reason .= "; Error: " . $res->userinfo['smtptext'];
                     }
-                    $allocation_reason .= "; Email: " . $w->to_email;
-                    $allocation_reason .= "; Spamhaus detected: yes";
-                    
                 }
             }
 
