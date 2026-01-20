@@ -1132,17 +1132,17 @@ class Pman_Core_NotifySend extends Pman
                 }
             }
         }
-        // If the ipv6 mapping has a reverse pointer,
-        // skip the host that has a suffix matching the domain of the ipv6 mapping
+        // If the ipv6 mapping has a reverse pointer and the domain of the ipv6 mapping does not match the suffix of the mx host,
+        // skip the mx host
         // e.g. 
-        // mx host: fortuneindia-com.mail.protection.outlook.com
-        // domain the of existing ipv6 mapping: outlook.com
+        // mx host: aspmx.l.google.com
+        // domain the of existing ipv6 mapping with a reverse pointer: outlook.com
         // -> skip this mx host
         else {
             if($this->server_ipv6->has_reverse_ptr) {
                 foreach($mx_ip_map as $ip => $mx) {
                     if(!str_ends_with($mx, $this->server_ipv6->domain_id_domain)) {
-                        $this->debug("DNS: Skipping host $mx because it's suffix matches the domain of the ipv6 mapping with a reverse pointer: " . $this->server_ipv6->domain_id_domain);
+                        $this->debug("DNS: Skipping host $mx because it's suffix does not match the domain of the ipv6 mapping with a reverse pointer: " . $this->server_ipv6->domain_id_domain);
                         unset($mx_ip_map[$ip]);
                     }
                 }
