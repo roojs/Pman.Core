@@ -21,9 +21,9 @@ class Pman_Core_NotifyRouter
      * Return an array of settings for the Mail::factory('smtp', $settings) call
      * @return array
      */
-    function toSettings()
+    function toMailer()
     {
-        return array(
+        return Mail::factory('smtp', array(
             'host'          => $this->host,
             'localhost'     => $this->localhost,
             'timeout'       => $this->timeout,
@@ -31,6 +31,6 @@ class Pman_Core_NotifyRouter
             'debug'         => $this->debug,
             'debug_handler' => $this->debug_handler,
             'dkim'          => $this->dkim
-        );
+        ));
     }
 }
