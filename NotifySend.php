@@ -1141,7 +1141,7 @@ class Pman_Core_NotifySend extends Pman
         else {
             if($this->server_ipv6->has_reverse_ptr) {
                 foreach($mx_ip_map as $ip => $mx) {
-                    if(str_ends_with($mx, $this->server_ipv6->domain_id_domain)) {
+                    if(!str_ends_with($mx, $this->server_ipv6->domain_id_domain)) {
                         $this->debug("DNS: Skipping host $mx because it's suffix matches the domain of the ipv6 mapping with a reverse pointer: " . $this->server_ipv6->domain_id_domain);
                         unset($mx_ip_map[$ip]);
                     }
