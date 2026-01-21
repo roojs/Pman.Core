@@ -24,7 +24,7 @@ class Pman_Core_NotifyRouter
     // Whether to use IPv6
     var $useIpv6 = false;
     
-    function __construct($notifySend, $smtp_host, $mx, $domain, $email, $notify)
+    function __construct($notifySend, $options = array())
     {
         $this->notifySend = $notifySend;
         $this->smtpHost = $smtp_host;
@@ -32,6 +32,13 @@ class Pman_Core_NotifyRouter
         $this->domain = $domain;
         $this->email = $email;
         $this->notify = $notify;
+        $this->notifySend = $notifySend;
+    
+        foreach ($options as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
         $this->server = $notifySend->server;
         $this->serverIpv6 = $notifySend->server_ipv6;
         $this->useIpv6 = !empty($this->serverIpv6) && !empty($this->serverIpv6->ipv6_addr_str) && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
