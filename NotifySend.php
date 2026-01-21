@@ -180,7 +180,7 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("message has been sent already.\n");
         }
         
-         $cev = DB_DataObject::Factory('Events');
+        $cev = DB_DataObject::Factory('Events');
         $cev->on_table =  $this->table;
         $cev->on_id =  $w->id;
         // force will override failed. (not not sent.)
