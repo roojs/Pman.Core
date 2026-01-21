@@ -56,11 +56,11 @@ class Pman_Core_NotifyRouter
     }
 
     /**
-     * Set the host for the Mail_smtp object
+     * Get the host for the Mail_smtp object
      * @param string $smtp_host The SMTP host (IP address or hostname)
-     * @return void
+     * @return string The host for the Mail_smtp object
      */
-    function setHost($smtp_host)
+    function getHost($smtp_host)
     {
         // Format IPv6 address with brackets for PEAR Mail compatibility
         $mailer_host = $smtp_host;
@@ -68,7 +68,7 @@ class Pman_Core_NotifyRouter
             $mailer_host = '[' . $smtp_host . ']';
         }
 
-        $this->host = $mailer_host;
+        return $mailer_host;
     }
 
     /**
