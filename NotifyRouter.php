@@ -29,8 +29,6 @@ class Pman_Core_NotifyRouter
         $this->smtpHost = $smtp_host;
         $this->mx = $mx;
         $this->domain = $domain;
-        var_dump($this->domain->domain);
-        die('test');
         $this->email = $email;
         $this->server = $notifySend->server;
         $this->serverIpv6 = $notifySend->server_ipv6;
