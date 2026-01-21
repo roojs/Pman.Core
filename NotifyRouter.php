@@ -13,7 +13,7 @@ class Pman_Core_NotifyRouter
     var $debug_handler;
     var $dkim = true;
     
-    // IPv6 related
+    // Core_notify_server_ipv6 instance
     var $server_ipv6 = null;
     // Whether to use IPv6
     var $use_ipv6 = false;
