@@ -186,6 +186,8 @@ class Pman_Core_NotifyRouter
      */
     function setMailerOptions()
     {
+        $mailer = $this->mailer;
+        
         $ff = HTML_FlexyFramework::get();
             
         // if the host is the mail host + it's authenticated add auth details
