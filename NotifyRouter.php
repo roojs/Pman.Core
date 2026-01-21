@@ -33,9 +33,6 @@ class Pman_Core_NotifyRouter
             )
         );
 
-        var_dump($base_socket_options);
-        die('test');
-
         // Check if we're using IPv6 and prepare HELO hostname
         $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
         $helo_hostname = $ff->Mail['helo'];
