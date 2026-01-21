@@ -75,6 +75,8 @@ class Pman_Core_NotifyRouter
 
         $this->host = $mailer_host;
         $this->localhost = $helo_hostname;
+
+        $this->setHost($host);
     }
 
     /**
@@ -84,6 +86,15 @@ class Pman_Core_NotifyRouter
     function debug($str)
     {
         $this->notifySend->debug($str);
+    }
+
+    function setHost()
+    {
+        // Format IPv6 address with brackets for PEAR Mail compatibility
+        $mailer_host = $smtp_host;
+        if ($is_ipv6) {
+            $mailer_host = '[' . $smtp_host . ']';
+        }
     }
     
     /**
