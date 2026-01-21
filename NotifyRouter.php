@@ -2,6 +2,8 @@
 
 class Pman_Core_NotifyRouter
 {
+    var $mailer;
+    
     // Pman_Core_NotifySend instance
     var $notifySend;
 
@@ -13,7 +15,6 @@ class Pman_Core_NotifyRouter
     var $emailDom = ''; 
     var $email = null;
 
-    var $mailer;
 
     // Core_notify_server instance
     var $server = null;
@@ -28,6 +29,7 @@ class Pman_Core_NotifyRouter
         $this->smtpHost = $smtp_host;
         $this->mx = $mx;
         $this->emailDom = $dom;
+        $this->email = $email;
         $this->server = $notifySend->server;
         $this->serverIpv6 = $notifySend->server_ipv6;
         $this->useIpv6 = !empty($this->serverIpv6) && !empty($this->serverIpv6->ipv6_addr_str) && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
