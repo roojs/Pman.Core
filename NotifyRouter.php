@@ -30,8 +30,6 @@ class Pman_Core_NotifyRouter
         $this->mx = $mx;
         $this->emailDom = $dom;
         $this->email = $email;
-        var_dump($this->email);
-        die('test');
         $this->server = $notifySend->server;
         $this->serverIpv6 = $notifySend->server_ipv6;
         $this->useIpv6 = !empty($this->serverIpv6) && !empty($this->serverIpv6->ipv6_addr_str) && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
