@@ -24,6 +24,8 @@ class Pman_Core_NotifyRouter
     function __construct($notifySend, $smtp_host, $mx, $dom)
     {
         $this->notifySend = $notifySend;
+        $this->smtpHost = $smtp_host;
+        $this->mx = $mx;
         $this->emailDom = $dom;
         $this->server = $notifySend->server;
         $this->serverIpv6 = $notifySend->server_ipv6;
