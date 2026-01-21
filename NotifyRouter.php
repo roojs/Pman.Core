@@ -92,7 +92,7 @@ class Pman_Core_NotifyRouter
     {
         // Format IPv6 address with brackets for PEAR Mail compatibility
         $mailer_host = $smtp_host;
-        if ($is_ipv6) {
+        if (!empty($this->server_ipv6)) {
             $mailer_host = '[' . $smtp_host . ']';
         }
     }
