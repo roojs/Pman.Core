@@ -12,9 +12,6 @@ class Pman_Core_NotifyRouter
     var $socket_options = array();
     var $debug_handler;
     var $dkim = true;
-
-    var $debug = 0;
-    var $server_ipv6 = null;
     
     function __construct($notifySend, $smtp_host, $mx)
     {
