@@ -290,9 +290,7 @@ class Pman_Core_NotifySend extends Pman
          
         
         if (isset($email['later'])) {
-             
             $this->server->updateNotifyToNextServer($w, $email['later'],true);
-             
             $this->errorHandler("Delivery postponed by email creator to {$email['later']}");
         }
         
