@@ -17,21 +17,17 @@ class Pman_Core_NotifyRouter
     var $notify = null;
 
 
-    // Core_notify_server instance
-    var $server = null;
-    // Core_notify_server_ipv6 instance
-    var $serverIpv6 = null;
     // Whether to use IPv6
     var $useIpv6 = false;
     
     function __construct($notifySend, $options = array())
     {
-        $this->notifySend = $notifySend;
         foreach ($options as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->$key = $value;
             }
         }
+        $this->notifySend = $notifySend;
         $this->server = $notifySend->server;
         $this->serverIpv6 = $notifySend->server_ipv6;
         $this->useIpv6 = !empty($this->serverIpv6) && !empty($this->serverIpv6->ipv6_addr_str) && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
