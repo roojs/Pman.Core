@@ -264,6 +264,7 @@ class Pman_Core_NotifySend extends Pman
             $w->flagDone($ev, '');
             $this->errorHandler( $ev->remarks);
         }
+        
         if (is_a($email, 'PEAR_Error')) {
             $email =array(
                 'error' => $email->toString()
