@@ -207,9 +207,6 @@ class Pman_Core_NotifyRouter
             $mailer->tls = false;
         }
 
-        var_dump($ff->Core_Notify['routes']);
-        die('test');
-
         if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
                 
             // we might want to regex 'office365 as a mx host 
