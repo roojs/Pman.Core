@@ -127,7 +127,7 @@ class Pman_Core_NotifyRouter
         $socket_options = $base_options;
         
         // Return early if not using IPv6
-        if (empty($smtp_host) || !filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+        if (empty($smtp_host) || !$this->use_ipv6) {
             return $socket_options;
         }
         
