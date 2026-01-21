@@ -72,10 +72,10 @@ class Pman_Core_NotifyRouter
     }
 
     /**
-     * Set the localhost for the Mail_smtp object
-     * @return void
+     * Get the localhost for the Mail_smtp object
+     * @return string The localhost for the Mail_smtp object
      */
-    function setLocalhost()
+    function getLocalhost()
     {
         $ff = HTML_FlexyFramework::get();
         $helo_hostname = $ff->Mail['helo'];
@@ -106,7 +106,7 @@ class Pman_Core_NotifyRouter
             $this->debug("IPv6: Modified HELO hostname: {$ff->Mail['helo']} -> $helo_hostname");
         }
 
-        $this->localhost = $helo_hostname;
+        return $helo_hostname;
     }
 
     /**
