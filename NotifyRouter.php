@@ -208,6 +208,7 @@ class Pman_Core_NotifyRouter
         }
 
         var_dump($ff->Core_Notify['routes']);
+        die('test');
 
         if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
                 
