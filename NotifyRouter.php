@@ -335,5 +335,7 @@ class Pman_Core_NotifyRouter
             }
             
         }
+
+        var_dump($this->emailDom);
     }
 }
