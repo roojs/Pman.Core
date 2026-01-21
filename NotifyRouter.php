@@ -13,7 +13,7 @@ class Pman_Core_NotifyRouter
     var $socket_options = array();
     
     // Domain of the recipient email address
-    var $dom = '';
+    var $emailDom = '';
     // Core_notify_server instance
     var $server = null;
     // Core_notify_server_ipv6 instance
