@@ -3,7 +3,7 @@
 class Pman_Core_NotifyRouter
 {
     var $notifySend;
-    
+
     var $host;
     var $localhost;
     var $timeout = 15;
@@ -22,7 +22,7 @@ class Pman_Core_NotifyRouter
 
         $ff = HTML_FlexyFramework::get();
 
-        $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
+        $this->->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
 
         // Prepare socket options with IPv6 binding if available
         $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
@@ -93,15 +93,6 @@ class Pman_Core_NotifyRouter
             'debug_handler' => $this->debug_handler,
             'dkim'          => $this->dkim
         ));
-    }
-
-    function debug($str)
-    {
-        if (empty($this->cli_args['debug'])) {
-            return;
-            
-        }
-        echo $str . "\n";
     }
 
     /**
