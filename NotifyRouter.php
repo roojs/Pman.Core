@@ -221,7 +221,7 @@ class Pman_Core_NotifyRouter
                 
                 $match = false;
 
-                if(in_array($this->emailDom, $settings['domains'])){
+                if(in_array($this->domain->domain, $settings['domains'])){
                     $match = true;
                 }
 
@@ -312,7 +312,7 @@ class Pman_Core_NotifyRouter
                 
                 if($core_notify->count()){
                     $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true, $this->serverIpv6);
-                    $this->errorHandler( " Too many emails sent by {$this->emailDom} - requeing");
+                    $this->errorHandler( " Too many emails sent by {$this->domain->domain} - requeing");
                 }
                 
                 
