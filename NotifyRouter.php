@@ -35,7 +35,7 @@ class Pman_Core_NotifyRouter
         $this->setSocketOptions($smtp_host);
         $this->initMailer();
 
-        var_dump($mailer);
+        var_dump($this->mailer);
         die('test2');
 
         $ff = HTML_FlexyFramework::get();
