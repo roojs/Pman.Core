@@ -40,8 +40,9 @@ class Pman_Core_NotifyRouter
 
         $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
 
-        $this->setHost($host);
+        $this->setHost($smtp_host);
         $this->setLocalhost();
+        $this->setSocketOptions($smtp_host);
     }
 
     /**
@@ -110,7 +111,7 @@ class Pman_Core_NotifyRouter
      * Set the socket options for the Mail_smtp object
      * @return void
      */
-    function setSocketOptions()
+    function setSocketOptions($smtp_host)
     {
         $ff = HTML_FlexyFramework::get();
         // Prepare socket options with IPv6 binding if available
