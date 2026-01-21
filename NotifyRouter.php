@@ -128,7 +128,8 @@ class Pman_Core_NotifyRouter
         
         // Return early if not using IPv6
         if (empty($smtp_host) || !$this->use_ipv6) {
-            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($this->server_ipv6->ipv6_addr_str ?: 'empty') . ")");
+            $ipv6_addr_str = !empty($this->server_ipv6) ? $this->server_ipv6->ipv6_addr_str : false;
+            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($ipv6_addr_str ?: 'empty') . ")");
             return $socket_options;
         }
         
