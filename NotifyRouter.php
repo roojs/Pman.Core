@@ -187,7 +187,6 @@ class Pman_Core_NotifyRouter
     function setMailerOptions()
     {
         $ff = HTML_FlexyFramework::get();
-
             
         // if the host is the mail host + it's authenticated add auth details
         // this normally will happen if you sent  Pman_Core_NotifySend['host']
@@ -205,6 +204,134 @@ class Pman_Core_NotifyRouter
         }
         if (isset($ff->Core_Notify['tls_exclude']) && in_array($mx, $ff->Core_Notify['tls_exclude'])) {
             $mailer->tls = false;
+        }
+
+        if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
+                
+            // we might want to regex 'office365 as a mx host 
+            foreach ($ff->Core_Notify['routes'] as $server => $settings){
+                
+                $match = false;
+
+                if(in_array($dom, $settings['domains'])){
+                    $match = true;
+                }
+
+                if (!$match && !empty($settings['mx'])) {
+                    foreach($settings['mx'] as $mmx) {
+                        if (preg_match($mmx, $mx)) {
+                            $match = true;
+                        }
+                    }
+                }
+
+                if (!$match) {
+                    continue;
+                }
+
+                $host = $server;
+
+                // check if there is a mail_imap_user for the 'From' email before using oauth
+                if(!empty($settings['auth']) && $settings['auth'] == 'XOAUTH2') {
+                    // extract sender's email from 'From'
+                    preg_match('/<([^>]+)>|^([^<>]+)$/', $email['headers']['From'], $matches);
+                    $from = end($matches);
+
+                    $fromUser = DB_DataObject::factory('mail_imap_user');
+                    $fromUser->setFrom(array(
+                        'is_active' => 1
+                    ));
+                    if(!$fromUser->get('email', $from)) {
+                        continue;
+                    }
+
+                    if($fromUser->is_reply_to_only) {
+                        $sendAsUser = DB_DataObject::factory('mail_imap_user');
+                        // reply only and not send_as_id
+                        if(!$sendAsUser->get($fromUser->send_as_id)) {
+                            continue;
+                        }
+
+
+                        $fromUser = $sendAsUser;
+                        require_once 'Mail/RFC822.php';
+                        $rfc822 = new Mail_RFC822(array('name' => $fromUser->name, 'address' => $fromUser->email));
+                        $email['headers']['From'] = $rfc822->toMime();
+                    }
+        
+                    $s = $fromUser->server();
+        
+                    if($s === false) {
+                        continue;
+                    }
+        
+                    // server is set up correctly?
+                    $sv = $s->is_valid();
+                    if ($sv !== true) {
+                        continue;
+                    }
+        
+                    // server is oauth?
+                    if(!$s->is_oauth) {
+                        continue;
+                    }
+        
+                    // has the token expired or does not exist
+                    if (empty($fromUser->token) || empty($fromUser->id_token) || empty($fromUser->code)) {
+                        continue;
+                    }
+
+                    $host = $s->smtp_host;
+                    $settings['port'] = $s->smtp_port;
+                    $settings['username'] = $fromUser->email;
+                    $settings['password'] = $s->requestToken($fromUser);;
+                }
+                 
+                // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
+                // if it's newer that '1' minute...
+                // then shunt it..
+                
+                $settings['rate'] = isset( $settings['rate']) ?  $settings['rate']  : 360;
+                
+                $seconds = floor((60 * 60) / $settings['rate']);
+                
+                $core_notify = DB_DataObject::factory($this->table);
+                $core_notify->domain_id = $core_domain->id;
+                $core_notify->server_id = $this->server->id;
+                $core_notify->whereAdd("
+                    sent >= NOW() - INTERVAL $seconds SECOND
+                ");
+                
+                if($core_notify->count()){
+                    $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true, $this->server_ipv6);
+                    $this->errorHandler( " Too many emails sent by {$dom} - requeing");
+                }
+                
+                
+                $mailer->host = $host;
+                $mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
+                $mailer->username = $settings['username'];
+                $mailer->password = $settings['password'];
+                if (isset($settings['port'])) {
+                    $mailer->port = $settings['port'];
+                }
+                // Prepare socket options with IPv6 binding if available
+                $base_route_socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array(
+                    'ssl' => array(
+                        'verify_peer_name' => false,
+                        'verify_peer' => false, 
+                        'allow_self_signed' => true,
+                        'security_level' => 1
+                    )
+                );
+                
+                $mailer->socket_options = $this->prepareSocketOptionsWithIPv6($base_route_socket_options);
+                $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
+                $this->debug("Got Core_Notify route match - " . print_R($mailer,true));
+
+                break;
+            }
+            
         }
     }
 }
