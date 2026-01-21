@@ -27,10 +27,6 @@ class Pman_Core_NotifyRouter
         $ff = HTML_FlexyFramework::get();
 
         $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
-
-        $this->setHost($smtp_host);
-        $this->setLocalhost();
-        $this->setSocketOptions($smtp_host);
         $this->initMailer($smtp_host, $mx);
     }
 
