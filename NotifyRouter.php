@@ -18,7 +18,6 @@ class Pman_Core_NotifyRouter
     function __construct($notifySend, $smtp_host, $mx)
     {
         $this->notifySend = $notifySend;
-        $this->debug_handler = array($notifySend, 'debugHandler');
         $this->server_ipv6 = $notifySend->server_ipv6;
 
         $ff = HTML_FlexyFramework::get();
@@ -76,8 +75,6 @@ class Pman_Core_NotifyRouter
 
         $this->host = $mailer_host;
         $this->localhost = $helo_hostname;
-
-        die('test');
     }
 
     /**
@@ -101,7 +98,7 @@ class Pman_Core_NotifyRouter
             'timeout'       => $this->timeout,
             'socket_options'=> $this->socket_options,
             'debug'         => 1,
-            'debug_handler' => $this->debug_handler,
+            'debug_handler' => array($this->notifySend, 'debugHandler'),
             'dkim'          => $this->dkim
         ));
     }
