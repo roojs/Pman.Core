@@ -327,13 +327,15 @@ class Pman_Core_NotifyRouter
             'dkim'          => $this->dkim
         ));
         $this->mailer = $mailer;
+
+        $this->setMailerOptions();
     }
 
     /**
      * Set the options for $this->mailer
      * @return void
      */
-    function setMailerOptions ()
+    function setMailerOptions()
     {
 
     }
