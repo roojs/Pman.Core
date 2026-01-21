@@ -215,7 +215,7 @@ class Pman_Core_NotifyRouter
     function setMailerOptionsBasedOnRoute()
     {
         $mailer = $this->mailer;
-        
+
         $ff = HTML_FlexyFramework::get();
 
         if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
@@ -225,7 +225,7 @@ class Pman_Core_NotifyRouter
                 
                 $match = false;
 
-                if(in_array($this->domain->domain, $settings['domains'])){
+                if(!empty($settings['domains']) && in_array($this->domain->domain, $settings['domains'])){
                     $match = true;
                 }
 
