@@ -5,7 +5,7 @@ class Pman_Core_NotifyRouter
     // Pman_Core_NotifySend instance
     var $notifySend;
 
-    // SMTP host
+    // SMTP host (usually the IP address of the server)
     var $smtpHost = '';
     // MX host
     var $mx = '';
