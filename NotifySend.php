@@ -536,6 +536,9 @@ class Pman_Core_NotifySend extends Pman
             }
             
             $res = $mailer->send($p->email, $emailHeaders, $email['body']);
+
+            var_dump($this->debug_st);
+            die('test');
             
             if (is_object($res)) {
                 $res->backtrace = array(); 
@@ -891,6 +894,7 @@ class Pman_Core_NotifySend extends Pman
     
     function debugHandler ($smtp, $message)
     {
+        var_dump("DEBUG HANDLER");
         $this->debug_str .= strlen($this->debug_str) ? "\n" : '';
         $this->debug_str .= $message;
         if ($this->debug) { 
