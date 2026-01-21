@@ -232,7 +232,6 @@ class Pman_Core_NotifySend extends Pman
         
         // let's work out the last notification sent to this user..
         $l = DB_DataObject::factory($this->table);
-        
         $lar = array(
                 'ontable' => $w->ontable,
                 'onid' => $w->onid,
@@ -244,8 +243,6 @@ class Pman_Core_NotifySend extends Pman
                 $lar[$personid_col] = $w->{$personid_col};
             }
         }
-        
-        
         $l->setFrom( $lar );       
         $l->whereAdd('id != '. $w->id);
         $l->orderBy('sent DESC');
