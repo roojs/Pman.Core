@@ -2,8 +2,10 @@
 
 class Pman_Core_NotifyRouter
 {
+    // Pman_Core_NotifySend instance
     var $notifySend;
 
+    // Setting for the Mail_smtp object
     var $host;
     var $localhost;
     var $timeout = 15;
@@ -67,9 +69,6 @@ class Pman_Core_NotifyRouter
         }
 
         $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
-
-        var_dump($socket_options);
-        die('test');
         
         // Format IPv6 address with brackets for PEAR Mail compatibility
         $mailer_host = $smtp_host;
