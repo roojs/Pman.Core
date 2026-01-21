@@ -33,6 +33,7 @@ class Pman_Core_NotifyRouter
         $this->setHost($smtp_host);
         $this->setLocalhost();
         $this->setSocketOptions($smtp_host);
+        $this->initMailer();
 
         $ff = HTML_FlexyFramework::get();
 
