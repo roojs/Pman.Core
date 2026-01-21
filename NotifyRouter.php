@@ -21,7 +21,7 @@ class Pman_Core_NotifyRouter
     // Whether to use IPv6
     var $use_ipv6 = false;
     
-    function __construct($notifySend, $smtp_host, $mx)
+    function __construct($notifySend, $smtp_host, $mx, $dom)
     {
         $this->notifySend = $notifySend;
         $this->server = $notifySend->server;
