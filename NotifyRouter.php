@@ -22,7 +22,7 @@ class Pman_Core_NotifyRouter
 
         $ff = HTML_FlexyFramework::get();
 
-        $this->->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
+        $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
 
         // Prepare socket options with IPv6 binding if available
         $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
