@@ -150,9 +150,9 @@ class Pman_Core_NotifyRouter
         
         // Add IPv6 binding if serverIpv6 is configured
         $socket_options['socket'] = array(
-            'bindto' => '[' . $ipv6_addr_str . ']:0'
+            'bindto' => '[' . $this->serverIpv6->ipv6_addr_str . ']:0'
         );
-        $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $ipv6_addr_str);
+        $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $this->serverIpv6->ipv6_addr_str);
         
         return $socket_options;
     }
