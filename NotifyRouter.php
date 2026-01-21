@@ -35,8 +35,6 @@ class Pman_Core_NotifyRouter
             )
         );
 
-        // Check if we're using IPv6 and prepare HELO hostname
-        $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
         $helo_hostname = $ff->Mail['helo'];
 
         if ($is_ipv6 && !empty($this->server_ipv6)) {
@@ -66,14 +64,8 @@ class Pman_Core_NotifyRouter
         }
 
         $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
-        
-        // Format IPv6 address with brackets for PEAR Mail compatibility
-        $mailer_host = $smtp_host;
-        if ($is_ipv6) {
-            $mailer_host = '[' . $smtp_host . ']';
-        }
 
-        $this->host = $mailer_host;
+
         $this->localhost = $helo_hostname;
 
         $this->setHost($host);
@@ -105,7 +97,7 @@ class Pman_Core_NotifyRouter
 
     function setLocalhost($localhost)
     {
-        
+
     }
     
     /**
