@@ -36,8 +36,6 @@ class Pman_Core_NotifyRouter
         $this->initMailer();
 
         $mailer = $this->mailer;
-        var_dump($mailer);
-        die('test2');
 
         $ff = HTML_FlexyFramework::get();
 
