@@ -1030,36 +1030,6 @@ class Pman_Core_NotifySend extends Pman
     }
     
     /**
-     * Prepare socket options with IPv6 binding if available
-     * 
-     * @param array $base_options Base socket options
-     * @param string $smtp_host The SMTP host (IP address or hostname)
-     * @return array Enhanced socket options with IPv6 binding
-     */
-    function prepareSocketOptionsWithIPv6($base_options = array(), $smtp_host = null)
-    {
-        $socket_options = $base_options;
-        
-        // Return early if not using IPv6
-        if (empty($smtp_host) || !filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            return $socket_options;
-        }
-        
-        // Add IPv6 binding if server_ipv6 is configured
-        $ipv6_addr_str = !empty($this->server_ipv6) ? $this->server_ipv6->ipv6_addr_str : false;
-        if ($ipv6_addr_str) {
-            $socket_options['socket'] = array(
-                'bindto' => '[' . $ipv6_addr_str . ']:0'
-            );
-            $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $ipv6_addr_str);
-        } else {
-            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($ipv6_addr_str ?: 'empty') . ")");
-        }
-        
-        return $socket_options;
-    }
-    
-    /**
      * Add domain identifier to email address for spam rejection tracking
      * 
      * Takes an email address and domain, and modifies the local part by adding
