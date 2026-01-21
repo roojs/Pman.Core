@@ -14,6 +14,8 @@ class Pman_Core_NotifyRouter
     var $dkim = true;
     
     var $server_ipv6 = null;
+    // Whether to use IPv6
+    var $use_ipv6 = false;
     
     function __construct($notifySend, $smtp_host, $mx)
     {
@@ -26,6 +28,7 @@ class Pman_Core_NotifyRouter
 
         // Check if we're using IPv6 and prepare HELO hostname
         $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        $this->use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
 
         $this->setHost($smtp_host);
         $this->setLocalhost();
