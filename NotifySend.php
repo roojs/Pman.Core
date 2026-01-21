@@ -195,7 +195,6 @@ class Pman_Core_NotifySend extends Pman
         $o = $w->object();
         
         if ($o === false)  {
-             
             $ev = $this->addEvent('NOTIFY', $w,   "Notification event cleared (underlying object does not exist)" );
             $w->flagDone($ev, '');
             $this->errorHandler(  $ev->remarks);
