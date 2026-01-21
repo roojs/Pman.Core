@@ -6,10 +6,10 @@ class Pman_Core_NotifyRouter
     var $notifySend;
 
     var $mailer;
-    
+
     // Setting for the Mail_smtp object
-    var $host;
-    var $localhost;
+    var $host = '';
+    var $localhost = '';
     var $timeout = 15;
     var $socket_options = array();
     var $debug_handler;
