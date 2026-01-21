@@ -303,7 +303,7 @@ class Pman_Core_NotifyRouter
                 
                 $seconds = floor((60 * 60) / $settings['rate']);
                 
-                $core_notify = DB_DataObject::factory($this->table);
+                $core_notify = DB_DataObject::factory($this->notifySend->table);
                 $core_notify->domain_id = $core_domain->id;
                 $core_notify->server_id = $this->server->id;
                 $core_notify->whereAdd("
