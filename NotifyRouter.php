@@ -16,8 +16,6 @@ class Pman_Core_NotifyRouter
     var $email = null;
     // Core_notify instance
     var $notify = null;
-
-
     // Whether to use IPv6
     var $useIpv6 = false;
     
