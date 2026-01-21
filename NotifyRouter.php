@@ -44,6 +44,7 @@ class Pman_Core_NotifyRouter
     /**
      * Set the host for the Mail_smtp object
      * @param string $smtp_host The SMTP host (IP address or hostname)
+     * @return void
      */
     function setHost($smtp_host)
     {
@@ -58,6 +59,7 @@ class Pman_Core_NotifyRouter
 
     /**
      * Set the localhost for the Mail_smtp object
+     * @return void
      */
     function setLocalhost()
     {
