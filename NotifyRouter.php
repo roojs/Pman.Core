@@ -195,7 +195,7 @@ class Pman_Core_NotifyRouter
         // if the host is the mail host + it's authenticated add auth details
         // this normally will happen if you sent  Pman_Core_NotifySend['host']
 
-        if (isset($ff->Mail['host']) && $ff->Mail['host'] == $this->mx && !empty($ff->Mail['auth'] )) {
+        if (isset($ff->Mail['host']) && $ff->Mail['host'] == $this->mx && !empty($ff->Mail['auth'] ) && !empty($ff->Mail['username']) && !empty($ff->Mail['password'])) {
             
             $mailer->auth = true;
             $mailer->username = $ff->Mail['username'];
