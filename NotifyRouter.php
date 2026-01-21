@@ -169,11 +169,11 @@ class Pman_Core_NotifyRouter
         $mailer = Mail::factory('smtp', array(
             'host'          => $this->host,
             'localhost'     => $this->localhost,
-            'timeout'       => $this->timeout,
+            'timeout'       => 15,
             'socket_options'=> $this->socket_options,
             'debug'         => 1,
             'debug_handler' => array($this->notifySend, 'debugHandler'),
-            'dkim'          => $this->dkim
+            'dkim'          => true
         ));
         $this->mailer = $mailer;
 
