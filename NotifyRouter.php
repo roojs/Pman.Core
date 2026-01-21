@@ -60,7 +60,6 @@ class Pman_Core_NotifyRouter
 
     /**
      * Get the host for the Mail_smtp object
-     * @param string $smtp_host The SMTP host (IP address or hostname)
      * @return string The host for the Mail_smtp object
      */
     function getHost($smtp_host)
