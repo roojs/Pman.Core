@@ -112,7 +112,7 @@ class Pman_Core_NotifyRouter
             )
         );
 
-        $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
+        $this->socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
     }
     
     /**
