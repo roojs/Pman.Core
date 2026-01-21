@@ -12,7 +12,6 @@ class Pman_Core_NotifyRouter
     var $localhost = '';
     var $timeout = 15;
     var $socket_options = array();
-    var $debug_handler = array();
     var $dkim = true;
     
     // Core_notify_server instance
