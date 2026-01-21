@@ -193,7 +193,6 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $o = $w->object();
-        
         if ($o === false)  {
             $ev = $this->addEvent('NOTIFY', $w,   "Notification event cleared (underlying object does not exist)" );
             $w->flagDone($ev, '');
@@ -203,7 +202,6 @@ class Pman_Core_NotifySend extends Pman
         
         
         $p = $w->person();
-        
         if (isset($p->active) && empty($p->active)) {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not user not active any more)" );;
              $w->flagDone($ev, '');
