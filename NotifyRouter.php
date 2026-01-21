@@ -58,9 +58,8 @@ class Pman_Core_NotifyRouter
 
     /**
      * Set the localhost for the Mail_smtp object
-     * @param string $localhost The localhost (hostname or IP address)
      */
-    function setLocalhost($localhost)
+    function setLocalhost()
     {
         $ff = HTML_FlexyFramework::get();
         $helo_hostname = $ff->Mail['helo'];
