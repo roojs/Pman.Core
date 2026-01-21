@@ -6,11 +6,6 @@ class Pman_Core_NotifyRouter
     var $notifySend;
 
     var $mailer;
-
-    // Setting for the Mail_smtp object
-    var $host = '';
-    var $localhost = '';
-    var $socket_options = array();
     
     // Domain of the recipient email address
     var $emailDom = '';
