@@ -21,8 +21,6 @@ class Pman_Core_NotifyRouter
         $this->debug = $notifySend->debug;
         $this->server_ipv6 = $notifySend->server_ipv6;
 
-        $ff = HTML_FlexyFramework::get();
-
         $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
 
         die('test');
