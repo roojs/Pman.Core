@@ -2,6 +2,8 @@
 
 class Pman_Core_NotifyRouter
 {
+    var $notifySend;
+    
     var $host;
     var $localhost;
     var $timeout = 15;
