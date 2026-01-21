@@ -203,6 +203,8 @@ class Pman_Core_NotifyRouter
         if (isset($ff->Core_Notify['tls_exclude']) && in_array($this->mx, $ff->Core_Notify['tls_exclude'])) {
             $mailer->tls = false;
         }
+
+        $this->setMailerOptionsBasedOnRoute();
     }
 
     function setMailerOptionsBasedOnRoute()
