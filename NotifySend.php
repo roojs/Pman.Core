@@ -578,7 +578,7 @@ class Pman_Core_NotifySend extends Pman
                 continue; // try next IP address
             }
             // give up after 2 days..
-            if (in_array($code, array( 421, 450, 451, 452))   && $next_try_min < (2*24*60)) {
+            if (in_array($code, array( 421, 450, 451, 452)) && strtotime($w->act_start) > strtotime('NOW - 2 DAYS')) {
                 // try again later..
                 // check last event for this item..
                 //$errmsg=  $fail ? ($res->userinfo['smtpcode'] . ': ' .$res->toString()) :  " - UNKNOWN ERROR";
