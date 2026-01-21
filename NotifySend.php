@@ -264,20 +264,18 @@ class Pman_Core_NotifySend extends Pman
             $w->flagDone($ev, '');
             $this->errorHandler( $ev->remarks);
         }
-        
+
         if (is_a($email, 'PEAR_Error')) {
             $email =array(
                 'error' => $email->toString()
             );
         }
-      
         if ((empty($p) || empty($p->id)) && !empty($email['recipients'])) {
             // make a fake person..
             $p = (object) array(
                 'email' => $email['recipients']
             );
         }
-         
         if ($email === false || isset($email['error']) || empty($p)) {
             // object returned 'false' - it does not know how to send it..
             $ev = $this->addEvent('NOTIFYFAIL', $w, isset($email['error'])  ? $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable); 
