@@ -31,6 +31,27 @@ class Pman_Core_NotifyRouter
         $this->setHost($smtp_host);
         $this->setLocalhost();
         $this->setSocketOptions($smtp_host);
+
+        $ff = HTML_FlexyFramework::get();
+
+            
+        // if the host is the mail host + it's authenticated add auth details
+        // this normally will happen if you sent  Pman_Core_NotifySend['host']
+            
+        
+        if (isset($ff->Mail['host']) && $ff->Mail['host'] == $mx && !empty($ff->Mail['auth'] )) {
+            
+            $mailer->auth = true;
+            $mailer->username = $ff->Mail['username'];
+            $mailer->password = $ff->Mail['password'];        
+        }
+        if (isset($ff->Core_Notify['tls'])) {
+            // you can set Core_Notify:tls to true to force it to use tls on all connections (where available)
+            $mailer->tls = $ff->Core_Notify['tls'];
+        }
+        if (isset($ff->Core_Notify['tls_exclude']) && in_array($mx, $ff->Core_Notify['tls_exclude'])) {
+            $mailer->tls = false;
+        }
     }
 
     /**
