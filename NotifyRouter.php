@@ -28,7 +28,7 @@ class Pman_Core_NotifyRouter
             }
         }
         $this->notifySend = $notifySend;
-        $this->useIpv6 = !empty($this->serverIpv6) && !empty($this->serverIpv6->ipv6_addr_str) && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        $this->useIpv6 = !empty($this->notifySend->server_ipv6) && !empty($this->notifySend->server_ipv6->ipv6_addr_str) && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
 
         $ff = HTML_FlexyFramework::get();
 
@@ -84,7 +84,7 @@ class Pman_Core_NotifyRouter
         if ($this->useIpv6) {
             // Extract last hex segment from IPv6 address (e.g., 2400:8901:e001:52a::22a -> 22a)
             // Handle compressed zeros (::) by splitting and taking the rightmost part
-            $ipv6_parts = explode('::', $this->serverIpv6->ipv6_addr_str);
+            $ipv6_parts = explode('::', $this->notifySend->server_ipv6->ipv6_addr_str);
             $right_part = end($ipv6_parts);
             if (empty($right_part)) {
                 // Address ends with ::, get last segment from left part
@@ -142,16 +142,16 @@ class Pman_Core_NotifyRouter
         
         // Return early if not using IPv6
         if (empty($this->smtpHost) || !$this->useIpv6) {
-            $ipv6_addr_str = !empty($this->serverIpv6) ? $this->serverIpv6->ipv6_addr_str : false;
-            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->serverIpv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($ipv6_addr_str ?: 'empty') . ")");
+            $ipv6_addr_str = !empty($this->notifySend->server_ipv6) ? $this->notifySend->server_ipv6->ipv6_addr_str : false;
+            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->notifySend->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($ipv6_addr_str ?: 'empty') . ")");
             return $socket_options;
         }
         
         // Add IPv6 binding if serverIpv6 is configured
         $socket_options['socket'] = array(
-            'bindto' => '[' . $this->serverIpv6->ipv6_addr_str . ']:0'
+            'bindto' => '[' . $this->notifySend->server_ipv6->ipv6_addr_str . ']:0'
         );
-        $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $this->serverIpv6->ipv6_addr_str);
+        $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $this->notifySend->server_ipv6->ipv6_addr_str);
         
         return $socket_options;
     }
@@ -303,13 +303,13 @@ class Pman_Core_NotifyRouter
                 
                 $core_notify = DB_DataObject::factory($this->notifySend->table);
                 $core_notify->domain_id = $this->domain->id;
-                $core_notify->server_id = $this->server->id;
+                $core_notify->server_id = $this->notifySend->server->id;
                 $core_notify->whereAdd("
                     sent >= NOW() - INTERVAL $seconds SECOND
                 ");
                 
                 if($core_notify->count()){
-                    $this->server->updateNotifyToNextServer( $this->notify , date("Y-m-d H:i:s", time() + $seconds), true, $this->serverIpv6);
+                    $this->notifySend->server->updateNotifyToNextServer( $this->notify , date("Y-m-d H:i:s", time() + $seconds), true, $this->notifySend->server_ipv6);
                     $this->errorHandler( " Too many emails sent by {$this->domain->domain} - requeing");
                 }
                 
