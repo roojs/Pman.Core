@@ -24,10 +24,12 @@ class Pman_Core_NotifyRouter
     {
         $this->notifySend = $notifySend;
         foreach ($options as $key => $value) {
+            var_dump($key);
             if (property_exists($this, $key)) {
                 $this->$key = $value;
             }
         }
+        die('test');
         $this->useIpv6 = !empty($this->notifySend->server_ipv6) && !empty($this->notifySend->server_ipv6->ipv6_addr_str) && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
 
         $ff = HTML_FlexyFramework::get();
