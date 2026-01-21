@@ -10,9 +10,7 @@ class Pman_Core_NotifyRouter
     // Setting for the Mail_smtp object
     var $host = '';
     var $localhost = '';
-    var $timeout = 15;
     var $socket_options = array();
-    var $dkim = true;
     
     // Domain
     var $dom = '';
