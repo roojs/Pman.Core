@@ -638,7 +638,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         // after trying all mxs - could not connect...
-        if  (!$force && !$fail && ($next_try_min > (2*24*60) || strtotime($w->act_start) < strtotime('NOW - 3 DAYS'))) {
+        if  (!$force && !$fail && strtotime($w->act_start) < strtotime('NOW - 2 DAYS')) {
             
             $errmsg=  " - UNKNOWN ERROR";
             if (isset($res->userinfo['smtptext'])) {
