@@ -12,17 +12,17 @@ class Pman_Core_NotifyRouter
     // Core_notify_server instance
     var $server = null;
     // Core_notify_server_ipv6 instance
-    var $server_ipv6 = null;
+    var $serverIpv6 = null;
     // Whether to use IPv6
-    var $use_ipv6 = false;
+    var $useIpv6 = false;
     
     function __construct($notifySend, $smtp_host, $mx, $dom)
     {
         $this->notifySend = $notifySend;
         $this->emailDom = $dom;
         $this->server = $notifySend->server;
-        $this->server_ipv6 = $notifySend->server_ipv6;
-        $this->use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str) && filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        $this->serverIpv6 = $notifySend->server_ipv6;
+        $this->useIpv6 = !empty($this->serverIpv6) && !empty($this->serverIpv6->ipv6_addr_str) && filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
 
         $ff = HTML_FlexyFramework::get();
 
@@ -64,7 +64,7 @@ class Pman_Core_NotifyRouter
     {
         // Format IPv6 address with brackets for PEAR Mail compatibility
         $mailer_host = $smtp_host;
-        if ($this->use_ipv6) {
+        if ($this->useIpv6) {
             $mailer_host = '[' . $smtp_host . ']';
         }
 
@@ -80,10 +80,10 @@ class Pman_Core_NotifyRouter
         $ff = HTML_FlexyFramework::get();
         $helo_hostname = $ff->Mail['helo'];
 
-        if ($this->use_ipv6) {
+        if ($this->useIpv6) {
             // Extract last hex segment from IPv6 address (e.g., 2400:8901:e001:52a::22a -> 22a)
             // Handle compressed zeros (::) by splitting and taking the rightmost part
-            $ipv6_parts = explode('::', $this->server_ipv6->ipv6_addr_str);
+            $ipv6_parts = explode('::', $this->serverIpv6->ipv6_addr_str);
             $right_part = end($ipv6_parts);
             if (empty($right_part)) {
                 // Address ends with ::, get last segment from left part
@@ -141,13 +141,13 @@ class Pman_Core_NotifyRouter
         $socket_options = $base_options;
         
         // Return early if not using IPv6
-        if (empty($smtp_host) || !$this->use_ipv6) {
-            $ipv6_addr_str = !empty($this->server_ipv6) ? $this->server_ipv6->ipv6_addr_str : false;
-            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($ipv6_addr_str ?: 'empty') . ")");
+        if (empty($smtp_host) || !$this->useIpv6) {
+            $ipv6_addr_str = !empty($this->serverIpv6) ? $this->serverIpv6->ipv6_addr_str : false;
+            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->serverIpv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($ipv6_addr_str ?: 'empty') . ")");
             return $socket_options;
         }
         
-        // Add IPv6 binding if server_ipv6 is configured
+        // Add IPv6 binding if serverIpv6 is configured
         $socket_options['socket'] = array(
             'bindto' => '[' . $ipv6_addr_str . ']:0'
         );
@@ -303,7 +303,7 @@ class Pman_Core_NotifyRouter
                 ");
                 
                 if($core_notify->count()){
-                    $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true, $this->server_ipv6);
+                    $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true, $this->serverIpv6);
                     $this->errorHandler( " Too many emails sent by {$this->emailDom} - requeing");
                 }
                 
