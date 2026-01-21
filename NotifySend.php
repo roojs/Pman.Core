@@ -894,7 +894,6 @@ class Pman_Core_NotifySend extends Pman
     
     function debugHandler ($smtp, $message)
     {
-        var_dump("DEBUG HANDLER");
         $this->debug_str .= strlen($this->debug_str) ? "\n" : '';
         $this->debug_str .= $message;
         if ($this->debug) { 
