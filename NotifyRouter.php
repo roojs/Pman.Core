@@ -97,6 +97,10 @@ class Pman_Core_NotifyRouter
         $this->host = $mailer_host;
     }
 
+    /**
+     * Set the localhost for the Mail_smtp object
+     * @param string $localhost The localhost (hostname or IP address)
+     */
     function setLocalhost($localhost)
     {
         $ff = HTML_FlexyFramework::get();
