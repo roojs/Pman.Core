@@ -516,8 +516,6 @@ class Pman_Core_NotifySend extends Pman
             $notifyRouter = new Pman_Core_NotifyRouter($this, $smtp_host, $mx, $dom);
             $mailer = $notifyRouter->mailer;
 
-            die('test');
-
             $emailHeaders = $email['headers'];
 
             if($use_ipv6 && $this->server_ipv6->is_spam_rejecting && $is_ipv6) {
