@@ -194,13 +194,13 @@ class Pman_Core_NotifyRouter
             
             $mailer->auth = true;
             $mailer->username = $ff->Mail['username'];
-            $mailer->password = $ff->Mail['password'];        
+            $mailer->password = $ff->Mail['password'];
         }
         if (isset($ff->Core_Notify['tls'])) {
             // you can set Core_Notify:tls to true to force it to use tls on all connections (where available)
             $mailer->tls = $ff->Core_Notify['tls'];
         }
-        if (isset($ff->Core_Notify['tls_exclude']) && in_array($mx, $ff->Core_Notify['tls_exclude'])) {
+        if (isset($ff->Core_Notify['tls_exclude']) && in_array($this->mx, $ff->Core_Notify['tls_exclude'])) {
             $mailer->tls = false;
         }
     }
@@ -222,7 +222,7 @@ class Pman_Core_NotifyRouter
 
                 if (!$match && !empty($settings['mx'])) {
                     foreach($settings['mx'] as $mmx) {
-                        if (preg_match($mmx, $mx)) {
+                        if (preg_match($mmx, $this->mx)) {
                             $match = true;
                         }
                     }
