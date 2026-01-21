@@ -295,12 +295,12 @@ class Pman_Core_NotifyRouter
     }
     
     /**
-     * Return a Mail_smtp object
-     * @return Mail_smtp
+     * Initialize the Mail_smtp object
+     * @return void
      */
-    function toMailer()
+    function initMailer()
     {
-        return Mail::factory('smtp', array(
+        $mailer = Mail::factory('smtp', array(
             'host'          => $this->host,
             'localhost'     => $this->localhost,
             'timeout'       => $this->timeout,
@@ -309,5 +309,8 @@ class Pman_Core_NotifyRouter
             'debug_handler' => array($this->notifySend, 'debugHandler'),
             'dkim'          => $this->dkim
         ));
+        $this->mailer = $mailer;
     }
+
+
 }
