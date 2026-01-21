@@ -252,20 +252,6 @@ class Pman_Core_NotifySend extends Pman
         $l->limit(1);
         $ar = $l->fetchAll('sent');
         $last = empty($ar) ? date('Y-m-d H:i:s', 0) : $ar[0];
-        
-        // find last event..
-        $ev = DB_DataObject::factory('Events');
-        $ev->on_id = $w->id;                           // int(11)
-        $ev->on_table = $this->table;
-        $ev->limit(1);
-        $ev->orderBy('event_when DESC');
-        $ar = $ev->fetchAll('event_when');
-        $last_event = empty($ar) ? 0 : $ar[0];
-        $next_try_min = 5;
-        if ($last_event) {
-            $next_try_min = floor((time() - strtotime($last_event)) / 60) * 2;
-        }
-        $next_try = $next_try_min . ' MINUTES';
          
         // this may modify $p->email. (it will not update it though)
         // may modify $w->email_id
