@@ -23,8 +23,6 @@ class Pman_Core_NotifyRouter
 
         $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
 
-        die('test');
-
         // Prepare socket options with IPv6 binding if available
         $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
             'ssl' => array(
@@ -34,6 +32,9 @@ class Pman_Core_NotifyRouter
                 'security_level' => 1
             )
         );
+
+        var_dump($base_socket_options);
+        die('test');
 
         // Check if we're using IPv6 and prepare HELO hostname
         $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
