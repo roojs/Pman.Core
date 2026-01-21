@@ -5,10 +5,12 @@ class Pman_Core_NotifyRouter
     // Pman_Core_NotifySend instance
     var $notifySend;
 
+    var $smtpHost = '';
+    var $mx = '';
+    var 
+
     var $mailer;
     
-    // Domain of the recipient email address
-    var $emailDom = '';
     // Core_notify_server instance
     var $server = null;
     // Core_notify_server_ipv6 instance
