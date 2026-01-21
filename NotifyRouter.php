@@ -102,6 +102,11 @@ class Pman_Core_NotifyRouter
 
         $this->host = $mailer_host;
     }
+
+    function setLocalhost($localhost)
+    {
+        
+    }
     
     /**
      * Return a Mail_smtp object
