@@ -213,7 +213,6 @@ class Pman_Core_NotifySend extends Pman
         }
 
         // has it failed mutliple times..
-        
         if (!empty($w->field) && isset($p->{$w->field .'_fails'}) && $p->{$w->field .'_fails'} > 9) {
             $notifyTable =  DB_DataObject::factory($this->table);
             $notifyTable->to_email = $w->to_email;
