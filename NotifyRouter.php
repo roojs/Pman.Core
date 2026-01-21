@@ -6,7 +6,7 @@ class Pman_Core_NotifyRouter
     var $notifySend;
 
     var $mailer;
-
+    
     // Setting for the Mail_smtp object
     var $host;
     var $localhost;
@@ -329,6 +329,8 @@ class Pman_Core_NotifyRouter
         ));
         $this->mailer = $mailer;
     }
+
+    function 
 
 
 }
