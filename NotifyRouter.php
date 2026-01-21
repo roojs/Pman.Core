@@ -66,7 +66,7 @@ class Pman_Core_NotifyRouter
         $ff = HTML_FlexyFramework::get();
         $helo_hostname = $ff->Mail['helo'];
 
-        if (!empty($this->server_ipv6)) {
+        if ($this->use_ipv6) {
             // Extract last hex segment from IPv6 address (e.g., 2400:8901:e001:52a::22a -> 22a)
             // Handle compressed zeros (::) by splitting and taking the rightmost part
             $ipv6_parts = explode('::', $this->server_ipv6->ipv6_addr_str);
