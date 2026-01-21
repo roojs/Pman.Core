@@ -137,12 +137,12 @@ class Pman_Core_NotifyRouter
      * @param array $base_options Base socket options
      * @return array Enhanced socket options with IPv6 binding
      */
-    function prepareSocketOptionsWithIPv6($base_options = array(), $smtp_host = null)
+    function prepareSocketOptionsWithIPv6($base_options = array())
     {
         $socket_options = $base_options;
         
         // Return early if not using IPv6
-        if (empty($smtp_host) || !$this->useIpv6) {
+        if (empty($this->smtpHost) || !$this->useIpv6) {
             $ipv6_addr_str = !empty($this->serverIpv6) ? $this->serverIpv6->ipv6_addr_str : false;
             $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->serverIpv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($ipv6_addr_str ?: 'empty') . ")");
             return $socket_options;
