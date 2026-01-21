@@ -16,6 +16,7 @@ class Pman_Core_NotifyRouter
     
     function __construct($notifySend, $smtp_host, $mx)
     {
+        $this->notifySend = $notifySend;
         $this->debug_handler = array($notifySend, 'debugHandler');
         $this->debug = $notifySend->debug;
         $this->server_ipv6 = $notifySend->server_ipv6;
