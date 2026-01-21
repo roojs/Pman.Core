@@ -300,15 +300,12 @@ class Pman_Core_NotifySend extends Pman
             $email['headers']['Message-Id'] = "<{$this->table}-{$id}@{$HOST}>";
             
         }
-
         if(empty($email['headers']['X-Notify-Id'])) {
             $email['headers']['X-Notify-Id'] = $w->id;
         }
-
         if(empty($email['headers']['X-Notify-To-Id']) && !empty($p) && !empty($p->id)) {
             $email['headers']['X-Notify-To-Id'] = $p->id;
         }
-
         if(empty($email['headers']['X-Notify-Recur-Id']) && $w->ontable == 'core_notify_recur' && !empty($w->onid)) {
             $email['headers']['X-Notify-Recur-Id'] = $w->onid;
         }
