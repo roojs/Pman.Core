@@ -21,7 +21,7 @@ class Pman_Core_NotifyRouter
     {
         $this->notifySend = $notifySend;
         $this->server_ipv6 = $notifySend->server_ipv6;
-        $this->use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
+        $this->use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str) && filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
 
         $ff = HTML_FlexyFramework::get();
 
