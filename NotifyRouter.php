@@ -24,13 +24,14 @@ class Pman_Core_NotifyRouter
     // Whether to use IPv6
     var $useIpv6 = false;
     
-    function __construct($notifySend, $smtp_host, $mx, $domain, $email)
+    function __construct($notifySend, $smtp_host, $mx, $domain, $email, $notify)
     {
         $this->notifySend = $notifySend;
         $this->smtpHost = $smtp_host;
         $this->mx = $mx;
         $this->domain = $domain;
         $this->email = $email;
+        $this->notify = $notify;
         $this->server = $notifySend->server;
         $this->serverIpv6 = $notifySend->server_ipv6;
         $this->useIpv6 = !empty($this->serverIpv6) && !empty($this->serverIpv6->ipv6_addr_str) && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
@@ -312,7 +313,7 @@ class Pman_Core_NotifyRouter
                 ");
                 
                 if($core_notify->count()){
-                    $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true, $this->serverIpv6);
+                    $this->server->updateNotifyToNextServer( $this->notify , date("Y-m-d H:i:s", time() + $seconds), true, $this->serverIpv6);
                     $this->errorHandler( " Too many emails sent by {$this->domain->domain} - requeing");
                 }
                 
