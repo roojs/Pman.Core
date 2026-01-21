@@ -192,7 +192,7 @@ class Pman_Core_NotifyRouter
             
         // if the host is the mail host + it's authenticated add auth details
         // this normally will happen if you sent  Pman_Core_NotifySend['host']
-        
+
         if (isset($ff->Mail['host']) && $ff->Mail['host'] == $mx && !empty($ff->Mail['auth'] )) {
             
             $mailer->auth = true;
@@ -206,6 +206,8 @@ class Pman_Core_NotifyRouter
         if (isset($ff->Core_Notify['tls_exclude']) && in_array($mx, $ff->Core_Notify['tls_exclude'])) {
             $mailer->tls = false;
         }
+
+        var_dump($ff->Core_Notify['routes']);
 
         if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
                 
