@@ -264,7 +264,7 @@ class Pman_Core_NotifyRouter
                         $fromUser = $sendAsUser;
                         require_once 'Mail/RFC822.php';
                         $rfc822 = new Mail_RFC822(array('name' => $fromUser->name, 'address' => $fromUser->email));
-                        $email['headers']['From'] = $rfc822->toMime();
+                        $this->email['headers']['From'] = $rfc822->toMime();
                     }
         
                     $s = $fromUser->server();
