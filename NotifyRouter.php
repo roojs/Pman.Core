@@ -13,6 +13,7 @@ class Pman_Core_NotifyRouter
     var $mx = '';
     // Core_domain instance
     var $domain = null;
+    // Email array (headers, recipients, body)
     var $email = null;
     // Core_notify instance
     var $notify = null;
