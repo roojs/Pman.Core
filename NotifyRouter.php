@@ -12,11 +12,11 @@ class Pman_Core_NotifyRouter
     var $debug = 0;
     var $server_ipv6 = null;
     
-    function __construct($debug_handler = null, $debug = 0, $smtp_host, $mx, $server_ipv6)
+    function __construct($notifySend, $smtp_host, $mx)
     {
-        $this->debug_handler = $debug_handler;
-        $this->debug = $debug;
-        $this->server_ipv6 = $server_ipv6;
+        $this->debug_handler = array($notifySend, 'debugHandler');
+        $this->debug = $notifySend->debug;
+        $this->server_ipv6 = $notifySend->server_ipv6;
 
 
         $ff = HTML_FlexyFramework::get();
