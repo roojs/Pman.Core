@@ -18,7 +18,7 @@ class Pman_Core_NotifyRouter
         $this->debug = $notifySend->debug;
         $this->server_ipv6 = $notifySend->server_ipv6;
 
-        var_dump($this->debug);
+        var_dump($this->server_ipv6);
         die('test');
 
 
