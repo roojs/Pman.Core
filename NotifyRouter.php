@@ -14,6 +14,8 @@ class Pman_Core_NotifyRouter
     var $socket_options = array();
     var $dkim = true;
     
+    // Domain
+    var $dom = '';
     // Core_notify_server instance
     var $server = null;
     // Core_notify_server_ipv6 instance
