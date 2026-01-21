@@ -521,6 +521,7 @@ class Pman_Core_NotifySend extends Pman
                 'notify' => $w
             ));
             $mailer = $notifyRouter->mailer;
+            die('test');
 
             $emailHeaders = $email['headers'];
 
