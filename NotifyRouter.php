@@ -77,6 +77,15 @@ class Pman_Core_NotifyRouter
 
         die('test');
     }
+
+    /**
+     * Debug a message
+     * @param string $str The message to debug
+     */
+    function debug($str)
+    {
+        $this->notifySend->debug($str);
+    }
     
     /**
      * Return a Mail_smtp object
