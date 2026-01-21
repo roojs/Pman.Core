@@ -329,8 +329,12 @@ class Pman_Core_NotifyRouter
         $this->mailer = $mailer;
     }
 
+    /**
+     * Set the options for $this->mailer
+     * @return void
+     */
     function setMailerOptions ()
     {
-        
+
     }
 }
