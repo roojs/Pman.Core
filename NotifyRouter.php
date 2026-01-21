@@ -193,6 +193,7 @@ class Pman_Core_NotifyRouter
     /**
      * Debug a message
      * @param string $str The message to debug
+     * @return void
      */
     function debug($str)
     {
@@ -200,6 +201,11 @@ class Pman_Core_NotifyRouter
     }
 
 
+    /**
+     * Error handler
+     * @param string $msg The message to error
+     * @return void
+     */
     function errorHandler($msg)
     {
         $this->notifySend->errorHandler($msg);
