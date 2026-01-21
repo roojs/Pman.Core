@@ -11,8 +11,8 @@ class Pman_Core_NotifyRouter
     var $smtpHost = '';
     // MX host
     var $mx = '';
-    // Domain of the recipient email address
-    var $emailDom = ''; 
+    // Core_domain instance
+    var $domain = null; 
     var $email = null;
 
 
@@ -23,12 +23,12 @@ class Pman_Core_NotifyRouter
     // Whether to use IPv6
     var $useIpv6 = false;
     
-    function __construct($notifySend, $smtp_host, $mx, $dom, $email)
+    function __construct($notifySend, $smtp_host, $mx, $domain, $email)
     {
         $this->notifySend = $notifySend;
         $this->smtpHost = $smtp_host;
         $this->mx = $mx;
-        $this->emailDom = $dom;
+        $this->domain = $domain;
         $this->email = $email;
         $this->server = $notifySend->server;
         $this->serverIpv6 = $notifySend->server_ipv6;
