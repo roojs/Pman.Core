@@ -21,14 +21,11 @@ class Pman_Core_NotifyRouter
     {
         $this->notifySend = $notifySend;
         $this->server_ipv6 = $notifySend->server_ipv6;
+        $this->use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
 
         $ff = HTML_FlexyFramework::get();
 
         $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
-
-        // Check if we're using IPv6 and prepare HELO hostname
-        $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
-        $this->use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
 
         $this->setHost($smtp_host);
         $this->setLocalhost();
