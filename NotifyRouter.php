@@ -36,7 +36,7 @@ class Pman_Core_NotifyRouter
             )
         );
 
-        var_dump($base_socket_options);
+        var_dump($ff->Mail);
         die('test');
 
         // Check if we're using IPv6 and prepare HELO hostname
