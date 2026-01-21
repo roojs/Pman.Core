@@ -177,14 +177,14 @@ class Pman_Core_NotifyRouter
         ));
         $this->mailer = $mailer;
 
-        $this->setMailerOptionsFromConfig();
+        $this->setMailerOptionsBasedOnConfig();
     }
 
     /**
      * Set the options for $this->mailer based on the config
      * @return void
      */
-    function setMailerOptionsFromConfig()
+    function setMailerOptionsBasedOnConfig()
     {
         $mailer = $this->mailer;
 
