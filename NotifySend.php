@@ -536,7 +536,7 @@ class Pman_Core_NotifySend extends Pman
             }
             
             $res = $mailer->send($p->email, $emailHeaders, $email['body']);
-            
+
             if (is_object($res)) {
                 $res->backtrace = array(); 
             }
@@ -629,6 +629,8 @@ class Pman_Core_NotifySend extends Pman
             }
             break;
         }
+
+
 
         // Not using IPv6 AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted
         if(!$fail && !$use_ipv6 && empty($validIps) && $this->isAnyIpv4Blacklisted) {
