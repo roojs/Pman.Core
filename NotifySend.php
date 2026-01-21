@@ -513,7 +513,13 @@ class Pman_Core_NotifySend extends Pman
             $this->debug_str = '';
 
             require_once 'Pman/Core/NotifyRouter.php';
-            $notifyRouter = new Pman_Core_NotifyRouter($this, $smtp_host, $mx, $core_domain, $email, $w);
+            $notifyRouter = new Pman_Core_NotifyRouter($this, array(
+                'smtpHost' => $smtp_host,
+                'mx' => $mx,
+                'domain' => $core_domain,
+                'email' => $email,
+                'notify' => $w
+            ));
             $mailer = $notifyRouter->mailer;
 
             $emailHeaders = $email['headers'];
