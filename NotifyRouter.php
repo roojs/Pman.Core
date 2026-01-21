@@ -27,13 +27,6 @@ class Pman_Core_NotifyRouter
     function __construct($notifySend, $options = array())
     {
         $this->notifySend = $notifySend;
-        $this->smtpHost = $smtp_host;
-        $this->mx = $mx;
-        $this->domain = $domain;
-        $this->email = $email;
-        $this->notify = $notify;
-        $this->notifySend = $notifySend;
-    
         foreach ($options as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->$key = $value;
