@@ -33,7 +33,7 @@ class Pman_Core_NotifyRouter
 
         $ff = HTML_FlexyFramework::get();
 
-        $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
+        $this->debug("Trying SMTP: $this->mx / HELO {$ff->Mail['helo']} (IP: $this->smtpHost)");
         $this->initMailer($smtp_host, $mx);
     }
 
