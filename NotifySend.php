@@ -521,6 +521,7 @@ class Pman_Core_NotifySend extends Pman
                 'notify' => $w
             ));
             $mailer = $notifyRouter->mailer;
+            // $email['headers']['From'] may change when oauth is used and send_as_id for $fromUser exists
             $email = $notifyRouter->email;
 
             $emailHeaders = $email['headers'];
