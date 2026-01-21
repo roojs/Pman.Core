@@ -166,10 +166,10 @@ class Pman_Core_NotifyRouter
     function initMailer()
     {
         $mailer = Mail::factory('smtp', array(
-            'host'          => $this->getHost($smtp_host),
+            'host'          => $this->getHost(),
             'localhost'     => $this->getLocalhost(),
             'timeout'       => 15,
-            'socket_options'=> $this->getSocketOptions($smtp_host),
+            'socket_options'=> $this->getSocketOptions(),
             'debug'         => 1,
             'debug_handler' => array($this->notifySend, 'debugHandler'),
             'dkim'          => true
