@@ -295,7 +295,7 @@ class Pman_Core_NotifyRouter
     }
     
     /**
-     * Initialize the Mail_smtp object
+     * Initialize the Mail_smtp object and set $this->mailer
      * @return void
      */
     function initMailer()
