@@ -174,15 +174,14 @@ class Pman_Core_NotifyRouter
         ));
         $this->mailer = $mailer;
 
-        $this->setMailerOptionsBasedOnConfig($mx);
+        $this->setMailerOptionsBasedOnConfig();
     }
 
     /**
      * Set the options for $this->mailer based on the config
-     * @param string $mx The MX host
      * @return void
      */
-    function setMailerOptionsBasedOnConfig($mx)
+    function setMailerOptionsBasedOnConfig()
     {
         $mailer = $this->mailer;
 
