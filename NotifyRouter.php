@@ -122,6 +122,8 @@ class Pman_Core_NotifyRouter
                 'security_level' => 1
             )
         );
+
+        $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
     }
     
     /**
