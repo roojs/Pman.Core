@@ -114,23 +114,6 @@ class Pman_Core_NotifyRouter
 
         $this->socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
     }
-    
-    /**
-     * Return a Mail_smtp object
-     * @return Mail_smtp
-     */
-    function toMailer()
-    {
-        return Mail::factory('smtp', array(
-            'host'          => $this->host,
-            'localhost'     => $this->localhost,
-            'timeout'       => $this->timeout,
-            'socket_options'=> $this->socket_options,
-            'debug'         => 1,
-            'debug_handler' => array($this->notifySend, 'debugHandler'),
-            'dkim'          => $this->dkim
-        ));
-    }
 
     /**
      * Prepare socket options with IPv6 binding if available
@@ -160,5 +143,22 @@ class Pman_Core_NotifyRouter
         }
         
         return $socket_options;
+    }
+    
+    /**
+     * Return a Mail_smtp object
+     * @return Mail_smtp
+     */
+    function toMailer()
+    {
+        return Mail::factory('smtp', array(
+            'host'          => $this->host,
+            'localhost'     => $this->localhost,
+            'timeout'       => $this->timeout,
+            'socket_options'=> $this->socket_options,
+            'debug'         => 1,
+            'debug_handler' => array($this->notifySend, 'debugHandler'),
+            'dkim'          => $this->dkim
+        ));
     }
 }
