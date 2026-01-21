@@ -106,9 +106,22 @@ class Pman_Core_NotifyRouter
         $this->localhost = $helo_hostname;
     }
 
+    /**
+     * Set the socket options for the Mail_smtp object
+     * @return void
+     */
     function setSocketOptions()
     {
-        $this->socket_options = $this->prepareSocketOptionsWithIPv6($this->socket_options, $this->host);
+        $ff = HTML_FlexyFramework::get();
+        // Prepare socket options with IPv6 binding if available
+        $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
+            'ssl' => array(
+                'verify_peer_name' => false,
+                'verify_peer' => false, 
+                'allow_self_signed' => true,
+                'security_level' => 1
+            )
+        );
     }
     
     /**
