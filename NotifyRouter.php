@@ -187,6 +187,8 @@ class Pman_Core_NotifyRouter
      */
     function setMailerOptionsBasedOnConfig()
     {
+        var_dump($mx);
+        die('test');
         $mailer = $this->mailer;
 
         $ff = HTML_FlexyFramework::get();
