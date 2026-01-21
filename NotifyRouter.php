@@ -14,6 +14,7 @@ class Pman_Core_NotifyRouter
     // Core_domain instance
     var $domain = null; 
     var $email = null;
+    var $notify = null;
 
 
     // Core_notify_server instance
