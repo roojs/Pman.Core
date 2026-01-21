@@ -161,11 +161,9 @@ class Pman_Core_NotifyRouter
     
     /**
      * Initialize the Mail_smtp object and set $this->mailer
-     * @param string $smtp_host The SMTP host (IP address or hostname)
-     * @param string $mx The MX host
      * @return void
      */
-    function initMailer($smtp_host, $mx)
+    function initMailer()
     {
         $mailer = Mail::factory('smtp', array(
             'host'          => $this->getHost($smtp_host),
