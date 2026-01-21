@@ -199,6 +199,12 @@ class Pman_Core_NotifyRouter
         $this->notifySend->debug($str);
     }
 
+
+    function errorHandler($msg)
+    {
+        $this->notifySend->errorHandler($msg);
+    }
+
     /**
      * Set the host for the Mail_smtp object
      * @param string $smtp_host The SMTP host (IP address or hostname)
