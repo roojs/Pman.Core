@@ -241,9 +241,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         clearstatcache();
         $ret =  file_exists(self::staticGetStoreName($o));
-        if (!$ret) {
-            return self::staticCanFix($o);
-        }
+        // if (!$ret) {
+        //     return self::staticCanFix($o);
+        // }
         return $ret;
     }
 
@@ -252,51 +252,40 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      * this tries to fix it.
      *
      */
-    function canFix() 
-    {
-        return self::staticCanFix($this);
-    }
+    // function canFix() 
+    // {
+    //     return self::staticCanFix($this);
+    // }
 
-    static function staticCanFix($o)
-    {
-        // look for the image in the folder, with matching id.
-        // this is problematic..
-        $fn = self::staticGetStoreName($o);
-        clearstatcache();
-        if (file_exists($fn)) {
-            
-            if (file_exists($fn . '-really-missing')) {
-                unlink($fn . '-really-missing');
-                return false;
-            }
-            
-            return true;
-        }
-        
-        if (file_exists($fn . '-really-missing')) {
-            return false;
-        }
-        if (!file_exists(dirname($fn))) {
-            return false;
-        }
-        foreach( scandir(dirname($fn)) as $n) {
-            if (empty($n) || $n[0] == '.') {
-                continue;
-            }
-            $bits = explode('-', $n);
-            if ($bits[0] != $o->id) {
-                continue;
-            }
-            if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
-                continue;
-            }
-            copy(dirname($fn). '/'.  $n, $fn);
-            clearstatcache();
-            return true;
-        }
-        // fixme - flag it as bad
-        touch($fn . '-really-missing');
-    }
+    // static function staticCanFix($o)
+    // {
+    //     // look for the image in the folder, with matching id.
+    //     $fn = self::staticGetStoreName($o);
+    //     clearstatcache();
+    //     if (file_exists($fn)) {
+    //         return true;
+    //     }
+    //     
+    //     if (!file_exists(dirname($fn))) {
+    //         return false;
+    //     }
+    //     foreach( scandir(dirname($fn)) as $n) {
+    //         if (empty($n) || $n[0] == '.') {
+    //             continue;
+    //         }
+    //         $bits = explode('-', $n);
+    //         if ($bits[0] != $o->id) {
+    //             continue;
+    //         }
+    //         if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
+    //             continue;
+    //         }
+    //         copy(dirname($fn). '/'.  $n, $fn);
+    //         clearstatcache();
+    //         return true;
+    //     }
+    //     return false;
+    // }
     
     
     /**
