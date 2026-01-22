@@ -312,18 +312,20 @@ class Pman_Core_NotifySend extends Pman
         //print_r($email);exit;
         // should we fetch the watch that caused it.. - which should contain the method to call..
         // --send-to=test@xxx.com
+        // Populate to_email if empty - use the 'field' column to get correct email from person
+        // e.g. if field is 'email2', get $p->email2
+        $ww = clone($w);
+        if (empty($ww->to_email)) {
+            $email_field = !empty($w->field) ? $w->field : 'email';
+            $ww->to_email = !empty($p->{$email_field}) ? trim($p->{$email_field}) : '';
+        }
+        
+        // Override with send-to from email content or CLI option
         if (!empty($opts['send-to'])) {
             $email['send-to'] = $opts['send-to'];
         }
         if (!empty($email['send-to'])) {
-            $p->email = $email['send-to'];
-        }
-        // since some of them have spaces?!?!
-        $p->email = empty($p->email) ? '' : trim($p->email);
-        $ww = clone($w);
-        $ww->to_email = empty($ww->to_email) ? $p->email : $ww->to_email;
-        if (!empty($opts['send-to'])) {
-            $ww->to_email = $opts['send-to']; // override send to
+            $ww->to_email = trim($email['send-to']);
         }
         
         $explode_email = explode('@', $ww->to_email);
