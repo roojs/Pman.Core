@@ -404,7 +404,7 @@ class Pman_Core_NotifySend extends Pman
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
         }
-        
+
         if (!$force && strtotime($w->act_start) <  strtotime('NOW - 8 DAY')) {
             $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - GIVE UP - ". $p->email );
             $w->flagDone($ev, '');
@@ -412,14 +412,11 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $retry_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
-        
         //$this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email . ' ' . $res->toString());
         // we can only update act_when if it has not been sent already (only happens when running in force mode..)
         // set act when if it's empty...
         $w->act_when =  (!$w->act_when || $w->act_when == '0000-00-00 00:00:00') ? $retry_when : $w->act_when;
-        
         $w->update($ww);
-        
         $ww = clone($w);   
         
         $fail = false;
