@@ -198,7 +198,7 @@ class Pman_Core_NotifySend extends Pman
             $w->flagDone($ev, '');
             $this->errorHandler(  $ev->remarks);
         }
-        
+
         $p = $w->person();
         if (isset($p->active) && empty($p->active)) {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not user not active any more)" );;
@@ -308,41 +308,27 @@ class Pman_Core_NotifySend extends Pman
             $email['headers']['X-Notify-Recur-Id'] = $w->onid;
         }
 
-
-        
-        
-            
-        
         //$p->email = 'alan@akbkhome.com'; //for testing..
         //print_r($email);exit;
         // should we fetch the watch that caused it.. - which should contain the method to call..
         // --send-to=test@xxx.com
-       
-       
         if (!empty($opts['send-to'])) {
             $email['send-to'] = $opts['send-to'];
         }
-       
         if (!empty($email['send-to'])) {
             $p->email = $email['send-to'];
         }
-       
-        
-            // since some of them have spaces?!?!
+        // since some of them have spaces?!?!
         $p->email = empty($p->email) ? '' : trim($p->email);
         $ww = clone($w);
         $ww->to_email = empty($ww->to_email) ? $p->email : $ww->to_email;
-        
         if (!empty($opts['send-to'])) {
             $ww->to_email = $opts['send-to']; // override send to
         }
         
         $explode_email = explode('@', $ww->to_email);
         $dom = array_pop($explode_email);
-         
         $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
-
-        
         $ww->domain_id = $core_domain->id;
         // if to_email has not been set!?
         $ww->update($w); // if nothing has changed this will not do anything.
@@ -360,15 +346,13 @@ class Pman_Core_NotifySend extends Pman
         } else {
             $this->debug("IPv6: domain_id is empty, cannot load IPv6");
         }
-      
-        
+
         require_once 'Validate.php';
         if (!Validate::email($p->email)) {
             $p->updateFails(isset($w->field) ? $w->field : 'email', $p::BAD_EMAIL_FAILS);
             $ev = $this->addEvent('NOTIFYFAIL', $w, "INVALID ADDRESS: " . $p->email);
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
-            
         }
         
         
