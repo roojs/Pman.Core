@@ -363,7 +363,7 @@ class Pman_Core_NotifySend extends Pman
         // the domain DOESN'T HAVE mx record in the recent dns check (within last 5 days)
         // then DON't recheck dns
         if(!$core_domain->has_mx && strtotime($core_domain->mx_updated) > strtotime('now - 5 day')) {
-            $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
+            $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - BAD DOMAIN - ". $w->to_email );
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
         }
@@ -402,13 +402,13 @@ class Pman_Core_NotifySend extends Pman
                 $w->flagLater(date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES')));
                 $this->errorHandler($ev->remarks);
             }
-            $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
+            $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - BAD DOMAIN - ". $w->to_email );
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
         }
 
         if (!$force && strtotime($w->act_start) <  strtotime('NOW - 8 DAY')) {
-            $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - GIVE UP - ". $p->email );
+            $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - GIVE UP - ". $w->to_email );
             $w->flagDone($ev, '');
             $this->errorHandler(  $ev->remarks);
         }
@@ -726,7 +726,7 @@ class Pman_Core_NotifySend extends Pman
         
         // try again.
         
-        $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $p->email);
+        $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $w->to_email);
         
         $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
 
