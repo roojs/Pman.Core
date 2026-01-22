@@ -350,9 +350,9 @@ class Pman_Core_NotifySend extends Pman
         }
 
         require_once 'Validate.php';
-        if (!Validate::email($p->email)) {
+        if (!Validate::email($w->to_email)) {
             $p->updateFails(isset($w->field) ? $w->field : 'email', $p::BAD_EMAIL_FAILS);
-            $ev = $this->addEvent('NOTIFYFAIL', $w, "INVALID ADDRESS: " . $p->email);
+            $ev = $this->addEvent('NOTIFYFAIL', $w, "INVALID ADDRESS: " . $w->to_email);
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
         }
