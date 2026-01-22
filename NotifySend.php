@@ -198,8 +198,6 @@ class Pman_Core_NotifySend extends Pman
             $w->flagDone($ev, '');
             $this->errorHandler(  $ev->remarks);
         }
-     
-        
         
         $p = $w->person();
         if (isset($p->active) && empty($p->active)) {
