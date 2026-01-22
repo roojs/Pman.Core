@@ -482,7 +482,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->debug("IPv6: Spam rejecting, changing from address to {$emailHeaders['From']}");
             }
             
-            $res = $mailer->send($p->email, $emailHeaders, $email['body']);
+            $res = $mailer->send($w->to_email, $emailHeaders, $email['body']);
 
             if (is_object($res)) {
                 $res->backtrace = array(); 
