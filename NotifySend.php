@@ -149,26 +149,6 @@ class Pman_Core_NotifySend extends Pman
         $this->beforeSend($id, $opts, $force);
         
         $fail = false;
-        require_once 'Mail.php';
-        
-        
-        $this->server->initHelo($this->server_ipv6);
-
-        $ff = HTML_FlexyFramework::get();
-
-        if (!isset($ff->Mail['helo'])) {
-            $this->errorHandler("config Mail[helo] is not set");
-        }
-        
-        // Disabled for now
-        /*
-        $sender = DB_DataObject::factory('core_notify_sender');
-        if(!empty($this->server_ipv6) && $sender->get($this->server->ipv6_sender_id)) {
-            $this->email['headers']['From'] = $sender->email;
-        }
-        */
-
-        $this->email = DB_DataObject::factory('core_notify_sender')->filterEmail($this->email, $this->notify);
         
         // Convert MX hostnames to map of IP addresses => domain
         $use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
