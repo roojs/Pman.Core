@@ -988,29 +988,25 @@ class Pman_Core_NotifySend extends Pman
      * Set up ipv6 for the domain
      * 
      * @param string $errmsg The error message from the SMTP server
-     * @param object $notify The notify object
-     * @param object $core_domain The core_domain object
-     * @param array $mxs The MX records
-     * @param string $retry_when The retry when
      * @return void
      */
-    function setUpIpv6($errmsg, $notify, $core_domain, $mxs, $retry_when)
+    function setUpIpv6($errmsg)
     {
         $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
 
         // Build allocation reason with error details
         $allocation_reason = $errmsg;
-        $allocation_reason .= "; Email: " . $notify->to_email;
+        $allocation_reason .= "; Email: " . $this->notify->to_email;
         $allocation_reason .= "; Spamhaus detected: yes";
 
         // try to set up ipv6
-        if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
+        if($this->server_ipv6 = $this->emailDomain->setUpIpv6($allocation_reason, $this->mxRecords)) {
             // IPv6 set up successfully
             $this->debug("IPv6: Setup successful, will retry");
 
-            $ev = $this->addEvent('NOTIFY', $notify, "GREYLISTED - {$errmsg}");
-            $this->server->updateNotifyToNextServer($notify,  $retry_when ,true, $this->server_ipv6);
-            $this->errorHandler("Retry in next server at {$retry_when} - Error: {$errmsg}");
+            $ev = $this->addEvent('NOTIFY', $this->notify, "GREYLISTED - {$errmsg}");
+            $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6);
+            $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: {$errmsg}");
             // Successfully passed to next server, exit
             return;
         }
@@ -1018,8 +1014,8 @@ class Pman_Core_NotifySend extends Pman
         // no IPv6 can be set up -> don't retry
         $this->debug("IPv6: Setup failed");
 
-        $ev = $this->addEvent('NOTIFYFAIL', $notify, "IPv6 SETUP FAILED - {$errmsg}");
-        $notify->flagDone($ev, '');
+        $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "IPv6 SETUP FAILED - {$errmsg}");
+        $this->notify->flagDone($ev, '');
         $this->errorHandler( $ev->remarks);
         return;
     }
