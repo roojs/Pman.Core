@@ -161,16 +161,16 @@ class Pman_Core_NotifySend extends Pman
 
 
         // Not using IPv6 AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted
-        if(!$fail && !$use_ipv6 && empty($validIps) && $this->isAnyIpv4Blacklisted) {
+        if(!$this->fail && !$this->useIpv6 && empty($this->validIps) && $this->isAnyIpv4Blacklisted) {
             $this->setUpIpv6("No more valid ipv4 address left for server (id: {$this->server->id})");
         }
         
         // after trying all mxs - could not connect...
-        if  (!$force && !$fail && strtotime($this->notify->act_start) < strtotime('NOW - 2 DAYS')) {
+        if  (!$force && !$this->fail && strtotime($this->notify->act_start) < strtotime('NOW - 2 DAYS')) {
             
             $errmsg=  " - UNKNOWN ERROR";
-            if (isset($res->userinfo['smtptext'])) {
-                $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
+            if (isset($this->lastSmtpResponse->userinfo['smtptext'])) {
+                $errmsg=  $this->lastSmtpResponse->userinfo['smtpcode'] . ':' . $this->lastSmtpResponse->userinfo['smtptext'];
             }
             
             $ev = $this->addEvent('NOTIFYFAIL', $this->notify,  "RETRY TIME EXCEEDED - " .  $errmsg);
@@ -178,11 +178,11 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler( $ev->remarks);
         }
         
-        if ($fail) { //// !!!!<<< BLACKLIST DETECT?
+        if ($this->fail) { //// !!!!<<< BLACKLIST DETECT?
         // fail.. = log and give up..
-            $errmsg=   $res->userinfo['smtpcode'] . ': ' .$res->toString();
-            if (isset($res->userinfo['smtptext'])) {
-                $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
+            $errmsg=   $this->lastSmtpResponse->userinfo['smtpcode'] . ': ' .$this->lastSmtpResponse->toString();
+            if (isset($this->lastSmtpResponse->userinfo['smtptext'])) {
+                $errmsg=  $this->lastSmtpResponse->userinfo['smtpcode'] . ':' . $this->lastSmtpResponse->userinfo['smtptext'];
             }
 
             
