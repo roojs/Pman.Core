@@ -151,10 +151,10 @@ class Pman_Core_NotifySend extends Pman
         //DB_DataObject::debugLevel(1);
         //date_default_timezone_set('UTC');
         // phpinfo();exit;
-        $force = empty($opts['force']) ? 0 : 1;
+        $this->force = empty($opts['force']) ? 0 : 1;
         
         // Pre-processing: validate, load objects, prepare email
-        $this->beforeSend($id, $opts, $force);
+        $this->beforeSend($id, $opts);
 
         // Send the email - tries each MX host
         $this->send();
