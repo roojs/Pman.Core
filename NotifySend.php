@@ -360,9 +360,6 @@ class Pman_Core_NotifySend extends Pman
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
         }
-        
-        
-        $ff = HTML_FlexyFramework::get();
 
         // the domain DOESN'T HAVE mx record in the recent dns check (within last 5 days)
         // then DON't recheck dns
@@ -429,6 +426,8 @@ class Pman_Core_NotifySend extends Pman
         
         
         $this->server->initHelo($this->server_ipv6);
+
+        $ff = HTML_FlexyFramework::get();
 
         if (!isset($ff->Mail['helo'])) {
             $this->errorHandler("config Mail[helo] is not set");
