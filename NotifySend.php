@@ -164,15 +164,15 @@ class Pman_Core_NotifySend extends Pman
         /*
         $sender = DB_DataObject::factory('core_notify_sender');
         if(!empty($this->server_ipv6) && $sender->get($this->server->ipv6_sender_id)) {
-            $email['headers']['From'] = $sender->email;
+            $this->email['headers']['From'] = $sender->email;
         }
         */
 
-        $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
+        $this->email = DB_DataObject::factory('core_notify_sender')->filterEmail($this->email, $this->notify);
         
         // Convert MX hostnames to map of IP addresses => domain
         $use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
-        $mx_ip_map = $this->convertMxsToIpMap($mxs, $use_ipv6);
+        $mx_ip_map = $this->convertMxsToIpMap($this->mxRecords, $use_ipv6);
 
         // get list of valid ip addresses
         $validIps = array();
