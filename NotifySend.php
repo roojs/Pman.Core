@@ -113,6 +113,7 @@ class Pman_Core_NotifySend extends Pman
     var $useIpv6 = false;     // Whether using IPv6 for this send
     var $fail = false;        // Whether send failed
     var $lastSmtpResponse;    // Last SMTP response (PEAR_Error or true)
+    var $force = false;       // Force sending even if already sent
     
     function getAuth()
     {
