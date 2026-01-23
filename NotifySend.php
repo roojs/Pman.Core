@@ -997,8 +997,8 @@ class Pman_Core_NotifySend extends Pman
         $fromArr[0] .=  '+' . implode("-", $parts);
         return implode("@", $fromArr);
     }
-    
-    function setUpIpv6($notify, $core_domain,$mxs)
+
+    function setUpIpv6($notify, $core_domain, $mxs, $retry_when, $validIps)
     {
         $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
 
