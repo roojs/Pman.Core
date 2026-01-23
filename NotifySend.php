@@ -786,8 +786,6 @@ class Pman_Core_NotifySend extends Pman
         $this->notify->act_when =  (!$this->notify->act_when || $this->notify->act_when == '0000-00-00 00:00:00') ? $this->retryWhen : $this->notify->act_when;
         $this->notify->update($ww);
         
-        require_once 'Mail.php';
-        
         $this->server->initHelo($this->server_ipv6);
 
         $ff = HTML_FlexyFramework::get();
