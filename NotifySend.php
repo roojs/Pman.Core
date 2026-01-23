@@ -906,9 +906,9 @@ class Pman_Core_NotifySend extends Pman
                 // "52.101.145.0" => "fortuneindia-com.mail.protection.outlook.com",
                 // "52.101.144.3" => "fortuneindia-com.mail.protection.outlook.com",
                 "142.251.8.27" => "aspmx.l.google.com",
-                "172.217.78.26" => "alt1.aspmx.l.google.com",
-                "142.250.101.27" => "alt2.aspmx.l.google.com",
-                "192.178.164.26" => "alt3.aspmx.l.google.com",
+                // "172.217.78.26" => "alt1.aspmx.l.google.com",
+                // "142.250.101.27" => "alt2.aspmx.l.google.com",
+                // "192.178.164.26" => "alt3.aspmx.l.google.com",
                 "172.253.135.26" => "alt4.aspmx.l.google.com",
             );
             // skip any blacklisted ip for this server
