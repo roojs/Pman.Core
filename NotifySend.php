@@ -107,6 +107,11 @@ class Pman_Core_NotifySend extends Pman
     var $mxRecords;     // Array of MX hostnames for the domain
     var $retryWhen;     // Datetime string for next retry attempt
     
+    // Properties used during send loop
+    var $validIps = array();  // Array of valid IP addresses remaining
+    var $failedIp = false;    // The IP address that failed
+    var $useIpv6 = false;     // Whether using IPv6 for this send
+    
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
