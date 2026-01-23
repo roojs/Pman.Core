@@ -389,10 +389,10 @@ class Pman_Core_NotifySend extends Pman
 
                     // blacklist detection only if not using IPv6
                     if(empty($this->server_ipv6)) {
-                        DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
+                        DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($this->email, $this->notify, $errmsg);
 
                         // blacklisted
-                        if($this->server->checkSmtpResponse($errmsg, $core_domain)) {
+                        if($this->server->checkSmtpResponse($errmsg, $this->emailDomain)) {
                             $shouldRetry = true;
                         }
                     }
@@ -401,9 +401,9 @@ class Pman_Core_NotifySend extends Pman
 
             // try next server
             if($shouldRetry) {
-                $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
-                $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6, $validIps);
-                $this->errorHandler("Retry in next server at {$retry_when} - Error: $errmsg");
+                $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLISTED - ' . $errmsg);
+                $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $validIps);
+                $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: $errmsg");
                 // Successfully passed to next server, exit
                 return;
             }
