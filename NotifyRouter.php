@@ -5,7 +5,7 @@
  * so that it can be used to send emails.
  * 
  * Usage
- * $notifyRouter = new Pman_Core_NotifyRouter($this, array(
+ * $notifyRouter = new Pman_Core_NotifyRouter($notifySend, array(
  *  'smtpHost' => $smtp_host,
  *  'mx' => $mx,
  *  'domain' => $core_domain,
