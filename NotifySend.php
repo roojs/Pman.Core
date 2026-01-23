@@ -439,7 +439,7 @@ class Pman_Core_NotifySend extends Pman
         // force will override failed. (not not sent.)
         $cev->whereAddIn("action", $force ? array('NOTIFYSENT') : array('NOTIFYSENT', 'NOTIFYFAIL', 'NOTIFYBOUNCE'), 'string');
         $cev->limit(1);
-        if (!$force && $cev->count()) {
+        if (!$this->force && $cev->count()) {
             $cev->find(true);
             $this->notify->flagDone($cev, $cev->action == 'NOTIFYSENT' ? 'alreadysent' : '');
             $this->errorHandler( $cev->action . " (fix old) ".  $cev->remarks);
