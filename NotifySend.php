@@ -802,7 +802,7 @@ class Pman_Core_NotifySend extends Pman
                 // Pass ALL MX IPs (not just validIps) so other servers can be properly checked
                 // An IP that blocks server X might not block server Y
                 $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, 
-                    ($is_spamhaus ? $this->allMxIps : $this->allMxIps)
+                    ($is_spamhaus ? $this->allMxIps : false)
                 );
                 $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: $errmsg");
                 // Successfully passed to next server, exit
