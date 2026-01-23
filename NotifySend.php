@@ -805,9 +805,7 @@ class Pman_Core_NotifySend extends Pman
             // try next server
             if($shouldRetry) {
                 $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLISTED - ' . $errmsg);
-                // Pass ALL MX IPs (not just validIps) so other servers can be properly checked
-                // An IP that blocks server X might not block server Y
-                $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIps);
+                $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->validIps);
                 $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: $errmsg");
                 // Successfully passed to next server, exit
                 return;
@@ -953,6 +951,11 @@ class Pman_Core_NotifySend extends Pman
                 // "192.178.164.26" => "alt3.aspmx.l.google.com",
                 "172.253.135.26" => "alt4.aspmx.l.google.com",
             );
+            
+            // Store ALL IPs BEFORE any filtering (for passing to next server)
+            // An IP that blocks server X might not block server Y
+            $this->allMxIps = array_keys($mx_ip_map);
+            
             // skip any blacklisted ip for this server
             $bl = DB_DataObject::factory('core_notify_blacklist');
             $bl->server_id = $this->server->id;
