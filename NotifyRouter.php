@@ -6,7 +6,7 @@
  * 
  * Usage example in NotifySend.php:
  * 
- * $notifyRouter = new Pman_Core_NotifyRouter($notifySend, array(
+ * $notifyRouter = new Pman_Core_NotifyRouter($this, array(
  *  'smtpHost' => $smtp_host,
  *  'mx' => $mx,
  *  'domain' => $core_domain,
