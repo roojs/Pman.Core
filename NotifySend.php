@@ -383,9 +383,8 @@ class Pman_Core_NotifySend extends Pman
      * 
      * @param int $id The notification ID
      * @param array $opts Options array
-     * @param bool $force Force sending even if already sent
      */
-    function beforeSend($id, $opts, $force)
+    function beforeSend($id, $opts)
     {
         $this->notify = DB_DataObject::factory($this->table); // core_notify usually.
 
@@ -393,11 +392,11 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("invalid id\n");
         }
 
-        if (!$force && !empty($this->notify->sent) && strtotime($this->notify->act_when) < strtotime($this->notify->sent)) {
+        if (!$this->force && !empty($this->notify->sent) && strtotime($this->notify->act_when) < strtotime($this->notify->sent)) {
             $this->errorHandler("already sent - repeat to early\n");
         }
         
-        $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
+        $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $this->force);
         // for testing
         $this->server = DB_DataObject::Factory('core_notify_server');
         $this->server->get($this->notify->server_id);
@@ -405,11 +404,11 @@ class Pman_Core_NotifySend extends Pman
 
         // Check if server is disabled or not found - exit gracefully (unless force is set)
         // id = 0 means no servers exist, is_active = 0 means server is disabled
-        if (!$force && (empty($this->server->id) || empty($this->server->is_active))) {
+        if (!$this->force && (empty($this->server->id) || empty($this->server->is_active))) {
             $this->errorHandler("Server is disabled or not found - exiting gracefully\n");
         }
         
-         if (!$force &&  $this->notify->server_id != $this->server->id) {
+         if (!$this->force &&  $this->notify->server_id != $this->server->id) {
             $this->errorHandler("Server id does not match - message = {$this->notify->server_id} - our id is {$this->server->id} use force to try again\n");
         }
         
@@ -425,7 +424,7 @@ class Pman_Core_NotifySend extends Pman
         
         $sent = (empty($this->notify->sent) || strtotime( $this->notify->sent) < 100 ) ? false : true;
         
-        if (!$force && (!empty($this->notify->msgid) || $sent)) {
+        if (!$this->force && (!empty($this->notify->msgid) || $sent)) {
             $ww = clone($this->notify);
             if (!$sent) {   // fix sent.
                 $this->notify->sent = strtotime( $this->notify->sent) < 100 ? $this->notify->sqlValue('NOW()') :$this->notify->sent; // do not update if sent.....
