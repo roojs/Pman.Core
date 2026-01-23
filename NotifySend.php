@@ -1012,8 +1012,8 @@ class Pman_Core_NotifySend extends Pman
             // IPv6 set up successfully
             $this->debug("IPv6: Setup successful, will retry");
 
-            $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $allocation_reason);
-            $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
+            $ev = $this->addEvent('NOTIFY', $notify, 'GREYLISTED - ' . $allocation_reason);
+            $this->server->updateNotifyToNextServer($notify,  $retry_when ,true, $this->server_ipv6);
             $this->errorHandler("Retry in next server at {$retry_when} - Error: $allocation_reason");
             // Successfully passed to next server, exit
             return;
@@ -1021,12 +1021,8 @@ class Pman_Core_NotifySend extends Pman
             // no IPv6 can be set up -> don't retry
             $this->debug("IPv6: Setup failed");
 
-            $ev = $this->addEvent('NOTIFYBOUNCE', $w, "IPv6 SET UP FAILED - {$errmsg}");
-            $w->flagDone($ev, '');
-            if (method_exists($w, 'matchReject')) {
-                $w->matchReject($errmsg);
-            }
-             
+            $ev = $this->addEvent('NOTIFYBOUNCE', $notify, "IPv6 SET UP FAILED - {$errmsg}");
+            $notify->flagDone($ev, '');
             $this->errorHandler( $ev->remarks);
         }
         /*
