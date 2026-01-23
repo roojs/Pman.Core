@@ -732,6 +732,7 @@ class Pman_Core_NotifySend extends Pman
             }
             
             $res = $mailer->send($this->notify->to_email, $emailHeaders, $this->email['body']);
+            $this->lastSmtpResponse = $res;
 
             if (is_object($res)) {
                 $res->backtrace = array(); 
