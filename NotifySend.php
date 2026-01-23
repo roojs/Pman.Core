@@ -195,7 +195,7 @@ class Pman_Core_NotifySend extends Pman
             $shouldRetry = false;
 
             // smtpcode > 500 (permanent failure)
-            $smtpcode = isset($res->userinfo['smtpcode']) ? $res->userinfo['smtpcode'] : 0;
+            $smtpcode = isset($this->lastSmtpResponse->userinfo['smtpcode']) ? $this->lastSmtpResponse->userinfo['smtpcode'] : 0;
             if(!empty($smtpcode) && $smtpcode > 500) {
                 // spamhaus - not using ipv6 -> try setting up ipv6
                 if($is_spamhaus && empty($this->server_ipv6)) {
@@ -203,15 +203,15 @@ class Pman_Core_NotifySend extends Pman
                     $this->debug("IPv6: Spamhaus detected (code: $smtpcode)");
                     // Build allocation reason with error details
                     $allocation_reason = "SMTP Code: " . $smtpcode;
-                    if (!empty($res->userinfo['smtptext'])) {
-                        $allocation_reason .= "; Error: " . $res->userinfo['smtptext'];
+                    if (!empty($this->lastSmtpResponse->userinfo['smtptext'])) {
+                        $allocation_reason .= "; Error: " . $this->lastSmtpResponse->userinfo['smtptext'];
                     }
 
                     // blacklist the ipv4 host which return spamhaus
-                    if($this->server->checkSmtpResponse($errmsg, $this->emailDomain, $failedIp)) {
-                        $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: $failedIp");
+                    if($this->server->checkSmtpResponse($errmsg, $this->emailDomain, $this->failedIp)) {
+                        $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: {$this->failedIp}");
                         // if there is no more valid ipv4 hosts left
-                        if(empty($validIps)) {
+                        if(empty($this->validIps)) {
                             $this->setUpIpv6($allocation_reason);
                             return;
                         }
