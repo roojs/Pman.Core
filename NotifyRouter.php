@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Initialize the Mail_smtp object and set $this->mailer
+ * so that it can be used to send emails.
+ */
 class Pman_Core_NotifyRouter
 {
     var $mailer;
