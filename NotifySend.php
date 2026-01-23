@@ -108,7 +108,7 @@ class Pman_Core_NotifySend extends Pman
     var $retryWhen;     // Datetime string for next retry attempt
     
     // Properties used during send()
-    var $allMxIps = array();  // Array of ALL IPv4 addresses from MX lookup (never reduced)
+    var $allMxIps = array();  // Array of ALL IP addresses from MX lookup (IPv4 and IPv6, never reduced)
     var $validIps = array();  // Array of valid IP addresses remaining (reduced during send loop)
     var $failedIp = false;    // The IP address that failed
     var $useIpv6 = false;     // Whether using IPv6 for this send
