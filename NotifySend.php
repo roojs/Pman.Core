@@ -574,12 +574,8 @@ class Pman_Core_NotifySend extends Pman
         $this->useIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
         $mx_ip_map = $this->convertMxsToIpMap($this->mxRecords, $this->useIpv6);
 
-        // get list of valid ip addresses (reduced during loop)
         // Note: $this->allMxIps is populated in convertMxsToIpMap() BEFORE filtering
-        $this->validIps = array();
-        foreach($mx_ip_map as $ip => $mx) {
-            $this->validIps[] = $ip;
-        }
+        // Note: $this->validIps is populated in convertMxsToIpMap() AFTER filtering
 
         // ip address that failed the SMTP check
         $this->failedIp = false;
