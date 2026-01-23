@@ -997,32 +997,30 @@ class Pman_Core_NotifySend extends Pman
         $fromArr[0] .=  '+' . implode("-", $parts);
         return implode("@", $fromArr);
     }
-
-    function setUpIpv6()
+    
+    function setUpIpv6($notify, $core_domain,$mxs)
     {
-        /*
-            $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
+        $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
 
-            // Build allocation reason with error details
-            $allocation_reason = "No valid ipv4 address left for server (id: {$this->server->id})";
-            $allocation_reason .= "; Email: " . $w->to_email;
-            $allocation_reason .= "; Spamhaus detected: yes";
+        // Build allocation reason with error details
+        $allocation_reason = "No valid ipv4 address left for server (id: {$this->server->id})";
+        $allocation_reason .= "; Email: " . $notify->to_email;
+        $allocation_reason .= "; Spamhaus detected: yes";
 
-            // try to set up ipv6
-            if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
-                // IPv6 set up successfully
-                $this->debug("IPv6: Setup successful, will retry");
+        // try to set up ipv6
+        if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
+            // IPv6 set up successfully
+            $this->debug("IPv6: Setup successful, will retry");
 
-                $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $allocation_reason);
-                $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6, $validIps);
-                $this->errorHandler("Retry in next server at {$retry_when} - Error: $allocation_reason");
-                // Successfully passed to next server, exit
-                return;
-            } else {
-                // no IPv6 can be set up -> don't retry
-                $this->debug("IPv6: Setup failed");
-            }
-        */
+            $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $allocation_reason);
+            $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6, $validIps);
+            $this->errorHandler("Retry in next server at {$retry_when} - Error: $allocation_reason");
+            // Successfully passed to next server, exit
+            return;
+        } else {
+            // no IPv6 can be set up -> don't retry
+            $this->debug("IPv6: Setup failed");
+        }
         /*
             $shouldRetry = true;
             $this->debug("IPv6: Spamhaus detected (code: $smtpcode)");
