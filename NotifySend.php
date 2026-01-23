@@ -148,6 +148,8 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
+        // for testing
+        $this->server = DB_DataObject::Factory('core_notify_server')->get($this->server_id);
 
         // Check if server is disabled or not found - exit gracefully (unless force is set)
         // id = 0 means no servers exist, is_active = 0 means server is disabled
