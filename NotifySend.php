@@ -632,16 +632,8 @@ class Pman_Core_NotifySend extends Pman
                         $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: $failedIp");
                         // if there is no more valid ipv4 hosts left
                         if(empty($validIps)) {
-                            $this->debug("No more valid ipv4 hosts left for server (id: {$this->server->id}), trying to set up ipv6");
-                            // try to set up ipv6
-                            if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
-                                // IPv6 set up successfully
-                                $this->debug("IPv6: Setup successful, will retry");
-                            } else {
-                                // no IPv6 can be set up -> don't retry
-                                $shouldRetry = false;
-                                $this->debug("IPv6: Setup failed");
-                            }
+                            $this->setUpIpv6($allocation_reason, $w, $core_domain, $mxs, $retry_when);
+                            return;
                         }
                     }
                 }
