@@ -192,26 +192,26 @@ class Pman_Core_NotifySend extends Pman
             $notifyRouter = new Pman_Core_NotifyRouter($this, array(
                 'smtpHost' => $smtp_host,
                 'mx' => $mx,
-                'domain' => $core_domain,
-                'email' => $email,
-                'notify' => $w
+                'domain' => $this->emailDomain,
+                'email' => $this->email,
+                'notify' => $this->notify
             ));
             $mailer = $notifyRouter->mailer;
-            // $email['headers']['From'] may change when oauth is used and 'Send As' of the From User is used
-            $email = $notifyRouter->email;
+            // $this->email['headers']['From'] may change when oauth is used and 'Send As' of the From User is used
+            $this->email = $notifyRouter->email;
 
-            $emailHeaders = $email['headers'];
+            $emailHeaders = $this->email['headers'];
 
             if($use_ipv6 && $this->server_ipv6->is_spam_rejecting) {
-                $emailHeaders['From'] = $this->addDomainToEmail($emailHeaders['From'], $dom);
+                $emailHeaders['From'] = $this->addDomainToEmail($emailHeaders['From'], $this->emailDomain->domain);
               
                 if (!empty($emailHeaders['Reply-To'])) {
-                    $emailHeaders['Reply-To'] = $this->addDomainToEmail($emailHeaders['Reply-To'], $dom);
+                    $emailHeaders['Reply-To'] = $this->addDomainToEmail($emailHeaders['Reply-To'], $this->emailDomain->domain);
                 }
                 $this->debug("IPv6: Spam rejecting, changing from address to {$emailHeaders['From']}");
             }
             
-            $res = $mailer->send($w->to_email, $emailHeaders, $email['body']);
+            $res = $mailer->send($this->notify->to_email, $emailHeaders, $this->email['body']);
 
             if (is_object($res)) {
                 $res->backtrace = array(); 
