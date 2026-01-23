@@ -933,6 +933,12 @@ class Pman_Core_NotifySend extends Pman
         string(23) "alt4.aspmx.l.google.com"
 
         */
+        
+        // Store ALL IPs BEFORE any filtering (for passing to next server)
+        // An IP that blocks server X might not block server Y
+        // This includes both IPv4 and IPv6 addresses
+        $this->allMxIps = array_keys($mx_ip_map);
+        
         // If not using IPv6, use IPv4 addresses and skip blacklisted IPs
         if(!$use_ipv6) {
             // FIXED QUERY RESULT FOR TESTING ONLY !!!!!
@@ -947,9 +953,7 @@ class Pman_Core_NotifySend extends Pman
                 // "192.178.164.26" => "alt3.aspmx.l.google.com",
                 "172.253.135.26" => "alt4.aspmx.l.google.com",
             );
-            
-            // Store ALL IPs BEFORE any filtering (for passing to next server)
-            // An IP that blocks server X might not block server Y
+            // For testing: update allMxIps with test data
             $this->allMxIps = array_keys($mx_ip_map);
             
             // skip any blacklisted ip for this server
