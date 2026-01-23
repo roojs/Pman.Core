@@ -652,7 +652,7 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler($ev->remarks);
         }
 
-        if (!$force && strtotime($this->notify->act_start) <  strtotime('NOW - 8 DAY')) {
+        if (!$this->force && strtotime($this->notify->act_start) <  strtotime('NOW - 8 DAY')) {
             $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "BAD ADDRESS - GIVE UP - ". $this->notify->to_email );
             $this->notify->flagDone($ev, '');
             $this->errorHandler(  $ev->remarks);
