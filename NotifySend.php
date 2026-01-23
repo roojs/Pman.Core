@@ -147,6 +147,9 @@ class Pman_Core_NotifySend extends Pman
         
         // Pre-processing: validate, load objects, prepare email
         $this->beforeSend($id, $opts, $force);
+
+        require_once 'Mail.php';
+        $ff = HTML_FlexyFramework::get();
         
         $fail = false;
         
