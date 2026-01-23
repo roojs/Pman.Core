@@ -7,11 +7,11 @@
  * Usage example in NotifySend.php:
  * 
  * $notifyRouter = new Pman_Core_NotifyRouter($this, array(
- *  'smtpHost' => $smtp_host,
- *  'mx' => $mx,
- *  'domain' => $core_domain,
- *  'email' => $email,
- *  'notify' => $w
+ *  'smtpHost' => $smtp_host, // the IP address of the server
+ *  'mx' => $mx, // the MX host
+ *  'domain' => $core_domain, // the domain
+ *  'email' => $email, // the email array
+ *  'notify' => $w // the notify instance
  * ));
  * $mailer = $notifyRouter->mailer;
  * // $email['headers']['From'] may change when oauth is used and 'Send As' of the From User is used
