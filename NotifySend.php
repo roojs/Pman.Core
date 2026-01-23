@@ -997,6 +997,11 @@ class Pman_Core_NotifySend extends Pman
         $fromArr[0] .=  '+' . implode("-", $parts);
         return implode("@", $fromArr);
     }
+
+    function setUpIpv6()
+    {
+        
+    }
     
     function errorHandler($msg)
     {
