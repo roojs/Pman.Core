@@ -24,7 +24,6 @@ class Pman_Core_NotifyRouter
     {
         $this->notifySend = $notifySend;
         foreach ($options as $key => $value) {
-            var_dump($key);
             if (property_exists($this, $key)) {
                 $this->$key = $value;
             }
