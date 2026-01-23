@@ -149,7 +149,7 @@ class Pman_Core_NotifySend extends Pman
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
         // for testing
-        $this->server = DB_DataObject::Factory('core_notify_server')
+        $this->server = DB_DataObject::Factory('core_notify_server');
         $this->server->get($w->server_id);
         
 
