@@ -3,6 +3,18 @@
 /**
  * Initialize the Mail_smtp object and set $this->mailer
  * so that it can be used to send emails.
+ * 
+ * Usage
+ * $notifyRouter = new Pman_Core_NotifyRouter($this, array(
+ *  'smtpHost' => $smtp_host,
+ *  'mx' => $mx,
+ *  'domain' => $core_domain,
+ *  'email' => $email,
+ *  'notify' => $w
+ * ));
+ * $mailer = $notifyRouter->mailer;
+ * // $email['headers']['From'] may change when oauth is used and 'Send As' of the From User is used
+ * $email = $notifyRouter->email;
  */
 class Pman_Core_NotifyRouter
 {
