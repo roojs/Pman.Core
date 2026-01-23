@@ -476,7 +476,7 @@ class Pman_Core_NotifySend extends Pman
 
             $emailHeaders = $email['headers'];
 
-            if($use_ipv6 && $this->server_ipv6->is_spam_rejecting && $is_ipv6) {
+            if($use_ipv6 && $this->server_ipv6->is_spam_rejecting) {
                 $emailHeaders['From'] = $this->addDomainToEmail($emailHeaders['From'], $dom);
               
                 if (!empty($emailHeaders['Reply-To'])) {
