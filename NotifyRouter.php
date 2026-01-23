@@ -12,7 +12,7 @@
  * ));
  * $mailer = $notifyRouter->mailer;
  * 
- * Access domain/email/notify via $this->notifySend->notifySend->emailDomain, $this->notifySend->notifySend->email, $this->notifySend->notifySend->notify
+ * Access domain/email/notify via $this->notifySend->emailDomain, $this->notifySend->email, $this->notifySend->notify
  */
 class Pman_Core_NotifyRouter
 {
@@ -36,13 +36,13 @@ class Pman_Core_NotifyRouter
      */
     function __construct($notifySend, $options = array())
     {
-        $this->notifySend->notifySend = $notifySend;
+        $this->notifySend = $notifySend;
         foreach ($options as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->$key = $value;
             }
         }
-        $this->useIpv6 = !empty($this->notifySend->notifySend->server_ipv6) && !empty($this->notifySend->notifySend->server_ipv6->ipv6_addr_str) && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        $this->useIpv6 = !empty($this->notifySend->server_ipv6) && !empty($this->notifySend->server_ipv6->ipv6_addr_str) && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
 
         $ff = HTML_FlexyFramework::get();
 
@@ -57,7 +57,7 @@ class Pman_Core_NotifyRouter
      */
     function debug($str)
     {
-        $this->notifySend->notifySend->debug($str);
+        $this->notifySend->debug($str);
     }
 
 
@@ -68,7 +68,7 @@ class Pman_Core_NotifyRouter
      */
     function errorHandler($msg)
     {
-        $this->notifySend->notifySend->errorHandler($msg);
+        $this->notifySend->errorHandler($msg);
     }
 
     /**
@@ -98,7 +98,7 @@ class Pman_Core_NotifyRouter
         if ($this->useIpv6) {
             // Extract last hex segment from IPv6 address (e.g., 2400:8901:e001:52a::22a -> 22a)
             // Handle compressed zeros (::) by splitting and taking the rightmost part
-            $ipv6_parts = explode('::', $this->notifySend->notifySend->server_ipv6->ipv6_addr_str);
+            $ipv6_parts = explode('::', $this->notifySend->server_ipv6->ipv6_addr_str);
             $right_part = end($ipv6_parts);
             if (empty($right_part)) {
                 // Address ends with ::, get last segment from left part
@@ -156,16 +156,16 @@ class Pman_Core_NotifyRouter
         
         // Return early if not using IPv6
         if (empty($this->smtpHost) || !$this->useIpv6) {
-            $ipv6_addr_str = !empty($this->notifySend->notifySend->server_ipv6) ? $this->notifySend->notifySend->server_ipv6->ipv6_addr_str : false;
-            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->notifySend->notifySend->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($ipv6_addr_str ?: 'empty') . ")");
+            $ipv6_addr_str = !empty($this->notifySend->server_ipv6) ? $this->notifySend->server_ipv6->ipv6_addr_str : false;
+            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->notifySend->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($ipv6_addr_str ?: 'empty') . ")");
             return $socket_options;
         }
         
         // Add IPv6 binding if serverIpv6 is configured
         $socket_options['socket'] = array(
-            'bindto' => '[' . $this->notifySend->notifySend->server_ipv6->ipv6_addr_str . ']:0'
+            'bindto' => '[' . $this->notifySend->server_ipv6->ipv6_addr_str . ']:0'
         );
-        $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $this->notifySend->notifySend->server_ipv6->ipv6_addr_str);
+        $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $this->notifySend->server_ipv6->ipv6_addr_str);
         
         return $socket_options;
     }
@@ -182,7 +182,7 @@ class Pman_Core_NotifyRouter
             'timeout'       => 15,
             'socket_options'=> $this->getSocketOptions(),
             'debug'         => 1,
-            'debug_handler' => array($this->notifySend->notifySend, 'debugHandler'),
+            'debug_handler' => array($this->notifySend, 'debugHandler'),
             'dkim'          => true
         ));
         $this->mailer = $mailer;
@@ -233,7 +233,7 @@ class Pman_Core_NotifyRouter
                 
                 $match = false;
 
-                if(!empty($settings['domains']) && in_array($this->notifySend->notifySend->emailDomain->domain, $settings['domains'])){
+                if(!empty($settings['domains']) && in_array($this->notifySend->emailDomain->domain, $settings['domains'])){
                     $match = true;
                 }
 
@@ -254,7 +254,7 @@ class Pman_Core_NotifyRouter
                 // check if there is a mail_imap_user for the 'From' email before using oauth
                 if(!empty($settings['auth']) && $settings['auth'] == 'XOAUTH2') {
                     // extract sender's email from 'From'
-                    preg_match('/<([^>]+)>|^([^<>]+)$/', $this->notifySend->notifySend->email['headers']['From'], $matches);
+                    preg_match('/<([^>]+)>|^([^<>]+)$/', $this->notifySend->email['headers']['From'], $matches);
                     $from = end($matches);
 
                     $fromUser = DB_DataObject::factory('mail_imap_user');
@@ -276,7 +276,7 @@ class Pman_Core_NotifyRouter
                         $fromUser = $sendAsUser;
                         require_once 'Mail/RFC822.php';
                         $rfc822 = new Mail_RFC822(array('name' => $fromUser->name, 'address' => $fromUser->email));
-                        $this->notifySend->notifySend->email['headers']['From'] = $rfc822->toMime();
+                        $this->notifySend->email['headers']['From'] = $rfc822->toMime();
                     }
         
                     $s = $fromUser->server();
@@ -315,16 +315,16 @@ class Pman_Core_NotifyRouter
                 
                 $seconds = floor((60 * 60) / $settings['rate']);
                 
-                $core_notify = DB_DataObject::factory($this->notifySend->notifySend->table);
-                $core_notify->domain_id = $this->notifySend->notifySend->emailDomain->id;
-                $core_notify->server_id = $this->notifySend->notifySend->server->id;
+                $core_notify = DB_DataObject::factory($this->notifySend->table);
+                $core_notify->domain_id = $this->notifySend->emailDomain->id;
+                $core_notify->server_id = $this->notifySend->server->id;
                 $core_notify->whereAdd("
                     sent >= NOW() - INTERVAL $seconds SECOND
                 ");
                 
                 if($core_notify->count()){
-                    $this->notifySend->notifySend->server->updateNotifyToNextServer( $this->notifySend->notify , date("Y-m-d H:i:s", time() + $seconds), true, $this->notifySend->notifySend->server_ipv6);
-                    $this->errorHandler( " Too many emails sent by {$this->notifySend->notifySend->emailDomain->domain} - requeing");
+                    $this->notifySend->server->updateNotifyToNextServer( $this->notifySend->notify , date("Y-m-d H:i:s", time() + $seconds), true, $this->notifySend->server_ipv6);
+                    $this->errorHandler( " Too many emails sent by {$this->notifySend->emailDomain->domain} - requeing");
                 }
                 
                 
