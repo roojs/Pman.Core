@@ -528,10 +528,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      * Check if the email is blacklisted
      * @param string $errmsg The error message from the SMTP server
      * @param object $core_domain The core_domain object
-     * @param string|false $blockedIp The IP address that is blocked by Spamhaus
+     * @param string|false $failedIp The MX host IP that returns the Spamhaus error
      * @return bool True if the email is blacklisted, false otherwise
      */
-    function checkSmtpResponse($errmsg, $core_domain, $blockedIp = false)
+    function checkSmtpResponse($errmsg, $core_domain, $failedIp = false)
     {
         if (!$this->id) {
             return false;
@@ -539,8 +539,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $bl = DB_DataObject::factory('core_notify_blacklist');
         $bl->server_id = $this->id;
         $bl->domain_id = $core_domain->id;
-        if($blockedIp) {
-            $bl->ip = $bl->sqlValue("INET6_ATON('" . $this->escape($blockedIp) . "')");
+        if($failedIp) {
+            $bl->ip = $bl->sqlValue("INET6_ATON('" . $this->escape($failedIp) . "')");
         }
         if ($bl->count()) {
             return true;
