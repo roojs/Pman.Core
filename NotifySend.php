@@ -222,40 +222,40 @@ class Pman_Core_NotifySend extends Pman
                 $mx_success = true;
                 // success....
                 
-                $successEventName = (empty($email['successEventName'])) ? 'NOTIFYSENT' : $email['successEventName'];
+                $successEventName = (empty($this->email['successEventName'])) ? 'NOTIFYSENT' : $this->email['successEventName'];
                 
-                $ev = $this->addEvent($successEventName, $w, "{$w->to_email} - {$email['headers']['Subject']}");
+                $ev = $this->addEvent($successEventName, $this->notify, "{$this->notify->to_email} - {$this->email['headers']['Subject']}");
                 
                 $ev->writeEventLog($this->debug_str);
                  
-                $w->flagDone($ev, $email['headers']['Message-Id']);
+                $this->notify->flagDone($ev, $this->email['headers']['Message-Id']);
                  
                 // enable cc in notify..
-                if (!empty($email['headers']['Cc'])) {
+                if (!empty($this->email['headers']['Cc'])) {
                     $cmailer = Mail::factory('smtp',  isset($ff->Mail) ? $ff->Mail : array() );
-                    $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
-                    $cmailer->send($email['headers']['Cc'],    $email['headers'], $email['body']);
+                    $this->email['headers']['Subject'] = "(CC): " . $this->email['headers']['Subject'];
+                    $cmailer->send($this->email['headers']['Cc'],    $this->email['headers'], $this->email['body']);
                     
                 }
                 
-                if (!empty($email['bcc'])) {
+                if (!empty($this->email['bcc'])) {
                     $cmailer = Mail::factory('smtp', isset($ff->Mail) ? $ff->Mail : array() );
-                    $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
-                    $res = $cmailer->send($email['bcc'],  $email['headers'], $email['body']);
+                    $this->email['headers']['Subject'] = "(CC): " . $this->email['headers']['Subject'];
+                    $res = $cmailer->send($this->email['bcc'],  $this->email['headers'], $this->email['body']);
                     if (!$res || is_a($res, 'PEAR_Error')) {
                         echo "could not send bcc..\n";
                     } else {
-                        echo "Sent BCC to {$email['bcc']}\n";
+                        echo "Sent BCC to {$this->email['bcc']}\n";
                     }
                 }
 
-                if($w->ontable == 'mail_imap_message_user' && $w->evtype == 'MAIL') {
-                    $o->postSend($this);
+                if($this->notify->ontable == 'mail_imap_message_user' && $this->notify->evtype == 'MAIL') {
+                    $this->notifyObject->postSend($this);
                 }
                  
-                $this->successHandler("Message to {$w->to_email} was successfully sent\n".
-                                    "Message Id: {$w->id}\n" .
-                                    "Subject: {$email['headers']['Subject']}"
+                $this->successHandler("Message to {$this->notify->to_email} was successfully sent\n".
+                                    "Message Id: {$this->notify->id}\n" .
+                                    "Subject: {$this->email['headers']['Subject']}"
                                   );
             }
 
