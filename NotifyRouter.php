@@ -4,7 +4,7 @@
  * Initialize the Mail_smtp object and set $this->mailer
  * so that it can be used to send emails.
  * 
- * Usage example:
+ * Usage example in NotifySend.php:
  * 
  * $notifyRouter = new Pman_Core_NotifyRouter($notifySend, array(
  *  'smtpHost' => $smtp_host,
