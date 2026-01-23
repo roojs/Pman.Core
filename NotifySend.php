@@ -998,7 +998,7 @@ class Pman_Core_NotifySend extends Pman
         return implode("@", $fromArr);
     }
 
-    function setUpIpv6($notify, $core_domain, $mxs, $retry_when, $validIps)
+    function setUpIpv6($notify, $core_domain, $mxs, $retry_when)
     {
         $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
 
@@ -1013,7 +1013,7 @@ class Pman_Core_NotifySend extends Pman
             $this->debug("IPv6: Setup successful, will retry");
 
             $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $allocation_reason);
-            $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6, $validIps);
+            $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
             $this->errorHandler("Retry in next server at {$retry_when} - Error: $allocation_reason");
             // Successfully passed to next server, exit
             return;
