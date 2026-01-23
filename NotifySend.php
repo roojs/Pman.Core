@@ -532,6 +532,12 @@ class Pman_Core_NotifySend extends Pman
                                     "Subject: {$email['headers']['Subject']}"
                                   );
             }
+
+            // remove the failed ip from the list of valid ip addresses
+            if(in_array($smtp_host, $validIps)) {
+                $validIps = array_diff($validIps, array($smtp_host));
+            }
+
             // what type of error..
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
             if (!empty($res->code) && $res->code == 10001) {
@@ -541,10 +547,6 @@ class Pman_Core_NotifySend extends Pman
             
             if ($code < 0) {
                 $this->debug("Connection error with $smtp_host: " . $res->message);
-                // remove the failed ip from the list of valid ip addresses
-                if(in_array($smtp_host, $validIps)) {
-                    $validIps = array_diff($validIps, array($smtp_host));
-                }
                 continue; // try next IP address
             }
             // give up after 2 days..
@@ -573,10 +575,6 @@ class Pman_Core_NotifySend extends Pman
             
             $fail = true;
             $failedIp = $smtp_host;
-            // remove the failed ip from the list of valid ip addresses
-            if(in_array($smtp_host, $validIps)) {
-                $validIps = array_diff($validIps, array($smtp_host));
-            }
             break;
         }
 
