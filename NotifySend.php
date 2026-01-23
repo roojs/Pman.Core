@@ -626,8 +626,6 @@ class Pman_Core_NotifySend extends Pman
                     if (!empty($res->userinfo['smtptext'])) {
                         $allocation_reason .= "; Error: " . $res->userinfo['smtptext'];
                     }
-                    $allocation_reason .= "; Email: " . $w->to_email;
-                    $allocation_reason .= "; Spamhaus detected: yes";
 
                     // blacklist the ipv4 host which return spamhaus
                     if($this->server->checkSmtpResponse($errmsg, $core_domain, $failedIp)) {
