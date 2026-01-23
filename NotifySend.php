@@ -256,14 +256,14 @@ class Pman_Core_NotifySend extends Pman
             // try next server
             if($shouldRetry) {
                 $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLISTED - ' . $errmsg);
-                $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $validIps);
+                $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->validIps);
                 $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: $errmsg");
                 // Successfully passed to next server, exit
                 return;
             }
             
             // mark as failed
-            $ev = $this->addEvent('NOTIFYBOUNCE', $this->notify, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
+            $ev = $this->addEvent('NOTIFYBOUNCE', $this->notify, ($this->fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
             $this->notify->flagDone($ev, '');
             if (method_exists($this->notify, 'matchReject')) {
                 $this->notify->matchReject($errmsg);
