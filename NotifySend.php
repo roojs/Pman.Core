@@ -997,15 +997,15 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("Retry in next server at {$retry_when} - Error: {$errmsg}");
             // Successfully passed to next server, exit
             return;
-        } else {
-            // no IPv6 can be set up -> don't retry
-            $this->debug("IPv6: Setup failed");
-
-            $ev = $this->addEvent('NOTIFYFAIL', $notify, "IPv6 SETUP FAILED - {$errmsg}");
-            $notify->flagDone($ev, '');
-            $this->errorHandler( $ev->remarks);
-            return;
         }
+
+        // no IPv6 can be set up -> don't retry
+        $this->debug("IPv6: Setup failed");
+
+        $ev = $this->addEvent('NOTIFYFAIL', $notify, "IPv6 SETUP FAILED - {$errmsg}");
+        $notify->flagDone($ev, '');
+        $this->errorHandler( $ev->remarks);
+        return;
     }
     
     function errorHandler($msg)
