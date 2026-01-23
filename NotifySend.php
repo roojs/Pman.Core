@@ -308,19 +308,19 @@ class Pman_Core_NotifySend extends Pman
 
         // Not using IPv6 AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted
         if(!$fail && !$use_ipv6 && empty($validIps) && $this->isAnyIpv4Blacklisted) {
-            $this->setUpIpv6("No more valid ipv4 address left for server (id: {$this->server->id})", $w, $core_domain, $mxs, $retry_when);
+            $this->setUpIpv6("No more valid ipv4 address left for server (id: {$this->server->id})", $this->notify, $this->emailDomain, $this->mxRecords, $this->retryWhen);
         }
         
         // after trying all mxs - could not connect...
-        if  (!$force && !$fail && strtotime($w->act_start) < strtotime('NOW - 2 DAYS')) {
+        if  (!$force && !$fail && strtotime($this->notify->act_start) < strtotime('NOW - 2 DAYS')) {
             
             $errmsg=  " - UNKNOWN ERROR";
             if (isset($res->userinfo['smtptext'])) {
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
             
-            $ev = $this->addEvent('NOTIFYFAIL', $w,  "RETRY TIME EXCEEDED - " .  $errmsg);
-            $w->flagDone($ev, '');
+            $ev = $this->addEvent('NOTIFYFAIL', $this->notify,  "RETRY TIME EXCEEDED - " .  $errmsg);
+            $this->notify->flagDone($ev, '');
             $this->errorHandler( $ev->remarks);
         }
         
