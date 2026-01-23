@@ -377,7 +377,6 @@ class Pman_Core_NotifySend extends Pman
 
         // we might fail doing this...
         // need to handle temporary failure..
-       
         
           // we try for 2 days..
         $retry = 15;
@@ -419,7 +418,7 @@ class Pman_Core_NotifySend extends Pman
         // set act when if it's empty...
         $w->act_when =  (!$w->act_when || $w->act_when == '0000-00-00 00:00:00') ? $retry_when : $w->act_when;
         $w->update($ww);
-        $ww = clone($w);   
+        $ww = clone($w);
         
         $fail = false;
         require_once 'Mail.php';
