@@ -36,6 +36,12 @@ class Pman_Core_NotifyRouter
     // Whether to use IPv6
     var $useIpv6 = false;
     
+    /**
+     * Constructor
+     * @param Pman_Core_NotifySend $notifySend The NotifySend instance
+     * @param array $options The options for the NotifyRouter
+     * @return void
+     */
     function __construct($notifySend, $options = array())
     {
         $this->notifySend = $notifySend;
