@@ -805,6 +805,26 @@ class Pman_Core_NotifySend extends Pman
         // set act when if it's empty...
         $this->notify->act_when =  (!$this->notify->act_when || $this->notify->act_when == '0000-00-00 00:00:00') ? $this->retryWhen : $this->notify->act_when;
         $this->notify->update($ww);
+        
+        require_once 'Mail.php';
+        
+        $this->server->initHelo($this->server_ipv6);
+
+        $ff = HTML_FlexyFramework::get();
+
+        if (!isset($ff->Mail['helo'])) {
+            $this->errorHandler("config Mail[helo] is not set");
+        }
+        
+        // Disabled for now
+        /*
+        $sender = DB_DataObject::factory('core_notify_sender');
+        if(!empty($this->server_ipv6) && $sender->get($this->server->ipv6_sender_id)) {
+            $this->email['headers']['From'] = $sender->email;
+        }
+        */
+
+        $this->email = DB_DataObject::factory('core_notify_sender')->filterEmail($this->email, $this->notify);
     }
     
     function debug($str)
