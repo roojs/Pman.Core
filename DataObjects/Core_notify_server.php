@@ -417,7 +417,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         while ($offset  != $start) {
             $s = $servers[$offset];
             // check if the server is blacklisted by the email domain
-            if(empty($allIpv4s)) {
+            if($allIpv4s === false) {
                 $blacklisted = $s->isBlacklisted($email);
             }
             // check if the server is blacklisted by all given ipv4 hosts 
