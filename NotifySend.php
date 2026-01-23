@@ -189,12 +189,12 @@ class Pman_Core_NotifySend extends Pman
             $this->debug_str = '';
 
             require_once 'Pman/Core/NotifyRouter.php';
+            // $this->email['headers']['From'] may change when oauth is used and 'Send As' of the From User is used
             $notifyRouter = new Pman_Core_NotifyRouter($this, array(
                 'smtpHost' => $smtp_host,
                 'mx' => $mx
             ));
             $mailer = $notifyRouter->mailer;
-            // $this->email['headers']['From'] may change when oauth is used and 'Send As' of the From User is used
 
             $emailHeaders = $this->email['headers'];
 
