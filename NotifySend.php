@@ -409,10 +409,10 @@ class Pman_Core_NotifySend extends Pman
             }
             
             // mark as failed
-            $ev = $this->addEvent('NOTIFYBOUNCE', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
-            $w->flagDone($ev, '');
-            if (method_exists($w, 'matchReject')) {
-                $w->matchReject($errmsg);
+            $ev = $this->addEvent('NOTIFYBOUNCE', $this->notify, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
+            $this->notify->flagDone($ev, '');
+            if (method_exists($this->notify, 'matchReject')) {
+                $this->notify->matchReject($errmsg);
             }
              
             $this->errorHandler( $ev->remarks);
@@ -423,9 +423,9 @@ class Pman_Core_NotifySend extends Pman
         
         // try again.
         
-        $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $w->to_email);
+        $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $this->notify->to_email);
         
-        $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
+        $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6);
 
         
          
