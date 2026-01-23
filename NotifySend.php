@@ -276,7 +276,7 @@ class Pman_Core_NotifySend extends Pman
                 continue; // try next IP address
             }
             // give up after 2 days..
-            if (in_array($code, array( 421, 450, 451, 452)) && strtotime($w->act_start) > strtotime('NOW - 2 DAYS')) {
+            if (in_array($code, array( 421, 450, 451, 452)) && strtotime($this->notify->act_start) > strtotime('NOW - 2 DAYS')) {
                 // try again later..
                 // check last event for this item..
                 //$errmsg=  $fail ? ($res->userinfo['smtpcode'] . ': ' .$res->toString()) :  " - UNKNOWN ERROR";
@@ -285,16 +285,16 @@ class Pman_Core_NotifySend extends Pman
                     $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
                 }
                 //print_r($res);
-                $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
+                $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLISTED - ' . $errmsg);
                 
                 // For 452 "out of storage" errors, wait 12 hours before retrying
-                $actual_retry_when = $retry_when;
+                $actual_retry_when = $this->retryWhen;
                 if ($code == 452 && stripos($errmsg, 'out of storage') !== false) {
                     $actual_retry_when = date('Y-m-d H:i:s', strtotime('NOW + 12 HOURS'));
                     $this->debug("Mailbox full - delaying retry to {$actual_retry_when}");
                 }
                 
-                $this->server->updateNotifyToNextServer($w, $actual_retry_when, true, $this->server_ipv6);
+                $this->server->updateNotifyToNextServer($this->notify, $actual_retry_when, true, $this->server_ipv6);
                 
                 $this->errorHandler(  $ev->remarks);
             }
