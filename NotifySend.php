@@ -99,6 +99,14 @@ class Pman_Core_NotifySend extends Pman
     var $isAnyIpv4Blacklisted = false;
     var $debug;
     
+    // Properties set by beforeSend()
+    var $notify;        // The notification record (core_notify or pressrelease_notify)
+    var $notifyObject;  // The object linked to the notification (ontable/onid)
+    var $email;         // The email array (headers, body, etc.)
+    var $emailDomain;   // Core_domain instance for the recipient's email domain
+    var $mxRecords;     // Array of MX hostnames for the domain
+    var $retryWhen;     // Datetime string for next retry attempt
+    
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
