@@ -1004,6 +1004,7 @@ class Pman_Core_NotifySend extends Pman
             $ev = $this->addEvent('NOTIFYFAIL', $notify, "IPv6 SETUP FAILED - {$errmsg}");
             $notify->flagDone($ev, '');
             $this->errorHandler( $ev->remarks);
+            return;
         }
         /*
             $shouldRetry = true;
