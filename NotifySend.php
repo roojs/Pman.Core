@@ -802,6 +802,296 @@ class Pman_Core_NotifySend extends Pman
         return false;
     }
     
+    /**
+     * Pre-processing before sending: validates notify record, loads objects, prepares email
+     * Sets class properties: $this->notify, $this->notifyObject, $this->email, 
+     * $this->emailDomain, $this->mxRecords, $this->retryWhen
+     * 
+     * @param int $id The notification ID
+     * @param array $opts Options array
+     * @param bool $force Force sending even if already sent
+     */
+    function beforeSend($id, $opts, $force)
+    {
+        $this->notify = DB_DataObject::factory($this->table); // core_notify usually.
+
+        if (!$this->notify->get($id)) {
+            $this->errorHandler("invalid id\n");
+        }
+
+        if (!$force && !empty($this->notify->sent) && strtotime($this->notify->act_when) < strtotime($this->notify->sent)) {
+            $this->errorHandler("already sent - repeat to early\n");
+        }
+        
+        $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
+        // for testing
+        $this->server = DB_DataObject::Factory('core_notify_server');
+        $this->server->get($this->notify->server_id);
+        
+
+        // Check if server is disabled or not found - exit gracefully (unless force is set)
+        // id = 0 means no servers exist, is_active = 0 means server is disabled
+        if (!$force && (empty($this->server->id) || empty($this->server->is_active))) {
+            $this->errorHandler("Server is disabled or not found - exiting gracefully\n");
+        }
+        
+         if (!$force &&  $this->notify->server_id != $this->server->id) {
+            $this->errorHandler("Server id does not match - message = {$this->notify->server_id} - our id is {$this->server->id} use force to try again\n");
+        }
+        
+        if (!empty($opts['debug'])) {
+            print_r($this->notify);
+            $ff = HTML_FlexyFramework::get();
+            if (!isset($ff->Core_Mailer)) {
+                $ff->Core_Mailer = array();
+            }
+            HTML_FlexyFramework::get()->Core_Mailer['debug'] = true;
+            $this->debug = true;
+        }
+        
+        $sent = (empty($this->notify->sent) || strtotime( $this->notify->sent) < 100 ) ? false : true;
+        
+        if (!$force && (!empty($this->notify->msgid) || $sent)) {
+            $ww = clone($this->notify);
+            if (!$sent) {   // fix sent.
+                $this->notify->sent = strtotime( $this->notify->sent) < 100 ? $this->notify->sqlValue('NOW()') :$this->notify->sent; // do not update if sent.....
+                $this->notify->update($ww);
+            }    
+            $this->errorHandler("message has been sent already.\n");
+        }
+        
+        $cev = DB_DataObject::Factory('Events');
+        $cev->on_table =  $this->table;
+        $cev->on_id =  $this->notify->id;
+        // force will override failed. (not not sent.)
+        $cev->whereAddIn("action", $force ? array('NOTIFYSENT') : array('NOTIFYSENT', 'NOTIFYFAIL', 'NOTIFYBOUNCE'), 'string');
+        $cev->limit(1);
+        if (!$force && $cev->count()) {
+            $cev->find(true);
+            $this->notify->flagDone($cev, $cev->action == 'NOTIFYSENT' ? 'alreadysent' : '');
+            $this->errorHandler( $cev->action . " (fix old) ".  $cev->remarks);
+        }
+        
+        $this->notifyObject = $this->notify->object();
+        if ($this->notifyObject === false)  {
+            $ev = $this->addEvent('NOTIFY', $this->notify,   "Notification event cleared (underlying object does not exist)" );
+            $this->notify->flagDone($ev, '');
+            $this->errorHandler(  $ev->remarks);
+        }
+
+        $p = $this->notify->person();
+        if (isset($p->active) && empty($p->active)) {
+            $ev = $this->addEvent('NOTIFY', $this->notify, "Notification event cleared (not user not active any more)" );;
+             $this->notify->flagDone($ev, '');
+            $this->errorHandler(  $ev->remarks);
+        }
+
+        if($this->notify->person_table == 'mail_imap_actor') {
+            $p->email = $p->email();
+        }
+
+        // has it failed mutliple times..
+        if (!empty($this->notify->field) && isset($p->{$this->notify->field .'_fails'}) && $p->{$this->notify->field .'_fails'} > 9) {
+            $notifyTable =  DB_DataObject::factory($this->table);
+            $notifyTable->to_email = $this->notify->to_email;
+            $notifyTable->selectAdd();
+            $notifyTable->selectAdd('MAX(event_id) AS max_event_id');
+            $notifyTable->whereAdd('event_id != 0');
+            $lastEvent = DB_DataObject::factory('Events');
+            if($notifyTable->find(true) && $lastEvent->get($notifyTable->max_event_id)) {
+                $ev = $lastEvent;
+            } else {
+                $ev = $this->addEvent('NOTIFY', $this->notify, "Notification event cleared (user has to many failures)" );;
+            }
+            $this->notify->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
+        }
+        
+        // let's work out the last notification sent to this user..
+        $l = DB_DataObject::factory($this->table);
+        $lar = array(
+                'ontable' => $this->notify->ontable,
+                'onid' => $this->notify->onid,
+        );
+        // only newer version of the database us this..
+        if (isset($this->notify->person_table)) {
+            $personid_col = strtolower($this->notify->person_table).'_id';
+            if (isset($this->notify->{$personid_col})) {
+                $lar[$personid_col] = $this->notify->{$personid_col};
+            }
+        }
+        $l->setFrom( $lar );       
+        $l->whereAdd('id != '. $this->notify->id);
+        $l->orderBy('sent DESC');
+        $l->limit(1);
+        $ar = $l->fetchAll('sent');
+        $last = empty($ar) ? date('Y-m-d H:i:s', 0) : $ar[0];
+         
+        // this may modify $p->email. (it will not update it though)
+        // may modify $this->notify->email_id
+        $this->email =  $this->makeEmail($this->notifyObject, $p, $last, $this->notify, $force);
+
+        if($this->notify->reachEmailLimit()) {
+            $ev = $this->addEvent('NOTIFY', $this->notify, "Notification event cleared (reach email limit)" );
+            $this->notify->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
+        }
+         
+        if ($this->email === true)  {
+            $ev = $this->addEvent('NOTIFY', $this->notify, "Notification event cleared (not required any more) - toEmail=true" );;
+            $this->notify->flagDone($ev, '');
+            $this->errorHandler( $ev->remarks);
+        }
+
+        if (is_a($this->email, 'PEAR_Error')) {
+            $this->email = array(
+                'error' => $this->email->toString()
+            );
+        }
+        if ((empty($p) || empty($p->id)) && !empty($this->email['recipients'])) {
+            // make a fake person..
+            $p = (object) array(
+                'email' => $this->email['recipients']
+            );
+        }
+        if ($this->email === false || isset($this->email['error']) || empty($p)) {
+            // object returned 'false' - it does not know how to send it..
+            $ev = $this->addEvent('NOTIFYFAIL', $this->notify, isset($this->email['error'])  ? $this->email['error'] : "INTERNAL ERROR  - We can not handle " . $this->notify->ontable); 
+            $this->notify->flagDone($ev, '');
+            $this->errorHandler(  $ev->remarks);
+        }
+        
+
+        if(empty($this->email['headers']['Date'])) {
+            $this->email['headers']['Date'] = date('r'); 
+        }
+         
+        
+        if (isset($this->email['later'])) {
+            $this->server->updateNotifyToNextServer($this->notify, $this->email['later'], true, $this->server_ipv6);
+            $this->errorHandler("Delivery postponed by email creator to {$this->email['later']}");
+        }
+        
+         
+        if (empty($this->email['headers']['Message-Id'])) {
+            $HOST = gethostname();
+            $this->email['headers']['Message-Id'] = "<{$this->table}-{$id}@{$HOST}>";
+            
+        }
+        if(empty($this->email['headers']['X-Notify-Id'])) {
+            $this->email['headers']['X-Notify-Id'] = $this->notify->id;
+        }
+        if(empty($this->email['headers']['X-Notify-To-Id']) && !empty($p) && !empty($p->id)) {
+            $this->email['headers']['X-Notify-To-Id'] = $p->id;
+        }
+        if(empty($this->email['headers']['X-Notify-Recur-Id']) && $this->notify->ontable == 'core_notify_recur' && !empty($this->notify->onid)) {
+            $this->email['headers']['X-Notify-Recur-Id'] = $this->notify->onid;
+        }
+
+        // Populate to_email if empty - use the 'field' column to get correct email from person
+        // e.g. if field is 'email2', get $p->email2
+        $ww = clone($this->notify);
+        if (empty($ww->to_email)) {
+            $email_field = !empty($this->notify->field) ? $this->notify->field : 'email';
+            $ww->to_email = !empty($p->{$email_field}) ? trim($p->{$email_field}) : '';
+        }
+        
+        // Override with send-to from email content or CLI option
+        if (!empty($opts['send-to'])) {
+            $this->email['send-to'] = $opts['send-to'];
+        }
+        if (!empty($this->email['send-to'])) {
+            $ww->to_email = trim($this->email['send-to']);
+        }
+        
+        $explode_email = explode('@', $ww->to_email);
+        $dom = array_pop($explode_email);
+        $this->emailDomain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
+        $ww->domain_id = $this->emailDomain->id;
+        // if to_email has not been set!?
+        $ww->update($this->notify); // if nothing has changed this will not do anything.
+        $this->notify = clone($ww);
+
+        // make sure there is a correct domain_id in the notify record
+        // Fetch IPv6 server configuration if available
+        $this->server_ipv6 = null;
+        $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
+        $ipv6->autoJoin();
+        $ipv6->selectAdd('INET6_NTOA(ipv6_addr) as ipv6_addr_str');
+        if (!empty($this->notify->ipv6_id) && $ipv6->get($this->notify->ipv6_id)) {
+            $this->server_ipv6 = $ipv6;
+            $this->debug("IPv6: Loaded existing IPv6 for domain_id={$this->notify->domain_id}, address=" . ($ipv6->ipv6_addr_str ?: 'NOT SET'));
+        } else {
+            $this->debug("IPv6: domain_id is empty, cannot load IPv6");
+        }
+
+        require_once 'Validate.php';
+        if (!Validate::email($this->notify->to_email)) {
+            $p->updateFails(isset($this->notify->field) ? $this->notify->field : 'email', $p::BAD_EMAIL_FAILS);
+            $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "INVALID ADDRESS: " . $this->notify->to_email);
+            $this->notify->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
+        }
+
+        // the domain DOESN'T HAVE mx record in the recent dns check (within last 5 days)
+        // then DON't recheck dns
+        if(!$this->emailDomain->has_mx && strtotime($this->emailDomain->mx_updated) > strtotime('now - 5 day')) {
+            $ev = $this->addEvent('NOTIFYBADMX', $this->notify, "BAD ADDRESS - BAD DOMAIN - ". $this->notify->to_email );
+            $this->notify->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
+        }
+        
+     
+        $this->mxRecords = $this->mxs($this->emailDomain->domain);
+        if (method_exists($this->notify, 'updateDomainMX')) {
+            $this->notify->updateDomainMX(empty($this->mxRecords) ? 0 : 1);
+        }
+        $ww = clone($this->notify);
+
+        // we might fail doing this...
+        // need to handle temporary failure..
+        
+          // we try for 2 days..
+        $retry = 15;
+        if (strtotime($this->notify->act_start) <  strtotime('NOW - 1 HOUR')) {
+            // older that 1 hour.
+            $retry = 60;
+        }
+        
+        if (strtotime($this->notify->act_start) <  strtotime('NOW - 1 DAY')) {
+            // older that 1 day.
+            $retry = 120;
+        }
+        if (strtotime($this->notify->act_start) <  strtotime('NOW - 2 DAY')) {
+            // older that 1 day.
+            $retry = 240;
+        }
+        
+        if (empty($this->mxRecords)) {
+            // only retry for 1 day if the MX issue..
+            if ($retry < 240) {
+                $this->addEvent('NOTIFY', $this->notify, 'MX LOOKUP FAILED ' . $this->emailDomain->domain );
+                $this->notify->flagLater(date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES')));
+                $this->errorHandler("MX LOOKUP FAILED " . $this->emailDomain->domain);
+            }
+            $ev = $this->addEvent('NOTIFYBADMX', $this->notify, "BAD ADDRESS - BAD DOMAIN - ". $this->notify->to_email );
+            $this->notify->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
+        }
+
+        if (!$force && strtotime($this->notify->act_start) <  strtotime('NOW - 8 DAY')) {
+            $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "BAD ADDRESS - GIVE UP - ". $this->notify->to_email );
+            $this->notify->flagDone($ev, '');
+            $this->errorHandler(  $ev->remarks);
+        }
+        
+        $this->retryWhen = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
+        // we can only update act_when if it has not been sent already (only happens when running in force mode..)
+        // set act when if it's empty...
+        $this->notify->act_when =  (!$this->notify->act_when || $this->notify->act_when == '0000-00-00 00:00:00') ? $this->retryWhen : $this->notify->act_when;
+        $this->notify->update($ww);
+    }
+    
     function debug($str)
     {
         if (empty($this->cli_args['debug'])) {
