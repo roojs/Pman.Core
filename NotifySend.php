@@ -914,28 +914,6 @@ class Pman_Core_NotifySend extends Pman
             $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
         }
         
-        /*
-        ["52.101.144.0"]=>
-        string(44) "fortuneindia-com.mail.protection.outlook.com"
-        ["52.101.145.2"]=>
-        string(44) "fortuneindia-com.mail.protection.outlook.com"
-        ["52.101.145.0"]=>
-        string(44) "fortuneindia-com.mail.protection.outlook.com"
-        ["52.101.144.3"]=>
-        string(44) "fortuneindia-com.mail.protection.outlook.com"
-        ["142.251.8.27"]=>
-        string(18) "aspmx.l.google.com"
-        ["172.217.78.26"]=>
-        string(23) "alt1.aspmx.l.google.com"
-        ["142.250.101.27"]=>
-        string(23) "alt2.aspmx.l.google.com"
-        ["192.178.164.26"]=>
-        string(23) "alt3.aspmx.l.google.com"
-        ["172.253.135.26"]=>
-        string(23) "alt4.aspmx.l.google.com"
-
-        */
-        
         // Store ALL IPs BEFORE any filtering (for passing to next server)
         // An IP that blocks server X might not block server Y
         // This includes both IPv4 and IPv6 addresses
@@ -943,21 +921,6 @@ class Pman_Core_NotifySend extends Pman
         
         // If not using IPv6, use IPv4 addresses and skip blacklisted IPs
         if(!$use_ipv6) {
-            // FIXED QUERY RESULT FOR TESTING ONLY !!!!!
-            $mx_ip_map = array(
-                "52.101.144.0" => "fortuneindia-com.mail.protection.outlook.com",
-                // "52.101.145.2" => "fortuneindia-com.mail.protection.outlook.com",
-                // "52.101.145.0" => "fortuneindia-com.mail.protection.outlook.com",
-                // "52.101.144.3" => "fortuneindia-com.mail.protection.outlook.com",
-                "142.251.8.27" => "aspmx.l.google.com",
-                // "172.217.78.26" => "alt1.aspmx.l.google.com",
-                // "142.250.101.27" => "alt2.aspmx.l.google.com",
-                // "192.178.164.26" => "alt3.aspmx.l.google.com",
-                "172.253.135.26" => "alt4.aspmx.l.google.com",
-            );
-            // For testing: update allMxIps with test data
-            $this->allMxIps = array_keys($mx_ip_map);
-            
             // skip any blacklisted ip for this server
             $bl = DB_DataObject::factory('core_notify_blacklist');
             $bl->server_id = $this->server->id;
