@@ -998,12 +998,12 @@ class Pman_Core_NotifySend extends Pman
         return implode("@", $fromArr);
     }
 
-    function setUpIpv6($reason, $notify, $core_domain, $mxs, $retry_when)
+    function setUpIpv6($errmsg, $notify, $core_domain, $mxs, $retry_when)
     {
         $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
 
         // Build allocation reason with error details
-        $allocation_reason = $reason;
+        $allocation_reason = $errmsg;
         $allocation_reason .= "; Email: " . $notify->to_email;
         $allocation_reason .= "; Spamhaus detected: yes";
 
@@ -1021,7 +1021,7 @@ class Pman_Core_NotifySend extends Pman
             // no IPv6 can be set up -> don't retry
             $this->debug("IPv6: Setup failed");
 
-            $ev = $this->addEvent('NOTIFYBOUNCE', $w, ("IPv6 SET UP FAILED - " .  $errmsg);
+            $ev = $this->addEvent('NOTIFYBOUNCE', $w, "IPv6 SET UP FAILED - " .  $errmsg);
             $w->flagDone($ev, '');
             if (method_exists($w, 'matchReject')) {
                 $w->matchReject($errmsg);
