@@ -354,11 +354,11 @@ class Pman_Core_NotifySend extends Pman
                     }
 
                     // blacklist the ipv4 host which return spamhaus
-                    if($this->server->checkSmtpResponse($errmsg, $core_domain, $failedIp)) {
+                    if($this->server->checkSmtpResponse($errmsg, $this->emailDomain, $failedIp)) {
                         $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: $failedIp");
                         // if there is no more valid ipv4 hosts left
                         if(empty($validIps)) {
-                            $this->setUpIpv6($allocation_reason, $w, $core_domain, $mxs, $retry_when);
+                            $this->setUpIpv6($allocation_reason, $this->notify, $this->emailDomain, $this->mxRecords, $this->retryWhen);
                             return;
                         }
                     }
