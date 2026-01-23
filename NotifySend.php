@@ -813,6 +813,126 @@ class Pman_Core_NotifySend extends Pman
         $this->email = DB_DataObject::factory('core_notify_sender')->filterEmail($this->email, $this->notify);
     }
     
+    /**
+     * Send email via a specific SMTP host
+     * 
+     * @param string $smtp_host The SMTP host IP address
+     * @param string $mx The MX hostname
+     * @param object $ff The FlexyFramework instance
+     * @return string 'continue' to try next IP, 'break' to stop loop with failure
+     */
+    function send($smtp_host, $mx, $ff)
+    {
+        $this->debug_str = '';
+
+        require_once 'Pman/Core/NotifyRouter.php';
+        // $this->email['headers']['From'] may change when oauth is used and 'Send As' of the From User is used
+        $notifyRouter = new Pman_Core_NotifyRouter($this, array(
+            'smtpHost' => $smtp_host,
+            'mx' => $mx
+        ));
+        $mailer = $notifyRouter->mailer;
+
+        $emailHeaders = $this->email['headers'];
+
+        if($this->useIpv6 && $this->server_ipv6->is_spam_rejecting) {
+            $emailHeaders['From'] = $this->addDomainToEmail($emailHeaders['From'], $this->emailDomain->domain);
+          
+            if (!empty($emailHeaders['Reply-To'])) {
+                $emailHeaders['Reply-To'] = $this->addDomainToEmail($emailHeaders['Reply-To'], $this->emailDomain->domain);
+            }
+            $this->debug("IPv6: Spam rejecting, changing from address to {$emailHeaders['From']}");
+        }
+        
+        $res = $mailer->send($this->notify->to_email, $emailHeaders, $this->email['body']);
+
+        if (is_object($res)) {
+            $res->backtrace = array(); 
+        }
+        $this->debug("GOT response to send: ". print_r($res,true));
+
+        if ($res === true) {
+            // success....
+            
+            $successEventName = (empty($this->email['successEventName'])) ? 'NOTIFYSENT' : $this->email['successEventName'];
+            
+            $ev = $this->addEvent($successEventName, $this->notify, "{$this->notify->to_email} - {$this->email['headers']['Subject']}");
+            
+            $ev->writeEventLog($this->debug_str);
+             
+            $this->notify->flagDone($ev, $this->email['headers']['Message-Id']);
+             
+            // enable cc in notify..
+            if (!empty($this->email['headers']['Cc'])) {
+                $cmailer = Mail::factory('smtp',  isset($ff->Mail) ? $ff->Mail : array() );
+                $this->email['headers']['Subject'] = "(CC): " . $this->email['headers']['Subject'];
+                $cmailer->send($this->email['headers']['Cc'],    $this->email['headers'], $this->email['body']);
+                
+            }
+            
+            if (!empty($this->email['bcc'])) {
+                $cmailer = Mail::factory('smtp', isset($ff->Mail) ? $ff->Mail : array() );
+                $this->email['headers']['Subject'] = "(CC): " . $this->email['headers']['Subject'];
+                $res = $cmailer->send($this->email['bcc'],  $this->email['headers'], $this->email['body']);
+                if (!$res || is_a($res, 'PEAR_Error')) {
+                    echo "could not send bcc..\n";
+                } else {
+                    echo "Sent BCC to {$this->email['bcc']}\n";
+                }
+            }
+
+            if($this->notify->ontable == 'mail_imap_message_user' && $this->notify->evtype == 'MAIL') {
+                $this->notifyObject->postSend($this);
+            }
+             
+            $this->successHandler("Message to {$this->notify->to_email} was successfully sent\n".
+                                "Message Id: {$this->notify->id}\n" .
+                                "Subject: {$this->email['headers']['Subject']}"
+                              );
+        }
+
+        // remove the failed ip from the list of valid ip addresses
+        if(in_array($smtp_host, $this->validIps)) {
+            $this->validIps = array_diff($this->validIps, array($smtp_host));
+        }
+
+        // what type of error..
+        $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
+        if (!empty($res->code) && $res->code == 10001) {
+            // fake greylist if timed out.
+            $code = -1;
+        }
+        
+        if ($code < 0) {
+            $this->debug("Connection error with $smtp_host: " . $res->message);
+            return 'continue'; // try next IP address
+        }
+        // give up after 2 days..
+        if (in_array($code, array( 421, 450, 451, 452)) && strtotime($this->notify->act_start) > strtotime('NOW - 2 DAYS')) {
+            // try again later..
+            // check last event for this item..
+            $errmsg=  $res->userinfo['smtpcode'] . ': ' .$res->message ;
+            if (!empty($res->userinfo['smtptext'])) {
+                $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
+            }
+            $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLISTED - ' . $errmsg);
+            
+            // For 452 "out of storage" errors, wait 12 hours before retrying
+            $actual_retry_when = $this->retryWhen;
+            if ($code == 452 && stripos($errmsg, 'out of storage') !== false) {
+                $actual_retry_when = date('Y-m-d H:i:s', strtotime('NOW + 12 HOURS'));
+                $this->debug("Mailbox full - delaying retry to {$actual_retry_when}");
+            }
+            
+            $this->server->updateNotifyToNextServer($this->notify, $actual_retry_when, true, $this->server_ipv6);
+            
+            $this->errorHandler(  $ev->remarks);
+        }
+        
+        $this->failedIp = $smtp_host;
+        return 'break';
+    }
+    
     function debug($str)
     {
         if (empty($this->cli_args['debug'])) {
