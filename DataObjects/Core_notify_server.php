@@ -377,6 +377,15 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
+    /**
+     * Update the notify to the next server
+     * @param object $cn The notify object
+     * @param string $when The when to update the notify
+     * @param bool $allow_same Allow the same server
+     * @param object $server_ipv6 The server ipv6 object
+     * @param array $allIpv4s The all ipv4s
+     * @return bool True if the notify was updated to the next server, false otherwise
+     */
     function updateNotifyToNextServer( $cn , $when = false, $allow_same = false, $server_ipv6 = null, $allIpv4s = false)
     {
         if (!$this->id) {
