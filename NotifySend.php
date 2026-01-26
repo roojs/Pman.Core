@@ -417,7 +417,7 @@ class Pman_Core_NotifySend extends Pman
          
         
         if (isset($this->email['later'])) {
-            $this->server->updateNotifyToNextServer($this->notify, $this->email['later'], true, $this->server_ipv6);
+            $this->server->updateNotifyToNextServer($this->notify, $this->email['later'], true, $this->server_ipv6, $this->allMxIps);
             $this->errorHandler("Delivery postponed by email creator to {$this->email['later']}");
         }
         
@@ -686,7 +686,7 @@ class Pman_Core_NotifySend extends Pman
                     $this->debug("Mailbox full - delaying retry to {$actual_retry_when}");
                 }
                 
-                $this->server->updateNotifyToNextServer($this->notify, $actual_retry_when, true, $this->server_ipv6);
+                $this->server->updateNotifyToNextServer($this->notify, $actual_retry_when, true, $this->server_ipv6, $this->allMxIps);
                 
                 $this->errorHandler(  $ev->remarks);
             }
@@ -824,7 +824,7 @@ class Pman_Core_NotifySend extends Pman
         
         $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $this->notify->to_email);
         
-        $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6);
+        $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIps);
 
         
          
@@ -1000,7 +1000,7 @@ class Pman_Core_NotifySend extends Pman
             $this->debug("IPv6: Setup successful, will retry");
 
             $ev = $this->addEvent('NOTIFY', $this->notify, "GREYLISTED - {$errmsg}");
-            $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6);
+            $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIps);
             $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: {$errmsg}");
             // Successfully passed to next server, exit
             return;
