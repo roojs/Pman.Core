@@ -801,8 +801,7 @@ class Pman_Core_NotifySend extends Pman
                 $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLISTED - ' . $errmsg);
                 // Pass ALL MX IPs (not just validIps) so other servers can be properly checked
                 // An IP that blocks server X might not block server Y
-                $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIps)
-                );
+                $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIps);
                 $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: $errmsg");
                 // Successfully passed to next server, exit
                 return;
