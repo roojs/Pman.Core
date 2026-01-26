@@ -790,6 +790,7 @@ class Pman_Core_NotifySend extends Pman
 
                         // blacklisted
                         if($this->server->checkSmtpResponse($errmsg, $this->emailDomain)) {
+                            $this->debug("Server (id: {$this->server->id}) is blacklisted by the domain: {$this->emailDomain->domain}");
                             $shouldRetry = true;
                         }
                     }
