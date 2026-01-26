@@ -383,10 +383,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      * @param string $when The when to update the notify
      * @param bool $allow_same Allow the same server
      * @param object $server_ipv6 The server ipv6 object
-     * @param array $allIpv4s All available ipv4s from the mx hosts
+     * @param array $allMxIpv4s All available ipv4s from the mx hosts
      * @return bool True if the notify was updated to the next server, false otherwise
      */
-    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false, $server_ipv6 = null, $allIpv4s = false)
+    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false, $server_ipv6 = null, $allMxIpv4s = false)
     {
         if (!$this->id) {
             return;
@@ -432,7 +432,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             // check if the server is blacklisted by all given ipv4 hosts 
             else {
                 $blacklisted = true;
-                foreach($allIpv4s as $ip) {
+                foreach($allMxIpv4s as $ip) {
                     if (!$s->isBlacklistedByIp($ip)) {
                         $blacklisted = false;
                         break;
