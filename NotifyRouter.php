@@ -323,7 +323,9 @@ class Pman_Core_NotifyRouter
                 ");
                 
                 if($core_notify->count()){
-                    $this->notifySend->server->updateNotifyToNextServer( $this->notifySend->notify , date("Y-m-d H:i:s", time() + $seconds), true, $this->notifySend->server_ipv6);
+                    $this->notifySend->server->updateNotifyToNextServer(
+                        $this->notifySend->notify , date("Y-m-d H:i:s", time() + $seconds), 
+                        true, $this->notifySend->server_ipv6, $this->notifySend->allMxIps);
                     $this->errorHandler( " Too many emails sent by {$this->notifySend->emailDomain->domain} - requeing");
                 }
                 
