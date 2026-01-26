@@ -378,7 +378,7 @@ class Pman_Core_NotifySend extends Pman
          
         // this may modify $p->email. (it will not update it though)
         // may modify $this->notify->email_id
-        $this->email =  $this->makeEmail($this->notifyObject, $p, $last, $this->notify, $force);
+        $this->email =  $this->makeEmail($this->notifyObject, $p, $last, $this->notify, $this->force);
 
         if($this->notify->reachEmailLimit()) {
             $ev = $this->addEvent('NOTIFY', $this->notify, "Notification event cleared (reach email limit)" );
