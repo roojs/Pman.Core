@@ -918,7 +918,7 @@ class Pman_Core_NotifySend extends Pman
             $mx_ip_map = array(
                 '52.101.145.0' => 'fortuneindia-com.mail.protection.outlook.com.',
                 '52.101.145.0' => 'fortuneindia-com.mail.protection.outlook.com.'
-            )
+            );
         }
         
         // Store ALL IPs BEFORE any filtering (for passing to next server)
