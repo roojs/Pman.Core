@@ -670,16 +670,15 @@ class Pman_Core_NotifySend extends Pman
                 continue; // try next IP address
             }
 
-            $errmsg=   $this->lastSmtpResponse->userinfo['smtpcode'] . ': ' .$this->lastSmtpResponse->toString();
-            if (isset($this->lastSmtpResponse->userinfo['smtptext'])) {
-                $errmsg=  $this->lastSmtpResponse->userinfo['smtpcode'] . ':' . $this->lastSmtpResponse->userinfo['smtptext'];
-            }
-            
-            // Check if error message contains spamhaus (case-insensitive)
-            // If spamhaus is found, continue current behavior (don't pass to next server)
-            $is_spamhaus = stripos($errmsg, 'spam') !== false 
-                || stripos($errmsg, 'in rbl') !== false 
-                || stripos($errmsg, 'reputation') !== false ;
+            // $errmsg=   $this->lastSmtpResponse->userinfo['smtpcode'] . ': ' .$this->lastSmtpResponse->toString();
+            // if (isset($this->lastSmtpResponse->userinfo['smtptext'])) {
+            //     $errmsg=  $this->lastSmtpResponse->userinfo['smtpcode'] . ':' . $this->lastSmtpResponse->userinfo['smtptext'];
+            // }
+            // // Check if error message contains spamhaus (case-insensitive)
+            // // If spamhaus is found, continue current behavior (don't pass to next server)
+            // $is_spamhaus = stripos($errmsg, 'spam') !== false 
+            //     || stripos($errmsg, 'in rbl') !== false 
+            //     || stripos($errmsg, 'reputation') !== false ;
 
             // give up after 2 days..
             if (in_array($code, array( 421, 450, 451, 452)) && strtotime($this->notify->act_start) > strtotime('NOW - 2 DAYS')) {
