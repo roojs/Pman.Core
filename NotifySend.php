@@ -756,8 +756,6 @@ class Pman_Core_NotifySend extends Pman
                         $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: {$this->failedIp}");
                         // if there is no more valid ipv4 hosts left
                         if(empty($this->validIps)) {
-                            var_dump($this->validIps);
-                            die('test');
                             $this->setUpIpv6($allocation_reason);
                             return;
                         }
