@@ -510,6 +510,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $bl = DB_DataObject::factory('core_notify_blacklist');
         $bl->server_id = $this->id;
         $bl->domain_id = $cd->id;
+        // not blacklisted by ip
+        $bl->whereAdd("ip = 0x0");
         if ($bl->count()) {
             $cache[$this->id . '-'. $dom] = true;
             return true;
