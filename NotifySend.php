@@ -932,6 +932,9 @@ class Pman_Core_NotifySend extends Pman
         // An IP that blocks server X might not block server Y
         // This includes both IPv4 and IPv6 addresses
         $this->allMxIps = array_keys($mx_ip_map);
+
+        var_dump($this->allMxIps);
+        die('test');
         
         // If not using IPv6, use IPv4 addresses and skip blacklisted IPs
         if(!$use_ipv6) {
