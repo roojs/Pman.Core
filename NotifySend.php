@@ -576,6 +576,7 @@ class Pman_Core_NotifySend extends Pman
 
         var_dump("VALID IPS");
         var_dump($this->validIps);
+        die('test');
 
         // Note: $this->allMxIps is populated in convertMxsToIpMap() BEFORE filtering
         // Note: $this->validIps is populated in convertMxsToIpMap() AFTER filtering
