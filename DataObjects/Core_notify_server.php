@@ -438,7 +438,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 }
             }
 
-            $blacklisted = $blacklistedByDomain && $blacklistedByAllMxIpv4s;
+            // if the server is blacklisted by the email domain or blocked by Spamhaus on all MX hosts' IPv4 addresses, it is blacklisted
+            $blacklisted = $blacklistedByDomain || $blacklistedByAllMxIpv4s;
 
             if(!$blacklisted) {
                 $good = $s;
