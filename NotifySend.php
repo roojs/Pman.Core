@@ -705,6 +705,7 @@ class Pman_Core_NotifySend extends Pman
     {
         // Not using IPv6 AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted (blocked by spamhaus)
         if(!$this->fail && !$this->useIpv6 && empty($this->validIps) && $this->isAnyIpv4Blacklisted) {
+            
             $this->setUpIpv6("No more valid ipv4 address left for server (id: {$this->server->id})");
         }
         
@@ -755,6 +756,7 @@ class Pman_Core_NotifySend extends Pman
                         $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: {$this->failedIp}");
                         // if there is no more valid ipv4 hosts left
                         if(empty($this->validIps)) {
+                            var_dump($this->validIps);
                             $this->setUpIpv6($allocation_reason);
                             return;
                         }
