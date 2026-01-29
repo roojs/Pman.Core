@@ -932,7 +932,7 @@ class Pman_Core_NotifySend extends Pman
         
         // If not using IPv6, use IPv4 addresses and skip blacklisted IPs
         if(!$use_ipv6) {
-            // skip any blacklisted ip for this server (blocked by spamhaus)
+            // skip any blacklisted ip on which the server is blocked by Spamhaus
             $bl = DB_DataObject::factory('core_notify_blacklist');
             $bl->server_id = $this->server->id;
             $bl->whereAdd('ip IS NOT NULL');
