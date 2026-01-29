@@ -273,9 +273,6 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $this->force);
-        // for testing
-        $this->server = DB_DataObject::Factory('core_notify_server');
-        $this->server->get($this->notify->server_id);
         
 
         // Check if server is disabled or not found - exit gracefully (unless force is set)
@@ -753,7 +750,7 @@ class Pman_Core_NotifySend extends Pman
             // smtpcode > 500 (permanent failure)
             $smtpcode = isset($this->lastSmtpResponse->userinfo['smtpcode']) ? $this->lastSmtpResponse->userinfo['smtpcode'] : 0;
 
-            //
+            // there may be 4XX spamhaus errors, we may need to set up ipv6 before retrying directly
             if(!empty($smtpcode) && ($smtpcode > 500 || $smtpcode > 400 && $is_spamhaus)) {
                 // spamhaus - not using ipv6 -> try setting up ipv6
                 if($is_spamhaus && empty($this->server_ipv6)) {
