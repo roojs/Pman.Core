@@ -752,7 +752,9 @@ class Pman_Core_NotifySend extends Pman
 
             // smtpcode > 500 (permanent failure)
             $smtpcode = isset($this->lastSmtpResponse->userinfo['smtpcode']) ? $this->lastSmtpResponse->userinfo['smtpcode'] : 0;
-            if(!empty($smtpcode) && $smtpcode > 500) {
+
+            //
+            if(!empty($smtpcode) && ($smtpcode > 500 || $smtpcode > 400 && $is_spamhaus)) {
                 // spamhaus - not using ipv6 -> try setting up ipv6
                 if($is_spamhaus && empty($this->server_ipv6)) {
                     $shouldRetry = true;
