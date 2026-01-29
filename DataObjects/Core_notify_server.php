@@ -462,7 +462,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     }
 
     /**
-     * Check if this server is blacklisted for the given ip
+     * Check if this server is blocked by Spamhaus on the given ip
      * @param string $ip The ip address
      * @return bool True if the server is blacklisted, false otherwise
      */
