@@ -757,6 +757,7 @@ class Pman_Core_NotifySend extends Pman
                         // if there is no more valid ipv4 hosts left
                         if(empty($this->validIps)) {
                             var_dump($this->validIps);
+                            die('test');
                             $this->setUpIpv6($allocation_reason);
                             return;
                         }
