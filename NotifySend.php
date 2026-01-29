@@ -912,6 +912,14 @@ class Pman_Core_NotifySend extends Pman
             }
             $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
         }
+
+        if(!$use_ipv6) {
+            // sample ipv4 ips
+            $mx_ip_map = array(
+                '52.101.145.0' => 'fortuneindia-com.mail.protection.outlook.com.',
+                '52.101.145.0' => 'fortuneindia-com.mail.protection.outlook.com.'
+            )
+        }
         
         // Store ALL IPs BEFORE any filtering (for passing to next server)
         // An IP that blocks server X might not block server Y
