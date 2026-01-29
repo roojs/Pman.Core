@@ -574,10 +574,6 @@ class Pman_Core_NotifySend extends Pman
         $this->useIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
         $mx_ip_map = $this->convertMxsToIpMap($this->mxRecords, $this->useIpv6);
 
-        var_dump("VALID IPS");
-        var_dump($this->validIps);
-        die('test');
-
         // Note: $this->allMxIps is populated in convertMxsToIpMap() BEFORE filtering
         // Note: $this->validIps is populated in convertMxsToIpMap() AFTER filtering
 
