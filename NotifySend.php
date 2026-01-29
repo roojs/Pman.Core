@@ -680,10 +680,6 @@ class Pman_Core_NotifySend extends Pman
                 || stripos($errmsg, 'in rbl') !== false 
                 || stripos($errmsg, 'reputation') !== false ;
 
-            var_dump($is_spamhaus);
-            var_dump($code);
-            die('test');
-
             // give up after 2 days..
             if (in_array($code, array( 421, 450, 451, 452)) && strtotime($this->notify->act_start) > strtotime('NOW - 2 DAYS')) {
                 // try again later..
