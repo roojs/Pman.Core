@@ -918,6 +918,7 @@ class Pman_Core_NotifySend extends Pman
             // sample ipv4 ips
             $mx_ip_map = array(
                 '52.101.145.0' => 'fortuneindia-com.mail.protection.outlook.com.',
+                '52.101.145.1' => 'fortuneindia-com.mail.protection.outlook.com.',
                 '52.101.145.2' => 'fortuneindia-com.mail.protection.outlook.com.'
             );
         }
