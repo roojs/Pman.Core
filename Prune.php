@@ -84,8 +84,8 @@ class Pman_Core_Prune extends Pman
        
       
         $this->pruneEventDupes();
-        $this->archiveNotify($inM);
-        $this->archiveEvents($inM);
+        $this->pruneNotify($inM);
+        $this->pruneEvents($inM);
     }
       
     function pruneEventDupes( )
