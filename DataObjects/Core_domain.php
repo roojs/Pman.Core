@@ -454,6 +454,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $res->code == 550 && preg_match('/does not exist/i', $errorMessage)
                 ||
                 $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
+                ||
+                $res->code == 550 && preg_match('/User unknown/i', $errorMessage)
             ) {
                 return "This email is invalid - we tested it and it does not exist";
             }
