@@ -125,14 +125,20 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
         );
         $this->success_30m = $success_30m->count();
 
-        // failed_30m: notify rows whose event_id points to Event with NOTIFYFAIL/NOTIFYBOUNCE in last N minutes
-        $failed_cn = clone $cn;
-        $failed_cn->autoJoin();
-        $failed_cn->whereAdd(
-            "join_event_id_id.action IN ('NOTIFYFAIL', 'NOTIFYBOUNCE')
-            AND join_event_id_id.event_when > NOW() - INTERVAL {$minutes} MINUTE"
+        // failed_30m: query Events for ids, then count notify where event_id IN (ids)
+        $events = DB_DataObject::factory('Events');
+        $events->whereAdd(
+            "action IN ('NOTIFYFAIL', 'NOTIFYBOUNCE')
+            AND event_when > NOW() - INTERVAL {$minutes} MINUTE"
         );
-        $this->failed_30m = $failed_cn->count();
+        $event_ids = array_keys($events->fetchAll('id'));
+        $failed_cn = clone $cn;
+        if ($event_ids) {
+            $failed_cn->whereAddIn('event_id', $event_ids, 'int');
+            $this->failed_30m = $failed_cn->count();
+        } else {
+            $this->failed_30m = 0;
+        }
 
         // total_delivered: delivered rows still in table (sent set, msgid set, event_id > 0)
         $total_delivered = clone $cn;
