@@ -72,6 +72,12 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
             'min' => 1,
             'max' => 1,
         ),
+        'debug' => array(
+            'desc' => 'Enable debug mode (DB_DataObject::debugLevel(1))',
+            'default' => false,
+            'short' => 'd',
+            'max' => 1,
+        ),
     );
 
     var $opts = array();
@@ -94,6 +100,9 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
     function get($m = "", $opts = array())
     {
         $this->opts = $opts;
+        if (!empty($opts['debug'])) {
+            DB_DataObject::debugLevel(1);
+        }
         $minutes = (int) $opts['minutes'];
 
         $cn = DB_DataObject::factory($this->notifyTable);
