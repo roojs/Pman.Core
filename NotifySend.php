@@ -274,7 +274,7 @@ class Pman_Core_NotifySend extends Pman
                 $e = DB_DataObject::factory('Events');
                 $e->get($this->notify->event_id);
                 if($e->action != 'NOTIFYSENT') {
-                    $this->errorHandler("failed and given up\n");
+                    $this->errorHandler("failed and given up - event_id: {$this->notify->event_id}\n");
                 }
             }
             $this->errorHandler("already sent - repeat to early\n");
