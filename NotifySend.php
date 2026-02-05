@@ -880,6 +880,8 @@ class Pman_Core_NotifySend extends Pman
     function convertMxsToIpMap($mxs, $use_ipv6 = false)
     {
         $mx_ip_map = array();
+        $mx_ipv6_map = array();
+        $mx_ipv4_map = array();
         
         foreach ($mxs as $mx) {
             // Resolve IPv6 addresses if and only if using IPv6
@@ -892,7 +894,7 @@ class Pman_Core_NotifySend extends Pman
                             continue;
                         }
 
-                        $mx_ip_map[$record['ipv6']] = $mx;
+                        $mx_ipv6_map[$record['ipv6']] = $mx;
                         
                     }
                 }
@@ -906,18 +908,20 @@ class Pman_Core_NotifySend extends Pman
                     if (empty($record['ip'])) {
                         continue;
                     }
-                    $mx_ip_map[$record['ip']] = $mx;
+                    $mx_ipv4_map[$record['ip']] = $mx;
                 }
             }
             
             // Also check hostname lookup (gethostbyname) as hosts file might override A record
             $hostname_ip = @gethostbyname($mx);
             if (!empty($hostname_ip) && filter_var($hostname_ip, FILTER_VALIDATE_IP)) {
-                // $mx_ip_map[$hostname_ip] = $mx;
+                $mx_ip_map[$hostname_ip] = $mx;
                 $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
             }
             
         }
+
+        die('test');
 
         // If no IPs resolved, fall back to hostnames
         if (empty($mx_ip_map)) {
