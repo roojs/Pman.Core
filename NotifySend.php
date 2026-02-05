@@ -713,8 +713,8 @@ class Pman_Core_NotifySend extends Pman
      */
     function postSend()
     {
-        // Not using IPv6 AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted (blocked by spamhaus)
-        if(!$this->fail && !$this->useIpv6 && empty($this->validIps) && $this->isAnyIpv4Blacklisted) {
+        // No IPv6 mapping AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted (blocked by spamhaus)
+        if(!$this->fail && !$this->hasIpv6 && empty($this->validIps) && $this->isAnyIpv4Blacklisted) {
             
             $this->setUpIpv6("No more valid ipv4 address left for server (id: {$this->server->id})");
         }
@@ -754,7 +754,7 @@ class Pman_Core_NotifySend extends Pman
             // there may be 4XX spamhaus errors, we may need to set up ipv6 before retrying directly
             if(!empty($smtpcode) && ($smtpcode > 500 || $smtpcode > 400 && $is_spamhaus)) {
                 // spamhaus - not using ipv6 -> try setting up ipv6
-                if($is_spamhaus && empty($this->server_ipv6)) {
+                if($is_spamhaus && !$this->hasIpv6) {
                     $shouldRetry = true;
                     $this->debug("IPv6: Spamhaus detected (code: $smtpcode)");
                     // Build allocation reason with error details
