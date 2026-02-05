@@ -79,6 +79,29 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
     var $core_events_archive_total;
 
     /**
+     * Fast approximate row counts for all tables (one information_schema query, keyed by table name).
+     *
+     * @return array table_name => TABLE_ROWS (int)
+     */
+    function tableRowsApproxMap()
+    {
+        $do = DB_DataObject::factory('Events');
+        $do->query( "
+            SELECT
+                 TABLE_NAME AS table_name, TABLE_ROWS AS table_rows
+            FROM
+                 information_schema.TABLES
+            WHERE
+                 TABLE_SCHEMA = DATABASE()"
+        );
+        $map = array();
+        while ($do->fetch()) {
+            $map[$do->table_name] = (int) $do->table_rows;
+        }
+        return $map;
+    }
+
+    /**
      * Parse "warning:critical" threshold string, return array(warn, crit).
      */
     function parseThreshold($str)
@@ -162,11 +185,10 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
         );
         $this->total_delivered = $total_delivered->count();
 
-        $pna = DB_DataObject::factory($this->notifyTable . '_archive');
-        $this->pressrelease_notify_archive_total = $pna->count();
-
-        $cea = DB_DataObject::factory('core_events_archive');
-        $this->core_events_archive_total = $cea->count();
+        $tableRows = $this->tableRowsApproxMap();
+        $notifyArchiveTable = $this->notifyTable . '_archive';
+        $this->pressrelease_notify_archive_total = isset($tableRows[$notifyArchiveTable]) ? $tableRows[$notifyArchiveTable] : 0;
+        $this->core_events_archive_total = isset($tableRows['core_events_archive']) ? $tableRows['core_events_archive'] : 0;
 
         $this->outputNagiosResults();
     }
@@ -186,22 +208,66 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
         list($pr_arch_w, $pr_arch_c) = $this->parseThreshold($this->opts['notify-archive']);
         list($core_arch_w, $core_arch_c) = $this->parseThreshold($this->opts['event-archive']);
 
-        if ($this->due_untried >= $unread_c || $this->tried_failed_pending >= $tried_c || $this->total_delivered >= $delivered_c || $this->failed_30m >= $failed_c || $this->pressrelease_notify_archive_total >= $pr_arch_c || $this->core_events_archive_total >= $core_arch_c) {
+        $reasons = array();
+        if ($this->due_untried >= $unread_c) {
             $overall = 2;
-        } elseif ($this->due_untried >= $unread_w || $this->tried_failed_pending >= $tried_w || $this->total_delivered >= $delivered_w || $this->failed_30m >= $failed_w || $this->pressrelease_notify_archive_total >= $pr_arch_w || $this->core_events_archive_total >= $core_arch_w) {
+            $reasons[] = 'due_untried critical';
+        } elseif ($this->due_untried >= $unread_w) {
             $overall = max($overall, 1);
+            $reasons[] = 'due_untried warning';
+        }
+        if ($this->tried_failed_pending >= $tried_c) {
+            $overall = 2;
+            $reasons[] = 'tried_failed critical';
+        } elseif ($this->tried_failed_pending >= $tried_w) {
+            $overall = max($overall, 1);
+            $reasons[] = 'tried_failed warning';
+        }
+        if ($this->total_delivered >= $delivered_c) {
+            $overall = 2;
+            $reasons[] = 'total_delivered critical';
+        } elseif ($this->total_delivered >= $delivered_w) {
+            $overall = max($overall, 1);
+            $reasons[] = 'total_delivered warning';
+        }
+        if ($this->failed_30m >= $failed_c) {
+            $overall = 2;
+            $reasons[] = 'failed_30m critical';
+        } elseif ($this->failed_30m >= $failed_w) {
+            $overall = max($overall, 1);
+            $reasons[] = 'failed_30m warning';
+        }
+        if ($this->pressrelease_notify_archive_total >= $pr_arch_c) {
+            $overall = 2;
+            $reasons[] = 'notify_archive critical';
+        } elseif ($this->pressrelease_notify_archive_total >= $pr_arch_w) {
+            $overall = max($overall, 1);
+            $reasons[] = 'notify_archive warning';
+        }
+        if ($this->core_events_archive_total >= $core_arch_c) {
+            $overall = 2;
+            $reasons[] = 'event_archive critical';
+        } elseif ($this->core_events_archive_total >= $core_arch_w) {
+            $overall = max($overall, 1);
+            $reasons[] = 'event_archive warning';
         }
 
-        printf(
-            "%s - due_untried=%d tried_failed=%d success_30m=%d failed_30m=%d total_delivered=%d pr_notify_arch=%d core_events_arch=%d | due_untried=%d;%d;%d;; tried_failed=%d;%d;%d;; success_30m=%d;;;; failed_30m=%d;%d;%d;; total_delivered=%d;%d;%d;; pr_notify_arch=%d;%d;%d;; core_events_arch=%d;%d;%d;;\n",
-            $statusStr[$overall],
+        $msg = $reasons ? implode('; ', $reasons) . ' - ' : '';
+        $msg .= sprintf(
+            "due_untried=%d tried_failed=%d success_30m=%d failed_30m=%d total_delivered=%d pr_notify_arch=%d core_events_arch=%d",
             $this->due_untried,
             $this->tried_failed_pending,
             $this->success_30m,
             $this->failed_30m,
             $this->total_delivered,
             $this->pressrelease_notify_archive_total,
-            $this->core_events_archive_total,
+            $this->core_events_archive_total
+        );
+
+        printf(
+            "%s - %s | due_untried=%d;%d;%d;; tried_failed=%d;%d;%d;; success_30m=%d;;;; failed_30m=%d;%d;%d;; total_delivered=%d;%d;%d;; pr_notify_arch=%d;%d;%d;; core_events_arch=%d;%d;%d;;\n",
+            $statusStr[$overall],
+            $msg,
             $this->due_untried,
             $unread_w,
             $unread_c,
