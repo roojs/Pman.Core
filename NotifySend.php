@@ -777,14 +777,15 @@ class Pman_Core_NotifySend extends Pman
                 else {
                     $reason = array();
                     if (!$is_spamhaus) $reason[] = "not spamhaus";
-                    if (!empty($this->server_ipv6)) {
+                    if ($this->hasIpv6) {
                         $reason[] = "IPv6 already exists (" . ($this->server_ipv6->ipv6_addr_str ?: 'no address') . ")";
 
+                        // using IPv6 AND
                         // is spamhaus AND 
                         // IPv6 already exists AND 
                         // this ip mapping is not already spam rejecting AND 
                         // this ip mapping does not have a reverse pointer
-                        if($is_spamhaus && !$this->server_ipv6->is_spam_rejecting && !$this->server_ipv6->has_reverse_ptr) {
+                        if($this->useIpv6 && $is_spamhaus && !$this->server_ipv6->is_spam_rejecting && !$this->server_ipv6->has_reverse_ptr) {
                             $old = clone($this->server_ipv6);
                             $this->server_ipv6->is_spam_rejecting = 1;
                             $this->server_ipv6->update($old);
