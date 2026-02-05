@@ -806,6 +806,9 @@ class Pman_Core_NotifySend extends Pman
                                     $this->debug("IPv6: Fallback to use ipv4 and there are some valid ipv4 hosts left");
                                     $shouldRetry = true;
                                 }
+                                else {
+                                    $this->debug("IPv6: Fallback to use ipv4 but there are no valid ipv4 hosts left");
+                                }
                             }
                         }
                         
