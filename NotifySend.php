@@ -987,10 +987,6 @@ class Pman_Core_NotifySend extends Pman
                 // don't need to skip any blacklisted ip
             }
         }
-
-        var_dump($mx_ip_map);
-
-        die('test');
         
         // Set validIps AFTER filtering (these are the IPs we'll actually try)
         $this->validIps = array_keys($mx_ip_map);
