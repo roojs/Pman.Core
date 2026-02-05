@@ -578,7 +578,7 @@ class Pman_Core_NotifySend extends Pman
             if($serverFromIpv6 === false || $serverFromIpv6->id != $this->server->id) {
                 // the ipv6 mapping is not for the current server
                 $this->useIpv6 = false;
-                $this->debug("IPv6: The ipv6 mapping is not for the current server");
+                $this->debug("IPv6: The ipv6 mapping is not for the current server. Fallback to use IPv4.");
             }
         }
         $mx_ip_map = $this->convertMxsToIpMap($this->mxRecords);
