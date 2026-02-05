@@ -913,13 +913,6 @@ class Pman_Core_NotifySend extends Pman
             }
         }
 
-        // Store ALL IPv4s BEFORE any filtering (for passing to next server)
-        // An IP that blocks server X might not block server Y
-        // This includes only IPv4 addresses
-        $this->allMxIpv4s = array_keys($mx_ipv4_map);
-
-        die('test');
-
         // If no IPs resolved, fall back to hostnames
         if (empty($mx_ip_map)) {
             foreach ($mxs as $mx) {
@@ -927,6 +920,11 @@ class Pman_Core_NotifySend extends Pman
             }
             $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
         }
+        
+        // Store ALL IPv4s BEFORE any filtering (for passing to next server)
+        // An IP that blocks server X might not block server Y
+        // This includes only IPv4 addresses
+        $this->allMxIpv4s = array_keys($mx_ipv4_map);
         
         // If not using IPv6, use IPv4 addresses and skip blacklisted IPs
         if(!$use_ipv6) {
