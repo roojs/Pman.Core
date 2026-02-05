@@ -97,7 +97,7 @@ class Pman_Core_Prune extends Pman
       
         $this->pruneEventDupes();
         $this->pruneNotify($inM);
-        $this->pruneNotifyArchive($this->opts['notify-archive-months'] ?? 6);
+        $this->pruneNotifyArchive($this->opts['notify-archive-months']);
         $this->pruneEvents($inM);
     }
       
@@ -150,8 +150,12 @@ class Pman_Core_Prune extends Pman
      */
     function pruneNotifyArchive($months = 6)
     {
+        $months = (int) $months;
         $cn = DB_DataObject::Factory('core_notify_archive');
+        $nbefore = $cn->count();
         $cn->deleteOldFailed($months);
+        $nafter = DB_DataObject::Factory('core_notify_archive')->count();
+        echo "DELETED : " . ($nbefore - $nafter) . "/{$nbefore} core_notify_archive records\n";
     }
 
     function pruneEvents($inM)
