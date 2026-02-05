@@ -981,9 +981,6 @@ class Pman_Core_NotifySend extends Pman
                 }
             }
         }
-
-        var_dump($mx_ip_map);
-        die('test');
         
         // Set validIps AFTER filtering (these are the IPs we'll actually try)
         $this->validIps = array_keys($mx_ip_map);
