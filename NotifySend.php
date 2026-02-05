@@ -270,7 +270,13 @@ class Pman_Core_NotifySend extends Pman
         }
 
         if (!$this->force && !empty($this->notify->sent) && strtotime($this->notify->act_when) < strtotime($this->notify->sent)) {
-            var_dump($this->notify);
+            if(!empty($this->notify->event_id)) {
+                $e = DB_DataObject::factory('Events');
+                $e->get($this->notify->event_id);
+                if($e->action != 'NOTIFYSENT') {
+                    $this->errorHandler("failed and given up\n");
+                }
+            }
             $this->errorHandler("already sent - repeat to early\n");
         }
         
