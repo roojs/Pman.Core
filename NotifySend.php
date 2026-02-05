@@ -805,6 +805,7 @@ class Pman_Core_NotifySend extends Pman
                                 if(!empty($this->validIps)) {
                                     $this->debug("IPv6: Fallback to use ipv4 and there are some valid ipv4 hosts left");
                                     $shouldRetry = true;
+                                    $this->server_ipv6 = null; // reset server_ipv6 to avoid retrying only in server with the ipv6 mapping
                                 }
                                 else {
                                     $this->debug("IPv6: Fallback to use ipv4 but there is no valid ipv4 host left");
