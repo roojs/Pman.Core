@@ -794,7 +794,7 @@ class Pman_Core_NotifySend extends Pman
                             // Retry after setting spam rejecting
                             $shouldRetry = true;
                         }
-                        
+
                         // The ipv6 addresses sometimes are removed from the mx host,
                         // we fallback to use ipv4 on which the server is not blocked by Spamhaus
                         if(!$this->useIpv6 && $is_spamhaus) {
@@ -803,6 +803,7 @@ class Pman_Core_NotifySend extends Pman
                                 $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: {$this->failedIp}");
                                 // if there are some valid ipv4 hosts left, retry with the next server
                                 if(!empty($this->validIps)) {
+                                    $this->debug("IPv6: Fallback to use ipv4 on which the server is not blocked by Spamhaus");
                                     $shouldRetry = true;
                                 }
                             }
@@ -998,7 +999,7 @@ class Pman_Core_NotifySend extends Pman
             // no ipv6 addresses, fallback to use ipv4 on which the server is not blocked by Spamhaus
             if(empty($mx_ip_map)) {
                 $mx_ip_map = $mx_ipv4_map;
-                $this->debug("DNS: No IPv6 addresses resolved, using IPv4 addresses");
+                $this->debug("DNS: No IPv6 addresses resolved, fallback to use IPv4 addresses");
 
                 // skip any blacklisted ip on which the server is blocked by Spamhaus
                 $bl = DB_DataObject::factory('core_notify_blacklist');
