@@ -979,7 +979,14 @@ class Pman_Core_NotifySend extends Pman
                     }
                 }
             }
+
+            if(empty($mx_ip_map)) {
+                $mx_ip_map = $mx_ipv4_map;
+                $this->debug("DNS: No IPv6 addresses resolved, using IPv4 addresses");
+            }
         }
+
+        var_dump($mx_ip_map);
 
         die('test');
         
