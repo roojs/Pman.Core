@@ -571,7 +571,7 @@ class Pman_Core_NotifySend extends Pman
         $this->fail = false;
         
         // Convert MX hostnames to map of IP addresses => domain
-        $this->useIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
+        $this->hasIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
         $mx_ip_map = $this->convertMxsToIpMap($this->mxRecords);
 
         // ip address that failed the SMTP check
