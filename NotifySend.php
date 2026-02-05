@@ -884,21 +884,17 @@ class Pman_Core_NotifySend extends Pman
         $mx_ipv4_map = array();
         
         foreach ($mxs as $mx) {
-            // Resolve IPv6 addresses if and only if using IPv6
-            if($use_ipv6) {
-                // Resolve IPv6 addresses (AAAA records)
-                $ipv6_records = @dns_get_record($mx, DNS_AAAA);
-                if (!empty($ipv6_records)) {
-                    foreach ($ipv6_records as $record) {
-                        if (empty($record['ipv6'])) {
-                            continue;
-                        }
-
-                        $mx_ipv6_map[$record['ipv6']] = $mx;
-                        
+            // Resolve IPv6 addresses (AAAA records)
+            $ipv6_records = @dns_get_record($mx, DNS_AAAA);
+            if (!empty($ipv6_records)) {
+                foreach ($ipv6_records as $record) {
+                    if (empty($record['ipv6'])) {
+                        continue;
                     }
+
+                    $mx_ipv6_map[$record['ipv6']] = $mx;
+                    
                 }
-                continue;
             }
             
             // Resolve IPv4 addresses (A records)
