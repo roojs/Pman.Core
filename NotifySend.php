@@ -950,7 +950,7 @@ class Pman_Core_NotifySend extends Pman
                 }
             }
         }
-        // If the ipv6 mapping has a reverse pointer and the domain of the ipv6 mapping does not match the suffix of the mx host,
+        // If the ipv6 mapping does not have a reverse pointer and the domain of the ipv6 mapping does not match the suffix of the mx host,
         // skip the mx host
         // e.g. 
         // mx host: aspmx.l.google.com
@@ -974,7 +974,7 @@ class Pman_Core_NotifySend extends Pman
                         }
                     }
                     if(!$match) {
-                        $this->debug("DNS: Skipping host $mx because it's suffix match no domain mapped to the current server's IPv6 address: " . $this->server_ipv6->ipv6_addr_str);
+                        $this->debug("DNS: Skipping host $mx because no domain mapped to the current server's IPv6 address (" . $this->server_ipv6->ipv6_addr_str . ") matches the suffix of the mx host");
                         unset($mx_ip_map[$ip]);
                     }
                 }
