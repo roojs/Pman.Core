@@ -879,6 +879,7 @@ class Pman_Core_NotifySend extends Pman
      */
     function convertMxsToIpMap($mxs, $use_ipv6 = false)
     {
+        $mx_ip_map = array();
         $mx_ipv6_map = array();
         $mx_ipv4_map = array();
         
@@ -913,6 +914,7 @@ class Pman_Core_NotifySend extends Pman
                 $mx_ipv4_map[$hostname_ip] = $mx;
                 $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
             }
+        }
             
 
         die('test');
