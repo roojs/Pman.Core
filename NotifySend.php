@@ -803,7 +803,7 @@ class Pman_Core_NotifySend extends Pman
                                 $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: {$this->failedIp}");
                                 // if there are some valid ipv4 hosts left, retry with the next server
                                 if(!empty($this->validIps)) {
-                                    $this->debug("IPv6: Fallback to use ipv4 on which the server is not blocked by Spamhaus");
+                                    $this->debug("IPv6: Fallback to use ipv4 and there are some valid ipv4 hosts left");
                                     $shouldRetry = true;
                                 }
                             }
