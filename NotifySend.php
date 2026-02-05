@@ -929,8 +929,6 @@ class Pman_Core_NotifySend extends Pman
             $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
         }
 
-        $mx_ip_map = array();
-
         
         // If not using IPv6, use IPv4 addresses and skip blacklisted IPs
         if(!$use_ipv6) {
