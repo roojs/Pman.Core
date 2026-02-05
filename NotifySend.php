@@ -794,7 +794,9 @@ class Pman_Core_NotifySend extends Pman
                             // Retry after setting spam rejecting
                             $shouldRetry = true;
                         }
-
+                        
+                        // The ipv6 addresses sometimes are removed from the mx host,
+                        // we fallback to use ipv4 on which the server is not blocked by Spamhaus
                         if(!$this->useIpv6 && $is_spamhaus) {
                             // blacklist the ipv4 host which return spamhaus
                             if($this->server->checkSmtpResponse($errmsg, $this->emailDomain, $this->failedIp)) {
