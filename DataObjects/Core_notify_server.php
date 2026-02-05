@@ -400,7 +400,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
         // set to ipv6 server if available
         // update act_when
-        if($server_ipv6 != null) {
+        if($server_ipv6 != null && $server_ipv6 !== false) {
             $pp = clone($w);
 
             $serverFromIpv6 = $server_ipv6->findServerFromIpv6($this->poolname);
