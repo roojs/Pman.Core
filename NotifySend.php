@@ -950,11 +950,13 @@ class Pman_Core_NotifySend extends Pman
                 }
             }
         }
-        // If the ipv6 mapping does not have a reverse pointer and the domain of the ipv6 mapping does not match the suffix of the mx host,
+        // If the ipv6 mapping does not have a reverse pointer and no domain mapped to the current server's IPv6 address matches the suffix of the mx host,
         // skip the mx host
         // e.g. 
+        // the current ipv6 mapping doesn't have a reverse pointer
         // mx host: aspmx.l.google.com
-        // domain the of existing ipv6 mapping with a reverse pointer: outlook.com
+        // domains mapped to the current server's IPv6 address: protection.outlook.com, roojs.onmicrosoft.com
+        // 'protection.outlook.com' and 'roojs.onmicrosoft.com' are not the suffix of the mx host 'aspmx.l.google.com'
         // -> skip this mx host
         else {
             if(empty($this->server_ipv6->has_reverse_ptr)) {
