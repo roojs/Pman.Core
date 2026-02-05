@@ -569,6 +569,14 @@ class Pman_Core_NotifySend extends Pman
         $ff = HTML_FlexyFramework::get();
         
         $this->fail = false;
+
+        $isValidIpv6Server = false;
+        if($this->hasIpv6()) {
+            $serverFromIpv6 = $this->server_ipv6->findServerFromIpv6($this->server->poolname);
+            if($serverFromIpv6 !== false && $serverFromIpv6->id == $this->server->id) {
+                $isValidIpv6Server = true;
+            }
+        }
         
         // Convert MX hostnames to map of IP addresses => domain
         $this->hasIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
