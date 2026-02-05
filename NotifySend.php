@@ -571,7 +571,7 @@ class Pman_Core_NotifySend extends Pman
         $this->fail = false;
 
         $isValidIpv6Server = false;
-        if($this->hasIpv6()) {
+        if($this->hasIpv6) {
             $serverFromIpv6 = $this->server_ipv6->findServerFromIpv6($this->server->poolname);
             if($serverFromIpv6 !== false && $serverFromIpv6->id == $this->server->id) {
                 $isValidIpv6Server = true;
