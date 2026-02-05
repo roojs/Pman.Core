@@ -22,9 +22,15 @@ class Pman_Core_Prune extends Pman
             
         ),
         'test' => array(
-            'desc' => 'what to test? Events, Notify',
+            'desc' => 'what to test? Events, Notify, NotifyArchive',
             'default' => '',
             'short' => 't',
+            'min' => 1,
+            'max' => 1,
+        ),
+        'notify-archive-months' => array(
+            'desc' => 'Months of age for pruning failed core_notify_archive (default 6)',
+            'default' => 6,
             'min' => 1,
             'max' => 1,
         ),
@@ -37,7 +43,8 @@ class Pman_Core_Prune extends Pman
         )
     );
     var $cli = false;
-    
+    var $opts = array();
+
     function getAuth() {
         
          
@@ -57,16 +64,21 @@ class Pman_Core_Prune extends Pman
        
         $f = DB_DataObject::Factory('Events');
         $this->events_before = $f->count();
+        $this->opts = $opts;
         if (!empty($opts['debug'])) {
             DB_DataObject::debugLevel(1);
         }
 
         if (!empty($opts['test'])) {
-            $m = "prune{$opts['test']}";
-            if (!method_exists($this, $m)) {
-                die("invalid test method $m\n");
+            if ($opts['test'] === 'NotifyArchive') {
+                $this->pruneNotifyArchive(isset($opts['notify-archive-months']) ? (int) $opts['notify-archive-months'] : 6);
+            } else {
+                $m = "prune{$opts['test']}";
+                if (!method_exists($this, $m)) {
+                    die("invalid test method $m\n");
+                }
+                $this->$m((int)$opts['months']);
             }
-            $this->$m((int)$opts['months']);
             die("done\n");
 
         }
@@ -85,6 +97,7 @@ class Pman_Core_Prune extends Pman
       
         $this->pruneEventDupes();
         $this->pruneNotify($inM);
+        $this->pruneNotifyArchive($this->opts['notify-archive-months']);
         $this->pruneEvents($inM);
     }
       
@@ -131,6 +144,20 @@ class Pman_Core_Prune extends Pman
         
         echo "DELETED : " . ($nbefore - $nafter) . "/{$nbefore} core_notify records\n";
     }
+
+    /**
+     * Prune core_notify_archive: delete only rows that failed to be delivered (no msgid), older than $months. Default 6 months.
+     */
+    function pruneNotifyArchive($months = 6)
+    {
+        $months = (int) $months;
+        $cn = DB_DataObject::Factory('core_notify_archive');
+        $nbefore = $cn->count();
+        $cn->deleteOldFailed($months);
+        $nafter = DB_DataObject::Factory('core_notify_archive')->count();
+        echo "DELETED : " . ($nbefore - $nafter) . "/{$nbefore} core_notify_archive records\n";
+    }
+
     function pruneEvents($inM)
     {
         
