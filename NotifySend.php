@@ -111,6 +111,7 @@ class Pman_Core_NotifySend extends Pman
     var $allMxIpv4s = array();  // Array of ALL IPv4 addresses from MX lookup (never reduced)
     var $validIps = array();  // Array of valid IP addresses remaining (reduced during send loop)
     var $failedIp = false;    // The IP address that failed
+    var $hasIpv6 = false;     // Whether this notify has an ipv6 mapping
     var $useIpv6 = false;     // Whether using IPv6 for this send
     var $fail = false;        // Whether send failed
     var $lastSmtpResponse;    // Last SMTP response (PEAR_Error or true)
