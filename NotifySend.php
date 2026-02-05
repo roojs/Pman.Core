@@ -965,7 +965,6 @@ class Pman_Core_NotifySend extends Pman
                 $domainsMappedToCurrentIpv6 = $cnsi->fetchAll('domain_id_domain');
                 
                 foreach($mx_ip_map as $ip => $mx) {
-                    $mx = 'aspmx.l.google.com';
                     $match = false;
                     foreach($domainsMappedToCurrentIpv6 as $domain) {
                         if(str_ends_with($mx, $domain)) {
