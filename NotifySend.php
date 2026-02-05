@@ -281,9 +281,7 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("already sent - no event_id?\n");
         }
         
-        // $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $this->force);
-        $this->server = DB_DataObject::factory('core_notify_server');
-        $this->server->get($this->notify->server_id);
+        $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $this->force);
         
 
         // Check if server is disabled or not found - exit gracefully (unless force is set)
