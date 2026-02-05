@@ -108,7 +108,7 @@ class Pman_Core_NotifySend extends Pman
     var $retryWhen;     // Datetime string for next retry attempt
     
     // Properties used during send()
-    var $allMxIps = array();  // Array of ALL IP addresses from MX lookup (never reduced)
+    var $allMxIpv4s = array();  // Array of ALL IPv4 addresses from MX lookup (never reduced)
     var $validIps = array();  // Array of valid IP addresses remaining (reduced during send loop)
     var $failedIp = false;    // The IP address that failed
     var $useIpv6 = false;     // Whether using IPv6 for this send
@@ -416,7 +416,7 @@ class Pman_Core_NotifySend extends Pman
          
         
         if (isset($this->email['later'])) {
-            $this->server->updateNotifyToNextServer($this->notify, $this->email['later'], true, $this->server_ipv6, $this->allMxIps);
+            $this->server->updateNotifyToNextServer($this->notify, $this->email['later'], true, $this->server_ipv6, $this->allMxIpv4s);
             $this->errorHandler("Delivery postponed by email creator to {$this->email['later']}");
         }
         
@@ -573,7 +573,7 @@ class Pman_Core_NotifySend extends Pman
         $this->useIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
         $mx_ip_map = $this->convertMxsToIpMap($this->mxRecords, $this->useIpv6);
 
-        // Note: $this->allMxIps is populated in convertMxsToIpMap() BEFORE filtering
+        // Note: $this->allMxIpv4s is populated in convertMxsToIpMap() BEFORE filtering
         // Note: $this->validIps is populated in convertMxsToIpMap() AFTER filtering
 
         // ip address that failed the SMTP check
@@ -697,7 +697,7 @@ class Pman_Core_NotifySend extends Pman
                     $this->debug("Mailbox full - delaying retry to {$actual_retry_when}");
                 }
                 
-                $this->server->updateNotifyToNextServer($this->notify, $actual_retry_when, true, $this->server_ipv6, $this->allMxIps);
+                $this->server->updateNotifyToNextServer($this->notify, $actual_retry_when, true, $this->server_ipv6, $this->allMxIpv4s);
                 
                 $this->errorHandler(  $ev->remarks);
             }
@@ -816,7 +816,7 @@ class Pman_Core_NotifySend extends Pman
                 $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLISTED - ' . $errmsg);
                 // Pass ALL MX IPs (not just validIps) so other servers can be properly checked
                 // An IP that blocks server X might not block server Y
-                $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIps);
+                $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIpv4s);
                 $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: $errmsg");
                 // Successfully passed to next server, exit
                 return;
@@ -839,7 +839,7 @@ class Pman_Core_NotifySend extends Pman
         
         $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $this->notify->to_email);
         
-        $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIps);
+        $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIpv4s);
 
         
          
@@ -930,7 +930,7 @@ class Pman_Core_NotifySend extends Pman
         // Store ALL IPs BEFORE any filtering (for passing to next server)
         // An IP that blocks server X might not block server Y
         // This includes both IPv4 and IPv6 addresses
-        $this->allMxIps = array_keys($mx_ip_map);
+        $this->allMxIpv4s = array_keys($mx_ip_map);
         
         // If not using IPv6, use IPv4 addresses and skip blacklisted IPs
         if(!$use_ipv6) {
@@ -1030,7 +1030,7 @@ class Pman_Core_NotifySend extends Pman
             $this->debug("IPv6: Setup successful, will retry");
 
             $ev = $this->addEvent('NOTIFY', $this->notify, "GREYLISTED - {$errmsg}");
-            $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIps);
+            $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIpv4s);
             $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: {$errmsg}");
             // Successfully passed to next server, exit
             return;
