@@ -580,6 +580,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->useIpv6 = false;
             }
         }
+        var_dump($this->useIpv6);
         $mx_ip_map = $this->convertMxsToIpMap($this->mxRecords);
 
         // ip address that failed the SMTP check
