@@ -572,15 +572,14 @@ class Pman_Core_NotifySend extends Pman
         
         // Convert MX hostnames to map of IP addresses => domain
         $this->hasIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
-
-
+        $this->useIpv6 = $this->hasIpv6;
         if($this->hasIpv6) {
             $serverFromIpv6 = $this->server_ipv6->findServerFromIpv6($this->server->poolname);
             if($serverFromIpv6 === false || $serverFromIpv6->id != $this->server->id) {
-                $this->hasIpv6 = false;
+                // the ipv6 mapping is not for the current server
+                $this->useIpv6 = false;
             }
         }
-        $this->useIpv6 = $this->hasIpv6;
         $mx_ip_map = $this->convertMxsToIpMap($this->mxRecords);
 
         // ip address that failed the SMTP check
