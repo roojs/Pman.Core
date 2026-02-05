@@ -920,14 +920,6 @@ class Pman_Core_NotifySend extends Pman
 
         // use only IPv6 if using IPv6
         $mx_ip_map = $use_ipv6 ? $mx_ipv6_map : $mx_ipv4_map;
-
-        // If no IPs resolved, fall back to hostnames
-        if (empty($mx_ip_map)) {
-            foreach ($mxs as $mx) {
-                $mx_ip_map[$mx] = $mx;
-            }
-            $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
-        }
         
         // If not using IPv6, use IPv4 addresses and skip blacklisted IPs
         if(!$use_ipv6) {
@@ -976,6 +968,10 @@ class Pman_Core_NotifySend extends Pman
                         unset($mx_ip_map[$ip]);
                     }
                 }
+            }
+
+            if(empty($mx_ip_map)) {
+
             }
         }
         
