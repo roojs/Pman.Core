@@ -753,7 +753,7 @@ class Pman_Core_NotifySend extends Pman
 
             // there may be 4XX spamhaus errors, we may need to set up ipv6 before retrying directly
             if(!empty($smtpcode) && ($smtpcode > 500 || $smtpcode > 400 && $is_spamhaus)) {
-                // spamhaus - not using ipv6 -> try setting up ipv6
+                // spamhaus - no IPv6 mapping -> try setting up ipv6
                 if($is_spamhaus && !$this->hasIpv6) {
                     $shouldRetry = true;
                     $this->debug("IPv6: Spamhaus detected (code: $smtpcode)");
