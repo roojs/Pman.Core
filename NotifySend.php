@@ -871,10 +871,9 @@ class Pman_Core_NotifySend extends Pman
      * Prioritizes IPv6 addresses if use_ipv6 is true
      * 
      * @param array $mxs Array of MX hostnames
-     * @param bool $use_ipv6 Whether to perform IPv6 DNS lookups
      * @return array Map of IP address => domain name
      */
-    function convertMxsToIpMap($mxs, $use_ipv6 = false)
+    function convertMxsToIpMap($mxs)
     {
         $mx_ip_map = array();
         $mx_ipv6_map = array();
@@ -919,7 +918,7 @@ class Pman_Core_NotifySend extends Pman
         $this->allMxIpv4s = array_keys($mx_ipv4_map);
 
         // use only IPv6 if using IPv6
-        $mx_ip_map = $use_ipv6 ? $mx_ipv6_map : $mx_ipv4_map;
+        $mx_ip_map = $this->useIpv6 ? $mx_ipv6_map : $mx_ipv4_map;
 
 
         // If no IPs resolved, fall back to hostnames
@@ -932,7 +931,7 @@ class Pman_Core_NotifySend extends Pman
 
         
         // If not using IPv6, use IPv4 addresses and skip blacklisted IPs
-        if(!$use_ipv6) {
+        if(!$this->useIpv6) {
             // skip any blacklisted ip on which the server is blocked by Spamhaus
             $bl = DB_DataObject::factory('core_notify_blacklist');
             $bl->server_id = $this->server->id;
