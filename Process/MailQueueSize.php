@@ -49,7 +49,7 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
             'max' => 1,
         ),
         'notify-archive' => array(
-            'desc' => 'pressrelease_notify_archive total thresholds as warning:critical',
+            'desc' => 'notify_archive table total thresholds as warning:critical',
             'default' => '1000000:1000000',
             'min' => 1,
             'max' => 1,
@@ -75,7 +75,7 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
     var $success_30m;
     var $failed_30m;
     var $total_delivered;
-    var $pressrelease_notify_archive_total;
+    var $notify_archive_total;
     var $core_events_archive_total;
 
     /**
@@ -187,7 +187,7 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
 
         $tableRows = $this->tableRowsApproxMap();
         $notifyArchiveTable = $this->notifyTable . '_archive';
-        $this->pressrelease_notify_archive_total = isset($tableRows[$notifyArchiveTable]) ? $tableRows[$notifyArchiveTable] : 0;
+        $this->notify_archive_total = isset($tableRows[$notifyArchiveTable]) ? $tableRows[$notifyArchiveTable] : 0;
         $this->core_events_archive_total = isset($tableRows['core_events_archive']) ? $tableRows['core_events_archive'] : 0;
 
         $this->outputNagiosResults();
@@ -205,7 +205,7 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
         list($tried_w, $tried_c) = $this->parseThreshold($this->opts['tried']);
         list($delivered_w, $delivered_c) = $this->parseThreshold($this->opts['delivered']);
         list($failed_w, $failed_c) = $this->parseThreshold($this->opts['failed']);
-        list($pr_arch_w, $pr_arch_c) = $this->parseThreshold($this->opts['notify-archive']);
+        list($notify_arch_w, $notify_arch_c) = $this->parseThreshold($this->opts['notify-archive']);
         list($core_arch_w, $core_arch_c) = $this->parseThreshold($this->opts['event-archive']);
 
         $reasons = array();
@@ -237,10 +237,10 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
             $overall = max($overall, 1);
             $reasons[] = 'failed_30m warning';
         }
-        if ($this->pressrelease_notify_archive_total >= $pr_arch_c) {
+        if ($this->notify_archive_total >= $notify_arch_c) {
             $overall = 2;
             $reasons[] = 'notify_archive critical';
-        } elseif ($this->pressrelease_notify_archive_total >= $pr_arch_w) {
+        } elseif ($this->notify_archive_total >= $notify_arch_w) {
             $overall = max($overall, 1);
             $reasons[] = 'notify_archive warning';
         }
@@ -254,18 +254,18 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
 
         $msg = $reasons ? implode('; ', $reasons) . ' - ' : '';
         $msg .= sprintf(
-            "due_untried=%d tried_failed=%d success_30m=%d failed_30m=%d total_delivered=%d pr_notify_arch=%d core_events_arch=%d",
+            "due_untried=%d tried_failed=%d success_30m=%d failed_30m=%d total_delivered=%d notify_arch=%d core_events_arch=%d",
             $this->due_untried,
             $this->tried_failed_pending,
             $this->success_30m,
             $this->failed_30m,
             $this->total_delivered,
-            $this->pressrelease_notify_archive_total,
+            $this->notify_archive_total,
             $this->core_events_archive_total
         );
 
         printf(
-            "%s - %s | due_untried=%d;%d;%d;; tried_failed=%d;%d;%d;; success_30m=%d;;;; failed_30m=%d;%d;%d;; total_delivered=%d;%d;%d;; pr_notify_arch=%d;%d;%d;; core_events_arch=%d;%d;%d;;\n",
+            "%s - %s | due_untried=%d;%d;%d;; tried_failed=%d;%d;%d;; success_30m=%d;;;; failed_30m=%d;%d;%d;; total_delivered=%d;%d;%d;; notify_arch=%d;%d;%d;; core_events_arch=%d;%d;%d;;\n",
             $statusStr[$overall],
             $msg,
             $this->due_untried,
@@ -281,9 +281,9 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
             $this->total_delivered,
             $delivered_w,
             $delivered_c,
-            $this->pressrelease_notify_archive_total,
-            $pr_arch_w,
-            $pr_arch_c,
+            $this->notify_archive_total,
+            $notify_arch_w,
+            $notify_arch_c,
             $this->core_events_archive_total,
             $core_arch_w,
             $core_arch_c
