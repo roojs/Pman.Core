@@ -979,6 +979,7 @@ class Pman_Core_NotifySend extends Pman
                 }
             }
 
+            // no ipv6 addresses, fallback to use ipv4 on which the server is not blocked by Spamhaus
             if(empty($mx_ip_map)) {
                 $mx_ip_map = $mx_ipv4_map;
                 $this->debug("DNS: No IPv6 addresses resolved, using IPv4 addresses");
