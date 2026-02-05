@@ -1001,7 +1001,7 @@ class Pman_Core_NotifySend extends Pman
                             break;
                         }
                     }
-                    if(!$match) {
+                    if($match) {
                         $this->debug("DNS: Skipping host $mx because no domain mapped to the current server's IPv6 address (" . $this->server_ipv6->ipv6_addr_str . ") matches the suffix of the mx host");
                         unset($mx_ip_map[$ip]);
                     }
