@@ -15,17 +15,17 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
 {
     static $cli_desc = "Mail Queue Size -- Nagios monitoring for notify (mail) queue";
     static $cli_opts = array(
-        'warning' => array(
-            'desc' => 'Warning threshold (due_untried count)',
-            'default' => 1000000,
+        'unread' => array(
+            'desc' => 'due_untried thresholds as warning:critical (e.g. 10:100)',
+            'default' => '1000000:1000000',
             'short' => 'w',
             'min' => 1,
             'max' => 1,
         ),
-        'critical' => array(
-            'desc' => 'Critical threshold (due_untried count)',
-            'default' => 1000000,
-            'short' => 'c',
+        'tried' => array(
+            'desc' => 'tried_failed_pending thresholds as warning:critical (e.g. 10:100)',
+            'default' => '1000000:1000000',
+            'short' => 't',
             'min' => 1,
             'max' => 1,
         ),
@@ -36,39 +36,27 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
             'min' => 1,
             'max' => 1,
         ),
-        'warning-tried' => array(
-            'desc' => 'Warning threshold for tried_failed_pending',
-            'default' => 1000000,
+        'delivered' => array(
+            'desc' => 'total_delivered thresholds as warning:critical',
+            'default' => '1000000:1000000',
             'min' => 1,
             'max' => 1,
         ),
-        'critical-tried' => array(
-            'desc' => 'Critical threshold for tried_failed_pending',
-            'default' => 1000000,
+        'failed' => array(
+            'desc' => 'failed_30m thresholds as warning:critical',
+            'default' => '1000000:1000000',
             'min' => 1,
             'max' => 1,
         ),
-        'warning-delivered' => array(
-            'desc' => 'Warning threshold for total_delivered (table bloat)',
-            'default' => 1000000,
+        'notify-archive' => array(
+            'desc' => 'pressrelease_notify_archive total thresholds as warning:critical',
+            'default' => '1000000:1000000',
             'min' => 1,
             'max' => 1,
         ),
-        'critical-delivered' => array(
-            'desc' => 'Critical threshold for total_delivered (table bloat)',
-            'default' => 1000000,
-            'min' => 1,
-            'max' => 1,
-        ),
-        'warning-failed' => array(
-            'desc' => 'Warning threshold for failed_30m',
-            'default' => 1000000,
-            'min' => 1,
-            'max' => 1,
-        ),
-        'critical-failed' => array(
-            'desc' => 'Critical threshold for failed_30m',
-            'default' => 1000000,
+        'event-archive' => array(
+            'desc' => 'core_events_archive total thresholds as warning:critical',
+            'default' => '1000000:1000000',
             'min' => 1,
             'max' => 1,
         ),
@@ -87,6 +75,21 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
     var $success_30m;
     var $failed_30m;
     var $total_delivered;
+    var $pressrelease_notify_archive_total;
+    var $core_events_archive_total;
+
+    /**
+     * Parse "warning:critical" threshold string, return array(warn, crit).
+     */
+    function parseThreshold($str)
+    {
+        $def = 1000000;
+        if (empty($str) || strpos($str, ':') === false) {
+            return array($def, $def);
+        }
+        list($w, $c) = explode(':', $str, 2);
+        return array((int) $w, (int) $c);
+    }
 
     function getAuth()
     {
@@ -159,6 +162,12 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
         );
         $this->total_delivered = $total_delivered->count();
 
+        $pna = DB_DataObject::factory($this->notifyTable . '_archive');
+        $this->pressrelease_notify_archive_total = $pna->count();
+
+        $cea = DB_DataObject::factory('core_events_archive');
+        $this->core_events_archive_total = $cea->count();
+
         $this->outputNagiosResults();
     }
 
@@ -170,33 +179,48 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
         $statusStr = array('OK', 'WARNING', 'CRITICAL');
         $overall = 0;
 
-        if ($this->due_untried >= $this->opts['critical'] || $this->tried_failed_pending >= $this->opts['critical-tried'] || $this->total_delivered >= $this->opts['critical-delivered'] || $this->failed_30m >= $this->opts['critical-failed']) {
+        list($unread_w, $unread_c) = $this->parseThreshold($this->opts['unread']);
+        list($tried_w, $tried_c) = $this->parseThreshold($this->opts['tried']);
+        list($delivered_w, $delivered_c) = $this->parseThreshold($this->opts['delivered']);
+        list($failed_w, $failed_c) = $this->parseThreshold($this->opts['failed']);
+        list($pr_arch_w, $pr_arch_c) = $this->parseThreshold($this->opts['notify-archive']);
+        list($core_arch_w, $core_arch_c) = $this->parseThreshold($this->opts['event-archive']);
+
+        if ($this->due_untried >= $unread_c || $this->tried_failed_pending >= $tried_c || $this->total_delivered >= $delivered_c || $this->failed_30m >= $failed_c || $this->pressrelease_notify_archive_total >= $pr_arch_c || $this->core_events_archive_total >= $core_arch_c) {
             $overall = 2;
-        } elseif ($this->due_untried >= $this->opts['warning'] || $this->tried_failed_pending >= $this->opts['warning-tried'] || $this->total_delivered >= $this->opts['warning-delivered'] || $this->failed_30m >= $this->opts['warning-failed']) {
+        } elseif ($this->due_untried >= $unread_w || $this->tried_failed_pending >= $tried_w || $this->total_delivered >= $delivered_w || $this->failed_30m >= $failed_w || $this->pressrelease_notify_archive_total >= $pr_arch_w || $this->core_events_archive_total >= $core_arch_w) {
             $overall = max($overall, 1);
         }
 
         printf(
-            "%s - due_untried=%d tried_failed=%d success_30m=%d failed_30m=%d total_delivered=%d | due_untried=%d;%d;%d;; tried_failed=%d;%d;%d;; success_30m=%d;;;; failed_30m=%d;%d;%d;; total_delivered=%d;%d;%d;;\n",
+            "%s - due_untried=%d tried_failed=%d success_30m=%d failed_30m=%d total_delivered=%d pr_notify_arch=%d core_events_arch=%d | due_untried=%d;%d;%d;; tried_failed=%d;%d;%d;; success_30m=%d;;;; failed_30m=%d;%d;%d;; total_delivered=%d;%d;%d;; pr_notify_arch=%d;%d;%d;; core_events_arch=%d;%d;%d;;\n",
             $statusStr[$overall],
             $this->due_untried,
             $this->tried_failed_pending,
             $this->success_30m,
             $this->failed_30m,
             $this->total_delivered,
+            $this->pressrelease_notify_archive_total,
+            $this->core_events_archive_total,
             $this->due_untried,
-            $this->opts['warning'],
-            $this->opts['critical'],
+            $unread_w,
+            $unread_c,
             $this->tried_failed_pending,
-            $this->opts['warning-tried'],
-            $this->opts['critical-tried'],
+            $tried_w,
+            $tried_c,
             $this->success_30m,
             $this->failed_30m,
-            $this->opts['warning-failed'],
-            $this->opts['critical-failed'],
+            $failed_w,
+            $failed_c,
             $this->total_delivered,
-            $this->opts['warning-delivered'],
-            $this->opts['critical-delivered']
+            $delivered_w,
+            $delivered_c,
+            $this->pressrelease_notify_archive_total,
+            $pr_arch_w,
+            $pr_arch_c,
+            $this->core_events_archive_total,
+            $core_arch_w,
+            $core_arch_c
         );
         exit($overall);
     }
