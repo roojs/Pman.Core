@@ -913,6 +913,8 @@ class Pman_Core_NotifySend extends Pman
             }
         }
 
+        $mx_ip_map = $use_ipv6 ? $mx_ipv6_map : $mx_ipv4_map;
+
         // If no IPs resolved, fall back to hostnames
         if (empty($mx_ip_map)) {
             foreach ($mxs as $mx) {
