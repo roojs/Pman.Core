@@ -574,7 +574,7 @@ class Pman_Core_NotifySend extends Pman
         $this->hasIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
         var_dump($this->server->id);
         $serverFromIpv6 = $this->server_ipv6->findServerFromIpv6($this->server->poolname);
-        var_dump($serverFromIpv6);
+        var_dump($serverFromIpv6->id);
         die('test');
         $this->useIpv6 = $this->hasIpv6;
         $mx_ip_map = $this->convertMxsToIpMap($this->mxRecords);
