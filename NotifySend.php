@@ -961,7 +961,8 @@ class Pman_Core_NotifySend extends Pman
                 $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
                 $cnsi->autoJoin();
                 $cnsi->ipv6_addr = $this->server_ipv6->ipv6_addr;
-                $domains = $cnsi->fetchAll('domain_id_domain');
+                // domains from ipv6 mappings with the same ipv6 address as the current server_ipv6
+                $domainsWithMappingIpv6 = $cnsi->fetchAll('domain_id_domain');
 
                 var_dump($domains);
                 
