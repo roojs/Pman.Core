@@ -572,8 +572,8 @@ class Pman_Core_NotifySend extends Pman
         
         // Convert MX hostnames to map of IP addresses => domain
         $this->hasIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
-        // var_dump($this->server_ipv6);
-        // die('test');
+        var_dump($this->hasIpv6);
+        die('test');
         $this->useIpv6 = $this->hasIpv6;
         $mx_ip_map = $this->convertMxsToIpMap($this->mxRecords);
 
