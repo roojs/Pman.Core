@@ -813,7 +813,7 @@ class Pman_Core_NotifySend extends Pman
                     $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
 
                     // blacklist detection only if not using IPv6
-                    if(empty($this->server_ipv6)) {
+                    if(!$this->hasIpv6) {
                         DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($this->email, $this->notify, $errmsg);
 
                         // blacklisted
