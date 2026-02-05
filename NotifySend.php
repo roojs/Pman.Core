@@ -962,13 +962,18 @@ class Pman_Core_NotifySend extends Pman
                 $cnsi->autoJoin();
                 $cnsi->ipv6_addr = $this->server_ipv6->ipv6_addr;
                 // domains mapped to the current server’s IPv6 address
-                $domainsWithMappingIpv6 = $cnsi->fetchAll('domain_id_domain');
-
-                var_dump($domains);
+                $domainsMappedToCurrentIpv6 = $cnsi->fetchAll('domain_id_domain');
                 
                 foreach($mx_ip_map as $ip => $mx) {
-                    if(!str_ends_with($mx, $this->server_ipv6->domain_id_domain)) {
-                        $this->debug("DNS: Skipping host $mx because it's suffix does not match the domain of the ipv6 mapping with a reverse pointer: " . $this->server_ipv6->domain_id_domain);
+                    $match = false;
+                    foreach($domainsMappedToCurrentIpv6 as $domain) {
+                        if(str_ends_with($mx, $domain)) {
+                            $match = true;
+                            break;
+                        }
+                    }
+                    if(!$match) {
+                        $this->debug("DNS: Skipping host $mx because it's suffix match no domain mapped to the current server's IPv6 address: " . $this->server_ipv6->ipv6_addr_str);
                         unset($mx_ip_map[$ip]);
                     }
                 }
