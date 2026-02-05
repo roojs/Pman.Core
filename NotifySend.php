@@ -984,7 +984,21 @@ class Pman_Core_NotifySend extends Pman
                 $mx_ip_map = $mx_ipv4_map;
                 $this->debug("DNS: No IPv6 addresses resolved, using IPv4 addresses");
 
-                // don't need to skip any blacklisted ip
+                // skip any blacklisted ip on which the server is blocked by Spamhaus
+                $bl = DB_DataObject::factory('core_notify_blacklist');
+                $bl->server_id = $this->server->id;
+                $bl->whereAdd('ip IS NOT NULL');
+                $bl->whereAdd('ip != 0x0');
+                $bl->selectAdd();
+                $bl->selectAdd('INET6_NTOA(ip) as ip_str');
+                $blacklistedIps = $bl->fetchAll('ip_str');
+                foreach($mx_ip_map as $ip => $mx) {
+                    if(in_array($ip, $blacklistedIps)) {
+                        $this->debug("DNS: Blacklisted IP: $ip");
+                        $this->isAnyIpv4Blacklisted = true;
+                        unset($mx_ip_map[$ip]);
+                    }
+                }
             }
         }
 
