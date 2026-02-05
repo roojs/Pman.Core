@@ -794,6 +794,17 @@ class Pman_Core_NotifySend extends Pman
                             // Retry after setting spam rejecting
                             $shouldRetry = true;
                         }
+
+                        if(!$this->useIpv6 && $is_spamhaus) {
+                            // blacklist the ipv4 host which return spamhaus
+                            if($this->server->checkSmtpResponse($errmsg, $this->emailDomain, $this->failedIp)) {
+                                $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: {$this->failedIp}");
+                                // if there are some valid ipv4 hosts left, retry with the next server
+                                if(!empty($this->validIps)) {
+                                    $shouldRetry = true;
+                                }
+                            }
+                        }
                         
                     }
                     $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
