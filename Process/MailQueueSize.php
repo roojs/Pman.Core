@@ -80,6 +80,22 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
     var $future_queue;
 
     /**
+     * Run ANALYZE TABLE on tables we read approximate row counts from, so TABLE_ROWS is up to date.
+     */
+    function analyzeTablesForApproxCounts()
+    {
+        $tables = array(
+            'Events',
+            $this->notifyTable . '_archive',
+            'core_events_archive',
+        );
+        $do = DB_DataObject::factory('Events');
+        foreach ($tables as $t) {
+            $do->query("ANALYZE TABLE `{$t}`");
+        }
+    }
+
+    /**
      * Fast approximate row counts for all tables (one information_schema query, keyed by table name).
      *
      * @return array table_name => TABLE_ROWS (int)
@@ -145,12 +161,11 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
         );
         $this->notify_needs_archiving = $notify_needs_archiving->count();
 
+        $this->analyzeTablesForApproxCounts();
         $tableRows = $this->tableRowsApproxMap();
         $notifyArchiveTable = $this->notifyTable . '_archive';
         $this->total_notify_archived = isset($tableRows[$notifyArchiveTable]) ? $tableRows[$notifyArchiveTable] : 0;
-        $eventsDo = DB_DataObject::factory('Events');
-        $eventsTableName = $eventsDo->tableName();
-        $this->total_events = isset($tableRows[$eventsTableName]) ? $tableRows[$eventsTableName] : 0;
+        $this->total_events = isset($tableRows['Events']) ? $tableRows['Events'] : 0;
         $this->total_event_archive = isset($tableRows['core_events_archive']) ? $tableRows['core_events_archive'] : 0;
 
         // requeued_again: act_when < NOW(), unsent, act_start != act_when
