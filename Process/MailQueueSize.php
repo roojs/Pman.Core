@@ -70,13 +70,14 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
 
     var $opts = array();
     var $notifyTable = 'core_notify';
-    var $due_untried;
-    var $tried_failed_pending;
+    var $notify_needs_archiving;
+    var $total_notify_archived;
+    var $total_events;
+    var $total_event_archive;
     var $success_30m;
     var $failed_30m;
-    var $total_delivered;
-    var $notify_archive_total;
-    var $core_events_archive_total;
+    var $requeued_again;
+    var $future_queue;
 
     /**
      * Fast approximate row counts for all tables (one information_schema query, keyed by table name).
@@ -133,23 +134,33 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
 
         $cn = DB_DataObject::factory($this->notifyTable);
 
-        // due_untried: act_when < NOW(), unsent, act_start = act_when
-        $due_untried = clone $cn;
-        $due_untried->whereAdd(
-            "act_when < NOW()
-            AND (sent < '1970-01-01' OR sent IS NULL)
-            AND act_start = act_when"
+        // notify_needs_archiving: delivered rows older than 2 months (matches prune archive logic)
+        $notify_needs_archiving = clone $cn;
+        $notify_needs_archiving->whereAdd(
+            "sent > '1970-01-01'
+            AND msgid IS NOT NULL
+            AND LENGTH(msgid) > 0
+            AND event_id > 0
+            AND act_when < NOW() - INTERVAL 2 MONTH"
         );
-        $this->due_untried = $due_untried->count();
+        $this->notify_needs_archiving = $notify_needs_archiving->count();
 
-        // tried_failed_pending: act_when < NOW(), unsent, act_start != act_when
-        $tried_failed = clone $cn;
-        $tried_failed->whereAdd(
+        $tableRows = $this->tableRowsApproxMap();
+        $notifyArchiveTable = $this->notifyTable . '_archive';
+        $this->total_notify_archived = isset($tableRows[$notifyArchiveTable]) ? $tableRows[$notifyArchiveTable] : 0;
+        $eventsDo = DB_DataObject::factory('Events');
+        $eventsTableName = $eventsDo->tableName();
+        $this->total_events = isset($tableRows[$eventsTableName]) ? $tableRows[$eventsTableName] : 0;
+        $this->total_event_archive = isset($tableRows['core_events_archive']) ? $tableRows['core_events_archive'] : 0;
+
+        // requeued_again: act_when < NOW(), unsent, act_start != act_when
+        $requeued = clone $cn;
+        $requeued->whereAdd(
             "act_when < NOW()
             AND (sent < '1970-01-01' OR sent IS NULL)
             AND act_start != act_when"
         );
-        $this->tried_failed_pending = $tried_failed->count();
+        $this->requeued_again = $requeued->count();
 
         // success_30m: sent in last N minutes, msgid set
         $success_30m = clone $cn;
@@ -175,20 +186,14 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
             $this->failed_30m = 0;
         }
 
-        // total_delivered: delivered rows still in table (sent set, msgid set, event_id > 0)
-        $total_delivered = clone $cn;
-        $total_delivered->whereAdd(
-            "sent > '1970-01-01'
-            AND msgid IS NOT NULL
-            AND LENGTH(msgid) > 0
-            AND event_id > 0"
+        // future_queue: act_when < NOW(), unsent, act_start = act_when (last in report)
+        $future_queue = clone $cn;
+        $future_queue->whereAdd(
+            "act_when < NOW()
+            AND (sent < '1970-01-01' OR sent IS NULL)
+            AND act_start = act_when"
         );
-        $this->total_delivered = $total_delivered->count();
-
-        $tableRows = $this->tableRowsApproxMap();
-        $notifyArchiveTable = $this->notifyTable . '_archive';
-        $this->notify_archive_total = isset($tableRows[$notifyArchiveTable]) ? $tableRows[$notifyArchiveTable] : 0;
-        $this->core_events_archive_total = isset($tableRows['core_events_archive']) ? $tableRows['core_events_archive'] : 0;
+        $this->future_queue = $future_queue->count();
 
         $this->outputNagiosResults();
     }
@@ -209,26 +214,26 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
         list($core_arch_w, $core_arch_c) = $this->parseThreshold($this->opts['event-archive']);
 
         $reasons = array();
-        if ($this->due_untried >= $unread_c) {
+        if ($this->notify_needs_archiving >= $delivered_c) {
             $overall = 2;
-            $reasons[] = 'due_untried critical';
-        } elseif ($this->due_untried >= $unread_w) {
+            $reasons[] = 'notify_needs_archiving critical';
+        } elseif ($this->notify_needs_archiving >= $delivered_w) {
             $overall = max($overall, 1);
-            $reasons[] = 'due_untried warning';
+            $reasons[] = 'notify_needs_archiving warning';
         }
-        if ($this->tried_failed_pending >= $tried_c) {
+        if ($this->total_notify_archived >= $notify_arch_c) {
             $overall = 2;
-            $reasons[] = 'tried_failed critical';
-        } elseif ($this->tried_failed_pending >= $tried_w) {
+            $reasons[] = 'total_notify_archived critical';
+        } elseif ($this->total_notify_archived >= $notify_arch_w) {
             $overall = max($overall, 1);
-            $reasons[] = 'tried_failed warning';
+            $reasons[] = 'total_notify_archived warning';
         }
-        if ($this->total_delivered >= $delivered_c) {
+        if ($this->total_event_archive >= $core_arch_c) {
             $overall = 2;
-            $reasons[] = 'total_delivered critical';
-        } elseif ($this->total_delivered >= $delivered_w) {
+            $reasons[] = 'total_event_archive critical';
+        } elseif ($this->total_event_archive >= $core_arch_w) {
             $overall = max($overall, 1);
-            $reasons[] = 'total_delivered warning';
+            $reasons[] = 'total_event_archive warning';
         }
         if ($this->failed_30m >= $failed_c) {
             $overall = 2;
@@ -237,56 +242,58 @@ class Pman_Core_Process_MailQueueSize extends Pman_Core_Cli
             $overall = max($overall, 1);
             $reasons[] = 'failed_30m warning';
         }
-        if ($this->notify_archive_total >= $notify_arch_c) {
+        if ($this->requeued_again >= $tried_c) {
             $overall = 2;
-            $reasons[] = 'notify_archive critical';
-        } elseif ($this->notify_archive_total >= $notify_arch_w) {
+            $reasons[] = 'requeued_again critical';
+        } elseif ($this->requeued_again >= $tried_w) {
             $overall = max($overall, 1);
-            $reasons[] = 'notify_archive warning';
+            $reasons[] = 'requeued_again warning';
         }
-        if ($this->core_events_archive_total >= $core_arch_c) {
+        if ($this->future_queue >= $unread_c) {
             $overall = 2;
-            $reasons[] = 'event_archive critical';
-        } elseif ($this->core_events_archive_total >= $core_arch_w) {
+            $reasons[] = 'future_queue critical';
+        } elseif ($this->future_queue >= $unread_w) {
             $overall = max($overall, 1);
-            $reasons[] = 'event_archive warning';
+            $reasons[] = 'future_queue warning';
         }
 
         $msg = $reasons ? implode('; ', $reasons) . ' - ' : '';
         $msg .= sprintf(
-            "due_untried=%d tried_failed=%d success_30m=%d failed_30m=%d total_delivered=%d notify_arch=%d core_events_arch=%d",
-            $this->due_untried,
-            $this->tried_failed_pending,
+            "notify_needs_archiving=%d total_notify_archived=%d total_events=%d total_event_archive=%d success_30m=%d failed_30m=%d requeued_again=%d future_queue=%d",
+            $this->notify_needs_archiving,
+            $this->total_notify_archived,
+            $this->total_events,
+            $this->total_event_archive,
             $this->success_30m,
             $this->failed_30m,
-            $this->total_delivered,
-            $this->notify_archive_total,
-            $this->core_events_archive_total
+            $this->requeued_again,
+            $this->future_queue
         );
 
         printf(
-            "%s - %s | due_untried=%d;%d;%d;; tried_failed=%d;%d;%d;; success_30m=%d;;;; failed_30m=%d;%d;%d;; total_delivered=%d;%d;%d;; notify_arch=%d;%d;%d;; core_events_arch=%d;%d;%d;;\n",
+            "%s - %s | notify_needs_archiving=%d;%d;%d;; total_notify_archived=%d;%d;%d;; total_events=%d;;;; total_event_archive=%d;%d;%d;; success_30m=%d;;;; failed_30m=%d;%d;%d;; requeued_again=%d;%d;%d;; future_queue=%d;%d;%d;;\n",
             $statusStr[$overall],
             $msg,
-            $this->due_untried,
-            $unread_w,
-            $unread_c,
-            $this->tried_failed_pending,
-            $tried_w,
-            $tried_c,
+            $this->notify_needs_archiving,
+            $delivered_w,
+            $delivered_c,
+            $this->total_notify_archived,
+            $notify_arch_w,
+            $notify_arch_c,
+            $this->total_events,
+            $this->total_event_archive,
+            $core_arch_w,
+            $core_arch_c,
             $this->success_30m,
             $this->failed_30m,
             $failed_w,
             $failed_c,
-            $this->total_delivered,
-            $delivered_w,
-            $delivered_c,
-            $this->notify_archive_total,
-            $notify_arch_w,
-            $notify_arch_c,
-            $this->core_events_archive_total,
-            $core_arch_w,
-            $core_arch_c
+            $this->requeued_again,
+            $tried_w,
+            $tried_c,
+            $this->future_queue,
+            $unread_w,
+            $unread_c
         );
         exit($overall);
     }
