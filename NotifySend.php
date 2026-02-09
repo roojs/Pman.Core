@@ -724,9 +724,8 @@ class Pman_Core_NotifySend extends Pman
     function postSend()
     {
         // No IPv6 mapping AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted (blocked by spamhaus)
-        if(!$this->fail && !$this->hasIpv6 && empty($this->validIps) && $this->isAnyIpv4Blacklisted) {
-            
-            $this->setUpIpv6("No more valid ipv4 address left for server (id: {$this->server->id})");
+        if (!$this->fail && !$this->hasIpv6 && empty($this->validIps) && $this->isAnyIpv4Blacklisted) {
+            $this->notifyRouter->setUpIpv6("No more valid ipv4 address left for server (id: {$this->server->id})");
         }
         
         // after trying all mxs - could not connect...
@@ -777,8 +776,8 @@ class Pman_Core_NotifySend extends Pman
                     if($this->server->checkSmtpResponse($errmsg, $this->emailDomain, $this->failedIp)) {
                         $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: {$this->failedIp}");
                         // if there is no more valid ipv4 hosts left
-                        if(empty($this->validIps)) {
-                            $this->setUpIpv6($allocation_reason);
+                        if (empty($this->validIps)) {
+                            $this->notifyRouter->setUpIpv6($allocation_reason);
                             return;
                         }
                     }
