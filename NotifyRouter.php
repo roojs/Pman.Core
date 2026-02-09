@@ -491,26 +491,25 @@ class Pman_Core_NotifyRouter
      */
     function setUpIpv6($errmsg)
     {
-        $ns = $this->notifySend;
-        $this->debug("No valid ipv4 address left for server (id: {$ns->server->id}), trying to set up ipv6");
+        $this->debug("No valid ipv4 address left for server (id: {$this->notifySend->server->id}), trying to set up ipv6");
 
         $allocation_reason = $errmsg;
-        $allocation_reason .= "; Email: " . $ns->notify->to_email;
+        $allocation_reason .= "; Email: " . $this->notifySend->notify->to_email;
         $allocation_reason .= "; Spamhaus detected: yes";
 
-        $server_ipv6 = $ns->emailDomain->setUpIpv6($allocation_reason, $ns->mxRecords);
+        $server_ipv6 = $this->notifySend->emailDomain->setUpIpv6($allocation_reason, $this->notifySend->mxRecords);
         if (empty($server_ipv6)) {
             $this->debug("IPv6: Setup failed");
-            $ev = $ns->addEvent('NOTIFYFAIL', $ns->notify, "IPv6 SETUP FAILED - {$errmsg}");
-            $ns->notify->flagDone($ev, '');
+            $ev = $this->notifySend->addEvent('NOTIFYFAIL', $this->notifySend->notify, "IPv6 SETUP FAILED - {$errmsg}");
+            $this->notifySend->notify->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
             return;
         }
 
-        $ns->server_ipv6 = $server_ipv6;
+        $this->notifySend->server_ipv6 = $server_ipv6;
         $this->debug("IPv6: Setup successful, will retry");
-        $ns->addEvent('NOTIFY', $ns->notify, "GREYLISTED - {$errmsg}");
-        $ns->server->updateNotifyToNextServer($ns->notify, $ns->retryWhen, true, $ns->server_ipv6, $ns->allMxIpv4s);
-        $this->errorHandler("Retry in next server at {$ns->retryWhen} - Error: {$errmsg}");
+        $this->notifySend->addEvent('NOTIFY', $this->notifySend->notify, "GREYLISTED - {$errmsg}");
+        $this->notifySend->server->updateNotifyToNextServer($this->notifySend->notify, $this->notifySend->retryWhen, true, $this->notifySend->server_ipv6, $this->notifySend->allMxIpv4s);
+        $this->errorHandler("Retry in next server at {$this->notifySend->retryWhen} - Error: {$errmsg}");
     }
 }
