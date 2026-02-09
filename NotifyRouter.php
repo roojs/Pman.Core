@@ -394,7 +394,7 @@ class Pman_Core_NotifyRouter
             $hostname_ip = @gethostbyname($mx);
             if (!empty($hostname_ip) && filter_var($hostname_ip, FILTER_VALIDATE_IP)) {
                 $mx_ipv4_map[$hostname_ip] = $mx;
-                $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
+                $ns->debug("DNS: Found hosts file override for $mx: $hostname_ip");
             }
         }
 
