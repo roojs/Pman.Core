@@ -367,7 +367,6 @@ class Pman_Core_NotifyRouter
      */
     static function convertMxsToIpMap($notifySend, $mxs)
     {
-        $ns = $notifySend;
         $mx_ip_map = array();
         $mx_ipv6_map = array();
         $mx_ipv4_map = array();
@@ -394,35 +393,35 @@ class Pman_Core_NotifyRouter
             $hostname_ip = @gethostbyname($mx);
             if (!empty($hostname_ip) && filter_var($hostname_ip, FILTER_VALIDATE_IP)) {
                 $mx_ipv4_map[$hostname_ip] = $mx;
-                $ns->debug("DNS: Found hosts file override for $mx: $hostname_ip");
+                $notifySend->debug("DNS: Found hosts file override for $mx: $hostname_ip");
             }
         }
 
-        $ns->allMxIpv4s = array_keys($mx_ipv4_map);
-        $mx_ip_map = $ns->useIpv6 ? $mx_ipv6_map : $mx_ipv4_map;
+        $notifySend->allMxIpv4s = array_keys($mx_ipv4_map);
+        $mx_ip_map = $notifySend->useIpv6 ? $mx_ipv6_map : $mx_ipv4_map;
 
         if (empty($mx_ip_map)) {
             foreach ($mxs as $mx) {
                 $mx_ip_map[$mx] = $mx;
             }
-            $ns->debug("DNS: No IP addresses resolved for any MX, using hostnames");
-            $ns->validIps = array_keys($mx_ip_map);
+            $notifySend->debug("DNS: No IP addresses resolved for any MX, using hostnames");
+            $notifySend->validIps = array_keys($mx_ip_map);
             return $mx_ip_map;
         }
 
-        if (!$ns->useIpv6) {
-            $mx_ip_map = self::filterBlacklistedIps($ns, $mx_ip_map, $mx_ipv4_map);
-            $ns->validIps = array_keys($mx_ip_map);
+        if (!$notifySend->useIpv6) {
+            $mx_ip_map = self::filterBlacklistedIps($notifySend, $mx_ip_map, $mx_ipv4_map);
+            $notifySend->validIps = array_keys($mx_ip_map);
             return $mx_ip_map;
         }
 
-        $mx_ip_map = self::filterIpv6ByReversePtr($ns, $mx_ip_map);
+        $mx_ip_map = self::filterIpv6ByReversePtr($notifySend, $mx_ip_map);
         if (empty($mx_ip_map)) {
-            $ns->debug("DNS: No IPv6 addresses resolved, fallback to use IPv4 addresses");
-            $ns->useIpv6 = false;
-            $mx_ip_map = self::filterBlacklistedIps($ns, $mx_ipv4_map, $mx_ipv4_map);
+            $notifySend->debug("DNS: No IPv6 addresses resolved, fallback to use IPv4 addresses");
+            $notifySend->useIpv6 = false;
+            $mx_ip_map = self::filterBlacklistedIps($notifySend, $mx_ipv4_map, $mx_ipv4_map);
         }
-        $ns->validIps = array_keys($mx_ip_map);
+        $notifySend->validIps = array_keys($mx_ip_map);
         return $mx_ip_map;
     }
 
