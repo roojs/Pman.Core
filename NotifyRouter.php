@@ -435,17 +435,16 @@ class Pman_Core_NotifyRouter
      */
     static function filterBlacklistedIps($notifySend, $mx_ip_map, $full_ipv4_map = array())
     {
-        $ns = $notifySend;
         $bl = DB_DataObject::factory('core_notify_blacklist');
-        $bl->server_id = $ns->server->id;
+        $bl->server_id = $notifySend->server->id;
         $bl->whereAdd('ip != 0x0');
         $bl->selectAdd();
         $bl->selectAdd('INET6_NTOA(ip) as ip_str');
         $blacklistedIps = $bl->fetchAll('ip_str');
         foreach ($mx_ip_map as $ip => $mx) {
             if (in_array($ip, $blacklistedIps)) {
-                $ns->debug("DNS: Blacklisted IP: $ip");
-                $ns->isAnyIpv4Blacklisted = true;
+                $notifySend->debug("DNS: Blacklisted IP: $ip");
+                $notifySend->isAnyIpv4Blacklisted = true;
                 unset($mx_ip_map[$ip]);
             }
         }
@@ -461,13 +460,12 @@ class Pman_Core_NotifyRouter
      */
     static function filterIpv6ByReversePtr($notifySend, $mx_ip_map)
     {
-        $ns = $notifySend;
-        if (empty($ns->server_ipv6) || !empty($ns->server_ipv6->has_reverse_ptr)) {
+        if (empty($notifySend->server_ipv6) || !empty($notifySend->server_ipv6->has_reverse_ptr)) {
             return $mx_ip_map;
         }
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
         $cnsi->autoJoin();
-        $cnsi->ipv6_addr = $ns->server_ipv6->ipv6_addr;
+        $cnsi->ipv6_addr = $notifySend->server_ipv6->ipv6_addr;
         $domainsMappedToCurrentIpv6 = $cnsi->fetchAll('domain_id_domain');
         foreach ($mx_ip_map as $ip => $mx) {
             $match = false;
@@ -478,7 +476,7 @@ class Pman_Core_NotifyRouter
                 }
             }
             if (!$match) {
-                $ns->debug("DNS: Skipping host $mx because no domain mapped to the current server's IPv6 address (" . $ns->server_ipv6->ipv6_addr_str . ") matches the suffix of the mx host");
+                $notifySend->debug("DNS: Skipping host $mx because no domain mapped to the current server's IPv6 address (" . $notifySend->server_ipv6->ipv6_addr_str . ") matches the suffix of the mx host");
                 unset($mx_ip_map[$ip]);
             }
         }
