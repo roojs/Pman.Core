@@ -386,7 +386,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      * @param array $allMxIpv4s All available ipv4s from the mx hosts
      * @return bool True if the notify was updated to the next server, false otherwise
      */
-    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false, $server_ipv6 = null, $allMxIpv4s = false)
+    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false, $server_ipv6 = false, $allMxIpv4s = false)
     {
         if (!$this->id) {
             return;
@@ -400,7 +400,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
         // set to ipv6 server if available
         // update act_when
-        if($server_ipv6 != null && $server_ipv6 !== false) {
+        if ($server_ipv6 !== false) {
             $pp = clone($w);
 
             $serverFromIpv6 = $server_ipv6->findServerFromIpv6($this->poolname);
@@ -520,14 +520,14 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         return false; 
     }
-    function initHelo($server_ipv6 = null)
+    function initHelo($server_ipv6 = false)
     {
         if (!$this->id) {
             return;
         }
         $ff = HTML_FlexyFramework::get();
         
-        if (!empty($server_ipv6)) {
+        if ($server_ipv6 !== false) {
             $serverFromIpv6 = $server_ipv6->findServerFromIpv6($this->poolname);
             if ($serverFromIpv6 && !empty($serverFromIpv6->ipv6_ptr)) {
                 $ff->Mail['helo'] = $serverFromIpv6->ipv6_ptr;
