@@ -116,7 +116,8 @@ class Pman_Core_NotifySend extends Pman
     var $fail = false;        // Whether send failed
     var $lastSmtpResponse;    // Last SMTP response (PEAR_Error or true)
     var $force = false;       // Force sending even if already sent
-    
+    var $notifyRouter;        // NotifyRouter instance (set during send loop, used for setUpIpv6)
+
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
