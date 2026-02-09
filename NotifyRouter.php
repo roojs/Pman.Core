@@ -359,4 +359,161 @@ class Pman_Core_NotifyRouter
             
         }
     }
+
+    /**
+     * Convert array of MX hostnames to map of IP addresses => domain.
+     * Prioritizes IPv6 if useIpv6 is true. Updates notifySend: allMxIpv4s, validIps, isAnyIpv4Blacklisted, useIpv6.
+     *
+     * @param array $mxs Array of MX hostnames
+     * @return array Map of IP address => domain name
+     */
+    function convertMxsToIpMap($mxs)
+    {
+        $ns = $this->notifySend;
+        $mx_ip_map = array();
+        $mx_ipv6_map = array();
+        $mx_ipv4_map = array();
+
+        foreach ($mxs as $mx) {
+            $ipv6_records = @dns_get_record($mx, DNS_AAAA);
+            if (!empty($ipv6_records)) {
+                foreach ($ipv6_records as $record) {
+                    if (empty($record['ipv6'])) {
+                        continue;
+                    }
+                    $mx_ipv6_map[$record['ipv6']] = $mx;
+                }
+            }
+            $ipv4_records = @dns_get_record($mx, DNS_A);
+            if (!empty($ipv4_records)) {
+                foreach ($ipv4_records as $record) {
+                    if (empty($record['ip'])) {
+                        continue;
+                    }
+                    $mx_ipv4_map[$record['ip']] = $mx;
+                }
+            }
+            $hostname_ip = @gethostbyname($mx);
+            if (!empty($hostname_ip) && filter_var($hostname_ip, FILTER_VALIDATE_IP)) {
+                $mx_ipv4_map[$hostname_ip] = $mx;
+                $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
+            }
+        }
+
+        $ns->allMxIpv4s = array_keys($mx_ipv4_map);
+        $mx_ip_map = $ns->useIpv6 ? $mx_ipv6_map : $mx_ipv4_map;
+
+        if (empty($mx_ip_map)) {
+            foreach ($mxs as $mx) {
+                $mx_ip_map[$mx] = $mx;
+            }
+            $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
+            $ns->validIps = array_keys($mx_ip_map);
+            return $mx_ip_map;
+        }
+
+        if (!$ns->useIpv6) {
+            $mx_ip_map = $this->filterBlacklistedIps($mx_ip_map, $mx_ipv4_map);
+            $ns->validIps = array_keys($mx_ip_map);
+            return $mx_ip_map;
+        }
+
+        $mx_ip_map = $this->filterIpv6ByReversePtr($mx_ip_map);
+        if (empty($mx_ip_map)) {
+            $this->debug("DNS: No IPv6 addresses resolved, fallback to use IPv4 addresses");
+            $ns->useIpv6 = false;
+            $mx_ip_map = $this->filterBlacklistedIps($mx_ipv4_map, $mx_ipv4_map);
+        }
+        $ns->validIps = array_keys($mx_ip_map);
+        return $mx_ip_map;
+    }
+
+    /**
+     * Filter IP map by blacklisted IPs for current server. Updates notifySend->isAnyIpv4Blacklisted.
+     *
+     * @param array $mx_ip_map Map to filter (ip => mx)
+     * @param array $full_ipv4_map Full IPv4 map (unused, for signature clarity)
+     * @return array Filtered map
+     */
+    function filterBlacklistedIps($mx_ip_map, $full_ipv4_map = array())
+    {
+        $ns = $this->notifySend;
+        $bl = DB_DataObject::factory('core_notify_blacklist');
+        $bl->server_id = $ns->server->id;
+        $bl->whereAdd('ip != 0x0');
+        $bl->selectAdd();
+        $bl->selectAdd('INET6_NTOA(ip) as ip_str');
+        $blacklistedIps = $bl->fetchAll('ip_str');
+        foreach ($mx_ip_map as $ip => $mx) {
+            if (in_array($ip, $blacklistedIps)) {
+                $this->debug("DNS: Blacklisted IP: $ip");
+                $ns->isAnyIpv4Blacklisted = true;
+                unset($mx_ip_map[$ip]);
+            }
+        }
+        return $mx_ip_map;
+    }
+
+    /**
+     * Filter IPv6 map by reverse PTR / domain suffix match. Uses notifySend->server_ipv6.
+     *
+     * @param array $mx_ip_map Map ip => mx
+     * @return array Filtered map
+     */
+    function filterIpv6ByReversePtr($mx_ip_map)
+    {
+        $ns = $this->notifySend;
+        if (empty($ns->server_ipv6) || !empty($ns->server_ipv6->has_reverse_ptr)) {
+            return $mx_ip_map;
+        }
+        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+        $cnsi->autoJoin();
+        $cnsi->ipv6_addr = $ns->server_ipv6->ipv6_addr;
+        $domainsMappedToCurrentIpv6 = $cnsi->fetchAll('domain_id_domain');
+        foreach ($mx_ip_map as $ip => $mx) {
+            $match = false;
+            foreach ($domainsMappedToCurrentIpv6 as $domain) {
+                if (str_ends_with($mx, $domain)) {
+                    $match = true;
+                    break;
+                }
+            }
+            if (!$match) {
+                $this->debug("DNS: Skipping host $mx because no domain mapped to the current server's IPv6 address (" . $ns->server_ipv6->ipv6_addr_str . ") matches the suffix of the mx host");
+                unset($mx_ip_map[$ip]);
+            }
+        }
+        return $mx_ip_map;
+    }
+
+    /**
+     * Try to set up IPv6 for the domain; on success requeue to next server, on failure flag done and error.
+     *
+     * @param string $errmsg Error message from SMTP
+     * @return void
+     */
+    function setUpIpv6($errmsg)
+    {
+        $ns = $this->notifySend;
+        $this->debug("No valid ipv4 address left for server (id: {$ns->server->id}), trying to set up ipv6");
+
+        $allocation_reason = $errmsg;
+        $allocation_reason .= "; Email: " . $ns->notify->to_email;
+        $allocation_reason .= "; Spamhaus detected: yes";
+
+        $server_ipv6 = $ns->emailDomain->setUpIpv6($allocation_reason, $ns->mxRecords);
+        if (empty($server_ipv6)) {
+            $this->debug("IPv6: Setup failed");
+            $ev = $ns->addEvent('NOTIFYFAIL', $ns->notify, "IPv6 SETUP FAILED - {$errmsg}");
+            $ns->notify->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
+            return;
+        }
+
+        $ns->server_ipv6 = $server_ipv6;
+        $this->debug("IPv6: Setup successful, will retry");
+        $ns->addEvent('NOTIFY', $ns->notify, "GREYLISTED - {$errmsg}");
+        $ns->server->updateNotifyToNextServer($ns->notify, $ns->retryWhen, true, $ns->server_ipv6, $ns->allMxIpv4s);
+        $this->errorHandler("Retry in next server at {$ns->retryWhen} - Error: {$errmsg}");
+    }
 }
