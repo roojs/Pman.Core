@@ -400,7 +400,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
         // set to ipv6 server if available
         // update act_when
-        if ($server_ipv6 !== false) {
+        if (!empty($server_ipv6)) {
             $pp = clone($w);
 
             $serverFromIpv6 = $server_ipv6->findServerFromIpv6($this->poolname);
@@ -527,7 +527,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         $ff = HTML_FlexyFramework::get();
         
-        if ($server_ipv6 !== false) {
+        if (!empty($server_ipv6)) {
             $serverFromIpv6 = $server_ipv6->findServerFromIpv6($this->poolname);
             if ($serverFromIpv6 && !empty($serverFromIpv6->ipv6_ptr)) {
                 $ff->Mail['helo'] = $serverFromIpv6->ipv6_ptr;

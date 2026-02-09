@@ -557,7 +557,7 @@ class Pman_Core_NotifySend extends Pman
         // Disabled for now
         /*
         $sender = DB_DataObject::factory('core_notify_sender');
-        if($this->server_ipv6 !== false && $sender->get($this->server->ipv6_sender_id)) {
+        if(!empty($this->server_ipv6) && $sender->get($this->server->ipv6_sender_id)) {
             $this->email['headers']['From'] = $sender->email;
         }
         */
@@ -577,7 +577,7 @@ class Pman_Core_NotifySend extends Pman
         $this->fail = false;
         
         // Convert MX hostnames to map of IP addresses => domain
-        $this->hasIpv6 = ($this->server_ipv6 !== false && !empty($this->server_ipv6->ipv6_addr_str));
+        $this->hasIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
         $this->useIpv6 = $this->hasIpv6;
         if($this->hasIpv6) {
             $serverFromIpv6 = $this->server_ipv6->findServerFromIpv6($this->server->poolname);
