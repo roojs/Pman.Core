@@ -469,7 +469,7 @@ class Pman_Core_NotifySend extends Pman
 
         // make sure there is a correct domain_id in the notify record
         // Fetch IPv6 server configuration if available
-        $this->server_ipv6 = null;
+        $this->server_ipv6 = false;
         $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
         $ipv6->autoJoin();
         $ipv6->selectAdd('INET6_NTOA(ipv6_addr) as ipv6_addr_str');
@@ -557,7 +557,7 @@ class Pman_Core_NotifySend extends Pman
         // Disabled for now
         /*
         $sender = DB_DataObject::factory('core_notify_sender');
-        if(!empty($this->server_ipv6) && $sender->get($this->server->ipv6_sender_id)) {
+        if($this->server_ipv6 !== false && $sender->get($this->server->ipv6_sender_id)) {
             $this->email['headers']['From'] = $sender->email;
         }
         */
@@ -577,7 +577,7 @@ class Pman_Core_NotifySend extends Pman
         $this->fail = false;
         
         // Convert MX hostnames to map of IP addresses => domain
-        $this->hasIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
+        $this->hasIpv6 = ($this->server_ipv6 !== false && !empty($this->server_ipv6->ipv6_addr_str));
         $this->useIpv6 = $this->hasIpv6;
         if($this->hasIpv6) {
             $serverFromIpv6 = $this->server_ipv6->findServerFromIpv6($this->server->poolname);
@@ -819,7 +819,7 @@ class Pman_Core_NotifySend extends Pman
                                 if(!empty($this->validIps)) {
                                     $this->debug("IPv6: Fallback to use ipv4 and there are some valid ipv4 hosts left");
                                     $shouldRetry = true;
-                                    $this->server_ipv6 = null; // reset server_ipv6 to avoid retrying only in server with the ipv6 mapping
+                                    $this->server_ipv6 = false; // reset server_ipv6 to avoid retrying only in server with the ipv6 mapping
                                 }
                                 else {
                                     $this->debug("IPv6: Fallback to use ipv4 but there is no valid ipv4 host left");
@@ -970,7 +970,6 @@ class Pman_Core_NotifySend extends Pman
             // skip any blacklisted ip on which the server is blocked by Spamhaus
             $bl = DB_DataObject::factory('core_notify_blacklist');
             $bl->server_id = $this->server->id;
-            $bl->whereAdd('ip IS NOT NULL');
             $bl->whereAdd('ip != 0x0');
             $bl->selectAdd();
             $bl->selectAdd('INET6_NTOA(ip) as ip_str');
@@ -1022,7 +1021,6 @@ class Pman_Core_NotifySend extends Pman
                 // skip any blacklisted ip on which the server is blocked by Spamhaus
                 $bl = DB_DataObject::factory('core_notify_blacklist');
                 $bl->server_id = $this->server->id;
-                $bl->whereAdd('ip IS NOT NULL');
                 $bl->whereAdd('ip != 0x0');
                 $bl->selectAdd();
                 $bl->selectAdd('INET6_NTOA(ip) as ip_str');
