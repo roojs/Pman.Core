@@ -613,16 +613,11 @@ class Pman_Core_Notify extends Pman
             //}
             $output = file_exists($p['out']) ? file_get_contents($p['out']) : '';
             $outputErr = file_exists($p['oute']) ? file_get_contents($p['oute']) : '';
-            $ok = ($exitCode === 0 && $outputErr === '');
-            if ($ok) {
-                $this->logecho("ENDED: ({$p['pid']}) {$p['email']}");
-            } else {
-                $endMsg = "ENDED: ({$p['pid']}) {$p['email']} exit={$exitCode} " . $p['cmd'] . " : " . $output;
-                if ($outputErr !== '') {
-                    $endMsg .= " : " . $outputErr;
-                }
-                $this->logecho($endMsg . " : ");
+            $endMsg = "ENDED: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . $output;
+            if ($outputErr !== '') {
+                $endMsg .= " : " . $outputErr;
             }
+            $this->logecho($endMsg . " : ");
             
             // Check for greylisting with "temporarily deferred" - flag matching pattern for later deferral
             if (stripos($output, 'GREYLISTED') !== false && stripos($output, 'temporarily deferred') !== false) {
