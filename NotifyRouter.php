@@ -159,8 +159,8 @@ class Pman_Core_NotifyRouter
     {
         if (!isset($this->mailer)) {
             $this->mailer = Mail::factory('smtp', array(
-                'host'          => $this->getHost(),
-                'localhost'     => $this->getLocalhost(),
+                'host'          => $this->useIpv6 ? '[' . $this->smtpHost . ']' : $this->smtpHost,
+                'localhost'     => $this->heloName(),
                 'timeout'       => 15,
                 'socket_options'=> $this->getSocketOptions(),
                 'debug'         => 1,
@@ -308,7 +308,7 @@ class Pman_Core_NotifyRouter
                     $this->notifySend->server->updateNotifyToNextServer(
                         $this->notifySend->notify , date("Y-m-d H:i:s", time() + $seconds), 
                         true, $this->notifySend->server_ipv6, self::$all_mx_ipv4s);
-                    $this->errorHandler( " Too many emails sent by {$this->notifySend->emailDomain->domain} - requeing");
+                    $this->notifySend->errorHandler(" Too many emails sent by {$this->notifySend->emailDomain->domain} - requeing");
                 }
                 
                 
