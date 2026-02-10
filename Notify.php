@@ -617,7 +617,7 @@ class Pman_Core_Notify extends Pman
             if ($outputErr !== '') {
                 $endMsg .= " : " . $outputErr;
             }
-            $this->logecho($endMsg . " : ");
+            $this->logecho($endMsg);
             
             // Check for greylisting with "temporarily deferred" - flag matching pattern for later deferral
             if (stripos($output, 'GREYLISTED') !== false && stripos($output, 'temporarily deferred') !== false) {

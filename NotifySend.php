@@ -666,10 +666,9 @@ class Pman_Core_NotifySend extends Pman
                     $this->notifyObject->postSend($this);
                 }
                  
-                $this->successHandler("Message to {$this->notify->to_email} was successfully sent\n".
-                                    "Message Id: {$this->notify->id}\n" .
-                                    "Subject: {$this->email['headers']['Subject']}"
-                                  );
+                
+                $this->successHandler("Message to {$this->notify->to_email} was successfully sent\n" .
+                     "    Subject: " . str_replace("\n", " ", $this->email['headers']['Subject']));
             }
 
             // remove the failed ip from the list of valid ip addresses
