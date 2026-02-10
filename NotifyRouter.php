@@ -167,25 +167,22 @@ class Pman_Core_NotifyRouter
      */
     private function setMailerOptionsBasedOnConfig()
     {
-        $mailer = $this->mailer;
-
         $ff = HTML_FlexyFramework::get();
             
         // if the host is the mail host + it's authenticated add auth details
         // this normally will happen if you sent  Pman_Core_NotifySend['host']
 
         if (isset($ff->Mail['host']) && $ff->Mail['host'] == $this->mx && !empty($ff->Mail['auth'] ) && !empty($ff->Mail['username']) && !empty($ff->Mail['password'])) {
-            
-            $mailer->auth = true;
-            $mailer->username = $ff->Mail['username'];
-            $mailer->password = $ff->Mail['password'];
+            $this->mailer->auth = true;
+            $this->mailer->username = $ff->Mail['username'];
+            $this->mailer->password = $ff->Mail['password'];
         }
         if (isset($ff->Core_Notify['tls'])) {
             // you can set Core_Notify:tls to true to force it to use tls on all connections (where available)
-            $mailer->tls = $ff->Core_Notify['tls'];
+            $this->mailer->tls = $ff->Core_Notify['tls'];
         }
         if (isset($ff->Core_Notify['tls_exclude']) && in_array($this->mx, $ff->Core_Notify['tls_exclude'])) {
-            $mailer->tls = false;
+            $this->mailer->tls = false;
         }
 
         $this->setMailerOptionsBasedOnRoute();
@@ -193,8 +190,6 @@ class Pman_Core_NotifyRouter
 
     private function setMailerOptionsBasedOnRoute()
     {
-        $mailer = $this->mailer;
-
         $ff = HTML_FlexyFramework::get();
 
         if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
@@ -301,12 +296,12 @@ class Pman_Core_NotifyRouter
                 }
                 
                 
-                $mailer->host = $host;
-                $mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
-                $mailer->username = $settings['username'];
-                $mailer->password = $settings['password'];
+                $this->mailer->host = $host;
+                $this->mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
+                $this->mailer->username = $settings['username'];
+                $this->mailer->password = $settings['password'];
                 if (isset($settings['port'])) {
-                    $mailer->port = $settings['port'];
+                    $this->mailer->port = $settings['port'];
                 }
                 // Route is final: overwrite base_socket_options then use socketOptions()
                 $this->base_socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array(
@@ -317,9 +312,9 @@ class Pman_Core_NotifyRouter
                         'security_level' => 1
                     )
                 );
-                $mailer->socket_options = $this->socketOptions();
-                $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
-                $this->debug("Got Core_Notify route match - " . print_R($mailer,true));
+                $this->mailer->socket_options = $this->socketOptions();
+                $this->mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
+                $this->debug("Got Core_Notify route match - " . print_R($this->mailer, true));
 
                 break;
             }
