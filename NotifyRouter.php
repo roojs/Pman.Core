@@ -117,23 +117,12 @@ class Pman_Core_NotifyRouter
     }
 
     /**
-     * Socket options (from base_socket_options, with IPv6 binding if applicable).
+     * Socket options from $this->base_socket_options, with IPv6 binding if applicable.
      * @return array
      */
-    private function getSocketOptions()
+    private function socketOptions()
     {
-        return $this->prepareSocketOptionsWithIPv6();
-    }
-
-    /**
-     * Prepare socket options with IPv6 binding if available.
-     * Uses $this->base_socket_options when no argument; route code may pass a base array.
-     * @param array|null $base_options Base socket options or null to use $this->base_socket_options
-     * @return array
-     */
-    private function prepareSocketOptionsWithIPv6($base_options = null)
-    {
-        $socket_options = $base_options !== null ? $base_options : $this->base_socket_options;
+        $socket_options = $this->base_socket_options;
         
         // Return early if not using IPv6
         if (empty($this->smtpHost) || !$this->useIpv6) {
@@ -162,7 +151,7 @@ class Pman_Core_NotifyRouter
                 'host'          => $this->useIpv6 ? '[' . $this->smtpHost . ']' : $this->smtpHost,
                 'localhost'     => $this->heloName(),
                 'timeout'       => 15,
-                'socket_options'=> $this->getSocketOptions(),
+                'socket_options'=> $this->socketOptions(),
                 'debug'         => 1,
                 'debug_handler' => array($this->notifySend, 'debugHandler'),
                 'dkim'          => true
@@ -319,17 +308,16 @@ class Pman_Core_NotifyRouter
                 if (isset($settings['port'])) {
                     $mailer->port = $settings['port'];
                 }
-                // Prepare socket options with IPv6 binding if available
-                $base_route_socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array(
+                // Route is final: overwrite base_socket_options then use socketOptions()
+                $this->base_socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array(
                     'ssl' => array(
                         'verify_peer_name' => false,
-                        'verify_peer' => false, 
+                        'verify_peer' => false,
                         'allow_self_signed' => true,
                         'security_level' => 1
                     )
                 );
-                
-                $mailer->socket_options = $this->prepareSocketOptionsWithIPv6($base_route_socket_options);
+                $mailer->socket_options = $this->socketOptions();
                 $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
                 $this->debug("Got Core_Notify route match - " . print_R($mailer,true));
 
