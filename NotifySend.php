@@ -108,14 +108,15 @@ class Pman_Core_NotifySend extends Pman
     var $retryWhen;     // Datetime string for next retry attempt
     
     // Properties used during send()
-    var $allMxIps = array();  // Array of ALL IP addresses from MX lookup (never reduced)
+    var $allMxIpv4s = array();  // Array of ALL IPv4 addresses from MX lookup (never reduced)
     var $validIps = array();  // Array of valid IP addresses remaining (reduced during send loop)
     var $failedIp = false;    // The IP address that failed
+    var $hasIpv6 = false;     // Whether this notify has an ipv6 mapping
     var $useIpv6 = false;     // Whether using IPv6 for this send
     var $fail = false;        // Whether send failed
     var $lastSmtpResponse;    // Last SMTP response (PEAR_Error or true)
     var $force = false;       // Force sending even if already sent
-    
+
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
@@ -269,7 +270,15 @@ class Pman_Core_NotifySend extends Pman
         }
 
         if (!$this->force && !empty($this->notify->sent) && strtotime($this->notify->act_when) < strtotime($this->notify->sent)) {
-            $this->errorHandler("already sent - repeat to early\n");
+            if(!empty($this->notify->event_id)) {
+                $e = DB_DataObject::factory('Events');
+                $e->get($this->notify->event_id);
+                if($e->action != 'NOTIFYSENT') {
+                    $this->errorHandler("failed and given up - event_id: {$this->notify->event_id}\n");
+                }
+                $this->errorHandler("already sent - event_id: {$this->notify->event_id}\n");
+            }
+            $this->errorHandler("already sent - no event_id?\n");
         }
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $this->force);
@@ -414,7 +423,12 @@ class Pman_Core_NotifySend extends Pman
          
         
         if (isset($this->email['later'])) {
-            $this->server->updateNotifyToNextServer($this->notify, $this->email['later'], true, $this->server_ipv6, $this->allMxIps);
+            $this->server->updateNotifyToNextServer(
+                $this->notify,
+                 $this->email['later'],
+                 true, 
+                 $this->server_ipv6,
+                 Pman_Core_NotifyRouter::$all_mx_ipv4s);
             $this->errorHandler("Delivery postponed by email creator to {$this->email['later']}");
         }
         
@@ -460,7 +474,7 @@ class Pman_Core_NotifySend extends Pman
 
         // make sure there is a correct domain_id in the notify record
         // Fetch IPv6 server configuration if available
-        $this->server_ipv6 = null;
+        $this->server_ipv6 = false;
         $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
         $ipv6->autoJoin();
         $ipv6->selectAdd('INET6_NTOA(ipv6_addr) as ipv6_addr_str');
@@ -568,31 +582,39 @@ class Pman_Core_NotifySend extends Pman
         $this->fail = false;
         
         // Convert MX hostnames to map of IP addresses => domain
-        $this->useIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
-        $mx_ip_map = $this->convertMxsToIpMap($this->mxRecords, $this->useIpv6);
+        $this->hasIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
+        $this->useIpv6 = $this->hasIpv6;
+        if ($this->hasIpv6) {
+            $serverFromIpv6 = $this->server_ipv6->findServerFromIpv6($this->server->poolname);
+            if ($serverFromIpv6 === false || $serverFromIpv6->id != $this->server->id) {
+                $this->useIpv6 = false;
+                $this->debug("IPv6: The ipv6 mapping is not for the current server. Fallback to use IPv4.");
+            }
+        }
+        require_once 'Pman/Core/NotifyRouter.php';
+        $debug = !empty($this->cli_args['debug']) || !empty($this->debug);
+        $mx_ip_map = Pman_Core_NotifyRouter::convertMxsToIpMap(
+            $this->mxRecords,
+            $this->useIpv6,
+            $this->server->id,
+            $this->server_ipv6,
+            $debug
+        );
 
-        // Note: $this->allMxIps is populated in convertMxsToIpMap() BEFORE filtering
-        // Note: $this->validIps is populated in convertMxsToIpMap() AFTER filtering
-
-        // ip address that failed the SMTP check
         $this->failedIp = false;
-                        
-        foreach($mx_ip_map as $smtp_host => $mx) {
-            
-           
+
+        foreach ($mx_ip_map as $smtp_host => $mx) {
             $this->debug_str = '';
 
-            require_once 'Pman/Core/NotifyRouter.php';
-            // $this->email['headers']['From'] may change when oauth is used and 'Send As' of the From User is used
             $notifyRouter = new Pman_Core_NotifyRouter($this, array(
                 'smtpHost' => $smtp_host,
                 'mx' => $mx
             ));
-            $mailer = $notifyRouter->mailer;
+            $mailer = $notifyRouter->mailer();
 
             $emailHeaders = $this->email['headers'];
 
-            if($this->useIpv6 && $this->server_ipv6->is_spam_rejecting) {
+            if (Pman_Core_NotifyRouter::$use_ipv6 && $this->server_ipv6->is_spam_rejecting) {
                 $emailHeaders['From'] = $this->addDomainToEmail($emailHeaders['From'], $this->emailDomain->domain);
               
                 if (!empty($emailHeaders['Reply-To'])) {
@@ -651,8 +673,8 @@ class Pman_Core_NotifySend extends Pman
             }
 
             // remove the failed ip from the list of valid ip addresses
-            if(in_array($smtp_host, $this->validIps)) {
-                $this->validIps = array_diff($this->validIps, array($smtp_host));
+            if (in_array($smtp_host, Pman_Core_NotifyRouter::$valid_ips)) {
+                Pman_Core_NotifyRouter::$valid_ips = array_diff(Pman_Core_NotifyRouter::$valid_ips, array($smtp_host));
             }
 
             // what type of error..
@@ -695,7 +717,11 @@ class Pman_Core_NotifySend extends Pman
                     $this->debug("Mailbox full - delaying retry to {$actual_retry_when}");
                 }
                 
-                $this->server->updateNotifyToNextServer($this->notify, $actual_retry_when, true, $this->server_ipv6, $this->allMxIps);
+                $this->server->updateNotifyToNextServer(
+                    $this->notify, 
+                    $actual_retry_when, 
+                    true, $this->server_ipv6, 
+                    Pman_Core_NotifyRouter::$all_mx_ipv4s);
                 
                 $this->errorHandler(  $ev->remarks);
             }
@@ -707,14 +733,47 @@ class Pman_Core_NotifySend extends Pman
     }
     
     /**
-     * Post-send handling: IPv6 setup, failure handling, retries
+     * Try to set up IPv6 for the domain; on success requeue to next server, on failure flag done and error.
+     *
+     * @param string $errmsg Error message from SMTP
+     * @return void
+     */
+    function setUpIpv6($errmsg)
+    {
+        $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
+
+        $allocation_reason = $errmsg
+            . "; Email: " . $this->notify->to_email
+            . "; Spamhaus detected: yes";
+
+        $server_ipv6 = $this->emailDomain->setUpIpv6($allocation_reason, $this->mxRecords);
+        if (empty($server_ipv6)) {
+            $this->debug("IPv6: Setup failed");
+            $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "IPv6 SETUP FAILED - {$errmsg}");
+            $this->notify->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
+            return;
+        }
+
+        $this->server_ipv6 = $server_ipv6;
+        $this->debug("IPv6: Setup successful, will retry");
+        $this->addEvent('NOTIFY', $this->notify, "GREYLISTED - {$errmsg}");
+        $this->server->updateNotifyToNextServer($this->notify, $this->retryWhen, true, $this->server_ipv6, Pman_Core_NotifyRouter::$all_mx_ipv4s);
+        $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: {$errmsg}");
+    }
+
+    /**
+     * Post-send handling: IPv6 setup, failure handling, retries.
      * Uses class properties set by beforeSend() and send()
      */
     function postSend()
     {
-        // Not using IPv6 AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted (blocked by spamhaus)
-        if(!$this->fail && !$this->useIpv6 && empty($this->validIps) && $this->isAnyIpv4Blacklisted) {
-            
+        // No IPv6 mapping AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted (blocked by spamhaus)
+        if (!$this->fail && 
+            Pman_Core_NotifyRouter::$use_ipv6 && 
+            !$this->hasIpv6 && 
+            empty(Pman_Core_NotifyRouter::$valid_ips) && 
+            Pman_Core_NotifyRouter::$is_any_ipv4_blacklisted) {
             $this->setUpIpv6("No more valid ipv4 address left for server (id: {$this->server->id})");
         }
         
@@ -752,8 +811,8 @@ class Pman_Core_NotifySend extends Pman
 
             // there may be 4XX spamhaus errors, we may need to set up ipv6 before retrying directly
             if(!empty($smtpcode) && ($smtpcode > 500 || $smtpcode > 400 && $is_spamhaus)) {
-                // spamhaus - not using ipv6 -> try setting up ipv6
-                if($is_spamhaus && empty($this->server_ipv6)) {
+                // spamhaus - no IPv6 mapping -> try setting up ipv6
+                if($is_spamhaus && !$this->hasIpv6) {
                     $shouldRetry = true;
                     $this->debug("IPv6: Spamhaus detected (code: $smtpcode)");
                     // Build allocation reason with error details
@@ -766,24 +825,27 @@ class Pman_Core_NotifySend extends Pman
                     if($this->server->checkSmtpResponse($errmsg, $this->emailDomain, $this->failedIp)) {
                         $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: {$this->failedIp}");
                         // if there is no more valid ipv4 hosts left
-                        if(empty($this->validIps)) {
+                        if (empty(Pman_Core_NotifyRouter::$valid_ips)) {
                             $this->setUpIpv6($allocation_reason);
                             return;
                         }
                     }
-                }
-                // not spamhaus OR IPv6 already exists
-                else {
+                    // not spamhaus OR IPv6 already exists
+                } else {
                     $reason = array();
                     if (!$is_spamhaus) $reason[] = "not spamhaus";
-                    if (!empty($this->server_ipv6)) {
+                    if ($this->hasIpv6) {
                         $reason[] = "IPv6 already exists (" . ($this->server_ipv6->ipv6_addr_str ?: 'no address') . ")";
 
+                        // using IPv6 AND
                         // is spamhaus AND 
                         // IPv6 already exists AND 
                         // this ip mapping is not already spam rejecting AND 
                         // this ip mapping does not have a reverse pointer
-                        if($is_spamhaus && !$this->server_ipv6->is_spam_rejecting && !$this->server_ipv6->has_reverse_ptr) {
+                        if (Pman_Core_NotifyRouter::$use_ipv6 && 
+                            $is_spamhaus && 
+                            !$this->server_ipv6->is_spam_rejecting && 
+                            !$this->server_ipv6->has_reverse_ptr) {
                             $old = clone($this->server_ipv6);
                             $this->server_ipv6->is_spam_rejecting = 1;
                             $this->server_ipv6->update($old);
@@ -792,12 +854,30 @@ class Pman_Core_NotifySend extends Pman
                             // Retry after setting spam rejecting
                             $shouldRetry = true;
                         }
+
+                        // The ipv6 addresses sometimes are removed from the mx host,
+                        // we fallback to use ipv4 on which the server is not blocked by Spamhaus
+                        if (!Pman_Core_NotifyRouter::$use_ipv6 && $is_spamhaus) {
+                            // blacklist the ipv4 host which return spamhaus
+                            if ($this->server->checkSmtpResponse($errmsg, $this->emailDomain, $this->failedIp)) {
+                                $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: {$this->failedIp}");
+                                // if there are some valid ipv4 hosts left, retry with the next server
+                                if (!empty(Pman_Core_NotifyRouter::$valid_ips)) {
+                                    $this->debug("IPv6: Fallback to use ipv4 and there are some valid ipv4 hosts left");
+                                    $shouldRetry = true;
+                                    $this->server_ipv6 = false; // reset server_ipv6 to avoid retrying only in server with the ipv6 mapping
+                                }
+                                else {
+                                    $this->debug("IPv6: Fallback to use ipv4 but there is no valid ipv4 host left");
+                                }
+                            }
+                        }
                         
                     }
                     $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
 
                     // blacklist detection only if not using IPv6
-                    if(empty($this->server_ipv6)) {
+                    if(!$this->hasIpv6) {
                         DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($this->email, $this->notify, $errmsg);
 
                         // blacklisted
@@ -814,7 +894,11 @@ class Pman_Core_NotifySend extends Pman
                 $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLISTED - ' . $errmsg);
                 // Pass ALL MX IPs (not just validIps) so other servers can be properly checked
                 // An IP that blocks server X might not block server Y
-                $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIps);
+                $this->server->updateNotifyToNextServer($this->notify,
+                    $this->retryWhen, 
+                    true, 
+                    $this->server_ipv6, 
+                    Pman_Core_NotifyRouter::$all_mx_ipv4s);
                 $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: $errmsg");
                 // Successfully passed to next server, exit
                 return;
@@ -837,10 +921,13 @@ class Pman_Core_NotifySend extends Pman
         
         $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $this->notify->to_email);
         
-        $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIps);
+        $this->server->updateNotifyToNextServer(
+            $this->notify, 
+            $this->retryWhen,
+            true, 
+            $this->server_ipv6, 
+            Pman_Core_NotifyRouter::$all_mx_ipv4s);
 
-        
-         
         $this->errorHandler($ev->remarks);
     }
     
@@ -868,110 +955,6 @@ class Pman_Core_NotifySend extends Pman
     }
     
     /**
-     * Convert array of MX hostnames to map of IP addresses => domain
-     * Prioritizes IPv6 addresses if use_ipv6 is true
-     * 
-     * @param array $mxs Array of MX hostnames
-     * @param bool $use_ipv6 Whether to perform IPv6 DNS lookups
-     * @return array Map of IP address => domain name
-     */
-    function convertMxsToIpMap($mxs, $use_ipv6 = false)
-    {
-        $mx_ip_map = array();
-        
-        foreach ($mxs as $mx) {
-            // Resolve IPv6 addresses if and only if using IPv6
-            if($use_ipv6) {
-                // Resolve IPv6 addresses (AAAA records)
-                $ipv6_records = @dns_get_record($mx, DNS_AAAA);
-                if (!empty($ipv6_records)) {
-                    foreach ($ipv6_records as $record) {
-                        if (empty($record['ipv6'])) {
-                            continue;
-                        }
-
-                        $mx_ip_map[$record['ipv6']] = $mx;
-                        
-                    }
-                }
-                continue;
-            }
-            
-            // Resolve IPv4 addresses (A records)
-            $ipv4_records = @dns_get_record($mx, DNS_A);
-            if (!empty($ipv4_records)) {
-                foreach ($ipv4_records as $record) {
-                    if (empty($record['ip'])) {
-                        continue;
-                    }
-                    $mx_ip_map[$record['ip']] = $mx;
-                }
-            }
-            
-            // Also check hostname lookup (gethostbyname) as hosts file might override A record
-            $hostname_ip = @gethostbyname($mx);
-            if (!empty($hostname_ip) && filter_var($hostname_ip, FILTER_VALIDATE_IP)) {
-                $mx_ip_map[$hostname_ip] = $mx;
-                $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
-            }
-            
-        }
-
-        // If no IPs resolved, fall back to hostnames
-        if (empty($mx_ip_map)) {
-            foreach ($mxs as $mx) {
-                $mx_ip_map[$mx] = $mx;
-            }
-            $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
-        }
-        
-        // Store ALL IPs BEFORE any filtering (for passing to next server)
-        // An IP that blocks server X might not block server Y
-        // This includes both IPv4 and IPv6 addresses
-        $this->allMxIps = array_keys($mx_ip_map);
-        
-        // If not using IPv6, use IPv4 addresses and skip blacklisted IPs
-        if(!$use_ipv6) {
-            // skip any blacklisted ip on which the server is blocked by Spamhaus
-            $bl = DB_DataObject::factory('core_notify_blacklist');
-            $bl->server_id = $this->server->id;
-            $bl->whereAdd('ip IS NOT NULL');
-            $bl->whereAdd('ip != 0x0');
-            $bl->selectAdd();
-            $bl->selectAdd('INET6_NTOA(ip) as ip_str');
-            $blacklistedIps = $bl->fetchAll('ip_str');
-            foreach($mx_ip_map as $ip => $mx) {
-                if(in_array($ip, $blacklistedIps)) {
-                    $this->debug("DNS: Blacklisted IP: $ip");
-                    $this->isAnyIpv4Blacklisted = true;
-                    unset($mx_ip_map[$ip]);
-                }
-            }
-        }
-        // If the ipv6 mapping has a reverse pointer and the domain of the ipv6 mapping does not match the suffix of the mx host,
-        // skip the mx host
-        // e.g. 
-        // mx host: aspmx.l.google.com
-        // domain the of existing ipv6 mapping with a reverse pointer: outlook.com
-        // -> skip this mx host
-        else {
-            if($this->server_ipv6->has_reverse_ptr) {
-                foreach($mx_ip_map as $ip => $mx) {
-                    if(!str_ends_with($mx, $this->server_ipv6->domain_id_domain)) {
-                        $this->debug("DNS: Skipping host $mx because it's suffix does not match the domain of the ipv6 mapping with a reverse pointer: " . $this->server_ipv6->domain_id_domain);
-                        unset($mx_ip_map[$ip]);
-                    }
-                }
-            }
-        }
-        
-        // Set validIps AFTER filtering (these are the IPs we'll actually try)
-        $this->validIps = array_keys($mx_ip_map);
-        
-        return $mx_ip_map;
-    }
-    
-    /**
      * Add domain identifier to email address for spam rejection tracking
      * 
      * Takes an email address and domain, and modifies the local part by adding
@@ -992,42 +975,6 @@ class Pman_Core_NotifySend extends Pman
         return implode("@", $fromArr);
     }
 
-    /**
-     * Set up ipv6 for the domain
-     * 
-     * @param string $errmsg The error message from the SMTP server
-     * @return void
-     */
-    function setUpIpv6($errmsg)
-    {
-        $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
-
-        // Build allocation reason with error details
-        $allocation_reason = $errmsg;
-        $allocation_reason .= "; Email: " . $this->notify->to_email;
-        $allocation_reason .= "; Spamhaus detected: yes";
-
-        // try to set up ipv6
-        if($this->server_ipv6 = $this->emailDomain->setUpIpv6($allocation_reason, $this->mxRecords)) {
-            // IPv6 set up successfully
-            $this->debug("IPv6: Setup successful, will retry");
-
-            $ev = $this->addEvent('NOTIFY', $this->notify, "GREYLISTED - {$errmsg}");
-            $this->server->updateNotifyToNextServer($this->notify,  $this->retryWhen ,true, $this->server_ipv6, $this->allMxIps);
-            $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: {$errmsg}");
-            // Successfully passed to next server, exit
-            return;
-        }
-
-        // no IPv6 can be set up -> don't retry
-        $this->debug("IPv6: Setup failed");
-
-        $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "IPv6 SETUP FAILED - {$errmsg}");
-        $this->notify->flagDone($ev, '');
-        $this->errorHandler( $ev->remarks);
-        return;
-    }
-    
     function errorHandler($msg)
     {
         if($this->error_handler == 'exception'){

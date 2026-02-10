@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Initialize the Mail_smtp object and set $this->mailer
- * so that it can be used to send emails.
+ * Builds SMTP mailer for a given host/mx; obtain it via mailer().
  * 
  * Usage example in NotifySend.php:
  * 
@@ -10,15 +9,24 @@
  *  'smtpHost' => $smtp_host, // the IP address of the server
  *  'mx' => $mx, // the MX host
  * ));
- * $mailer = $notifyRouter->mailer;
+ * $mailer = $notifyRouter->mailer();
  * 
  * Access domain/email/notify via $this->notifySend->emailDomain, $this->notifySend->email, $this->notifySend->notify
  */
 class Pman_Core_NotifyRouter
 {
+    /** Result of last convertMxsToIpMap; caller uses these directly (no copying into NotifySend) */
+    static $all_mx_ipv4s = array();
+    static $valid_ips = array();
+    static $use_ipv6 = false;
+    static $is_any_ipv4_blacklisted = false;
+
     var $mailer;
 
-    // Pman_Core_NotifySend instance
+    /** Pman_Core_NotifySend instance.
+     *  Uses: debug, cli_args['debug'], server_ipv6, emailDomain, email, table, server, notify;
+     *  methods: errorHandler(), debugHandler() (callback for Mail).
+     */
     var $notifySend;
 
     // SMTP host (usually the IP address of the server)
@@ -27,7 +35,10 @@ class Pman_Core_NotifyRouter
     var $mx = '';
     // Whether to use IPv6
     var $useIpv6 = false;
-    
+
+    /** Base socket options from config (set in ctor) */
+    var $base_socket_options;
+
     /**
      * Constructor
      * @param Pman_Core_NotifySend $notifySend The NotifySend instance
@@ -42,55 +53,39 @@ class Pman_Core_NotifyRouter
                 $this->$key = $value;
             }
         }
-        $this->useIpv6 = !empty($this->notifySend->server_ipv6) && !empty($this->notifySend->server_ipv6->ipv6_addr_str) && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        $this->useIpv6 = !empty($this->notifySend->server_ipv6) 
+            && !empty($this->notifySend->server_ipv6->ipv6_addr_str) 
+            && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
 
         $ff = HTML_FlexyFramework::get();
+        $this->base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
+            'ssl' => array(
+                'verify_peer_name' => false,
+                'verify_peer' => false,
+                'allow_self_signed' => true,
+                'security_level' => 1
+            )
+        );
 
         $this->debug("Trying SMTP: $this->mx / HELO {$ff->Mail['helo']} (IP: $this->smtpHost)");
-        $this->initMailer();
     }
 
     /**
-     * Debug a message
-     * @param string $str The message to debug
-     * @return void
+     * Debug a message (echo when notifySend debug boolean is set)
      */
-    function debug($str)
+    private function debug($str)
     {
-        $this->notifySend->debug($str);
-    }
-
-
-    /**
-     * Error handler
-     * @param string $msg The message to error
-     * @return void
-     */
-    function errorHandler($msg)
-    {
-        $this->notifySend->errorHandler($msg);
-    }
-
-    /**
-     * Get the host for the Mail_smtp object
-     * @return string The host for the Mail_smtp object
-     */
-    function getHost()
-    {
-        // Format IPv6 address with brackets for PEAR Mail compatibility
-        $mailer_host = $this->smtpHost;
-        if ($this->useIpv6) {
-            $mailer_host = '[' . $this->smtpHost . ']';
+        if (!empty($this->notifySend->debug) || !empty($this->notifySend->cli_args['debug'])) {
+            echo $str . "\n";
         }
-
-        return $mailer_host;
     }
 
+
     /**
-     * Get the localhost for the Mail_smtp object
-     * @return string The localhost for the Mail_smtp object
+     * HELO hostname (optionally IPv6-suffixed from server_ipv6)
+     * @return string
      */
-    function getLocalhost()
+    private function heloName()
     {
         $ff = HTML_FlexyFramework::get();
         $helo_hostname = $ff->Mail['helo'];
@@ -125,34 +120,12 @@ class Pman_Core_NotifyRouter
     }
 
     /**
-     * Get the socket options for the Mail_smtp object
-     * @return array The socket options for the Mail_smtp object
+     * Socket options from $this->base_socket_options, with IPv6 binding if applicable.
+     * @return array
      */
-    function getSocketOptions()
+    private function socketOptions()
     {
-        $ff = HTML_FlexyFramework::get();
-        // Prepare socket options with IPv6 binding if available
-        $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
-            'ssl' => array(
-                'verify_peer_name' => false,
-                'verify_peer' => false, 
-                'allow_self_signed' => true,
-                'security_level' => 1
-            )
-        );
-
-        return $this->prepareSocketOptionsWithIPv6($base_socket_options);
-    }
-
-    /**
-     * Prepare socket options with IPv6 binding if available
-     * 
-     * @param array $base_options Base socket options
-     * @return array Enhanced socket options with IPv6 binding
-     */
-    function prepareSocketOptionsWithIPv6($base_options = array())
-    {
-        $socket_options = $base_options;
+        $socket_options = $this->base_socket_options;
         
         // Return early if not using IPv6
         if (empty($this->smtpHost) || !$this->useIpv6) {
@@ -171,59 +144,55 @@ class Pman_Core_NotifyRouter
     }
     
     /**
-     * Initialize the Mail_smtp object and set $this->mailer
-     * @return void
+     * Create (if needed) and return the Mail_smtp instance for this router.
+     * @return object Mail_smtp mailer
      */
-    function initMailer()
+    function mailer()
     {
-        $mailer = Mail::factory('smtp', array(
-            'host'          => $this->getHost(),
-            'localhost'     => $this->getLocalhost(),
-            'timeout'       => 15,
-            'socket_options'=> $this->getSocketOptions(),
-            'debug'         => 1,
-            'debug_handler' => array($this->notifySend, 'debugHandler'),
-            'dkim'          => true
-        ));
-        $this->mailer = $mailer;
-
-        $this->setMailerOptionsBasedOnConfig();
+        if (!isset($this->mailer)) {
+            $this->mailer = Mail::factory('smtp', array(
+                'host'          => $this->useIpv6 ? '[' . $this->smtpHost . ']' : $this->smtpHost,
+                'localhost'     => $this->heloName(),
+                'timeout'       => 15,
+                'socket_options'=> $this->socketOptions(),
+                'debug'         => 1,
+                'debug_handler' => array($this->notifySend, 'debugHandler'),
+                'dkim'          => true
+            ));
+            $this->applyConfig();
+        }
+        return $this->mailer;
     }
 
     /**
      * Set the options for $this->mailer based on the config
      * @return void
      */
-    function setMailerOptionsBasedOnConfig()
+    private function applyConfig()
     {
-        $mailer = $this->mailer;
-
         $ff = HTML_FlexyFramework::get();
             
         // if the host is the mail host + it's authenticated add auth details
         // this normally will happen if you sent  Pman_Core_NotifySend['host']
 
         if (isset($ff->Mail['host']) && $ff->Mail['host'] == $this->mx && !empty($ff->Mail['auth'] ) && !empty($ff->Mail['username']) && !empty($ff->Mail['password'])) {
-            
-            $mailer->auth = true;
-            $mailer->username = $ff->Mail['username'];
-            $mailer->password = $ff->Mail['password'];
+            $this->mailer->auth = true;
+            $this->mailer->username = $ff->Mail['username'];
+            $this->mailer->password = $ff->Mail['password'];
         }
         if (isset($ff->Core_Notify['tls'])) {
             // you can set Core_Notify:tls to true to force it to use tls on all connections (where available)
-            $mailer->tls = $ff->Core_Notify['tls'];
+            $this->mailer->tls = $ff->Core_Notify['tls'];
         }
         if (isset($ff->Core_Notify['tls_exclude']) && in_array($this->mx, $ff->Core_Notify['tls_exclude'])) {
-            $mailer->tls = false;
+            $this->mailer->tls = false;
         }
 
-        $this->setMailerOptionsBasedOnRoute();
+        $this->applyRoute();
     }
 
-    function setMailerOptionsBasedOnRoute()
+    private function applyRoute()
     {
-        $mailer = $this->mailer;
-
         $ff = HTML_FlexyFramework::get();
 
         if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
@@ -325,35 +294,185 @@ class Pman_Core_NotifyRouter
                 if($core_notify->count()){
                     $this->notifySend->server->updateNotifyToNextServer(
                         $this->notifySend->notify , date("Y-m-d H:i:s", time() + $seconds), 
-                        true, $this->notifySend->server_ipv6, $this->notifySend->allMxIps);
-                    $this->errorHandler( " Too many emails sent by {$this->notifySend->emailDomain->domain} - requeing");
+                        true, $this->notifySend->server_ipv6, self::$all_mx_ipv4s);
+                    $this->notifySend->errorHandler(" Too many emails sent by {$this->notifySend->emailDomain->domain} - requeing");
                 }
                 
                 
-                $mailer->host = $host;
-                $mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
-                $mailer->username = $settings['username'];
-                $mailer->password = $settings['password'];
+                $this->mailer->host = $host;
+                $this->mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
+                $this->mailer->username = $settings['username'];
+                $this->mailer->password = $settings['password'];
                 if (isset($settings['port'])) {
-                    $mailer->port = $settings['port'];
+                    $this->mailer->port = $settings['port'];
                 }
-                // Prepare socket options with IPv6 binding if available
-                $base_route_socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array(
+                // Route is final: overwrite base_socket_options then use socketOptions()
+                $this->base_socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array(
                     'ssl' => array(
                         'verify_peer_name' => false,
-                        'verify_peer' => false, 
+                        'verify_peer' => false,
                         'allow_self_signed' => true,
                         'security_level' => 1
                     )
                 );
-                
-                $mailer->socket_options = $this->prepareSocketOptionsWithIPv6($base_route_socket_options);
-                $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
-                $this->debug("Got Core_Notify route match - " . print_R($mailer,true));
+                $this->mailer->socket_options = $this->socketOptions();
+                $this->mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
+                $this->debug("Got Core_Notify route match - " . print_R($this->mailer, true));
 
                 break;
             }
             
         }
     }
+
+    /**
+     * Collect MX → IP map and related data (static, data only). Stores result in self::$all_mx_ipv4s, $valid_ips, $use_ipv6, $is_any_ipv4_blacklisted.
+     * Caller uses those static properties directly.
+     *
+     * @param array $mxs MX hostnames
+     * @param bool $useIpv6 Whether to prefer IPv6
+     * @param int $server_id Current server id (for blacklist)
+     * @param object|false $server_ipv6 Core_notify_server_ipv6 or false
+     * @param bool $debug If true, echo debug messages
+     * @return array Map of IP (or hostname) => domain name
+     */
+    static function convertMxsToIpMap($mxs, $useIpv6, $server_id, $server_ipv6 = false, $debug = false)
+    {
+        $mx_ip_map = array();
+        $mx_ipv6_map = array();
+        $mx_ipv4_map = array();
+
+        foreach ($mxs as $mx) {
+            $ipv6_records = @dns_get_record($mx, DNS_AAAA);
+            if (!empty($ipv6_records)) {
+                foreach ($ipv6_records as $record) {
+                    if (empty($record['ipv6'])) {
+                        continue;
+                    }
+                    $mx_ipv6_map[$record['ipv6']] = $mx;
+                }
+            }
+            $ipv4_records = @dns_get_record($mx, DNS_A);
+            if (!empty($ipv4_records)) {
+                foreach ($ipv4_records as $record) {
+                    if (empty($record['ip'])) {
+                        continue;
+                    }
+                    $mx_ipv4_map[$record['ip']] = $mx;
+                }
+            }
+            $hostname_ip = @gethostbyname($mx);
+            if (!empty($hostname_ip) && filter_var($hostname_ip, FILTER_VALIDATE_IP)) {
+                $mx_ipv4_map[$hostname_ip] = $mx;
+                if ($debug) {
+                    echo "DNS: Found hosts file override for $mx: $hostname_ip\n";
+                }
+            }
+        }
+
+        self::$all_mx_ipv4s = array_keys($mx_ipv4_map);
+        $mx_ip_map = $useIpv6 ? $mx_ipv6_map : $mx_ipv4_map;
+
+        if (empty($mx_ip_map)) {
+            foreach ($mxs as $mx) {
+                $mx_ip_map[$mx] = $mx;
+            }
+            if ($debug) {
+                echo "DNS: No IP addresses resolved for any MX, using hostnames\n";
+            }
+            self::$valid_ips = array_keys($mx_ip_map);
+            self::$use_ipv6 = $useIpv6;
+            self::$is_any_ipv4_blacklisted = false;
+            return $mx_ip_map;
+        }
+
+        if (!$useIpv6) {
+            list($mx_ip_map, $is_blacklisted) = self::filterBlacklistedIps($server_id, $mx_ip_map, $debug);
+            self::$valid_ips = array_keys($mx_ip_map);
+            self::$use_ipv6 = $useIpv6;
+            self::$is_any_ipv4_blacklisted = $is_blacklisted;
+            return $mx_ip_map;
+        }
+
+        $mx_ip_map = self::filterIpv6ByReversePtr($server_ipv6, $mx_ip_map, $debug);
+        if (empty($mx_ip_map)) {
+            if ($debug) {
+                echo "DNS: No IPv6 addresses resolved, fallback to use IPv4 addresses\n";
+            }
+            self::$use_ipv6 = false;
+            list($mx_ip_map, $is_blacklisted) = self::filterBlacklistedIps($server_id, $mx_ipv4_map, $debug);
+            self::$valid_ips = array_keys($mx_ip_map);
+            self::$is_any_ipv4_blacklisted = $is_blacklisted;
+            return $mx_ip_map;
+        }
+        self::$valid_ips = array_keys($mx_ip_map);
+        self::$use_ipv6 = $useIpv6;
+        self::$is_any_ipv4_blacklisted = false;
+        return $mx_ip_map;
+    }
+
+    /**
+     * Filter IP map by blacklisted IPs for server (static, data only).
+     *
+     * @param int $server_id
+     * @param array $mx_ip_map Map to filter (ip => mx)
+     * @param bool $debug
+     * @return array [filtered_map, is_any_blacklisted]
+     */
+    private static function filterBlacklistedIps($server_id, $mx_ip_map, $debug = false)
+    {
+        $bl = DB_DataObject::factory('core_notify_blacklist');
+        $bl->server_id = $server_id;
+        $bl->whereAdd('ip != 0x0');
+        $bl->selectAdd();
+        $bl->selectAdd('INET6_NTOA(ip) as ip_str');
+        $blacklistedIps = $bl->fetchAll('ip_str');
+        $is_any_blacklisted = false;
+        foreach ($mx_ip_map as $ip => $mx) {
+            if (in_array($ip, $blacklistedIps)) {
+                if ($debug) {
+                    echo "DNS: Blacklisted IP: $ip\n";
+                }
+                $is_any_blacklisted = true;
+                unset($mx_ip_map[$ip]);
+            }
+        }
+        return array($mx_ip_map, $is_any_blacklisted);
+    }
+
+    /**
+     * Filter IPv6 map by reverse PTR / domain suffix match (static, data only).
+     *
+     * @param object|false $server_ipv6 Core_notify_server_ipv6 or false
+     * @param array $mx_ip_map Map ip => mx
+     * @param bool $debug
+     * @return array Filtered map
+     */
+    private static function filterIpv6ByReversePtr($server_ipv6, $mx_ip_map, $debug = false)
+    {
+        if (empty($server_ipv6) || !empty($server_ipv6->has_reverse_ptr)) {
+            return $mx_ip_map;
+        }
+        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+        $cnsi->autoJoin();
+        $cnsi->ipv6_addr = $server_ipv6->ipv6_addr;
+        $domainsMappedToCurrentIpv6 = $cnsi->fetchAll('domain_id_domain');
+        foreach ($mx_ip_map as $ip => $mx) {
+            $match = false;
+            foreach ($domainsMappedToCurrentIpv6 as $domain) {
+                if (str_ends_with($mx, $domain)) {
+                    $match = true;
+                    break;
+                }
+            }
+            if (!$match) {
+                if ($debug) {
+                    echo "DNS: Skipping host $mx because no domain mapped to the current server's IPv6 address (" . $server_ipv6->ipv6_addr_str . ") matches the suffix of the mx host\n";
+                }
+                unset($mx_ip_map[$ip]);
+            }
+        }
+        return $mx_ip_map;
+    }
+
 }
