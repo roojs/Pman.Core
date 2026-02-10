@@ -23,7 +23,10 @@ class Pman_Core_NotifyRouter
 
     var $mailer;
 
-    // Pman_Core_NotifySend instance
+    /** Pman_Core_NotifySend instance.
+     *  Uses: debug, cli_args['debug'], server_ipv6, emailDomain, email, table, server, notify;
+     *  methods: errorHandler(), debugHandler() (callback for Mail).
+     */
     var $notifySend;
 
     // SMTP host (usually the IP address of the server)
