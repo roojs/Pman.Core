@@ -156,7 +156,7 @@ class Pman_Core_NotifyRouter
                 'debug_handler' => array($this->notifySend, 'debugHandler'),
                 'dkim'          => true
             ));
-            $this->setMailerOptionsBasedOnConfig();
+            $this->applyConfig();
         }
         return $this->mailer;
     }
@@ -165,7 +165,7 @@ class Pman_Core_NotifyRouter
      * Set the options for $this->mailer based on the config
      * @return void
      */
-    private function setMailerOptionsBasedOnConfig()
+    private function applyConfig()
     {
         $ff = HTML_FlexyFramework::get();
             
@@ -185,10 +185,10 @@ class Pman_Core_NotifyRouter
             $this->mailer->tls = false;
         }
 
-        $this->setMailerOptionsBasedOnRoute();
+        $this->applyRoute();
     }
 
-    private function setMailerOptionsBasedOnRoute()
+    private function applyRoute()
     {
         $ff = HTML_FlexyFramework::get();
 
