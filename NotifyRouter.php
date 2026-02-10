@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Initialize the Mail_smtp object and set $this->mailer
- * so that it can be used to send emails.
+ * Builds SMTP mailer for a given host/mx; obtain it via mailer().
  * 
  * Usage example in NotifySend.php:
  * 
@@ -10,7 +9,7 @@
  *  'smtpHost' => $smtp_host, // the IP address of the server
  *  'mx' => $mx, // the MX host
  * ));
- * $mailer = $notifyRouter->mailer;
+ * $mailer = $notifyRouter->mailer();
  * 
  * Access domain/email/notify via $this->notifySend->emailDomain, $this->notifySend->email, $this->notifySend->notify
  */
@@ -33,7 +32,10 @@ class Pman_Core_NotifyRouter
     var $mx = '';
     // Whether to use IPv6
     var $useIpv6 = false;
-    
+
+    /** Base socket options from config (set in ctor) */
+    var $base_socket_options;
+
     /**
      * Constructor
      * @param Pman_Core_NotifySend $notifySend The NotifySend instance
@@ -48,18 +50,27 @@ class Pman_Core_NotifyRouter
                 $this->$key = $value;
             }
         }
-        $this->useIpv6 = !empty($this->notifySend->server_ipv6) && !empty($this->notifySend->server_ipv6->ipv6_addr_str) && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        $this->useIpv6 = !empty($this->notifySend->server_ipv6) 
+            && !empty($this->notifySend->server_ipv6->ipv6_addr_str) 
+            && filter_var($this->smtpHost, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
 
         $ff = HTML_FlexyFramework::get();
+        $this->base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
+            'ssl' => array(
+                'verify_peer_name' => false,
+                'verify_peer' => false,
+                'allow_self_signed' => true,
+                'security_level' => 1
+            )
+        );
 
         $this->debug("Trying SMTP: $this->mx / HELO {$ff->Mail['helo']} (IP: $this->smtpHost)");
-        $this->initMailer();
     }
 
     /**
      * Debug a message (echo when notifySend debug boolean is set)
      */
-    function debug($str)
+    private function debug($str)
     {
         if (!empty($this->notifySend->debug) || !empty($this->notifySend->cli_args['debug'])) {
             echo $str . "\n";
@@ -68,35 +79,10 @@ class Pman_Core_NotifyRouter
 
 
     /**
-     * Error handler
-     * @param string $msg The message to error
-     * @return void
+     * HELO hostname (optionally IPv6-suffixed from server_ipv6)
+     * @return string
      */
-    function errorHandler($msg)
-    {
-        $this->notifySend->errorHandler($msg);
-    }
-
-    /**
-     * Get the host for the Mail_smtp object
-     * @return string The host for the Mail_smtp object
-     */
-    function getHost()
-    {
-        // Format IPv6 address with brackets for PEAR Mail compatibility
-        $mailer_host = $this->smtpHost;
-        if ($this->useIpv6) {
-            $mailer_host = '[' . $this->smtpHost . ']';
-        }
-
-        return $mailer_host;
-    }
-
-    /**
-     * Get the localhost for the Mail_smtp object
-     * @return string The localhost for the Mail_smtp object
-     */
-    function getLocalhost()
+    private function heloName()
     {
         $ff = HTML_FlexyFramework::get();
         $helo_hostname = $ff->Mail['helo'];
@@ -131,34 +117,23 @@ class Pman_Core_NotifyRouter
     }
 
     /**
-     * Get the socket options for the Mail_smtp object
-     * @return array The socket options for the Mail_smtp object
+     * Socket options (from base_socket_options, with IPv6 binding if applicable).
+     * @return array
      */
-    function getSocketOptions()
+    private function getSocketOptions()
     {
-        $ff = HTML_FlexyFramework::get();
-        // Prepare socket options with IPv6 binding if available
-        $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
-            'ssl' => array(
-                'verify_peer_name' => false,
-                'verify_peer' => false, 
-                'allow_self_signed' => true,
-                'security_level' => 1
-            )
-        );
-
-        return $this->prepareSocketOptionsWithIPv6($base_socket_options);
+        return $this->prepareSocketOptionsWithIPv6();
     }
 
     /**
-     * Prepare socket options with IPv6 binding if available
-     * 
-     * @param array $base_options Base socket options
-     * @return array Enhanced socket options with IPv6 binding
+     * Prepare socket options with IPv6 binding if available.
+     * Uses $this->base_socket_options when no argument; route code may pass a base array.
+     * @param array|null $base_options Base socket options or null to use $this->base_socket_options
+     * @return array
      */
-    function prepareSocketOptionsWithIPv6($base_options = array())
+    private function prepareSocketOptionsWithIPv6($base_options = null)
     {
-        $socket_options = $base_options;
+        $socket_options = $base_options !== null ? $base_options : $this->base_socket_options;
         
         // Return early if not using IPv6
         if (empty($this->smtpHost) || !$this->useIpv6) {
@@ -177,30 +152,31 @@ class Pman_Core_NotifyRouter
     }
     
     /**
-     * Initialize the Mail_smtp object and set $this->mailer
-     * @return void
+     * Create (if needed) and return the Mail_smtp instance for this router.
+     * @return object Mail_smtp mailer
      */
-    function initMailer()
+    function mailer()
     {
-        $mailer = Mail::factory('smtp', array(
-            'host'          => $this->getHost(),
-            'localhost'     => $this->getLocalhost(),
-            'timeout'       => 15,
-            'socket_options'=> $this->getSocketOptions(),
-            'debug'         => 1,
-            'debug_handler' => array($this->notifySend, 'debugHandler'),
-            'dkim'          => true
-        ));
-        $this->mailer = $mailer;
-
-        $this->setMailerOptionsBasedOnConfig();
+        if (!isset($this->mailer)) {
+            $this->mailer = Mail::factory('smtp', array(
+                'host'          => $this->getHost(),
+                'localhost'     => $this->getLocalhost(),
+                'timeout'       => 15,
+                'socket_options'=> $this->getSocketOptions(),
+                'debug'         => 1,
+                'debug_handler' => array($this->notifySend, 'debugHandler'),
+                'dkim'          => true
+            ));
+            $this->setMailerOptionsBasedOnConfig();
+        }
+        return $this->mailer;
     }
 
     /**
      * Set the options for $this->mailer based on the config
      * @return void
      */
-    function setMailerOptionsBasedOnConfig()
+    private function setMailerOptionsBasedOnConfig()
     {
         $mailer = $this->mailer;
 
@@ -226,7 +202,7 @@ class Pman_Core_NotifyRouter
         $this->setMailerOptionsBasedOnRoute();
     }
 
-    function setMailerOptionsBasedOnRoute()
+    private function setMailerOptionsBasedOnRoute()
     {
         $mailer = $this->mailer;
 
@@ -457,7 +433,7 @@ class Pman_Core_NotifyRouter
      * @param bool $debug
      * @return array [filtered_map, is_any_blacklisted]
      */
-    static function filterBlacklistedIps($server_id, $mx_ip_map, $debug = false)
+    private static function filterBlacklistedIps($server_id, $mx_ip_map, $debug = false)
     {
         $bl = DB_DataObject::factory('core_notify_blacklist');
         $bl->server_id = $server_id;
@@ -486,7 +462,7 @@ class Pman_Core_NotifyRouter
      * @param bool $debug
      * @return array Filtered map
      */
-    static function filterIpv6ByReversePtr($server_ipv6, $mx_ip_map, $debug = false)
+    private static function filterIpv6ByReversePtr($server_ipv6, $mx_ip_map, $debug = false)
     {
         if (empty($server_ipv6) || !empty($server_ipv6->has_reverse_ptr)) {
             return $mx_ip_map;
@@ -513,33 +489,4 @@ class Pman_Core_NotifyRouter
         return $mx_ip_map;
     }
 
-    /**
-     * Try to set up IPv6 for the domain; on success requeue to next server, on failure flag done and error.
-     *
-     * @param string $errmsg Error message from SMTP
-     * @return void
-     */
-    function setUpIpv6($errmsg)
-    {
-        $this->debug("No valid ipv4 address left for server (id: {$this->notifySend->server->id}), trying to set up ipv6");
-
-        $allocation_reason = $errmsg;
-        $allocation_reason .= "; Email: " . $this->notifySend->notify->to_email;
-        $allocation_reason .= "; Spamhaus detected: yes";
-
-        $server_ipv6 = $this->notifySend->emailDomain->setUpIpv6($allocation_reason, $this->notifySend->mxRecords);
-        if (empty($server_ipv6)) {
-            $this->debug("IPv6: Setup failed");
-            $ev = $this->notifySend->addEvent('NOTIFYFAIL', $this->notifySend->notify, "IPv6 SETUP FAILED - {$errmsg}");
-            $this->notifySend->notify->flagDone($ev, '');
-            $this->errorHandler($ev->remarks);
-            return;
-        }
-
-        $this->notifySend->server_ipv6 = $server_ipv6;
-        $this->debug("IPv6: Setup successful, will retry");
-        $this->notifySend->addEvent('NOTIFY', $this->notifySend->notify, "GREYLISTED - {$errmsg}");
-        $this->notifySend->server->updateNotifyToNextServer($this->notifySend->notify, $this->notifySend->retryWhen, true, $this->notifySend->server_ipv6, self::$all_mx_ipv4s);
-        $this->errorHandler("Retry in next server at {$this->notifySend->retryWhen} - Error: {$errmsg}");
-    }
 }
