@@ -116,7 +116,6 @@ class Pman_Core_NotifySend extends Pman
     var $fail = false;        // Whether send failed
     var $lastSmtpResponse;    // Last SMTP response (PEAR_Error or true)
     var $force = false;       // Force sending even if already sent
-    var $notifyRouter;        // NotifyRouter instance (set during send loop, used for setUpIpv6)
 
     function getAuth()
     {
@@ -607,11 +606,11 @@ class Pman_Core_NotifySend extends Pman
         foreach ($mx_ip_map as $smtp_host => $mx) {
             $this->debug_str = '';
 
-            $this->notifyRouter = new Pman_Core_NotifyRouter($this, array(
+            $notifyRouter = new Pman_Core_NotifyRouter($this, array(
                 'smtpHost' => $smtp_host,
                 'mx' => $mx
             ));
-            $mailer = $this->notifyRouter->mailer;
+            $mailer = $notifyRouter->mailer();
 
             $emailHeaders = $this->email['headers'];
 
@@ -734,7 +733,37 @@ class Pman_Core_NotifySend extends Pman
     }
     
     /**
-     * Post-send handling: IPv6 setup, failure handling, retries
+     * Try to set up IPv6 for the domain; on success requeue to next server, on failure flag done and error.
+     *
+     * @param string $errmsg Error message from SMTP
+     * @return void
+     */
+    function setUpIpv6($errmsg)
+    {
+        $this->debug("No valid ipv4 address left for server (id: {$this->server->id}), trying to set up ipv6");
+
+        $allocation_reason = $errmsg
+            . "; Email: " . $this->notify->to_email
+            . "; Spamhaus detected: yes";
+
+        $server_ipv6 = $this->emailDomain->setUpIpv6($allocation_reason, $this->mxRecords);
+        if (empty($server_ipv6)) {
+            $this->debug("IPv6: Setup failed");
+            $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "IPv6 SETUP FAILED - {$errmsg}");
+            $this->notify->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
+            return;
+        }
+
+        $this->server_ipv6 = $server_ipv6;
+        $this->debug("IPv6: Setup successful, will retry");
+        $this->addEvent('NOTIFY', $this->notify, "GREYLISTED - {$errmsg}");
+        $this->server->updateNotifyToNextServer($this->notify, $this->retryWhen, true, $this->server_ipv6, Pman_Core_NotifyRouter::$all_mx_ipv4s);
+        $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: {$errmsg}");
+    }
+
+    /**
+     * Post-send handling: IPv6 setup, failure handling, retries.
      * Uses class properties set by beforeSend() and send()
      */
     function postSend()
@@ -745,7 +774,7 @@ class Pman_Core_NotifySend extends Pman
             !$this->hasIpv6 && 
             empty(Pman_Core_NotifyRouter::$valid_ips) && 
             Pman_Core_NotifyRouter::$is_any_ipv4_blacklisted) {
-            $this->notifyRouter->setUpIpv6("No more valid ipv4 address left for server (id: {$this->server->id})");
+            $this->setUpIpv6("No more valid ipv4 address left for server (id: {$this->server->id})");
         }
         
         // after trying all mxs - could not connect...
@@ -797,7 +826,7 @@ class Pman_Core_NotifySend extends Pman
                         $this->debug("Server (id: {$this->server->id}) is blacklisted by the ipv4 host: {$this->failedIp}");
                         // if there is no more valid ipv4 hosts left
                         if (empty(Pman_Core_NotifyRouter::$valid_ips)) {
-                            $this->notifyRouter->setUpIpv6($allocation_reason);
+                            $this->setUpIpv6($allocation_reason);
                             return;
                         }
                     }
