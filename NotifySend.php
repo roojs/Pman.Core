@@ -125,7 +125,7 @@ class Pman_Core_NotifySend extends Pman
             return true;
         }
         if (empty($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] != 'POST') {
-            $this->errorHandler("access denied");
+            $this->fatalHandler("access denied");
         }
         //HTML_FlexyFramework::ensureSingle(__FILE__, $this);
         return true;
@@ -142,7 +142,7 @@ class Pman_Core_NotifySend extends Pman
     {   
         // DB_DataObject::debugLevel(5);
         if ($this->database_is_locked()) {
-            $this->errorHandler("LATER - DATABASE IS LOCKED\n");
+            $this->fatalHandler("LATER - DATABASE IS LOCKED\n");
         }
 
         //print_r($opts);
@@ -266,7 +266,7 @@ class Pman_Core_NotifySend extends Pman
         $this->notify = DB_DataObject::factory($this->table); // core_notify usually.
 
         if (!$this->notify->get($id)) {
-            $this->errorHandler("invalid id\n");
+            $this->fatalHandler("invalid id\n");
         }
 
         if (!$this->force && !empty($this->notify->sent) && strtotime($this->notify->act_when) < strtotime($this->notify->sent)) {
@@ -287,11 +287,11 @@ class Pman_Core_NotifySend extends Pman
         // Check if server is disabled or not found - exit gracefully (unless force is set)
         // id = 0 means no servers exist, is_active = 0 means server is disabled
         if (!$this->force && (empty($this->server->id) || empty($this->server->is_active))) {
-            $this->errorHandler("Server is disabled or not found - exiting gracefully\n");
+            $this->fatalHandler("Server is disabled or not found - exiting gracefully\n");
         }
         
          if (!$this->force &&  $this->notify->server_id != $this->server->id) {
-            $this->errorHandler("Server id does not match - message = {$this->notify->server_id} - our id is {$this->server->id} use force to try again\n");
+            $this->fatalHandler("Server id does not match - message = {$this->notify->server_id} - our id is {$this->server->id} use force to try again\n");
         }
         
         if (!empty($opts['debug'])) {
@@ -556,7 +556,7 @@ class Pman_Core_NotifySend extends Pman
         $ff = HTML_FlexyFramework::get();
 
         if (!isset($ff->Mail['helo'])) {
-            $this->errorHandler("config Mail[helo] is not set");
+            $this->fatalHandler("config Mail[helo] is not set");
         }
         
         // Disabled for now
@@ -983,6 +983,20 @@ class Pman_Core_NotifySend extends Pman
         if (!$this->cli) {
             $this->jnotice("SENDFAIL", $msg );
         }
+        die(date('Y-m-d h:i:s') . ' ' . $msg ."\n");
+        
+        
+    }
+
+    /** Fatal: process/state broken; CLI = stderr + exit(1). */
+    function fatalHandler($msg)
+    {
+        if ($this->error_handler == 'exception') {
+            throw new Pman_Core_NotifySend_Exception_Fail($msg);
+        }
+        if (!$this->cli) {
+            $this->jnotice("SENDFAIL", $msg);
+        }
         $line = date('Y-m-d H:i:s') . ' ' . $msg . "\n";
         if ($this->cli) {
             fwrite(STDERR, $line);
@@ -990,17 +1004,13 @@ class Pman_Core_NotifySend extends Pman
         }
         die($line);
     }
+
     function successHandler($msg)
     {
         if (!$this->cli) {
             $this->jok(str_replace("\n", "<br/>", $msg));
         }
-        $line = date('Y-m-d H:i:s') . ' ' . $msg . "\n";
-        if ($this->cli) {
-            echo $line;
-            exit(0);
-        }
-        die($line);
+        die(date('Y-m-d h:i:s') . ' ' . $msg ."\n");
     }
     function updateServer($w)
     {
