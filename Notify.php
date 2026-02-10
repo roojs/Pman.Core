@@ -598,7 +598,7 @@ class Pman_Core_Notify extends Pman
             // echo "CLOSING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             //fclose($p['pipes'][1]);
             
-            proc_close($p['proc']);
+            $exitCode = proc_close($p['proc']);
              //sleep(1);
             clearstatcache();
             if (file_exists('/proc/'. $p['pid'])) {
@@ -613,12 +613,16 @@ class Pman_Core_Notify extends Pman
             //}
             $output = file_exists($p['out']) ? file_get_contents($p['out']) : '';
             $outputErr = file_exists($p['oute']) ? file_get_contents($p['oute']) : '';
-            
-            $endMsg = "ENDED: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . $output;
-            if ($outputErr !== '') {
-                $endMsg .= " : " . $outputErr;
+            $ok = ($exitCode === 0 && $outputErr === '');
+            if ($ok) {
+                $this->logecho("ENDED: ({$p['pid']}) {$p['email']}");
+            } else {
+                $endMsg = "ENDED: ({$p['pid']}) {$p['email']} exit={$exitCode} " . $p['cmd'] . " : " . $output;
+                if ($outputErr !== '') {
+                    $endMsg .= " : " . $outputErr;
+                }
+                $this->logecho($endMsg . " : ");
             }
-            $this->logecho($endMsg . " : ");
             
             // Check for greylisting with "temporarily deferred" - flag matching pattern for later deferral
             if (stripos($output, 'GREYLISTED') !== false && stripos($output, 'temporarily deferred') !== false) {

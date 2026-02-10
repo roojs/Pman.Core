@@ -983,16 +983,24 @@ class Pman_Core_NotifySend extends Pman
         if (!$this->cli) {
             $this->jnotice("SENDFAIL", $msg );
         }
-        die(date('Y-m-d h:i:s') . ' ' . $msg ."\n");
-        
-        
+        $line = date('Y-m-d H:i:s') . ' ' . $msg . "\n";
+        if ($this->cli) {
+            fwrite(STDERR, $line);
+            exit(1);
+        }
+        die($line);
     }
     function successHandler($msg)
     {
         if (!$this->cli) {
             $this->jok(str_replace("\n", "<br/>", $msg));
         }
-        die(date('Y-m-d h:i:s') . ' ' . $msg ."\n");
+        $line = date('Y-m-d H:i:s') . ' ' . $msg . "\n";
+        if ($this->cli) {
+            echo $line;
+            exit(0);
+        }
+        die($line);
     }
     function updateServer($w)
     {
