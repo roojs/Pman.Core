@@ -459,6 +459,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
             // We don't need to log these errors and don't need to show these errors to the user
             if(
+                $res->code = 553 && preg_match('/User unknown/i', $errorMessage)
+                ||
                 $res->code == 550 && preg_match('/does not exist/i', $errorMessage)
                 ||
                 $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
