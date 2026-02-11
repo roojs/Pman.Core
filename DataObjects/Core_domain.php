@@ -425,6 +425,14 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 );
                 return true; // Treat 451 as success
             }
+
+            // Check for SMTP error 452 (out of storage space)
+            if ($res->code == 452 && preg_match('/out of storage/i', $errorMessage)) {
+                // Don't need to log error for out of storage space
+                return "The email address is over quota - which probably means its a dead email address - " .
+                "we don't add these as we would just get rejections - you should contact this user before adding " .
+                "and see if they have another email address";
+            }
             
             // Check for SMTP error 550 with Spamhaus failure
             // Spamhaus failures are false positives we can't fix, so treat as valid
@@ -451,6 +459,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
             // We don't need to log these errors and don't need to show these errors to the user
             if(
+                $res->code == 553 && preg_match('/User unknown/i', $errorMessage)
+                ||
                 $res->code == 550 && preg_match('/does not exist/i', $errorMessage)
                 ||
                 $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
