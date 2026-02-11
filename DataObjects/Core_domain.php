@@ -467,7 +467,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 ||
                 $res->code == 550 && preg_match('/User unknown/i', $errorMessage)
             ) {
-                $roo->errorlog("WARNING: Email test failed for {$email} - returned code {$res->code} (User unknown), however we accepted it as valid. Error: {$errorMessage}");
                 return "This email is invalid - we tested it and it does not exist";
             }
 
