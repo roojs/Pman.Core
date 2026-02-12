@@ -363,7 +363,29 @@ class Pman_Core_NotifyRouter
                 }
             }
         }
-        return empty($mxs) ? false : $mxs;
+        if (empty($mxs)) {
+            return false;
+        }
+        // If any MX hostname matches a route's mx regex, use that route's server (and its IPs) instead of the MX hostnames
+        if (!empty($ff->Core_Notify['routes'])) {
+            $pattern_to_server = array();
+            foreach ($ff->Core_Notify['routes'] as $server => $settings) {
+                if (empty($settings['mx'])) {
+                    continue;
+                }
+                foreach ($settings['mx'] as $mmx) {
+                    $pattern_to_server[$mmx] = $server;
+                }
+            }
+            foreach ($mxs as $mx_host) {
+                foreach ($pattern_to_server as $mmx => $server) {
+                    if (preg_match($mmx, $mx_host)) {
+                        return array($server);
+                    }
+                }
+            }
+        }
+        return $mxs;
     }
 
     /**
