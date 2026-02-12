@@ -318,7 +318,6 @@ class Pman_Core_NotifyRouter
                 );
                 $this->mailer->socket_options = $this->socketOptions();
                 $this->mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
-                $this->notifySend->usedConfiguredRoute = true;
                 $this->debug("Got Core_Notify route match - " . print_R($this->mailer, true));
 
                 break;
@@ -328,9 +327,74 @@ class Pman_Core_NotifyRouter
     }
 
     /**
+     * Route host list if domain is in a route's 'domains', else false.
+     *
+     * @param string $domain Recipient email domain (e.g. media-outreach.com)
+     * @return array|false array(server) or false
+     */
+    static function routeMxs($domain)
+    {
+        $ff = HTML_FlexyFramework::get();
+        if (empty($ff->Core_Notify['routes'])) {
+            return false;
+        }
+        foreach ($ff->Core_Notify['routes'] as $server => $settings) {
+            if (!empty($settings['domains']) && in_array($domain, $settings['domains'])) {
+                return array($server);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns [ mxRecords, useRoute ]. When route found: array(array($server), $settings); else array($mxs, false).
+     *
+     * @param string $domain Recipient email domain
+     * @param array|false $mxs Hostnames we're going to try (from routeMxs or mxs()); false to check domain only
+     * @return array [ mxRecords, useRoute ] useRoute is $settings or false
+     */
+    static function detectRoute($domain, $mxs = false)
+    {
+        $ff = HTML_FlexyFramework::get();
+        if (empty($ff->Core_Notify['routes'])) {
+            return array($mxs, false);
+        }
+        // Domain match
+        foreach ($ff->Core_Notify['routes'] as $server => $settings) {
+            if (!empty($settings['domains']) && in_array($domain, $settings['domains'])) {
+                return array(array($server), $settings);
+            }
+        }
+        // Post-filter: match resulting $mxs against route wildcards (mx regex); first match wins
+        if ($mxs === false || empty($mxs)) {
+            return array($mxs, false);
+        }
+        $pattern_to_server = array();
+        foreach ($ff->Core_Notify['routes'] as $server => $settings) {
+            if (empty($settings['mx'])) {
+                continue;
+            }
+            foreach ($settings['mx'] as $mmx) {
+                $pattern_to_server[$mmx] = $server;
+            }
+        }
+        if (empty($pattern_to_server)) {
+            return array($mxs, false);
+        }
+        foreach ($mxs as $mx_host) {
+            foreach ($pattern_to_server as $mmx => $server) {
+                if (preg_match($mmx, $mx_host)) {
+                    $settings = $ff->Core_Notify['routes'][$server];
+                    return array(array($server), $settings);
+                }
+            }
+        }
+        return array($mxs, false);
+    }
+
+    /**
      * Return hostname(s) to use for sending to the given domain.
-     * Checks routing config first; if the domain matches a Core_Notify route (by 'domains'),
-     * returns the configured route host. Otherwise runs MX lookup for the domain.
+     * Config host override, then MX lookup; mx-regex may collapse to a single route host.
      *
      * @param string $fqdn Recipient email domain (e.g. media-outreach.com)
      * @return array|false Array of hostnames to try (e.g. array('smtp.office365.com') or MX list), or false if none
@@ -340,13 +404,6 @@ class Pman_Core_NotifyRouter
         $ff = HTML_FlexyFramework::get();
         if (isset($ff->Pman_Core_NotifySend['host'])) {
             return array($ff->Pman_Core_NotifySend['host']);
-        }
-        if (!empty($ff->Core_Notify['routes'])) {
-            foreach ($ff->Core_Notify['routes'] as $server => $settings) {
-                if (!empty($settings['domains']) && in_array($fqdn, $settings['domains'])) {
-                    return array($server);
-                }
-            }
         }
         $mx_records = array();
         $mx_weight = array();
@@ -437,6 +494,7 @@ class Pman_Core_NotifyRouter
 
         self::$all_mx_ipv4s = array_keys($mx_ipv4_map);
         $mx_ip_map = $useIpv6 ? $mx_ipv6_map : $mx_ipv4_map;
+        self::$is_any_ipv4_blacklisted = false;  // no filtering here; caller may call removeBlacklistedIps()
 
         if (empty($mx_ip_map)) {
             foreach ($mxs as $mx) {
@@ -447,15 +505,12 @@ class Pman_Core_NotifyRouter
             }
             self::$valid_ips = array_keys($mx_ip_map);
             self::$use_ipv6 = $useIpv6;
-            self::$is_any_ipv4_blacklisted = false;
             return $mx_ip_map;
         }
 
         if (!$useIpv6) {
-            list($mx_ip_map, $is_blacklisted) = self::filterBlacklistedIps($server_id, $mx_ip_map, $debug);
             self::$valid_ips = array_keys($mx_ip_map);
             self::$use_ipv6 = $useIpv6;
-            self::$is_any_ipv4_blacklisted = $is_blacklisted;
             return $mx_ip_map;
         }
 
@@ -465,15 +520,29 @@ class Pman_Core_NotifyRouter
                 echo "DNS: No IPv6 addresses resolved, fallback to use IPv4 addresses\n";
             }
             self::$use_ipv6 = false;
-            list($mx_ip_map, $is_blacklisted) = self::filterBlacklistedIps($server_id, $mx_ipv4_map, $debug);
-            self::$valid_ips = array_keys($mx_ip_map);
-            self::$is_any_ipv4_blacklisted = $is_blacklisted;
-            return $mx_ip_map;
+            self::$valid_ips = array_keys($mx_ipv4_map);
+            return $mx_ipv4_map;
         }
         self::$valid_ips = array_keys($mx_ip_map);
         self::$use_ipv6 = $useIpv6;
-        self::$is_any_ipv4_blacklisted = false;
         return $mx_ip_map;
+    }
+
+    /**
+     * Remove blacklisted IPs from map. Updates self::$valid_ips and self::$is_any_ipv4_blacklisted.
+     * Caller should call this when not using a configured route (e.g. after convertMxsToIpMap).
+     *
+     * @param int $server_id
+     * @param array $mx_ip_map Map ip => mx
+     * @param bool $debug
+     * @return array Map with blacklisted IPs removed
+     */
+    static function removeBlacklistedIps($server_id, $mx_ip_map, $debug = false)
+    {
+        list($filtered, $is_blacklisted) = self::filterBlacklistedIps($server_id, $mx_ip_map, $debug);
+        self::$valid_ips = array_keys($filtered);
+        self::$is_any_ipv4_blacklisted = $is_blacklisted;
+        return $filtered;
     }
 
     /**
