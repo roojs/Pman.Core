@@ -318,6 +318,7 @@ class Pman_Core_NotifyRouter
                 );
                 $this->mailer->socket_options = $this->socketOptions();
                 $this->mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
+                $this->notifySend->usedConfiguredRoute = true;
                 $this->debug("Got Core_Notify route match - " . print_R($this->mailer, true));
 
                 break;
