@@ -297,9 +297,10 @@ class Pman_Core_NotifyRouter
                         true, $this->notifySend->server_ipv6, self::$all_mx_ipv4s);
                     $this->notifySend->errorHandler(" Too many emails sent by {$this->notifySend->emailDomain->domain} - requeing");
                 }
-                
-                
-                $this->mailer->host = $host;
+                // Keep using the IP we built (smtpHost); only use route hostname when we have no IP (hostname fallback)
+                if (!filter_var($this->smtpHost, FILTER_VALIDATE_IP)) {
+                    $this->mailer->host = $host;
+                }
                 $this->mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
                 $this->mailer->username = $settings['username'];
                 $this->mailer->password = $settings['password'];
@@ -317,12 +318,76 @@ class Pman_Core_NotifyRouter
                 );
                 $this->mailer->socket_options = $this->socketOptions();
                 $this->mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
+                $this->notifySend->usedConfiguredRoute = true;
                 $this->debug("Got Core_Notify route match - " . print_R($this->mailer, true));
 
                 break;
             }
             
         }
+    }
+
+    /**
+     * Return hostname(s) to use for sending to the given domain.
+     * Checks routing config first; if the domain matches a Core_Notify route (by 'domains'),
+     * returns the configured route host. Otherwise runs MX lookup for the domain.
+     *
+     * @param string $fqdn Recipient email domain (e.g. media-outreach.com)
+     * @return array|false Array of hostnames to try (e.g. array('smtp.office365.com') or MX list), or false if none
+     */
+    static function mxs($fqdn)
+    {
+        $ff = HTML_FlexyFramework::get();
+        if (isset($ff->Pman_Core_NotifySend['host'])) {
+            return array($ff->Pman_Core_NotifySend['host']);
+        }
+        if (!empty($ff->Core_Notify['routes'])) {
+            foreach ($ff->Core_Notify['routes'] as $server => $settings) {
+                if (!empty($settings['domains']) && in_array($fqdn, $settings['domains'])) {
+                    return array($server);
+                }
+            }
+        }
+        $mx_records = array();
+        $mx_weight = array();
+        $mxs = array();
+        if (!getmxrr($fqdn, $mx_records, $mx_weight)) {
+            if (!checkdnsrr($fqdn)) {
+                return false;
+            }
+            return array($fqdn);
+        }
+        asort($mx_weight, SORT_NUMERIC);
+        foreach ($mx_weight as $k => $weight) {
+            if (!empty($mx_records[$k])) {
+                if (checkdnsrr($mx_records[$k], 'A') || checkdnsrr($mx_records[$k], 'AAAA')) {
+                    $mxs[] = $mx_records[$k];
+                }
+            }
+        }
+        if (empty($mxs)) {
+            return false;
+        }
+        // If any MX hostname matches a route's mx regex, use that route's server (and its IPs) instead of the MX hostnames
+        if (!empty($ff->Core_Notify['routes'])) {
+            $pattern_to_server = array();
+            foreach ($ff->Core_Notify['routes'] as $server => $settings) {
+                if (empty($settings['mx'])) {
+                    continue;
+                }
+                foreach ($settings['mx'] as $mmx) {
+                    $pattern_to_server[$mmx] = $server;
+                }
+            }
+            foreach ($mxs as $mx_host) {
+                foreach ($pattern_to_server as $mmx => $server) {
+                    if (preg_match($mmx, $mx_host)) {
+                        return array($server);
+                    }
+                }
+            }
+        }
+        return $mxs;
     }
 
     /**
