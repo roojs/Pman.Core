@@ -297,9 +297,10 @@ class Pman_Core_NotifyRouter
                         true, $this->notifySend->server_ipv6, self::$all_mx_ipv4s);
                     $this->notifySend->errorHandler(" Too many emails sent by {$this->notifySend->emailDomain->domain} - requeing");
                 }
-                
-                
-                $this->mailer->host = $host;
+                // Keep using the IP we built (smtpHost); only use route hostname when we have no IP (hostname fallback)
+                if (!filter_var($this->smtpHost, FILTER_VALIDATE_IP)) {
+                    $this->mailer->host = $host;
+                }
                 $this->mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
                 $this->mailer->username = $settings['username'];
                 $this->mailer->password = $settings['password'];
