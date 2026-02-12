@@ -377,7 +377,16 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
-    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false, $server_ipv6 = null)
+    /**
+     * Update the notify to the next server
+     * @param object $cn The notify object
+     * @param string $when The when to update the notify
+     * @param bool $allow_same Allow the same server
+     * @param object $server_ipv6 The server ipv6 object
+     * @param array $allMxIpv4s All available ipv4s from the mx hosts
+     * @return bool True if the notify was updated to the next server, false otherwise
+     */
+    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false, $server_ipv6 = false, $allMxIpv4s = false)
     {
         if (!$this->id) {
             return;
@@ -391,7 +400,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
         // set to ipv6 server if available
         // update act_when
-        if($server_ipv6 != null) {
+        if (!empty($server_ipv6)) {
             $pp = clone($w);
 
             $serverFromIpv6 = $server_ipv6->findServerFromIpv6($this->poolname);
@@ -416,7 +425,23 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $good = false;
         while ($offset  != $start) {
             $s = $servers[$offset];
-            if (!$s->isBlacklisted($email)) {
+
+            // check if the server is blacklisted by the email domain
+            $blacklistedByDomain = $s->isBlacklisted($email);
+
+            // also check if the server is blocked by Spamhaus on all MX hosts' IPv4 addresses
+            $blacklistedByAllMxIpv4s = true;
+            foreach($allMxIpv4s as $ip) {
+                if (!$s->isBlacklistedByIp($ip)) {
+                    $blacklistedByAllMxIpv4s = false;
+                    break;
+                }
+            }
+
+            // if the server is blacklisted by the email domain or blocked by Spamhaus on all MX hosts' IPv4 addresses, it is blacklisted
+            $blacklisted = $blacklistedByDomain || $blacklistedByAllMxIpv4s;
+
+            if(!$blacklisted) {
                 $good = $s;
                 break;
             }
@@ -438,6 +463,31 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $w->act_when = $when === false ? $w->sqlValue('NOW() + INTERVAL 5 MINUTE') : $when;
         $w->update($pp);
         return true;
+    }
+
+    /**
+     * Check if this server is blocked by Spamhaus on the given ip
+     * @param string $ip The ip address
+     * @return bool True if the server is blacklisted, false otherwise
+     */
+    function isBlacklistedByIp($ip)
+    {
+        if(!$this->id) {
+            return false;
+        }
+        static $cache = array();
+        if (isset( $cache[$this->id . '-'. $ip])) {
+            return  $cache[$this->id . '-'. $ip];
+        }
+        $bl = DB_DataObject::factory('core_notify_blacklist');
+        $bl->server_id = $this->id;
+        $bl->ip = $bl->sqlValue("INET6_ATON('" . $this->escape($ip) . "')");
+        if ($bl->count()) {
+            $cache[$this->id . '-'. $ip] = true;
+            return true;
+        }
+        $cache[$this->id . '-'. $ip] = false;
+        return false;
     }
     
     
@@ -461,6 +511,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $bl = DB_DataObject::factory('core_notify_blacklist');
         $bl->server_id = $this->id;
         $bl->domain_id = $cd->id;
+        // not blocked by Spamhaus on an IPv4 address
+        $bl->whereAdd("ip = 0x0");
         if ($bl->count()) {
             $cache[$this->id . '-'. $dom] = true;
             return true;
@@ -468,7 +520,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         return false; 
     }
-    function initHelo($server_ipv6 = null)
+    function initHelo($server_ipv6 = false)
     {
         if (!$this->id) {
             return;
@@ -484,7 +536,14 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         $ff->Mail['helo'] = $this->helo;
     }
-    function checkSmtpResponse($errmsg, $core_domain)
+    /**
+     * Check if the email is blacklisted
+     * @param string $errmsg The error message from the SMTP server
+     * @param object $core_domain The core_domain object
+     * @param string|false $failedIp The MX host IPv4 address on which the server is blocked by Spamhaus
+     * @return bool True if the email is blacklisted, false otherwise
+     */
+    function checkSmtpResponse($errmsg, $core_domain, $failedIp = false)
     {
         if (!$this->id) {
             return false;
@@ -492,6 +551,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $bl = DB_DataObject::factory('core_notify_blacklist');
         $bl->server_id = $this->id;
         $bl->domain_id = $core_domain->id;
+        if($failedIp) {
+            $bl->ip = $bl->sqlValue("INET6_ATON('" . $this->escape($failedIp) . "')");
+        }
         if ($bl->count()) {
             return true;
         }

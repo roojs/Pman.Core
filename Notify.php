@@ -581,8 +581,12 @@ class Pman_Core_Notify extends Pman
                     if ($this->log_events) {
                         $this->addEvent('NOTIFY', $w, 'TERMINATED - TIMEOUT');
                     }
-                    $w->act_when = date('Y-m-d H:i:s', strtotime("NOW + {$this->try_again_minutes} MINUTES"));
-                    $w->update($ww);
+                    // Only reschedule if notification hasn't been sent yet
+                    $already_sent = !empty($w->sent) && strtotime($w->sent) > strtotime('1500-01-01 00:00:00');
+                    if (!$already_sent) {
+                        $w->act_when = date('Y-m-d H:i:s', strtotime("NOW + {$this->try_again_minutes} MINUTES"));
+                        $w->update($ww);
+                    }
                     
                     continue;
                 }
@@ -594,7 +598,7 @@ class Pman_Core_Notify extends Pman
             // echo "CLOSING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             //fclose($p['pipes'][1]);
             
-            proc_close($p['proc']);
+            $exitCode = proc_close($p['proc']);
              //sleep(1);
             clearstatcache();
             if (file_exists('/proc/'. $p['pid'])) {
@@ -609,11 +613,11 @@ class Pman_Core_Notify extends Pman
             //}
             $output = file_exists($p['out']) ? file_get_contents($p['out']) : '';
             $outputErr = file_exists($p['oute']) ? file_get_contents($p['oute']) : '';
-            
-            $this->logecho("ENDED: ({$p['pid']}) {$p['email']} " .  $p['cmd'] . " : " .
-                ($output ?: "output DELETED?") . " : " .
-                ($outputErr ?: "error output DELETED?") . " : "
-            );
+            $endMsg = "ENDED: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . $output;
+            if ($outputErr !== '') {
+                $endMsg .= " : " . $outputErr;
+            }
+            $this->logecho($endMsg);
             
             // Check for greylisting with "temporarily deferred" - flag matching pattern for later deferral
             if (stripos($output, 'GREYLISTED') !== false && stripos($output, 'temporarily deferred') !== false) {

@@ -388,7 +388,9 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     function flagDone($event,$msgid)
     {
         $ww = clone($this);
-        if(strtotime($this->act_when) > strtotime("NOW")){
+        // Only modify act_when if notification hasn't been sent yet
+        $already_sent = !empty($this->sent) && strtotime($this->sent) > strtotime('1500-01-01 00:00:00');
+        if (!$already_sent && strtotime($this->act_when) > strtotime("NOW")){
             $this->act_when = $this->sqlValue('NOW()');
         }
         $this->sent = empty($this->sent) || strtotime($this->sent) < 1 ? $this->sqlValue('NOW()') :$this->sent; // do not update if sent.....

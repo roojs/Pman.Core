@@ -115,5 +115,27 @@ class Pman_Core_DataObjects_Core_notify_archive extends DB_DataObject
         
         
     }
+
+    /**
+     * Delete old rows that failed to be delivered (no msgid), older than $months.
+     * Default 6 months. One batch per call (50000).
+     */
+    function deleteOldFailed($months = 6)
+    {
+        $months = (int) $months;
+        $tn = $this->tableName();
+        $this->query("
+            DELETE FROM
+                {$tn}
+            WHERE
+                (msgid IS NULL OR msgid = '' OR LENGTH(msgid) = 0)
+            AND
+                act_when < NOW() - INTERVAL {$months} MONTH
+            ORDER BY
+                id ASC
+            LIMIT
+                50000
+        ");
+    }
  
 }
