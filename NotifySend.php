@@ -764,6 +764,24 @@ class Pman_Core_NotifySend extends Pman
      */
     function postSend()
     {
+        // First: no valid IPs left + blacklist involved, and we won't try IPv6 — handle and exit.
+        if (!$this->fail &&
+            empty(Pman_Core_NotifyRouter::$valid_ips) &&
+            Pman_Core_NotifyRouter::$is_any_ipv4_blacklisted &&
+            (!Pman_Core_NotifyRouter::$use_ipv6 || $this->hasIpv6)) {
+            $ev = $this->addEvent('NOTIFY', $this->notify,
+                'GREYLIST - All Hosts Blacklisted: ' . $this->notify->to_email .
+                ' - Error: ' . $this->getLastEventRemarksForNotify());
+            $this->server->updateNotifyToNextServer(
+                $this->notify,
+                date('Y-m-d H:i:s', strtotime('NOW + 12 HOURS')),
+                true,
+                $this->server_ipv6,
+                Pman_Core_NotifyRouter::$all_mx_ipv4s);
+            $this->errorHandler($ev->remarks);
+            return;
+        }
+
         // No IPv6 mapping AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted (blocked by spamhaus)
         if (!$this->fail &&
             Pman_Core_NotifyRouter::$use_ipv6 &&
@@ -923,11 +941,8 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler( $ev->remarks);
         }
         
-        // at this point we just could not find any MX records..
-        // try again. Greylist and retry whether or not we used a route.
-
+        // at this point we just could not find any MX records / no host could be contacted (all-hosts-blacklisted already handled above).
         $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $this->notify->to_email);
-
         $this->server->updateNotifyToNextServer(
             $this->notify,
             $this->retryWhen,
