@@ -39,6 +39,9 @@ class Pman_Core_NotifyRouter
     /** Base socket options from config (set in ctor) */
     var $base_socket_options;
 
+    /** SMTP connection timeout (seconds); used for each host so 2nd/3rd MX also time out. */
+    const SMTP_CONNECT_TIMEOUT = 15;
+
     /**
      * Constructor
      * @param Pman_Core_NotifySend $notifySend The NotifySend instance
@@ -153,13 +156,16 @@ class Pman_Core_NotifyRouter
             $this->mailer = Mail::factory('smtp', array(
                 'host'          => $this->useIpv6 ? '[' . $this->smtpHost . ']' : $this->smtpHost,
                 'localhost'     => $this->heloName(),
-                'timeout'       => 15,
+                'timeout'       => self::SMTP_CONNECT_TIMEOUT,
                 'socket_options'=> $this->socketOptions(),
                 'debug'         => 1,
                 'debug_handler' => array($this->notifySend, 'debugHandler'),
                 'dkim'          => true
             ));
             $this->applyConfig();
+            // Ensure connect timeout is always set (Mail_smtp passes this to Net_SMTP::connect() for each new connection)
+            $this->mailer->timeout = self::SMTP_CONNECT_TIMEOUT;
+            $this->debug("SMTP connect timeout set to " . $this->mailer->timeout . "s for host " . $this->smtpHost . " (passed to Net_SMTP::connect() when send() runs)");
         }
         return $this->mailer;
     }

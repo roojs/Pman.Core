@@ -942,10 +942,18 @@ class Pman_Core_NotifySend extends Pman
         }
         
         // at this point we just could not find any MX records / no host could be contacted (all-hosts-blacklisted already handled above).
-        $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $this->notify->to_email);
+        $remarks = 'GREYLIST - NO HOST CAN BE CONTACTED:' . $this->notify->to_email;
+        if (is_object($this->lastSmtpResponse) && method_exists($this->lastSmtpResponse, 'getMessage')) {
+            $remarks .= ' - ' . $this->lastSmtpResponse->getMessage();
+        }
+        $ev = $this->addEvent('NOTIFY', $this->notify, $remarks);
+        // Minimum 60 min retry when no host could be contacted — no need to rush
+        $retryWhen = strtotime($this->retryWhen) < strtotime('NOW + 60 MINUTES')
+            ? date('Y-m-d H:i:s', strtotime('NOW + 60 MINUTES'))
+            : $this->retryWhen;
         $this->server->updateNotifyToNextServer(
             $this->notify,
-            $this->retryWhen,
+            $retryWhen,
             true,
             $this->server_ipv6,
             Pman_Core_NotifyRouter::$all_mx_ipv4s);
