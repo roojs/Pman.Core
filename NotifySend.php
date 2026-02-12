@@ -725,7 +725,8 @@ class Pman_Core_NotifySend extends Pman
         $server_ipv6 = $this->emailDomain->setUpIpv6($allocation_reason, $this->mxRecords);
         if (empty($server_ipv6)) {
             $this->debug("IPv6: Setup failed");
-            $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "IPv6 SETUP FAILED - {$errmsg}");
+            $domain = $this->emailDomain->domain;
+            $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "No IPv6 FOUND for {$domain} - all ipv4 are blacklisted");
             $this->notify->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
             return;
@@ -736,6 +737,25 @@ class Pman_Core_NotifySend extends Pman
         $this->addEvent('NOTIFY', $this->notify, "GREYLISTED - {$errmsg}");
         $this->server->updateNotifyToNextServer($this->notify, $this->retryWhen, true, $this->server_ipv6, Pman_Core_NotifyRouter::$all_mx_ipv4s);
         $this->errorHandler("Retry in next server at {$this->retryWhen} - Error: {$errmsg}");
+    }
+
+    /**
+     * Get remarks from the most recent Event for this notify (for use when current attempt has no SMTP response).
+     *
+     * @return string Previous event remarks or empty string
+     */
+    function getLastEventRemarksForNotify()
+    {
+        $e = DB_DataObject::factory('Events');
+        $e->on_id = $this->notify->id;
+        $e->on_table = $this->notify->tableName();
+        $e->orderBy('event_when DESC');
+        $e->limit(1);
+        $e->selectAdd('remarks');
+        if ($e->find(true) && !empty($e->remarks)) {
+            return $e->remarks;
+        }
+        return '';
     }
 
     /**
@@ -755,11 +775,14 @@ class Pman_Core_NotifySend extends Pman
 
         // after trying all mxs - could not connect...
         if  (!$this->force && !$this->fail && strtotime($this->notify->act_start) < strtotime('NOW - 2 DAYS')) {
-            
-            $errmsg=  " - UNKNOWN ERROR";
+
+            $errmsg = " - UNKNOWN ERROR";
             if (isset($this->lastSmtpResponse->userinfo['smtptext'])) {
-                $errmsg=  $this->lastSmtpResponse->userinfo['smtpcode'] . ':' . $this->lastSmtpResponse->userinfo['smtptext'];
+                $errmsg = $this->lastSmtpResponse->userinfo['smtpcode'] . ':' . $this->lastSmtpResponse->userinfo['smtptext'];
+            } else {
+                $errmsg = $this->getLastEventRemarksForNotify();
             }
+            $errmsg = empty($errmsg) ? " - UNKNOWN ERROR" : $errmsg;
             
             $ev = $this->addEvent('NOTIFYFAIL', $this->notify,  "RETRY TIME EXCEEDED - " .  $errmsg);
             $this->notify->flagDone($ev, '');
