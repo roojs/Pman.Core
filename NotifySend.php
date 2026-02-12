@@ -1,5 +1,6 @@
 <?php
 require_once 'Pman.php';
+require_once 'Pman/Core/NotifyRouter.php';
 
 /**
  * notification script sender - designed to be run by the Notify script - with many children running
@@ -164,37 +165,7 @@ class Pman_Core_NotifySend extends Pman
         // Post-send handling: IPv6 setup, failure handling, retries
         $this->postSend();
     }
-    function mxs($fqdn)
-    {
-        $ff = HTML_FlexyFramework::get();
-        if (isset($ff->Pman_Core_NotifySend['host'])) {
-            return array($ff->Pman_Core_NotifySend['host']);
-        }
-        
-        $mx_records = array();
-        $mx_weight = array();
-        $mxs = array();
-        if (!getmxrr($fqdn, $mx_records, $mx_weight)) {
-            if (!checkdnsrr($fqdn)) {
-                return false;
-            }
-            return array($fqdn);
-        }
-        
-        asort($mx_weight,SORT_NUMERIC);
-        
-        foreach($mx_weight as $k => $weight) {
-            if (!empty($mx_records[$k])) {
-                // Validate that the MX hostname is actually resolvable
-                if (checkdnsrr($mx_records[$k], 'A') || checkdnsrr($mx_records[$k], 'AAAA')) {
-                    $mxs[] = $mx_records[$k];
-                }
-            }
-        }
 
-        return empty($mxs) ? false : $mxs;
-    }
-    
     /**
      * wrapper to call object->toEmail()
      *
@@ -502,7 +473,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
      
-        $this->mxRecords = $this->mxs($this->emailDomain->domain);
+        $this->mxRecords = Pman_Core_NotifyRouter::mxs($this->emailDomain->domain);
         if (method_exists($this->notify, 'updateDomainMX')) {
             $this->notify->updateDomainMX(empty($this->mxRecords) ? 0 : 1);
         }
@@ -591,7 +562,6 @@ class Pman_Core_NotifySend extends Pman
                 $this->debug("IPv6: The ipv6 mapping is not for the current server. Fallback to use IPv4.");
             }
         }
-        require_once 'Pman/Core/NotifyRouter.php';
         $debug = !empty($this->cli_args['debug']) || !empty($this->debug);
         $mx_ip_map = Pman_Core_NotifyRouter::convertMxsToIpMap(
             $this->mxRecords,

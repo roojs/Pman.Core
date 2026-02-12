@@ -326,6 +326,47 @@ class Pman_Core_NotifyRouter
     }
 
     /**
+     * Return hostname(s) to use for sending to the given domain.
+     * Checks routing config first; if the domain matches a Core_Notify route (by 'domains'),
+     * returns the configured route host. Otherwise runs MX lookup for the domain.
+     *
+     * @param string $fqdn Recipient email domain (e.g. media-outreach.com)
+     * @return array|false Array of hostnames to try (e.g. array('smtp.office365.com') or MX list), or false if none
+     */
+    static function mxs($fqdn)
+    {
+        $ff = HTML_FlexyFramework::get();
+        if (isset($ff->Pman_Core_NotifySend['host'])) {
+            return array($ff->Pman_Core_NotifySend['host']);
+        }
+        if (!empty($ff->Core_Notify['routes'])) {
+            foreach ($ff->Core_Notify['routes'] as $server => $settings) {
+                if (!empty($settings['domains']) && in_array($fqdn, $settings['domains'])) {
+                    return array($server);
+                }
+            }
+        }
+        $mx_records = array();
+        $mx_weight = array();
+        $mxs = array();
+        if (!getmxrr($fqdn, $mx_records, $mx_weight)) {
+            if (!checkdnsrr($fqdn)) {
+                return false;
+            }
+            return array($fqdn);
+        }
+        asort($mx_weight, SORT_NUMERIC);
+        foreach ($mx_weight as $k => $weight) {
+            if (!empty($mx_records[$k])) {
+                if (checkdnsrr($mx_records[$k], 'A') || checkdnsrr($mx_records[$k], 'AAAA')) {
+                    $mxs[] = $mx_records[$k];
+                }
+            }
+        }
+        return empty($mxs) ? false : $mxs;
+    }
+
+    /**
      * Collect MX → IP map and related data (static, data only). Stores result in self::$all_mx_ipv4s, $valid_ips, $use_ipv6, $is_any_ipv4_blacklisted.
      * Caller uses those static properties directly.
      *
