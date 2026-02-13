@@ -1203,6 +1203,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 $phoneCondition = "REGEXP_REPLACE({$tn_p}.phone, '[^0-9]', '') LIKE '%{$escapedSearch}%'";
                 $str = $str . ' OR ' . $phoneCondition;
             }
+
+            var_dump($str);
             
             $this->whereAdd($str); /*
                         $tn_p.name LIKE '%$s%'  OR
