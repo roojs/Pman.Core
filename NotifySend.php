@@ -472,6 +472,7 @@ class Pman_Core_NotifySend extends Pman
             $this->notify->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
         }
+        die('test');
         
      
         $this->mxRecords = Pman_Core_NotifyRouter::mxs($this->emailDomain->domain);
