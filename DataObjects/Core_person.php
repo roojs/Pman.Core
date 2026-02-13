@@ -1166,9 +1166,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
              require_once 'Text/SearchParser.php';
             $x = new Text_SearchParser($q['query']['search']);
-
-            var_dump($x);
-            die('test');
             
             $props = array(
                     "$tn_p.name",
