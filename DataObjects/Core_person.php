@@ -1175,12 +1175,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     // "$tn_p.remarks",
                     "join_company_id_id.name"
             );
-            $tbcols = $this->table();
-            foreach(array('firstname','lastname') as $k) {
-                if (isset($tbcols[$k])) {
-                    $props[] = "{$tn_p}.{$k}";
-                }
-            }
+            // $tbcols = $this->table();
+            // foreach(array('firstname','lastname') as $k) {
+            //     if (isset($tbcols[$k])) {
+            //         $props[] = "{$tn_p}.{$k}";
+            //     }
+            // }
             
             
             
