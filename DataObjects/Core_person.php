@@ -1182,15 +1182,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 }
             }
             
-            // Add phone fields if they exist and build phone fields array
-            $phoneFields = array("$tn_p.phone");
-            foreach(array('phone_mobile','phone_direct') as $k) {
-                if (isset($tbcols[$k])) {
-                    $props[] = "{$tn_p}.{$k}";
-                    $phoneFields[] = "{$tn_p}.{$k}";
-                }
-            }
-            
             $str =  $x->toSQL(array(
                 'default' => $props,
                 'map' => array(
@@ -1198,7 +1189,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     //'country' => 'Clipping.country',
                     //  'media' => 'Clipping.media_name',
                 ),
-                'phone' => $phoneFields,
+                'phone' => array("$tn_p.phone"),
                 'escape' => array($this->getDatabaseConnection(), 'escapeSimple'), /// pear db or mdb object..
 
             ));
