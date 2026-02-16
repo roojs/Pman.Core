@@ -1168,7 +1168,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $x = new Text_SearchParser($q['query']['search']);
 
             var_dump($x);
-            die('test');
             
             $props = array(
                     "$tn_p.name",
@@ -1198,6 +1197,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 'escape' => array($this->getDatabaseConnection(), 'escapeSimple'), /// pear db or mdb object..
 
             ));
+
+            var_dump($str);
+            die('test');
 
             // Add phone search: strip non-digit characters and match against phone column
             $searchDigits = preg_replace('/[^0-9]/', '', $q['query']['search']);
