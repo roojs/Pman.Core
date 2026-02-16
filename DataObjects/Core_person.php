@@ -1193,9 +1193,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 'escape' => array($this->getDatabaseConnection(), 'escapeSimple'), /// pear db or mdb object..
 
             ));
-
-            var_dump($str);
-            die('test');
             
             $this->whereAdd($str); /*
                         $tn_p.name LIKE '%$s%'  OR
