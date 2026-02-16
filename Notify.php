@@ -318,12 +318,15 @@ class Pman_Core_Notify extends Pman
                 $this->logecho("COMPLETED MAIN QUEUE - running maxed out domains");
                 if ($this->domain_queue !== false) {
                     $this->queue  = $this->remainingDomainQueue();
-                     
+                    if (empty($this->queue)) {
+                        // Domain queue was empty, wait longer before rechecking (pool may still be draining)
+                        sleep(5);
+                    }
                     continue;
                 }
-                // If queue is empty but pool still has running processes, wait for them
+                // If queue is empty but pool still has running processes, wait for them (longer sleep - nothing to do until pool drains)
                 if (count($this->pool) > 0) {
-                    sleep(1);
+                    sleep(5);
                     continue;
                 }
                 break; // nothing more in queue.. and no remaining one
