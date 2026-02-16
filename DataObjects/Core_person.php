@@ -1171,7 +1171,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     "$tn_p.name",
                     "$tn_p.email",
                     "$tn_p.role",
-                    // "$tn_p.phone",
+                    "$tn_p.phone",
                     "$tn_p.remarks",
                     "join_company_id_id.name"
             );
