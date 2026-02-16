@@ -1201,12 +1201,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             // die('test');
 
             // Add phone search: strip non-digit characters and match against phone column
-            $searchDigits = preg_replace('/[^0-9]/', '', $q['query']['search']);
-            if (!empty($searchDigits)) {
-                $escapedSearch = $this->escape($searchDigits);
-                $phoneCondition = "REGEXP_REPLACE({$tn_p}.phone, '[^0-9]', '') LIKE '%{$escapedSearch}%'";
-                $str = $str . ' OR ' . $phoneCondition;
-            }
+            // $searchDigits = preg_replace('/[^0-9]/', '', $q['query']['search']);
+            // if (!empty($searchDigits)) {
+            //     $escapedSearch = $this->escape($searchDigits);
+            //     $phoneCondition = "REGEXP_REPLACE({$tn_p}.phone, '[^0-9]', '') LIKE '%{$escapedSearch}%'";
+            //     $str = $str . ' OR ' . $phoneCondition;
+            // }
             
             $this->whereAdd($str); /*
                         $tn_p.name LIKE '%$s%'  OR
