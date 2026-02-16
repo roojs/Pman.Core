@@ -1199,7 +1199,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             ));
 
             var_dump($str);
-            die('test');
+            // die('test');
 
             // Add phone search: strip non-digit characters and match against phone column
             $searchDigits = preg_replace('/[^0-9]/', '', $q['query']['search']);
