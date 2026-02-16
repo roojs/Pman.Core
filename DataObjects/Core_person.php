@@ -1168,11 +1168,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $x = new Text_SearchParser($q['query']['search']);
             
             $props = array(
-                    "$tn_p.name",
-                    "$tn_p.email",
-                    "$tn_p.role",
-                    "$tn_p.phone",
-                    "$tn_p.remarks",
+                    // "$tn_p.name",
+                    // "$tn_p.email",
+                    // "$tn_p.role",
+                    // "$tn_p.phone",
+                    // "$tn_p.remarks",
                     "join_company_id_id.name"
             );
             $tbcols = $this->table();
