@@ -67,4 +67,6 @@ ALTER TABLE core_company ADD INDEX lookup_owner_id (owner_id);
 
 -- our new code should have this fixed now..
 -- UPDATE core_company set comptype='OWNER' where isOwner=1;
+
+ALTER TABLE core_company ADD COLUMN source VARCHAR(255) NOT NULL DEFAULT '';
  
