@@ -427,7 +427,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
 
             // Check for SMTP error 452 (out of storage space)
-            if ($res->code == 452 && preg_match('/out of storage/i', $errorMessage)) {
+            if (in_array($res->code, array( 452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
                 // Don't need to log error for out of storage space
                 return "The email address is over quota - which probably means its a dead email address - " .
                 "we don't add these as we would just get rejections - you should contact this user before adding " .
