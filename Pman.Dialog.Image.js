@@ -290,6 +290,7 @@ Pman.Dialog.Image = {
               Roo.log(typeof(_this.data.actionFailed));
               if(typeof(_this.data.actionFailed) === 'function') {
                   _this.data.actionFailed(_this.dialog, _self, act);
+                  return;
               }
              
              
