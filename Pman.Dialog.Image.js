@@ -286,6 +286,11 @@ Pman.Dialog.Image = {
           },
          actionfailed : function (_self, act)
           {
+              Roo.log(_this.data);
+              Roo.log(typeof(_this.data.actionFailed));
+              if(typeof(_this.data.actionFailed) === 'function') {
+                  _this.data.actionFailed(_this.dialog, _self, act);
+              }
              
              
               _this.dialog.uploadComplete = true;
