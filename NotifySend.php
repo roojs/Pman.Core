@@ -117,7 +117,7 @@ class Pman_Core_NotifySend extends Pman
     var $fail = false;        // Whether send failed
     var $lastSmtpResponse;    // Last SMTP response (PEAR_Error or true)
     var $force = false;       // Force sending even if already sent
-    var $usedConfiguredRoute = false;  // True when a Core_Notify route was used (our router); skip spam/ipv6 post-delivery filters
+    var $useRoute = false;  // Route config ($settings) when using Core_Notify route; false otherwise
 
     function getAuth()
     {
@@ -465,16 +465,19 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler($ev->remarks);
         }
 
+        $domain = $this->emailDomain->domain;
+        $this->mxRecords = Pman_Core_NotifyRouter::routeMxs($domain);
+        $this->mxRecords = $this->mxRecords ? $this->mxRecords : Pman_Core_NotifyRouter::mxs($domain);
+        list($this->mxRecords, $this->useRoute) = Pman_Core_NotifyRouter::detectRoute($domain, $this->mxRecords);
+
         // the domain DOESN'T HAVE mx record in the recent dns check (within last 5 days)
-        // then DON't recheck dns
-        if(!$this->emailDomain->has_mx && strtotime($this->emailDomain->mx_updated) > strtotime('now - 5 day')) {
+        // then DON't recheck dns — skip when using configured route
+        if (!$this->useRoute && !$this->emailDomain->has_mx && strtotime($this->emailDomain->mx_updated) > strtotime('now - 5 day')) {
             $ev = $this->addEvent('NOTIFYBADMX', $this->notify, "BAD ADDRESS - BAD DOMAIN - ". $this->notify->to_email );
             $this->notify->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
         }
-        
-     
-        $this->mxRecords = Pman_Core_NotifyRouter::mxs($this->emailDomain->domain);
+
         if (method_exists($this->notify, 'updateDomainMX')) {
             $this->notify->updateDomainMX(empty($this->mxRecords) ? 0 : 1);
         }
@@ -499,7 +502,7 @@ class Pman_Core_NotifySend extends Pman
             $retry = 240;
         }
         
-        if (empty($this->mxRecords)) {
+        if (!$this->useRoute && empty($this->mxRecords)) {
             // only retry for 1 day if the MX issue..
             if ($retry < 240) {
                 $this->addEvent('NOTIFY', $this->notify, 'MX LOOKUP FAILED ' . $this->emailDomain->domain );
@@ -555,8 +558,8 @@ class Pman_Core_NotifySend extends Pman
         
         // Convert MX hostnames to map of IP addresses => domain
         $this->hasIpv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
-        $this->useIpv6 = $this->hasIpv6;
-        if ($this->hasIpv6) {
+        $this->useIpv6 = $this->hasIpv6 && !$this->useRoute;
+        if ($this->useIpv6) {
             $serverFromIpv6 = $this->server_ipv6->findServerFromIpv6($this->server->poolname);
             if ($serverFromIpv6 === false || $serverFromIpv6->id != $this->server->id) {
                 $this->useIpv6 = false;
@@ -571,6 +574,9 @@ class Pman_Core_NotifySend extends Pman
             $this->server_ipv6,
             $debug
         );
+        if (empty($this->useRoute)) {
+            $mx_ip_map = Pman_Core_NotifyRouter::removeBlacklistedIps($this->server->id, $mx_ip_map, $debug);
+        }
 
         $this->failedIp = false;
 
@@ -719,7 +725,8 @@ class Pman_Core_NotifySend extends Pman
         $server_ipv6 = $this->emailDomain->setUpIpv6($allocation_reason, $this->mxRecords);
         if (empty($server_ipv6)) {
             $this->debug("IPv6: Setup failed");
-            $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "IPv6 SETUP FAILED - {$errmsg}");
+            $domain = $this->emailDomain->domain;
+            $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "No IPv6 FOUND for {$domain} - all ipv4 are blacklisted");
             $this->notify->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
             return;
@@ -733,14 +740,50 @@ class Pman_Core_NotifySend extends Pman
     }
 
     /**
+     * Get remarks from the most recent Event for this notify (for use when current attempt has no SMTP response).
+     *
+     * @return string Previous event remarks or empty string
+     */
+    function getLastEventRemarksForNotify()
+    {
+        $e = DB_DataObject::factory('Events');
+        $e->on_id = $this->notify->id;
+        $e->on_table = $this->notify->tableName();
+        $e->orderBy('event_when DESC');
+        $e->limit(1);
+        $e->selectAdd('remarks');
+        if ($e->find(true) && !empty($e->remarks)) {
+            return $e->remarks;
+        }
+        return '';
+    }
+
+    /**
      * Post-send handling: IPv6 setup, failure handling, retries.
      * Uses class properties set by beforeSend() and send()
      */
     function postSend()
     {
+        // First: no valid IPs left + blacklist involved, and we won't try IPv6 — handle and exit.
+        if (!$this->fail &&
+            empty(Pman_Core_NotifyRouter::$valid_ips) &&
+            Pman_Core_NotifyRouter::$is_any_ipv4_blacklisted &&
+            (!Pman_Core_NotifyRouter::$use_ipv6 || $this->hasIpv6)) {
+            $ev = $this->addEvent('NOTIFY', $this->notify,
+                'GREYLIST - All Hosts Blacklisted: ' . $this->notify->to_email .
+                ' - Error: ' . $this->getLastEventRemarksForNotify());
+            $this->server->updateNotifyToNextServer(
+                $this->notify,
+                date('Y-m-d H:i:s', strtotime('NOW + 12 HOURS')),
+                true,
+                $this->server_ipv6,
+                Pman_Core_NotifyRouter::$all_mx_ipv4s);
+            $this->errorHandler($ev->remarks);
+            return;
+        }
+
         // No IPv6 mapping AND no valid ipv4 addresses left AND some ipv4 addresses are blacklisted (blocked by spamhaus)
-        // Skip when using our configured route (spam/ipv6 filters are for external MX only)
-        if (!$this->usedConfiguredRoute && !$this->fail &&
+        if (!$this->fail &&
             Pman_Core_NotifyRouter::$use_ipv6 &&
             !$this->hasIpv6 &&
             empty(Pman_Core_NotifyRouter::$valid_ips) &&
@@ -750,11 +793,14 @@ class Pman_Core_NotifySend extends Pman
 
         // after trying all mxs - could not connect...
         if  (!$this->force && !$this->fail && strtotime($this->notify->act_start) < strtotime('NOW - 2 DAYS')) {
-            
-            $errmsg=  " - UNKNOWN ERROR";
+
+            $errmsg = " - UNKNOWN ERROR";
             if (isset($this->lastSmtpResponse->userinfo['smtptext'])) {
-                $errmsg=  $this->lastSmtpResponse->userinfo['smtpcode'] . ':' . $this->lastSmtpResponse->userinfo['smtptext'];
+                $errmsg = $this->lastSmtpResponse->userinfo['smtpcode'] . ':' . $this->lastSmtpResponse->userinfo['smtptext'];
+            } else {
+                $errmsg = $this->getLastEventRemarksForNotify();
             }
+            $errmsg = empty($errmsg) ? " - UNKNOWN ERROR" : $errmsg;
             
             $ev = $this->addEvent('NOTIFYFAIL', $this->notify,  "RETRY TIME EXCEEDED - " .  $errmsg);
             $this->notify->flagDone($ev, '');
@@ -769,7 +815,7 @@ class Pman_Core_NotifySend extends Pman
             }
 
             // Using our configured route: no spam/ipv6/blacklist updates
-            if ($this->usedConfiguredRoute) {
+            if ($this->useRoute) {
                 $ev = $this->addEvent('NOTIFYBOUNCE', $this->notify, ($this->fail ? "FAILED - " : "") . $errmsg);
                 $this->notify->flagDone($ev, '');
                 if (method_exists($this->notify, 'matchReject')) {
@@ -895,21 +941,19 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler( $ev->remarks);
         }
         
-        // at this point we just could not find any MX records..
-        // try again.
-
-        if ($this->usedConfiguredRoute) {
-            $ev = $this->addEvent('NOTIFYFAIL', $this->notify, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $this->notify->to_email);
-            $this->notify->flagDone($ev, '');
-            $this->errorHandler($ev->remarks);
-            return;
+        // at this point we just could not find any MX records / no host could be contacted (all-hosts-blacklisted already handled above).
+        $remarks = 'GREYLIST - NO HOST CAN BE CONTACTED:' . $this->notify->to_email;
+        if (is_object($this->lastSmtpResponse) && method_exists($this->lastSmtpResponse, 'getMessage')) {
+            $remarks .= ' - ' . $this->lastSmtpResponse->getMessage();
         }
-
-        $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $this->notify->to_email);
-
+        $ev = $this->addEvent('NOTIFY', $this->notify, $remarks);
+        // Minimum 60 min retry when no host could be contacted — no need to rush
+        $retryWhen = strtotime($this->retryWhen) < strtotime('NOW + 60 MINUTES')
+            ? date('Y-m-d H:i:s', strtotime('NOW + 60 MINUTES'))
+            : $this->retryWhen;
         $this->server->updateNotifyToNextServer(
             $this->notify,
-            $this->retryWhen,
+            $retryWhen,
             true,
             $this->server_ipv6,
             Pman_Core_NotifyRouter::$all_mx_ipv4s);
