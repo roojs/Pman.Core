@@ -394,11 +394,9 @@ class Pman_Core_Notify extends Pman
         // Skip requeuing if database was locked
        
         if (!$db_locked && !empty($this->next_queue)) {
-            $this->logecho("REQUEUING all emails that maxed out:" . count($this->next_queue));       
-            foreach($this->next_queue as $p) {
-                if (false === $this->server->updateNotifyToNextServer($p)) {
-                    $p->updateState("????");
-                }
+            $this->logecho("REQUEUING all emails that maxed out:" . count($this->next_queue));
+            foreach ($this->next_queue as $p) {
+                $this->server->updateNotifyToNextServer($p);
             }
         }
          
