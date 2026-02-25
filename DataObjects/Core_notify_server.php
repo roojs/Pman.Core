@@ -425,6 +425,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $good = false;
         while ($offset  != $start) {
             $s = $servers[$offset];
+            if ($allMxIpv4s === false) { // this is called from notify where we failed to queue something 
+                $good = $s;
+                break;
+            }
 
             // check if the server is blacklisted by the email domain
             $blacklistedByDomain = $s->isBlacklisted($email);
