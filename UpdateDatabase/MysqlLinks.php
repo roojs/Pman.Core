@@ -48,6 +48,9 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         $this->loadIniFiles();
        
         foreach(array_keys($this->schema) as $table) {
+            if (preg_match('/__keys$/', $table)) {
+                continue;
+            }
             $this->updateTableComment($table);
         }
        
@@ -63,6 +66,9 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         // as you can only have one trigger per table for each action.
             
         foreach(array_keys($this->schema) as $table) {
+            if (preg_match('/__keys$/', $table)) {
+                continue;
+            }
             $this->createDeleteTrigger($table);
             $this->createInsertTrigger($table);
             $this->createUpdateTrigger($table);
