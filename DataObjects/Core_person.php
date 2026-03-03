@@ -1182,9 +1182,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 }
             }
             
-            
-            
-            
             $str =  $x->toSQL(array(
                 'default' => $props,
                 'map' => array(
@@ -1192,10 +1189,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     //'country' => 'Clipping.country',
                     //  'media' => 'Clipping.media_name',
                 ),
+                'phone' => array($tn_p . ".phone"),
                 'escape' => array($this->getDatabaseConnection(), 'escapeSimple'), /// pear db or mdb object..
 
             ));
-            
             
             $this->whereAdd($str); /*
                         $tn_p.name LIKE '%$s%'  OR
