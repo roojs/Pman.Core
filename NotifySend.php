@@ -119,6 +119,33 @@ class Pman_Core_NotifySend extends Pman
     var $force = false;       // Force sending even if already sent
     var $useRoute = false;  // Route config ($settings) when using Core_Notify route; false otherwise
 
+    /**
+     * Run Core/NotifySend for one core_notify id in the background (no wait).
+     * Use after inserting a core_notify row so the send happens asynchronously.
+     *
+     * @param int   $id         core_notify id
+     * @param mixed $scriptPath Optional. Bootstrap script path that can run Core/NotifySend (e.g. press.php, admin.php). If false, uses current script (SCRIPT_FILENAME).
+     */
+    static function runBackground($id, $scriptPath = false)
+    {
+        if ($scriptPath === false && !empty($_SERVER['SCRIPT_FILENAME'])) {
+            $scriptPath = $_SERVER['SCRIPT_FILENAME'];
+        }
+        if (empty($scriptPath) || !file_exists($scriptPath)) {
+            HTML_FlexyFramework::get()->page->jerr(empty($scriptPath) ?
+                 "NotifySend script path not set" : "NotifySend script path not found: " . $scriptPath);
+            return;
+        }
+        require_once 'System.php';
+        $php = System::which('php');
+        if (empty($php)) {
+            HTML_FlexyFramework::get()->page->jerr("PHP path not found");
+            return;
+        }
+        $cmd = sprintf('%s %s Core/NotifySend/%d -f', $php, escapeshellarg($scriptPath), (int) $id);
+        exec($cmd . ' > /dev/null 2>&1 &');
+    }
+
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
