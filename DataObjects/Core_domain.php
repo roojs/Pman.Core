@@ -337,8 +337,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     function validateEmail($roo, $email)
     {
         $dom = $this->domain;
-        var_dump($dom);
-        die('test');
         if (empty($dom)) {
             throw new Exception("Domain not set on core_domain object");
         }
