@@ -389,8 +389,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         $lastError = '';
-        var_dump($mxs);
-        die('test');
         foreach($mxs as $mx) {
             $mailer = $this->createMailer($roo, $mx, $validUser);
             if ($mailer === false) {
