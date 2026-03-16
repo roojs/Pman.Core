@@ -400,12 +400,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
             ), '');
 
-
-
-            var_dump($res);
-            var_dump($dom);
-            die('test');
-
             if (!is_object($res)) {
                 return true; // Success
             }
