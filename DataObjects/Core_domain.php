@@ -400,6 +400,12 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
             ), '');
 
+
+
+            var_dump($res);
+            var_dump($dom);
+            die('test');
+
             if (!is_object($res)) {
                 return true; // Success
             }
@@ -407,10 +413,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // Check for known false positives BEFORE logging
             // These are temporary errors or false positives we can't fix, so treat as valid
             $errorMessage = $res->getMessage();
-
-            var_dump($res->code);
-            var_dump($dom);
-            die('test');
             
             // Check for SMTP error 421 (Service unavailable - server busy)
             // This is a temporary error we can't fix, so treat it as a valid check
