@@ -417,6 +417,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // Check for SMTP error 421 (Service unavailable - server busy)
             // This is a temporary error we can't fix, so treat it as a valid check
             if ($res->code == 421) {
+                if($dom == 'yahoo.com') {
+                    // no error log for 421 on yahoo.com
+                    return true;
+                }
                 $roo->errorlog(
                     "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
                 );
