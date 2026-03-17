@@ -1,4 +1,10 @@
-
+-- =============================================================================
+-- *** ALWAYS UPDATE ARCHIVE ***
+-- When you add or change any column in core_notify, you MUST add the same
+-- column to core_notify_archive immediately below (in this file).
+-- The prune/archive does: REPLACE INTO core_notify_archive SELECT * FROM core_notify
+-- so column count and order must match or you get "Column count doesn't match".
+-- =============================================================================
 
 CREATE TABLE  core_notify  (
   id int(11)  NOT NULL AUTO_INCREMENT,
@@ -22,6 +28,7 @@ ALTER TABLE core_notify ADD COLUMN  trigger_event_id BIGINT NOT NULL DEFAULT 0;
 ALTER TABLE core_notify ADD COLUMN  to_email varchar(255)  NOT NULL  DEFAULT '';
 
 alter table core_notify add column language varchar(5) not null default 'en';
+ALTER TABLE core_notify_archive ADD COLUMN language VARCHAR(5) NOT NULL DEFAULT 'en';
 
 -- old mysql..
 -- ALTER TABLE core_notify CHANGE COLUMN bounced event_id BIGINT NOT NULL DEFAULT 0;
@@ -40,8 +47,10 @@ ALTER TABLE core_notify ADD COLUMN reject_match_id INT(11) NOT NULL DEFAULT 0;
 ALTER TABLE core_notify ADD COLUMN mail_imap_actor_id INT(11) NOT NULL DEFAULT 0;
 
 ALTER TABLE core_notify ADD COLUMN email_id INT NOT NULL DEFAULT 0;
+ALTER TABLE core_notify_archive ADD COLUMN email_id INT NOT NULL DEFAULT 0;
 
 ALTER TABLE core_notify ADD COLUMN ipv6_id INT NOT NULL DEFAULT 0;
+ALTER TABLE core_notify_archive ADD COLUMN ipv6_id INT NOT NULL DEFAULT 0;
 
 ALTER TABLE core_notify ADD   INDEX lookup(act_when, msgid);
 
