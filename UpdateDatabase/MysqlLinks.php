@@ -48,6 +48,9 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         $this->loadIniFiles();
        
         foreach(array_keys($this->schema) as $table) {
+            if (preg_match('/__keys$/', $table)) {
+                continue;
+            }
             $this->updateTableComment($table);
         }
        
@@ -63,6 +66,9 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         // as you can only have one trigger per table for each action.
             
         foreach(array_keys($this->schema) as $table) {
+            if (preg_match('/__keys$/', $table)) {
+                continue;
+            }
             $this->createDeleteTrigger($table);
             $this->createInsertTrigger($table);
             $this->createUpdateTrigger($table);
@@ -264,6 +270,10 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
     }
     function createInsertTrigger($tbl)
     {
+        if (!isset($this->links[$tbl]) || !is_array($this->links[$tbl])) {
+            return;
+        }
+        $map = $this->links[$tbl];
         $q = DB_DataObject::factory('core_enum');
         $q->query("
             DROP TRIGGER IF EXISTS `{$tbl}_before_insert` ;
@@ -281,7 +291,6 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         ";
         $has_checks=  false;
         $errs = array();
-        $map = $this->links[$tbl];
         foreach($map as $source_col=>$target) {
             // check that source_col exists in schema.
             if (!isset($this->schema[$tbl][$source_col])) {
@@ -345,6 +354,10 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
     }
     function createUpdateTrigger($tbl)
     {
+        if (!isset($this->links[$tbl]) || !is_array($this->links[$tbl])) {
+            return;
+        }
+        $map = $this->links[$tbl];
         $q = DB_DataObject::factory('core_enum');
         $q->query("
             DROP TRIGGER IF EXISTS `{$tbl}_before_update` ;
@@ -362,7 +375,6 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         ";
         $has_checks=  false;
         $errs = array();
-        $map = $this->links[$tbl];
         foreach($map as $source_col=>$target) {
             // check that source_col exists in schema.
             if (!isset($this->schema[$tbl][$source_col])) {

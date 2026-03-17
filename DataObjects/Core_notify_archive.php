@@ -1,7 +1,7 @@
 <?php
 /**
- *
  * Archive for core notify
+ *
  */
   
 class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
@@ -28,8 +28,11 @@ class Pman_Core_DataObjects_Core_notify_archive extends DB_DataObject
     public $act_start;
     public $person_table;
     public $to_email;
- 
- 
+    public $language;
+    public $email_id;
+    public $ipv6_id;
+
+
     function archive($months)
     {
         
