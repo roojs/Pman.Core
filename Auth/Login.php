@@ -231,8 +231,11 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $fw = new Services_Cloudflare_Firewall($ff->Pman_Core_Auth['cloudflare']);
 
-        // whitelist the address
-        $fw->update($ip, "logged in via {$ff->appName}");
+        $ret = $fw->update($ip, "logged in via {$ff->appName}");
+        if (is_a($ret, 'PEAR_Error')) {
+            $this->errorlog('Cloudflare whitelist failed: ' . $ret->getMessage());
+            return;
+        }
 
         $this->addEvent("CLOUDFLARE-WHITELIST", false, $ip);
     }
