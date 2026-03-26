@@ -126,12 +126,6 @@ class Pman_Core_Notify_Log extends Pman
             AND ev_notifysent.on_id = core_notify.id
             AND ev_notifysent.action = 'NOTIFYSENT'
         )");
-        $w->whereAdd("EXISTS (
-            SELECT 1 FROM Events AS ev_notifysent
-            WHERE ev_notifysent.on_table = 'core_notify'
-            AND ev_notifysent.on_id = core_notify.id
-            AND ev_notifysent.action = 'NOTIFYSENT'
-        )");
         
         $w->orderBy('core_notify.sent DESC');
         $w->limit($limit);
