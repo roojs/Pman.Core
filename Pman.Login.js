@@ -65,11 +65,13 @@ Pman.Login =  new Roo.util.Observable({
 
         if (Roo.form && Roo.form.Action && Roo.form.Action.Sse) {
             Roo.form.Action.Sse.onBegin(function () {
+                Roo.log("AUTH CHECK PAUSED");
                 if (typeof Pman !== 'undefined' && Pman.Login) {
                     Pman.Login.authCheckPaused = true;
                 }
             });
             Roo.form.Action.Sse.onEnd(function () {
+                Roo.log("AUTH CHECK RESUMED");
                 if (typeof Pman !== 'undefined' && Pman.Login) {
                     Pman.Login.authCheckPaused = false;
                 }
