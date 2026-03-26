@@ -113,10 +113,17 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             core_notify.onid
         ");
         
-        $w->whereAdd("core_notify.msgid IS NOT NULL AND core_notify.msgid != ''");
-        $w->whereAdd("core_notify.sent > '1970-01-01'");
-        $w->whereAdd("core_notify.sent >= '" . $w->escape($startStr) . "'");
-        $w->whereAdd("core_notify.sent <= '" . $w->escape($endStr) . "'");
+        $w->whereAdd("
+                core_notify.msgid IS NOT NULL
+            AND
+                core_notify.msgid != ''
+            AND
+                core_notify.sent > '1970-01-01'
+            AND
+                core_notify.sent >= '" . $w->escape($startStr) . "'
+            AND
+                core_notify.sent <= '" . $w->escape($endStr) . "'
+        ");
         
         $w->orderBy('core_notify.sent DESC');
         $w->limit($limit);
@@ -126,7 +133,15 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             $this->jok('No sent notifications in range (0 rows).');
         }
         
-        echo str_pad('id', 10) . str_pad('to', 50) . str_pad('sent', 25) . str_pad('evtype', 50) . str_pad('srv', 4) . str_pad('ontable:onid', 50) . str_pad('from', 44) . str_pad('subject', 50) . "\n";
+        echo str_pad('id', 10)
+            . str_pad('to', 50)
+            . str_pad('sent', 25)
+            . str_pad('evtype', 50)
+            . str_pad('srv', 4)
+            . str_pad('ontable:onid', 50)
+            . str_pad('from', 44)
+            . str_pad('subject', 50)
+            . "\n";
         echo str_repeat('-', 283) . "\n";
         
         while ($w->fetch()) {
@@ -146,10 +161,10 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         }
         
         $ev = DB_DataObject::factory('Events');
-        $ev->whereAdd("Events.on_table = 'core_notify'");
-        $ev->whereAdd('Events.on_id = ' . (int) $notifyId);
-        $ev->whereAdd("Events.action = 'NOTIFYSENT'");
-        $ev->orderBy('Events.event_when DESC');
+        $ev->on_table = 'core_notify';
+        $ev->on_id = $notifyId;
+        $ev->action = 'NOTIFYSENT';
+        $ev->orderBy('event_when DESC');
         $ev->limit(1);
         if (!$ev->find(true)) {
             $this->jerr('No NOTIFYSENT event for this notify id.');
