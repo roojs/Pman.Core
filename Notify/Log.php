@@ -3,7 +3,7 @@
 require_once 'Pman.php';
 
 /**
- * CLI: list delivered core_notify rows (msgid set) in a time window on sent: id, to, from, subject.
+ * CLI: list delivered core_notify rows (msgid set) in a time window on sent: id, to, from, subject, evtype, srv, ontable:onid.
  * Uses join_person for to fallback; core_email for from/subject when email_id is set.
  *
  * php index.php Core/Notify/Log [--from "datetime"] [--to "datetime"] [-L N] [--debug]
@@ -15,7 +15,7 @@ require_once 'Pman.php';
  */
 class Pman_Core_Notify_Log extends Pman
 {
-    static $cli_desc = 'List delivered core_notify rows (all servers): id, to, from, subject; filter by sent time.';
+    static $cli_desc = 'List delivered core_notify rows (all servers): id, to, from, subject, evtype, server, ontable:onid; filter by sent time.';
     
     static $cli_opts = array(
         'debug' => array(
@@ -108,7 +108,11 @@ class Pman_Core_Notify_Log extends Pman
             COALESCE(NULLIF(TRIM(core_notify.to_email), ''), NULLIF(TRIM(join_person_id_id.email), ''), '') AS join_to_display,
             core_email.from_email AS join_from_email,
             core_email.from_name AS join_from_name,
-            core_email.subject AS join_subject
+            core_email.subject AS join_subject,
+            core_notify.evtype,
+            core_notify.server_id,
+            core_notify.ontable,
+            core_notify.onid
         ");
         
         $w->whereAdd("core_notify.msgid IS NOT NULL AND core_notify.msgid != ''");
@@ -124,8 +128,8 @@ class Pman_Core_Notify_Log extends Pman
             $this->jok('No sent notifications in range (0 rows).');
         }
         
-        echo str_pad('id', 10) . str_pad('to', 50) . str_pad('from', 44) . "subject\n";
-        echo str_repeat('-', 130) . "\n";
+        echo str_pad('id', 10) . str_pad('to', 50) . str_pad('from', 44) . str_pad('subject', 50) . str_pad('evtype', 50) . str_pad('srv', 4) . "ontable:onid\n";
+        echo str_repeat('-', 220) . "\n";
         
         while ($w->fetch()) {
             $this->printRow($w);
@@ -136,13 +140,16 @@ class Pman_Core_Notify_Log extends Pman
     
     function printRow($w)
     {
-        $to = trim((string) $w->join_to_display);
+        $to = trim((string) ($w->join_to_display ?? ''));
         $from = $this->formatFrom($w);
         $subject = $this->formatSubject($w);
         echo str_pad($w->id, 10)
             . str_pad($this->truncate($to, 50), 50)
             . str_pad($this->truncate($from, 42), 44)
-            . $this->truncate($subject, 80) . "\n";
+            . str_pad($this->truncate($subject, 48), 50)
+            . str_pad($this->truncate($w->evtype, 50), 50)
+            . str_pad((string) $w->server_id, 4)
+            . $w->ontable . ':' . $w->onid . "\n";
     }
     
     function formatFrom($w)
