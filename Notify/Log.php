@@ -178,6 +178,6 @@ class Pman_Core_Notify_Log extends Pman
         if (strlen($str) <= $len) {
             return $str;
         }
-        return substr($str, 0, $len - 1) . "...";
+        return substr($str, 0, $len - 1) . "....";
     }
 }
