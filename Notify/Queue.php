@@ -5,7 +5,7 @@ require_once 'Pman.php';
 /**
  * CLI: list unsent core_notify rows (id, to, act_when, evtype, server_id, ontable:onid).
  * email_id is set after send, so from/subject are not shown for pending rows.
- * If to_email is empty, the displayed address falls back to core_person.email for person_id (same idea as NotifySend).
+ * If to_email is empty, the displayed address falls back to join_person_id_id.email (autoJoin), same idea as NotifySend.
  * All servers; unsent sent only.
  *
  * php admin.php Core/Notify/Queue [-L N]
@@ -55,19 +55,20 @@ class Pman_Core_Notify_Queue extends Pman
         $w->selectAdd("
             core_notify.id,
             core_notify.to_email,
-            COALESCE(NULLIF(TRIM(core_notify.to_email), ''), core_person.email) AS join_to_display,
+            COALESCE(NULLIF(TRIM(core_notify.to_email), ''), join_person_id_id.email) AS join_to_display,
             core_notify.act_when,
             core_notify.evtype,
             core_notify.server_id,
             core_notify.ontable,
             core_notify.onid
         ");
-        $w->joinAdd(array('person_id', 'core_person:id'), 'LEFT');
         
         $w->whereAdd("core_notify.sent < '1970-01-01' OR core_notify.sent IS NULL");
         
         $w->orderBy('core_notify.act_when ASC');
         $w->limit($limit);
+        
+        $w->autoJoin();
         
         $count = $w->find();
         if (empty($count)) {
