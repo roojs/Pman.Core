@@ -65,7 +65,12 @@ class Pman_Core_Notify_Queue extends Pman_Core_Cli
             $this->jok('Nothing in queue (0 rows).');
         }
         
-        echo str_pad('id', 10) . str_pad('to', 50) . str_pad('act_when', 25) . str_pad('evtype', 50) . str_pad('srv', 4) . "ontable:onid\n";
+        echo str_pad('id', 10)
+            . str_pad('to', 50)
+            . str_pad('act_when', 25)
+            . str_pad('evtype', 50)
+            . str_pad('srv', 4)
+            . "ontable:onid\n";
         echo str_repeat('-', 145) . "\n";
         
         while ($w->fetch()) {
