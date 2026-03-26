@@ -3,7 +3,7 @@
 require_once 'Pman.php';
 
 /**
- * CLI: list core_notify rows successfully delivered (NOTIFYSENT event) in a time window on sent: id, to, sent, evtype, srv, ontable:onid, from, subject.
+ * CLI: list delivered core_notify rows (msgid set) in a time window on sent: id, to, sent, evtype, srv, ontable:onid, from, subject.
  * Uses join_person for to fallback; core_email for from/subject when email_id is set.
  *
  * php index.php Core/Notify/Log [--from "datetime"] [--to "datetime"] [-L N] [--debug]
@@ -15,7 +15,7 @@ require_once 'Pman.php';
  */
 class Pman_Core_Notify_Log extends Pman
 {
-    static $cli_desc = 'List core_notify rows with NOTIFYSENT (all servers): id, to, sent, evtype, server, ontable:onid, from, subject; filter by sent time.';
+    static $cli_desc = 'List delivered core_notify rows (all servers): id, to, sent, evtype, server, ontable:onid, from, subject; filter by sent time.';
     
     static $cli_opts = array(
         'debug' => array(
@@ -120,19 +120,13 @@ class Pman_Core_Notify_Log extends Pman
         $w->whereAdd("core_notify.sent > '1970-01-01'");
         $w->whereAdd("core_notify.sent >= '" . $w->escape($startStr) . "'");
         $w->whereAdd("core_notify.sent <= '" . $w->escape($endStr) . "'");
-        $w->whereAdd("EXISTS (
-            SELECT 1 FROM Events AS ev_notifysent
-            WHERE ev_notifysent.on_table = 'core_notify'
-            AND ev_notifysent.on_id = core_notify.id
-            AND ev_notifysent.action = 'NOTIFYSENT'
-        )");
         
         $w->orderBy('core_notify.sent DESC');
         $w->limit($limit);
         
         $count = $w->find();
         if (empty($count)) {
-            $this->jok('No NOTIFYSENT notifications in range (0 rows).');
+            $this->jok('No sent notifications in range (0 rows).');
         }
         
         echo str_pad('id', 10) . str_pad('to', 50) . str_pad('sent', 25) . str_pad('evtype', 50) . str_pad('srv', 4) . str_pad('ontable:onid', 50) . str_pad('from', 44) . str_pad('subject', 50) . "\n";
