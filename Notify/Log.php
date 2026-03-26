@@ -102,13 +102,13 @@ class Pman_Core_Notify_Log extends Pman
         $endStr = date('Y-m-d H:i:s', $end);
         
         $w = DB_DataObject::factory('core_notify');
-        $w->joinAdd(array('person_id', 'core_person:id'), 'LEFT');
+        $w->autoJoin(array('exclude' => array('email_id')));
         $w->joinAdd(array('email_id', 'core_email:id'), 'LEFT');
         
         $w->selectAdd();
         $w->selectAdd("
             core_notify.id,
-            COALESCE(NULLIF(TRIM(core_notify.to_email), ''), NULLIF(TRIM(core_person.email), ''), '') AS join_to_display,
+            COALESCE(NULLIF(TRIM(core_notify.to_email), ''), NULLIF(TRIM(join_person_id_id.email), ''), '') AS join_to_display,
             core_email.from_email AS join_from_email,
             core_email.from_name AS join_from_name,
             core_email.subject AS join_subject
