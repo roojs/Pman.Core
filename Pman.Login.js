@@ -230,10 +230,12 @@ Pman.Login =  new Roo.util.Observable({
         }
         
         console.log(["failed", res]);
+        Roo.log(Pman.Login.checkFails);
         if ( Pman.Login.checkFails > 2) {
             //if (typeof(Pman.Preview) != 'undefined') {
             Pman.Preview.disable(); // not sure why this was added - but MO chrome does not have it.
             //}
+            Roo.log("SHOW LOGIN");
             Pman.Login.show();
             return;
         }
