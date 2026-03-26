@@ -56,7 +56,7 @@ class Pman_Core_Notify_Queue extends Pman
         $w->selectAdd("
             core_notify.id,
             core_notify.to_email,
-            COALESCE(NULLIF(TRIM(core_notify.to_email), ''), NULLIF(join_person_id_id.email, '')) AS join_to_display,
+            COALESCE(NULLIF(TRIM(core_notify.to_email), ''), NULLIF(join_person_id_id.email, ''), '') AS join_to_display,
             core_notify.act_when,
             core_notify.evtype,
             core_notify.server_id,
