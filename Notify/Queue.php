@@ -51,6 +51,7 @@ class Pman_Core_Notify_Queue extends Pman
         }
         
         $w = DB_DataObject::factory('core_notify');
+        $w->autoJoin();
         $w->selectAdd();
         $w->selectAdd("
             core_notify.id,
@@ -67,8 +68,6 @@ class Pman_Core_Notify_Queue extends Pman
         
         $w->orderBy('core_notify.act_when ASC');
         $w->limit($limit);
-        
-        $w->autoJoin();
         
         $count = $w->find();
         if (empty($count)) {
