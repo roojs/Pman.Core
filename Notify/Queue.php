@@ -34,7 +34,7 @@ class Pman_Core_Notify_Queue extends Pman
     {
         $ff = HTML_FlexyFramework::get();
         if (!$ff->cli) {
-            die("access denied");
+            $this->jerr('access denied');
         }
         return true;
     }
@@ -71,8 +71,7 @@ class Pman_Core_Notify_Queue extends Pman
         
         $count = $w->find();
         if (empty($count)) {
-            echo "Nothing in queue (0 rows).\n";
-            return;
+            $this->jok('Nothing in queue (0 rows).');
         }
         
         echo str_pad('id', 10) . str_pad('to', 50) . str_pad('act_when', 25) . str_pad('evtype', 50) . str_pad('srv', 4) . "ontable:onid\n";
@@ -81,11 +80,13 @@ class Pman_Core_Notify_Queue extends Pman
         while ($w->fetch()) {
             $this->printRow($w);
         }
+        
+        $this->jok('Done');
     }
     
     function printRow($w)
     {
-        $to = trim($w->join_to_display);
+        $to = trim((string) ($w->join_to_display ?? ''));
         echo str_pad($w->id, 10)
             . str_pad($this->truncate($to, 50), 50)
             . str_pad($w->act_when, 25)

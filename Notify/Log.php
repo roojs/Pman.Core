@@ -49,7 +49,7 @@ class Pman_Core_Notify_Log extends Pman
     {
         $ff = HTML_FlexyFramework::get();
         if (!$ff->cli) {
-            die("access denied");
+            $this->jerr('access denied');
         }
         return true;
     }
@@ -72,18 +72,15 @@ class Pman_Core_Notify_Log extends Pman
         $toTs = strlen($toOpt) ? strtotime($toOpt) : false;
         
         if (strlen($fromOpt) && $fromTs === false) {
-            fwrite(STDERR, "Invalid --from datetime.\n");
-            exit(1);
+            $this->jerr('Invalid --from datetime.');
         }
         if (strlen($toOpt) && $toTs === false) {
-            fwrite(STDERR, "Invalid --to datetime.\n");
-            exit(1);
+            $this->jerr('Invalid --to datetime.');
         }
         
         if ($fromTs !== false && $toTs !== false) {
             if ($fromTs > $toTs) {
-                fwrite(STDERR, "--from must be before or equal to --to.\n");
-                exit(1);
+                $this->jerr('--from must be before or equal to --to.');
             }
             $start = $fromTs;
             $end = $toTs;
@@ -124,8 +121,7 @@ class Pman_Core_Notify_Log extends Pman
         
         $count = $w->find();
         if (empty($count)) {
-            echo "No sent notifications in range (0 rows).\n";
-            return;
+            $this->jok('No sent notifications in range (0 rows).');
         }
         
         echo str_pad('id', 10) . str_pad('to', 50) . str_pad('from', 44) . "subject\n";
@@ -134,6 +130,8 @@ class Pman_Core_Notify_Log extends Pman
         while ($w->fetch()) {
             $this->printRow($w);
         }
+        
+        $this->jok('Done');
     }
     
     function printRow($w)
