@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Pman.php';
+require_once 'Pman/Core/Cli.php';
 
 /**
  * CLI: list delivered core_notify rows (msgid set) in a time window on sent: id, to, sent, evtype, srv, ontable:onid, from, subject.
@@ -14,7 +14,7 @@ require_once 'Pman.php';
  * --to only: sent between {to}-24h and {to}.
  * --from and --to: sent between {from} and {to} (from must be <= to).
  */
-class Pman_Core_Notify_Log extends Pman
+class Pman_Core_Notify_Log extends Pman_Core_Cli
 {
     static $cli_desc = 'List sent core_notify rows (all servers) or Core/Notify/Log/{id} for NOTIFYSENT SMTP debug from event log.';
     
@@ -45,16 +45,7 @@ class Pman_Core_Notify_Log extends Pman
             'max' => 99999,
         ),
     );
-    
-    function getAuth()
-    {
-        $ff = HTML_FlexyFramework::get();
-        if (!$ff->cli) {
-            $this->jerr('access denied');
-        }
-        return true;
-    }
-    
+
     function get($r, $opts = array())
     {
         if (!empty($opts['debug'])) {
