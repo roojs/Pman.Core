@@ -72,8 +72,8 @@ class Pman_Core_Notify_Queue extends Pman
             return;
         }
         
-        echo str_pad('id', 8) . str_pad('to', 48) . "act_when            evtype          srv  ontable:onid\n";
-        echo str_repeat('-', 100) . "\n";
+        echo str_pad('id', 10) . str_pad('to', 50) . str_pad('act_when', 25) . str_pad('evtype', 30) . str_pad('srv', 4) . "ontable:onid\n";
+        echo str_repeat('-', 125) . "\n";
         
         while ($w->fetch()) {
             $this->printRow($w);
@@ -83,10 +83,10 @@ class Pman_Core_Notify_Queue extends Pman
     function printRow($w)
     {
         $to = trim($w->to_email);
-        echo str_pad($w->id, 8)
-            . str_pad($this->truncate($to, 46), 48)
-            . str_pad($w->act_when, 20)
-            . ' ' . str_pad($this->truncate($w->evtype, 14), 16)
+        echo str_pad($w->id, 10)
+            . str_pad($this->truncate($to, 50), 50)
+            . str_pad($w->act_when, 25)
+            . str_pad($this->truncate($w->evtype, 30), 30)
             . str_pad($w->server_id, 4)
             . $w->ontable . ':' . $w->onid . "\n";
     }
