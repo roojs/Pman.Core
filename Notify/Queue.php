@@ -3,14 +3,15 @@
 require_once 'Pman.php';
 
 /**
- * CLI: list unsent core_notify rows (id, to, from, subject) for queue tracking.
- * All servers; no extra filters beyond unsent sent.
+ * CLI: list unsent core_notify rows for queue tracking (id, to; evtype etc. with --verbose).
+ * email_id is set after send, so from/subject are not shown for pending rows.
+ * All servers; unsent sent only.
  *
  * php admin.php Core/Notify/Queue [--verbose] [-L N]
  */
 class Pman_Core_Notify_Queue extends Pman
 {
-    static $cli_desc = 'List unsent core_notify rows (all servers): id, to, from, subject.';
+    static $cli_desc = 'List unsent core_notify rows (all servers): id, to (verbose: act_when, evtype, server, ontable:onid).';
     
     static $cli_opts = array(
         'debug' => array(
@@ -64,12 +65,8 @@ class Pman_Core_Notify_Queue extends Pman
             core_notify.evtype,
             core_notify.server_id,
             core_notify.ontable,
-            core_notify.onid,
-            core_email.subject AS join_subject,
-            core_email.from_email AS join_from_email,
-            core_email.from_name AS join_from_name
+            core_notify.onid
         ");
-        $w->joinAdd(array('email_id', 'core_email:id'), 'LEFT');
         
         $w->whereAdd("core_notify.sent < '1970-01-01' OR core_notify.sent IS NULL");
         
@@ -84,12 +81,11 @@ class Pman_Core_Notify_Queue extends Pman
         
         $verbose = !empty($opts['verbose']);
         if ($verbose) {
-            echo str_pad('id', 8) . str_pad('to', 36) . str_pad('from', 40) . str_pad('subject', 56)
-                . "act_when            evtype  srv ontable:onid\n";
+            echo str_pad('id', 8) . str_pad('to', 48) . "act_when            evtype          srv  ontable:onid\n";
         } else {
-            echo str_pad('id', 8) . str_pad('to', 40) . str_pad('from', 44) . "subject\n";
+            echo str_pad('id', 8) . "to\n";
         }
-        echo str_repeat('-', $verbose ? 120 : 100) . "\n";
+        echo str_repeat('-', $verbose ? 100 : 60) . "\n";
         
         while ($w->fetch()) {
             $this->printRow($w, $verbose);
@@ -99,43 +95,17 @@ class Pman_Core_Notify_Queue extends Pman
     function printRow($w, $verbose)
     {
         $to = trim($w->to_email);
-        $from = $this->formatFrom($w);
-        $subject = $this->formatSubject($w);
         
         if ($verbose) {
             echo str_pad($w->id, 8)
-                . str_pad($this->truncate($to, 34), 36)
-                . str_pad($this->truncate($from, 38), 40)
-                . str_pad($this->truncate($subject, 54), 56)
+                . str_pad($this->truncate($to, 46), 48)
                 . str_pad($w->act_when, 20)
                 . ' ' . str_pad($this->truncate($w->evtype, 14), 16)
                 . str_pad($w->server_id, 4)
                 . $w->ontable . ':' . $w->onid . "\n";
             return;
         }
-        echo str_pad($w->id, 8)
-            . str_pad($this->truncate($to, 38), 40)
-            . str_pad($this->truncate($from, 42), 44)
-            . $this->truncate($subject, 80) . "\n";
-    }
-    
-    function formatFrom($w)
-    {
-        if (empty($w->join_from_email)) {
-            return '-';
-        }
-        if (empty($w->join_from_name)) {
-            return trim($w->join_from_email);
-        }
-        return trim('"' . addslashes($w->join_from_name) . '" <' . $w->join_from_email . '>');
-    }
-    
-    function formatSubject($w)
-    {
-        if (empty($w->join_subject)) {
-            return '-';
-        }
-        return str_replace(array("\r", "\n"), ' ', $w->join_subject);
+        echo str_pad($w->id, 8) . $this->truncate($to, 72) . "\n";
     }
     
     function truncate($str, $len)
