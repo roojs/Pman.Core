@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Pman.php';
+require_once 'Pman/Core/Cli.php';
 
 /**
  * CLI: list unsent core_notify rows (id, to, act_when, evtype, server_id, ontable:onid).
@@ -10,7 +10,7 @@ require_once 'Pman.php';
  *
  * php admin.php Core/Notify/Queue [-L N]
  */
-class Pman_Core_Notify_Queue extends Pman
+class Pman_Core_Notify_Queue extends Pman_Core_Cli
 {
     static $cli_desc = 'List unsent core_notify rows (all servers): id, to, act_when, evtype, server, ontable:onid.';
     
@@ -29,16 +29,7 @@ class Pman_Core_Notify_Queue extends Pman
             'max' => 99999,
         ),
     );
-    
-    function getAuth()
-    {
-        $ff = HTML_FlexyFramework::get();
-        if (!$ff->cli) {
-            $this->jerr('access denied');
-        }
-        return true;
-    }
-    
+
     function get($r, $opts = array())
     {
         if (!empty($opts['debug'])) {
