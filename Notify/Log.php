@@ -7,6 +7,7 @@ require_once 'Pman.php';
  * Uses join_person for to fallback; core_email for from/subject when email_id is set.
  *
  * php index.php Core/Notify/Log [--from "datetime"] [--to "datetime"] [-L N] [--debug]
+ * php index.php Core/Notify/Log/{id}  — print raw SMTP debug (Events log EXTRA) for NOTIFYSENT on that core_notify id.
  *
  * Default window: sent between NOW()-24h and NOW().
  * --from only: sent between {from} and {from}+24h.
@@ -15,7 +16,7 @@ require_once 'Pman.php';
  */
 class Pman_Core_Notify_Log extends Pman
 {
-    static $cli_desc = 'List delivered core_notify rows (all servers): id, to, sent, evtype, server, ontable:onid, from, subject; filter by sent time.';
+    static $cli_desc = 'List sent core_notify rows (all servers) or Core/Notify/Log/{id} for NOTIFYSENT SMTP debug from event log.';
     
     static $cli_opts = array(
         'debug' => array(
@@ -58,6 +59,11 @@ class Pman_Core_Notify_Log extends Pman
     {
         if (!empty($opts['debug'])) {
             DB_DataObject::debugLevel($opts['debug']);
+        }
+        
+        if (strlen((string) $r) && ctype_digit((string) $r)) {
+            $this->outputSmtpLog((int) $r);
+            return;
         }
         
         $limit = isset($opts['limit']) ? (int) $opts['limit'] : 500;
@@ -136,6 +142,44 @@ class Pman_Core_Notify_Log extends Pman
             $this->printRow($w);
         }
         
+        $this->jok('Done');
+    }
+    
+    /**
+     * Print SMTP debug_str from NOTIFYSENT event log (EXTRA) for a core_notify id.
+     */
+    private function outputSmtpLog($notifyId)
+    {
+        if (!DB_DataObject::factory('core_notify')->get($notifyId)) {
+            $this->jerr('Unknown notify id.');
+        }
+        
+        $ev = DB_DataObject::factory('Events');
+        $ev->whereAdd("Events.on_table = 'core_notify'");
+        $ev->whereAdd('Events.on_id = ' . (int) $notifyId);
+        $ev->whereAdd("Events.action = 'NOTIFYSENT'");
+        $ev->orderBy('Events.event_when DESC');
+        $ev->limit(1);
+        if (!$ev->find(true)) {
+            $this->jerr('No NOTIFYSENT event for this notify id.');
+        }
+        
+        $file = $ev->retrieveEventLog();
+        if (!$file) {
+            $this->jerr('Event log file not found.');
+        }
+        
+        $data = json_decode(file_get_contents($file), true);
+        if (!is_array($data)) {
+            $this->jerr('Event log file is not valid JSON.');
+        }
+        
+        if (empty($data['EXTRA'])) {
+            $this->jok('No SMTP debug data in event log (EXTRA empty or missing).');
+        }
+        
+        echo $data['EXTRA'];
+        echo "\n";
         $this->jok('Done');
     }
     
