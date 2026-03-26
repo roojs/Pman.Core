@@ -3,7 +3,7 @@
 require_once 'Pman.php';
 
 /**
- * CLI: list delivered core_notify rows (msgid set) in a time window on sent: id, to, from, subject, sent, evtype, srv, ontable:onid.
+ * CLI: list delivered core_notify rows (msgid set) in a time window on sent: id, to, sent, evtype, srv, ontable:onid, from, subject.
  * Uses join_person for to fallback; core_email for from/subject when email_id is set.
  *
  * php index.php Core/Notify/Log [--from "datetime"] [--to "datetime"] [-L N] [--debug]
@@ -15,7 +15,7 @@ require_once 'Pman.php';
  */
 class Pman_Core_Notify_Log extends Pman
 {
-    static $cli_desc = 'List delivered core_notify rows (all servers): id, to, from, subject, sent, evtype, server, ontable:onid; filter by sent time.';
+    static $cli_desc = 'List delivered core_notify rows (all servers): id, to, sent, evtype, server, ontable:onid, from, subject; filter by sent time.';
     
     static $cli_opts = array(
         'debug' => array(
@@ -129,8 +129,8 @@ class Pman_Core_Notify_Log extends Pman
             $this->jok('No sent notifications in range (0 rows).');
         }
         
-        echo str_pad('id', 10) . str_pad('to', 50) . str_pad('from', 44) . str_pad('subject', 50) . str_pad('sent', 25) . str_pad('evtype', 50) . str_pad('srv', 4) . "ontable:onid\n";
-        echo str_repeat('-', 245) . "\n";
+        echo str_pad('id', 10) . str_pad('to', 50) . str_pad('sent', 25) . str_pad('evtype', 50) . str_pad('srv', 4) . str_pad('ontable:onid', 50) . str_pad('from', 44) . str_pad('subject', 50) . "\n";
+        echo str_repeat('-', 283) . "\n";
         
         while ($w->fetch()) {
             $this->printRow($w);
@@ -146,12 +146,13 @@ class Pman_Core_Notify_Log extends Pman
         $subject = $this->formatSubject($w);
         echo str_pad($w->id, 10)
             . str_pad($this->truncate($to, 50), 50)
-            . str_pad($this->truncate($from, 42), 44)
-            . str_pad($this->truncate($subject, 48), 50)
             . str_pad((string) ($w->sent ?? ''), 25)
             . str_pad($this->truncate($w->evtype, 50), 50)
             . str_pad((string) $w->server_id, 4)
-            . $w->ontable . ':' . $w->onid . "\n";
+            . str_pad($this->truncate($w->ontable . ':' . $w->onid, 48), 50)
+            . str_pad($this->truncate($from, 42), 44)
+            . str_pad($this->truncate($subject, 48), 50)
+            . "\n";
     }
     
     function formatFrom($w)
