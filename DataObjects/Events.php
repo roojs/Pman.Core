@@ -695,7 +695,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     {
 
         $logdir = $this->logDir();
-        var_dump($logdir);
         if (!$logdir) {
             return false;
          
