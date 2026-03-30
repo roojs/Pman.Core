@@ -63,18 +63,15 @@ Pman.Login =  new Roo.util.Observable({
         }
         this.switchLang('en');
 
-        if (Roo.form && Roo.form.Action && Roo.form.Action.Sse) {
-            Roo.form.Action.Sse.onBegin(function () {
-                if (typeof Pman !== 'undefined' && Pman.Login) {
-                    Pman.Login.authCheckPaused = true;
-                }
-            });
-            Roo.form.Action.Sse.onEnd(function () {
-                if (typeof Pman !== 'undefined' && Pman.Login) {
-                    Pman.Login.authCheckPaused = false;
-                }
-            });
-        }
+        
+        Roo.form.Action.Sse.onBegin(function () {
+            Pman.Login.authCheckPaused = true;
+
+        });
+        Roo.form.Action.Sse.onEnd(function () {
+            Pman.Login.authCheckPaused = false;
+        });
+       
        
         // inital check if we are logged in..
         // if we are - then it will load the page,
