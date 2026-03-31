@@ -704,7 +704,8 @@ class Pman_Core_NotifySend extends Pman
 
             // give up after 2 days..
             // there may be 4XX spamhaus errors, we may need to set up ipv6 before retrying directly
-            if (in_array($code, array( 421, 450, 451, 452)) && strtotime($this->notify->act_start) > strtotime('NOW - 2 DAYS') && !$is_spamhaus) {
+            // 432: e.g. Microsoft "4.3.2 Concurrent connections limit exceeded" — temporary throttle, not a bounce
+            if (in_array($code, array(421, 432, 450, 451, 452)) && strtotime($this->notify->act_start) > strtotime('NOW - 2 DAYS') && !$is_spamhaus) {
                 // try again later..
                 // check last event for this item..
                 $errmsg=  $res->userinfo['smtpcode'] . ': ' .$res->message ;
