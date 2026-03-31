@@ -703,8 +703,10 @@ class Pman_Core_NotifySend extends Pman
                 || stripos($errmsg, 'reputation') !== false ;
 
             // give up after 2 days..
-            // there may be 4XX spamhaus errors, we may need to set up ipv6 before retrying directly
-            if (in_array($code, array( 421, 450, 451, 452)) && strtotime($this->notify->act_start) > strtotime('NOW - 2 DAYS') && !$is_spamhaus) {
+            // Historically only 421, 432, 450, 451, 452 were matched here; we have no record of why.
+            // SMTP defines 4xx as transient; the allowlist wrongly produced NOTIFYBOUNCE for other 4xx (bug).
+            // Still skip when the reply looks like spam/RBL/reputation — those go to postSend() for IPv6/blacklist handling.
+            if ($code > 399 && $code < 500 && strtotime($this->notify->act_start) > strtotime('NOW - 2 DAYS') && !$is_spamhaus) {
                 // try again later..
                 // check last event for this item..
                 $errmsg=  $res->userinfo['smtpcode'] . ': ' .$res->message ;
