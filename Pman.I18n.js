@@ -50,7 +50,7 @@ Pman.I18n = {
         
         var lang = 'en';
         
-        if(typeof(Pman.Login) != 'undefined' && typeof(Pman.Login.authUser.lang) == 'undefined'){
+        if(typeof(Pman.Login) != 'undefined' && typeof(Pman.Login.authUser.lang) != 'undefined'){
             lang = Pman.Login.authUser.lang;
         }
         
