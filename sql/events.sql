@@ -45,6 +45,8 @@ ALTER TABLE Events ADD INDEX lookupf (on_id, action, on_table, person_id, event_
 
 ALTER TABLE Events ADD INDEX lookup_person_id (person_id);
 
+alter table Events add index lookup_person_id_event_when_on_id (person_id, event_when, on_id)
+
 -- #Keep for later use..
 
 -- ALTER TABLE Events CHANGE COLUMN person_name person_name VARCHAR(128) NOT NULL ;
