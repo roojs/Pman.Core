@@ -39,6 +39,7 @@ Pman.Login =  new Roo.util.Observable({
     logging_out : false,
     
     checkConnection : false, // the Roo.data.Connection for checking if still authenticated.
+    authCheckPaused : false, // pause auth checks during long-running SSE operations
     
     onLoad : function() // called on page load...
     {
@@ -61,6 +62,16 @@ Pman.Login =  new Roo.util.Observable({
             Roo.get('loading').remove();
         }
         this.switchLang('en');
+
+        
+        Roo.form.Action.Sse.onBegin(function () {
+            Pman.Login.authCheckPaused = true;
+
+        });
+        Roo.form.Action.Sse.onEnd(function () {
+            Pman.Login.authCheckPaused = false;
+        });
+       
        
         // inital check if we are logged in..
         // if we are - then it will load the page,
@@ -146,6 +157,9 @@ Pman.Login =  new Roo.util.Observable({
     {
         if (Pman.Login.logging_out) {
             return; // don't keep rechecking if we are already about to log out.
+        }
+        if (Pman.Login.authCheckPaused) {
+            return; // skip auth check during long-running SSE operations
         }
         
         if (again) { // could be undefined..
