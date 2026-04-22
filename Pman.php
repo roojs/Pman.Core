@@ -13,6 +13,8 @@ class Pman_Core_Pman {
     {
         $ch = DB_DataObject::factory('core_holiday');
         $ch->updateHolidays('hk');
+
+        die('load');
         
         
         $group = DB_DataObject::factory('core_group');
