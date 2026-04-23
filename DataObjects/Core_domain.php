@@ -381,12 +381,12 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
             
             if ($validUser === false && !empty($ff->Mail_Validate['test_user'])) {
-                die('a');
                 $fromUser = DB_DataObject::factory('mail_imap_user');
                 if ($fromUser->get('email', $ff->Mail_Validate['test_user'])) {
                     $validUser = $fromUser->validateAsOAuth();
                 }
             }
+            var_dump($validUser);
             die('test');
         }
 
