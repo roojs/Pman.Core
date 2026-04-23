@@ -373,8 +373,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
         $validUser = false;
-        var_dump($ff->Mail_Validate['routes']);
-        die('test');
         if (!empty($ff->Mail_Validate['routes'])) {
             $authUser = $ff->page->getAuthUser();
             $fromUser = DB_DataObject::factory('mail_imap_user');
@@ -383,11 +381,13 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
             
             if ($validUser === false && !empty($ff->Mail_Validate['test_user'])) {
+                die('a');
                 $fromUser = DB_DataObject::factory('mail_imap_user');
                 if ($fromUser->get('email', $ff->Mail_Validate['test_user'])) {
                     $validUser = $fromUser->validateAsOAuth();
                 }
             }
+            die('test');
         }
 
         $lastError = '';
