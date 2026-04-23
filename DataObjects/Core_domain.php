@@ -373,6 +373,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
         $validUser = false;
+        var_dump($ff->Mail_Validate['routes']);
+        die('test');
         if (!empty($ff->Mail_Validate['routes'])) {
             $authUser = $ff->page->getAuthUser();
             $fromUser = DB_DataObject::factory('mail_imap_user');
