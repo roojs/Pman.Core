@@ -386,8 +386,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                     $validUser = $fromUser->validateAsOAuth();
                 }
             }
-            var_dump($validUser);
-            die('test');
         }
 
         $lastError = '';
