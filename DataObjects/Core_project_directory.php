@@ -26,20 +26,37 @@ class Pman_Core_DataObjects_Core_project_directory extends DB_DataObject
     function person()
     {
         $p = DB_DataObject::factory('core_person');
+        if (empty($this->person_id)) {
+            return $p;
+        }
         $p->get($this->person_id);
         return $p;
     }
     
-    function toEventString() {
-        $p = $this->person();
-        // this is weird... company is in the person.. - effieciency??
-        // for seaching??
-        $c = DB_DataObject::factory('core_company');
-        $c->get($this->company_id);
+    function toEventString()
+    {
         $pr = DB_DataObject::factory('core_project');
         $pr->get($this->project_id);
-        
-        return $pr->code . ' '. $p->name . '('. $c->name .')';
+
+        $cname = '';
+        if (!empty($this->company_id)) {
+            $c = DB_DataObject::factory('core_company');
+            $c->get($this->company_id);
+            $cname = $c->name;
+        }
+
+        if (!empty($this->person_id)) {
+            return $pr->code . ' ' . $this->person()->name . '(' . $cname . ')';
+        }
+
+        if (!empty($this->crm_person_id)) {
+            $cp = DB_DataObject::factory('crm_person');
+            if ($cp->get($this->crm_person_id)) {
+                return $pr->code . ' ' . $cp->name . '(' . $cname . ')';
+            }
+        }
+
+        return $pr->code . ' ?(' . $cname . ')';
     }
     
     function personMemberOf($pe, $pr) {
