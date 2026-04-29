@@ -43,7 +43,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
         
         
         $pmids = array();
-        $pd = DB_DataObject::factory('ProjectDirectory');
+        $pd = DB_DataObject::factory('core_project_directory');
         $pd->project_id = $this->id;
         $pd->company_id = $c->id;
         $pd->ispm = 1;
@@ -144,7 +144,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
             $prjs = $pr->fetchAll('id');
             
             //DB_DataObject::debugLevel(1);
-            $pd = DB_DataObject::factory('ProjectDirectory');
+            $pd = DB_DataObject::factory('core_project_directory');
             $pd->joinAdd(DB_DataObject::factory($tn), 'LEFT');
             $pd->whereAdd("{$tn}.type NOT IN ('N','X')");
             $pd->person_id = $au->id;
