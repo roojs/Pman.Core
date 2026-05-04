@@ -1,18 +1,17 @@
 <?php
 /**
- * Table Definition for ProjectDirectory
+ * Table Definition for core_project_directory
  *
- * Note - projectdirectory is linked to this - due to an issue with postgres - we should keep to lowercase names only for tables..
- * 
+ * former ProjectDirectory — junction of projects, companies, staff / CRM contacts.
  */
 class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
-class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject 
+class Pman_Core_DataObjects_Core_project_directory extends DB_DataObject 
 {
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'ProjectDirectory';                // table name
+    public $__table = 'core_project_directory';                // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $project_id;                      // int(11)  not_null
     public $person_id;                       // int(11)  not_null
@@ -27,20 +26,37 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
     function person()
     {
         $p = DB_DataObject::factory('core_person');
+        if (empty($this->person_id)) {
+            return $p;
+        }
         $p->get($this->person_id);
         return $p;
     }
     
-    function toEventString() {
-        $p = $this->person();
-        // this is weird... company is in the person.. - effieciency??
-        // for seaching??
-        $c = DB_DataObject::factory('core_company');
-        $c->get($this->company_id);
+    function toEventString()
+    {
         $pr = DB_DataObject::factory('core_project');
         $pr->get($this->project_id);
-        
-        return $pr->code . ' '. $p->name . '('. $c->name .')';
+
+        $cname = '';
+        if (!empty($this->company_id)) {
+            $c = DB_DataObject::factory('core_company');
+            $c->get($this->company_id);
+            $cname = $c->name;
+        }
+
+        if (!empty($this->person_id)) {
+            return $pr->code . ' ' . $this->person()->name . '(' . $cname . ')';
+        }
+
+        if (!empty($this->crm_person_id)) {
+            $cp = DB_DataObject::factory('crm_person');
+            if ($cp->get($this->crm_person_id)) {
+                return $pr->code . ' ' . $cp->name . '(' . $cname . ')';
+            }
+        }
+
+        return $pr->code . ' ?(' . $cname . ')';
     }
     
     function personMemberOf($pe, $pr) {
@@ -128,7 +144,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
             return true;
         }
 
-        $xx = DB_Dataobject::factory('ProjectDirectory');
+        $xx = DB_Dataobject::factory('core_project_directory');
         $xx->setFrom(array(
             'project_id' => $this->project_id,
             'person_id'  => $this->person_id,
@@ -150,12 +166,12 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
         // can  see - their projects + their personal mail...
         if (!empty($q['project_id_ar'])) {
             // can filter projects!
-            $this->whereAddIn('ProjectDirectory.project_id', explode(',',$q['project_id_ar']), 'int');
+            $this->whereAddIn('core_project_directory.project_id', explode(',',$q['project_id_ar']), 'int');
         }
         
         
          if (!empty($q['query']['company_ids'])) {
-             $this->whereAddIn('ProjectDirectory.company_id', explode(',',$q['query']['company_ids']), 'int');
+             $this->whereAddIn('core_project_directory.company_id', explode(',',$q['query']['company_ids']), 'int');
         }
         
         // whos should they see as far as personal contacts.!?!?
@@ -174,7 +190,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
         $prjs = $pr->fetchAll('id');
         
         
-        $pd = DB_DataObject::factory('ProjectDirectory');
+        $pd = DB_DataObject::factory('core_project_directory');
         $pd->joinAdd(DB_DataObject::factory('core_project'), 'LEFT');
         $pd->whereAdd("Projects.type NOT IN ('N','X')");
         $pd->person_id = $au->id;
@@ -182,7 +198,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
         $prjs = array_merge($prjs, $pd->fetchAll('project_id'));
         if (count($prjs)) {
             $this->whereAdd("
-                    (ProjectDirectory.project_id IN (".implode(',', $prjs).")) 
+                    (core_project_directory.project_id IN (".implode(',', $prjs).")) 
                   
                 
             ");

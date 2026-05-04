@@ -84,7 +84,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             
             $pids = implode(',', $pids);
             $this->whereAdd("{$tn}.id IN (
-                SELECT distinct(company_id) FROM ProjectDirectory where project_id IN ($pids)
+                SELECT distinct(company_id) FROM core_project_directory where project_id IN ($pids)
             ) $add" );
              
         }
