@@ -634,7 +634,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $sizear[1] =   0; // 0x with '0' is a box? why
         }
         
-        $size = implode(strpos($size,'c') > -1 ? 'c' : 'x', $sizear);
+        $size = implode(strpos($size,'c') > -1 ? 'c' : (strpos($size,'q') > -1 ? 'q' : 'x'), $sizear);
 //        print_r($size);
         $fc = $this->toFileConvert();
 //        print_r($size);
