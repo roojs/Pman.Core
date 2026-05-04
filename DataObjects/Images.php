@@ -629,7 +629,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         //$size = max(100, (int) $size);
         //$size = min(1024, (int) $size);
         // the size should 200x150 to convert
-        $sizear = preg_split('/(x|c)/', $size);
+        $sizear = preg_split('/(x|c|q)/', $size);
         if(!isset($sizear[1])){
             $sizear[1] =   0; // 0x with '0' is a box? why
         }
