@@ -73,12 +73,12 @@ class Pman_Core_Pman {
             AND Name NOT LIKE 'posix%'
             AND Name NOT LIKE 'Etc%'
         ");
-        // if (!$q->fetch()) {
+        if (!$q->fetch()) {
             trigger_error(
                 'MySQL timezone tables: could not query mysql.time_zone_name (missing table or insufficient privileges).',
                 E_USER_ERROR
             );
-        // }
+        }
         if ((int) $q->cnt < 1) {
             trigger_error(
                 'MySQL timezone tables are empty. Load them with mysql_tzinfo_to_sql (see MySQL Server Time Zone Support). ' .
