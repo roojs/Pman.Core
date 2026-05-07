@@ -976,7 +976,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             // must be internal and not current user (need for distribution list)
             // user has a projectdirectory entry and role is not blank.
             //DB_DataObject::DebugLevel(1);
-            $pd = DB_DataObject::factory('ProjectDirectory');
+            $pd = DB_DataObject::factory('core_project_directory');
             $pd->whereAdd("role != ''");
             $pd->selectAdd();
             $pd->selectAdd('distinct(person_id) as person_id');
@@ -1097,7 +1097,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
 
             if ( $q['query']['not_in_directory'] > -1 && $q['company_id'] > 0) {
-                $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
+                $tn_pd = DB_DataObject::Factory('core_project_directory')->tableName();
                 // can list current - so that it does not break!!!
                 $this->whereAdd("$tn_p.id NOT IN 
                     ( SELECT distinct person_id FROM $tn_pd WHERE
@@ -1113,7 +1113,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             // specific to project directory which is single comp. login
             //
-            $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
+            $tn_pd = DB_DataObject::Factory('core_project_directory')->tableName();
                 // can list current - so that it does not break!!!
             $this->whereAdd("$tn_p.id IN 
                     ( SELECT distinct person_id FROM $tn_pd WHERE
@@ -1126,9 +1126,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (!empty($q['query']['project_member_of'])) {
                // this is also a flag to return if they are a member..
             //DB_DataObject::debugLevel(1);
-            $do = DB_DataObject::factory('ProjectDirectory');
+            $do = DB_DataObject::factory('core_project_directory');
             $do->project_id = $q['query']['project_member_of'];
-            $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
+            $tn_pd = DB_DataObject::Factory('core_project_directory')->tableName();
             $this->joinAdd($do,array('joinType' => 'LEFT', 'useWhereAsOn' => true));
             $this->selectAdd("IF($tn_pd.id IS NULL, 0,  $tn_pd.id )  as is_member");
                 
@@ -1205,7 +1205,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         // project directory rules -- this may distrupt things.
-        $p = DB_DataObject::factory('ProjectDirectory');
+        $p = DB_DataObject::factory('core_project_directory');
         // if project directories are set up, then we can apply project query rules..
         if ($p->count()) {
             $p->autoJoin();
@@ -1245,7 +1245,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 $roo->jerr("permssion denied to query state of ticket");
             }
             
-            $p = DB_DataObject::factory('ProjectDirectory');
+            $p = DB_DataObject::factory('core_project_directory');
             $pids = array($t->project_id);
            
             $peps = $p->people($pids);
@@ -1526,7 +1526,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $this->login();
         }
         if (!empty($req['project_id_addto'])) {
-            $pd = DB_DataObject::factory('ProjectDirectory');
+            $pd = DB_DataObject::factory('core_project_directory');
             $pd->project_id = $req['project_id_addto'];
             $pd->person_id = $this->id; 
             $pd->ispm =0;
