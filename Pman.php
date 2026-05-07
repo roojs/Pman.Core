@@ -11,6 +11,8 @@ class Pman_Core_Pman {
     
     function init ($pg)
     {
+        $this->verifyMysqlTimeZoneTables();
+
         $ch = DB_DataObject::factory('core_holiday');
         $ch->updateHolidays('hk');
         
@@ -53,6 +55,53 @@ class Pman_Core_Pman {
          
         
         
+    }
+
+    /**
+     * Fail fast if MySQL time zone tables are missing or empty (CONVERT_TZ would not work).
+     * Same filter spirit as {@see Pman_Core_TimeZone::getTimezones()}.
+     */
+    function verifyMysqlTimeZoneTables()
+    {
+        $q = DB_DataObject::factory('core_group');
+        $q->query("
+            SELECT COUNT(*) AS cnt
+            FROM mysql.time_zone_name
+            WHERE Name LIKE '%/%'
+            AND Name NOT LIKE '%/%/%'
+            AND Name NOT LIKE 'right%'
+            AND Name NOT LIKE 'posix%'
+            AND Name NOT LIKE 'Etc%'
+        ");
+        if (!$q->fetch()) {
+            trigger_error(
+                'MySQL timezone tables: could not query mysql.time_zone_name (missing table or insufficient privileges).',
+                E_USER_ERROR
+            );
+            exit(1);
+        }
+        if ((int) $q->cnt < 1) {
+            trigger_error(
+                'MySQL timezone tables are empty. Load them with mysql_tzinfo_to_sql (see MySQL Server Time Zone Support). ' .
+                'Required for CONVERT_TZ() and Pman_Core_TimeZone.',
+                E_USER_ERROR
+            );
+            exit(1);
+        }
+
+        $q = DB_DataObject::factory('core_group');
+        $q->query("SELECT CONVERT_TZ(NOW(), 'UTC', 'Asia/Hong_Kong') AS tz_test");
+        if (!$q->fetch()) {
+            trigger_error('MySQL timezone tables: CONVERT_TZ verification query failed.', E_USER_ERROR);
+            exit(1);
+        }
+        if ($q->tz_test === null || $q->tz_test === '') {
+            trigger_error(
+                'MySQL CONVERT_TZ() returned NULL; time zone data may be incomplete. Load zone tables with mysql_tzinfo_to_sql.',
+                E_USER_ERROR
+            );
+            exit(1);
+        }
     }
     
     
