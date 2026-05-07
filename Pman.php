@@ -78,7 +78,6 @@ class Pman_Core_Pman {
                 'MySQL timezone tables: could not query mysql.time_zone_name (missing table or insufficient privileges).',
                 E_USER_ERROR
             );
-            exit(1);
         // }
         if ((int) $q->cnt < 1) {
             trigger_error(
@@ -86,7 +85,6 @@ class Pman_Core_Pman {
                 'Required for CONVERT_TZ() and Pman_Core_TimeZone.',
                 E_USER_ERROR
             );
-            exit(1);
         }
     }
     
