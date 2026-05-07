@@ -11,6 +11,7 @@ class Pman_Core_Pman {
     
     function init ($pg)
     {
+        die('test');
         $this->verifyMysqlTimeZoneTables();
 
         $ch = DB_DataObject::factory('core_holiday');
