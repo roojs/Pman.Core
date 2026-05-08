@@ -40,7 +40,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         if (!empty($ip)  ) {
             $recentWin = DB_DataObject::factory('core_person_window');
             $recentWin->ip = $ip;
-            $recentWin->whereAdd('login_dt > NOW() - INTERVAL 10 MINUTE');
+            $recentWin->whereAdd('login_dt > NOW() - INTERVAL 1 HOUR');
             $recentWin->limit(1);
              
 
