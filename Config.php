@@ -36,6 +36,8 @@ class Pman_Core_Config {
         }
         
         $this->verifyExtensions();
+        
+          
            
         if (!isset($cfg['Pman']['timezone'])) {
             trigger_error("timezone needs setting in Pman[timezone]", E_USER_WARNING);

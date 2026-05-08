@@ -14,6 +14,7 @@ class Pman_Core_Pman {
         $ch = DB_DataObject::factory('core_holiday');
         $ch->updateHolidays('hk');
         
+        
         $group = DB_DataObject::factory('core_group');
         
          // group should be auto created - by update-database...
@@ -54,5 +55,7 @@ class Pman_Core_Pman {
         
         
     }
-
+    
+    
+    
 }
