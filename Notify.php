@@ -212,6 +212,14 @@ class Pman_Core_Notify extends Pman
         
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
+
+        $q = DB_DataObject::factory('core_notify_server');
+        $q->setFrom(array(
+            'poolname' => $this->poolname,
+            'hostname' => gethostbyaddr("127.0.1.1"),
+            'is_active' => 1,
+        ));
+        $sids = $q->fetchAll('id');
         
         // Check if server is disabled or not found (id = 0 means no servers exist)
         if (empty($this->server->id)) {
@@ -237,7 +245,7 @@ class Pman_Core_Notify extends Pman
             $w->evtype = $this->evtype;
         }
         
-        $w->server_id = $this->server->id;
+        $w->whereAddIn('server_id', $sids, 'int');
 
         
         if (!empty($opts['old'])) {
