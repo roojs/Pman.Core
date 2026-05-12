@@ -394,7 +394,8 @@ class Pman_Core_Notify extends Pman
             }
             
             
-            $this->run($p->id,$email); 
+            $this->run($p->id, $email, '', 
+                ($p->server_id_interface == '') ? '' : ' (iface:' . $p->server_id_interface . ')'); 
             
             
             
@@ -469,7 +470,7 @@ class Pman_Core_Notify extends Pman
     
      
     
-    function run($id, $email='', $cmdOpts="")
+    function run($id, $email='', $cmdOpts="", $iface = '')
     {
         
         static $renice = false;
@@ -513,7 +514,7 @@ class Pman_Core_Notify extends Pman
         //$this->logecho("call proc_open $cmd");
         
         if ($this->max_pool_size === 1) {
-            $this->logecho("call passthru [{$email}] $cmd");
+            $this->logecho("call passthru [{$email}]{$iface} $cmd");
             passthru($cmd);
             return;
         }
@@ -540,11 +541,12 @@ class Pman_Core_Notify extends Pman
                 'email' => $email,
                 'pipes' => $pipes,
                 'notify_id' => $id,
-                'started' => time()
+                'started' => time(),
+                'iface' => $iface,
             
                 
         );
-        $this->logecho("RUN [{$email}] ({$info['pid']}) $cmd ");
+        $this->logecho("RUN [{$email}] ({$info['pid']}){$iface} $cmd ");
     }
     
     function poolfree()
@@ -622,7 +624,7 @@ class Pman_Core_Notify extends Pman
             //}
             $output = file_exists($p['out']) ? file_get_contents($p['out']) : '';
             $outputErr = file_exists($p['oute']) ? file_get_contents($p['oute']) : '';
-            $endMsg = "ENDED: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . $output;
+            $endMsg = "ENDED: ({$p['pid']}){$p['iface']} {$p['email']} " . $p['cmd'] . " : " . $output;
             if ($outputErr !== '') {
                 $endMsg .= " : " . $outputErr;
             }
