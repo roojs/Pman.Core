@@ -336,6 +336,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      */
     function validateEmail($roo, $email)
     {
+        $ff = HTML_FlexyFramework::get();
+
         $dom = $this->domain;
         if (empty($dom)) {
             throw new Exception("Domain not set on core_domain object");
@@ -347,7 +349,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         require_once 'Mail.php';
-        $ff = HTML_FlexyFramework::get();
         
         if (!isset($ff->Mail['helo'])) {
             throw new Exception("config Mail[helo] is not set");
@@ -519,7 +520,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $mailer = Mail::factory('smtp', array(
             'host'    => $mx,
             'localhost' => $ff->Mail['helo'],
-            'timeout' => 15,
+            'timeout' => 90,
             'socket_options' => $socket_options,
             'test' => true
         ));
