@@ -45,7 +45,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             'max' => 99999,
         ),
         'view' => array(
-            'desc' => 'View to print',
+            'desc' => 'View event log',
             'default' => '',
             'short' => 'N',
             'min' => 0,
