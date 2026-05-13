@@ -87,6 +87,12 @@ class Pman_Core_NotifySend extends Pman
             'short' => 't',
             'min' => 0,
             'max' => 1,
+        ),
+        'interface' => array(
+            'desc' => 'Verification: use this core_notify_server.interface row (this host/pool, active). Requires --force.',
+            'default' => '',
+            'min' => 0,
+            'max' => 1,
         )
         
         
@@ -287,6 +293,21 @@ class Pman_Core_NotifySend extends Pman
         }
         if (!$this->server || (!$this->force && !$this->server->isCurrent($this, false))) {
             $this->fatalHandler("Server not available for this notify (missing or not current for this host/pool)\n");
+        }
+
+        if (!empty($opts['interface'])) {
+            if (!$this->force) {
+                $this->fatalHandler("--interface requires --force (verification mode only)\n");
+            }
+            $s = DB_DataObject::factory('core_notify_server');
+            $s->poolname = $this->poolname;
+            $s->hostname = gethostbyaddr('127.0.1.1');
+            $s->is_active = 1;
+            $s->interface = $opts['interface'];
+            if (!$s->find(true)) {
+                $this->fatalHandler("--interface: no active core_notify_server for this host/pool with interface={$opts['interface']}\n");
+            }
+            $this->server = $s;
         }
         
         if (!empty($opts['debug'])) {
