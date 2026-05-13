@@ -302,7 +302,9 @@ class Pman_Core_NotifySend extends Pman
             $s = DB_DataObject::factory('core_notify_server');
             $s->poolname = $this->poolname;
             $s->hostname = gethostbyaddr('127.0.1.1');
-            $s->is_active = 1;
+            if (empty($opts['force'])) {    // if we use force then we can send to a disabeld intervase
+                $s->is_active = 1; 
+            }
             $s->interface = $opts['interface'];
             if (!$s->find(true)) {
                 $this->fatalHandler("--interface: no active core_notify_server for this host/pool with interface={$opts['interface']}\n");
