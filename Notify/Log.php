@@ -46,7 +46,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         ),
         'view' => array(
             'desc' => 'View event log for a specific notify id',
-            'default' => '',
+            'default' => 0,
             'short' => 'N',
             'min' => 0,
             'max' => 1,
