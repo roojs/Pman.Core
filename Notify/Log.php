@@ -47,7 +47,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         'view' => array(
             'desc' => 'View to print',
             'default' => '',
-            'short' => 'n',
+            'short' => 'N',
             'min' => 0,
             'max' => 1,
         )
