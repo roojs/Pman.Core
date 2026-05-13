@@ -44,6 +44,13 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             'min' => 0,
             'max' => 99999,
         ),
+        'view' => array(
+            'desc' => 'View to print',
+            'default' => '',
+            'short' => 'n',
+            'min' => 0,
+            'max' => 1,
+        )
     );
 
     function get($r, $opts = array())
@@ -52,7 +59,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             DB_DataObject::debugLevel($opts['debug']);
         }
         
-        if (strlen((string) $r) && ctype_digit((string) $r)) {
+        if (strlen((string) $r) && ctype_digit((string) $r) || !empty($opts['view'])) {
             $this->outputSmtpLog((int) $r);
             return;
         }
