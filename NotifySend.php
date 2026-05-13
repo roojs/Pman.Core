@@ -87,6 +87,12 @@ class Pman_Core_NotifySend extends Pman
             'short' => 't',
             'min' => 0,
             'max' => 1,
+        ),
+        'interface' => array(
+            'desc' => 'Verification: use this core_notify_server.interface row (this host/pool, active). Requires --force.',
+            'default' => '',
+            'min' => 0,
+            'max' => 1,
         )
         
         
@@ -280,17 +286,30 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("already sent - no event_id?\n");
         }
         
-        $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $this->force);
-        
+        $this->server = $this->notify->server();
 
-        // Check if server is disabled or not found - exit gracefully (unless force is set)
-        // id = 0 means no servers exist, is_active = 0 means server is disabled
-        if (!$this->force && (empty($this->server->id) || empty($this->server->is_active))) {
-            $this->fatalHandler("Server is disabled or not found - exiting gracefully\n");
+        if ($this->force && (!$this->server || !$this->server->isCurrent($this, false))) {
+            $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $this->force);
         }
-        
-         if (!$this->force &&  $this->notify->server_id != $this->server->id) {
-            $this->fatalHandler("Server id does not match - message = {$this->notify->server_id} - our id is {$this->server->id} use force to try again\n");
+        if (!$this->server || (!$this->force && !$this->server->isCurrent($this, false))) {
+            $this->fatalHandler("Server not available for this notify (missing or not current for this host/pool)\n");
+        }
+
+        if (!empty($opts['interface'])) {
+            if (!$this->force) {
+                $this->fatalHandler("--interface requires --force (verification mode only)\n");
+            }
+            $s = DB_DataObject::factory('core_notify_server');
+            $s->poolname = $this->poolname;
+            $s->hostname = gethostbyaddr('127.0.1.1');
+            if (empty($opts['force'])) {    // if we use force then we can send to a disabeld intervase
+                $s->is_active = 1; 
+            }
+            $s->interface = $opts['interface'];
+            if (!$s->find(true)) {
+                $this->fatalHandler("--interface: no active core_notify_server for this host/pool with interface={$opts['interface']}\n");
+            }
+            $this->server = $s;
         }
         
         if (!empty($opts['debug'])) {

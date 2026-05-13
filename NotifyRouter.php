@@ -123,26 +123,37 @@ class Pman_Core_NotifyRouter
     }
 
     /**
-     * Socket options from $this->base_socket_options, with IPv6 binding if applicable.
+     * Socket options from $this->base_socket_options, with optional per-server IPv4 bind and IPv6 binding if applicable.
      * @return array
      */
     private function socketOptions()
     {
         $socket_options = $this->base_socket_options;
-        
-        // Return early if not using IPv6
+
+        $ipv4_bind_ip = '';
+        if ($this->notifySend->server->interface != '') {
+            $iface = $this->notifySend->server->interface;
+            $ipv4_bind_ip = net_get_interfaces()[$iface]['unicast'][1]['address'];
+        }
+
         if (empty($this->smtpHost) || !$this->useIpv6) {
             $ipv6_addr_str = !empty($this->notifySend->server_ipv6) ? $this->notifySend->server_ipv6->ipv6_addr_str : false;
             $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->notifySend->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($ipv6_addr_str ?: 'empty') . ")");
+            if ($ipv4_bind_ip != '') {
+                $socket_options['socket'] = array(
+                    'bindto' => $ipv4_bind_ip . ':0'
+                );
+                $this->debug("IPv4 bind from interface {$iface}: {$ipv4_bind_ip}");
+            }
             return $socket_options;
         }
-        
-        // Add IPv6 binding if serverIpv6 is configured
+
         $socket_options['socket'] = array(
             'bindto' => '[' . $this->notifySend->server_ipv6->ipv6_addr_str . ']:0'
         );
         $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $this->notifySend->server_ipv6->ipv6_addr_str);
-        
+        // ⚠️ Precedence: when $this->useIpv6 is true, this IPv6 bindto wins; per-server $iface IPv4 bind is not merged here.
+
         return $socket_options;
     }
     

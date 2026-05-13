@@ -212,6 +212,14 @@ class Pman_Core_Notify extends Pman
         
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
+
+        $q = DB_DataObject::factory('core_notify_server');
+        $q->setFrom(array(
+            'poolname' => $this->poolname,
+            'hostname' => gethostbyaddr("127.0.1.1"),
+            'is_active' => 1,
+        ));
+        $sids = $q->fetchAll('id');
         
         // Check if server is disabled or not found (id = 0 means no servers exist)
         if (empty($this->server->id)) {
@@ -237,7 +245,7 @@ class Pman_Core_Notify extends Pman
             $w->evtype = $this->evtype;
         }
         
-        $w->server_id = $this->server->id;
+        $w->whereAddIn('server_id', $sids, 'int');
 
         
         if (!empty($opts['old'])) {
@@ -386,7 +394,8 @@ class Pman_Core_Notify extends Pman
             }
             
             
-            $this->run($p->id,$email); 
+            $this->run($p->id, $email, '', 
+                ($p->server_id_interface == '') ? '' : ' (iface:' . $p->server_id_interface . ')'); 
             
             
             
@@ -461,7 +470,7 @@ class Pman_Core_Notify extends Pman
     
      
     
-    function run($id, $email='', $cmdOpts="")
+    function run($id, $email='', $cmdOpts="", $iface = '')
     {
         
         static $renice = false;
@@ -505,7 +514,7 @@ class Pman_Core_Notify extends Pman
         //$this->logecho("call proc_open $cmd");
         
         if ($this->max_pool_size === 1) {
-            $this->logecho("call passthru [{$email}] $cmd");
+            $this->logecho("call passthru [{$email}]{$iface} $cmd");
             passthru($cmd);
             return;
         }
@@ -532,11 +541,12 @@ class Pman_Core_Notify extends Pman
                 'email' => $email,
                 'pipes' => $pipes,
                 'notify_id' => $id,
-                'started' => time()
+                'started' => time(),
+                'iface' => $iface,
             
                 
         );
-        $this->logecho("RUN [{$email}] ({$info['pid']}) $cmd ");
+        $this->logecho("RUN [{$email}] ({$info['pid']}){$iface} $cmd ");
     }
     
     function poolfree()
@@ -614,7 +624,7 @@ class Pman_Core_Notify extends Pman
             //}
             $output = file_exists($p['out']) ? file_get_contents($p['out']) : '';
             $outputErr = file_exists($p['oute']) ? file_get_contents($p['oute']) : '';
-            $endMsg = "ENDED: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . $output;
+            $endMsg = "ENDED: ({$p['pid']}){$p['iface']} {$p['email']} " . $p['cmd'] . " : " . $output;
             if ($outputErr !== '') {
                 $endMsg .= " : " . $outputErr;
             }
