@@ -59,8 +59,13 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             DB_DataObject::debugLevel($opts['debug']);
         }
         
-        if (strlen((string) $r) && ctype_digit((string) $r) || !empty($opts['view'])) {
+        if (strlen((string) $r) && ctype_digit((string) $r)) {
             $this->outputSmtpLog((int) $r);
+            return;
+        }
+
+        if(!empty($opts['view'])) {
+            $this->outputView((int) $opts['view']);
             return;
         }
         
