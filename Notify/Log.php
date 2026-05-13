@@ -65,7 +65,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         }
 
         if(!empty($opts['view'])) {
-            $this->outputView((int) $opts['view']);
+            $this->outputSmtpLog((int) $opts['view']);
             return;
         }
         
