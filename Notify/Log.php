@@ -44,6 +44,13 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             'min' => 0,
             'max' => 99999,
         ),
+        'view' => array(
+            'desc' => 'View event log for a specific notify id',
+            'default' => 0,
+            'short' => 'N',
+            'min' => 0,
+            'max' => 1,
+        )
     );
 
     function get($r, $opts = array())
@@ -54,6 +61,11 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         
         if (strlen((string) $r) && ctype_digit((string) $r)) {
             $this->outputSmtpLog((int) $r);
+            return;
+        }
+
+        if(!empty($opts['view'])) {
+            $this->outputSmtpLog((int) $opts['view']);
             return;
         }
         
