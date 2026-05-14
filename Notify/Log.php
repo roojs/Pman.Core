@@ -179,6 +179,32 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         
         $this->jok('Done');
     }
+
+    /**
+     * LEFT JOINs for MAIL rows without core_email: mailing-list queue → message; IMAP message_user → user + message.
+     */
+    private function appendMailLogJoins(DB_DataObject $w)
+    {
+        $otQueue = $w->escape('crm_mailing_list_queue');
+        $otMimu = $w->escape('mail_imap_message_user');
+        $evMail = $w->escape('MAIL');
+        $w->_join .= "
+            LEFT JOIN crm_mailing_list_queue join_log_mlq
+                ON join_log_mlq.id = core_notify.onid
+                AND core_notify.ontable = '{$otQueue}'
+                AND core_notify.evtype = '{$evMail}'
+            LEFT JOIN crm_mailing_list_message join_log_mlmsg
+                ON join_log_mlmsg.id = join_log_mlq.message_id
+            LEFT JOIN mail_imap_message_user join_log_mimu
+                ON join_log_mimu.id = core_notify.onid
+                AND core_notify.ontable = '{$otMimu}'
+                AND core_notify.evtype = '{$evMail}'
+            LEFT JOIN mail_imap_user join_log_miu
+                ON join_log_miu.id = join_log_mimu.imap_user_id
+            LEFT JOIN mail_imap_message join_log_mim
+                ON join_log_mim.id = join_log_mimu.msg_id
+        ";
+    }
     
     /**
      * Print SMTP debug_str from NOTIFYSENT event log (EXTRA) for a core_notify id.
