@@ -607,16 +607,4 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         return $mxs;
     }
-
-    /**
-     * Client hidden field value after SSE email validation (md5(email . domain_id)).
-     *
-     * @param string $email Full address as stored (must match save request).
-     * @param int $domainId core_domain.id
-     * @return string
-     */
-    static function emailValidationToken($email, $domainId)
-    {
-        return md5($email . $domainId);
-    }
 }

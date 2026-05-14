@@ -171,7 +171,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             exit(1);
         }
 
-        $token = Pman_Core_DataObjects_Core_domain::emailValidationToken($this->emailNorm, (int) $cd->id);
+        $token = md5($this->emailNorm . (int) $cd->id);
         $this->vewOut(array(
             'type' => 'email_ok',
             'field' => $this->field,
