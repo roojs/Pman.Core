@@ -573,4 +573,50 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         return $mailer;
     }
+
+    /**
+     * MX hostnames in priority order for SMTP probe, or empty if domain cannot receive mail
+     * (same preconditions as validateEmail before the MX loop).
+     *
+     * @return array list of MX host strings
+     */
+    function mxHostsForValidation()
+    {
+        $dom = $this->domain;
+        if (empty($dom)) {
+            return array();
+        }
+
+        if (!(($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) ? $this->has_mx : $this->hasValidMx($dom))) {
+            return array();
+        }
+
+        $mx_records = array();
+        $mx_weight = array();
+        if (!getmxrr($dom, $mx_records, $mx_weight)) {
+            return array();
+        }
+        asort($mx_weight, SORT_NUMERIC);
+
+        $mxs = array();
+        foreach ($mx_weight as $k => $weight) {
+            if (!empty($mx_records[$k])) {
+                $mxs[] = $mx_records[$k];
+            }
+        }
+
+        return $mxs;
+    }
+
+    /**
+     * Client hidden field value after SSE email validation (md5(email . domain_id)).
+     *
+     * @param string $email Full address as stored (must match save request).
+     * @param int $domainId core_domain.id
+     * @return string
+     */
+    static function emailValidationToken($email, $domainId)
+    {
+        return md5($email . $domainId);
+    }
 }
