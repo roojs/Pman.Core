@@ -7,6 +7,7 @@ require_once 'Pman/Core/Cli.php';
  * Uses join_person for to fallback; core_email for from/subject when email_id is set.
  * Without email_id: MAIL + crm_mailing_list_queue → crm_mailing_list_message; MAIL + mail_imap_message_user → mail_imap_user + mail_imap_message;
  * ontable crm_mailing_list_message (e.g. SendPreviewEmail): from/subject from that row by onid.
+ * ontable core_email (e.g. Core_email::testData): from/subject from that row by onid when email_id is unset.
  *
  * php index.php Core/Notify/Log [--from "datetime"] [--to "datetime"] [-L N] [--debug]
  * php index.php Core/Notify/Log/{id}  — print raw SMTP debug (Events log EXTRA) for NOTIFYSENT on that core_notify id.
@@ -113,6 +114,9 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         $w->autoJoin(array('exclude' => array('email_id')));
         $w->joinAdd(array('email_id', 'core_email:id'), 'LEFT');
         $w->_join .= "
+            LEFT JOIN core_email join_log_ce_ontable
+                ON join_log_ce_ontable.id = core_notify.onid
+                AND core_notify.ontable = 'core_email'
             LEFT JOIN crm_mailing_list_queue join_log_mlq
                 ON join_log_mlq.id = core_notify.onid
                 AND core_notify.ontable = 'crm_mailing_list_queue'
