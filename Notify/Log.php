@@ -5,6 +5,7 @@ require_once 'Pman/Core/Cli.php';
 /**
  * CLI: list delivered core_notify rows (msgid set) in a time window on sent: id, to, sent, evtype, srv, ontable:onid, from, subject.
  * Uses join_person for to fallback; core_email for from/subject when email_id is set.
+ * For evtype MAIL without email_id: crm_mailing_list_queue → crm_mailing_list_message; mail_imap_message_user → mail_imap_user + mail_imap_message.
  *
  * php index.php Core/Notify/Log [--from "datetime"] [--to "datetime"] [-L N] [--debug]
  * php index.php Core/Notify/Log/{id}  — print raw SMTP debug (Events log EXTRA) for NOTIFYSENT on that core_notify id.
