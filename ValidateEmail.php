@@ -68,7 +68,6 @@ class Pman_Core_ValidateEmail extends Pman
         }
 
         $ff = HTML_FlexyFramework::get();
-        $rootDir = $ff->rootDir;
         $entryScript = realpath($_SERVER['SCRIPT_FILENAME']);
         if ($entryScript === false || !is_file($entryScript)) {
             $this->sendSSE('error', array(
