@@ -5,7 +5,8 @@ require_once 'Pman/Core/Cli.php';
 /**
  * CLI: list delivered core_notify rows (msgid set) in a time window on sent: id, to, sent, evtype, srv, ontable:onid, from, subject.
  * Uses join_person for to fallback; core_email for from/subject when email_id is set.
- * For evtype MAIL without email_id: crm_mailing_list_queue → crm_mailing_list_message; mail_imap_message_user → mail_imap_user + mail_imap_message.
+ * Without email_id: MAIL + crm_mailing_list_queue → crm_mailing_list_message; MAIL + mail_imap_message_user → mail_imap_user + mail_imap_message;
+ * ontable crm_mailing_list_message (e.g. SendPreviewEmail): from/subject from that row by onid.
  *
  * php index.php Core/Notify/Log [--from "datetime"] [--to "datetime"] [-L N] [--debug]
  * php index.php Core/Notify/Log/{id}  — print raw SMTP debug (Events log EXTRA) for NOTIFYSENT on that core_notify id.
@@ -118,6 +119,9 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
                 AND core_notify.evtype = 'MAIL'
             LEFT JOIN crm_mailing_list_message join_log_mlmsg
                 ON join_log_mlmsg.id = join_log_mlq.message_id
+            LEFT JOIN crm_mailing_list_message join_log_mlmsg_direct
+                ON join_log_mlmsg_direct.id = core_notify.onid
+                AND core_notify.ontable = 'crm_mailing_list_message'
             LEFT JOIN mail_imap_message_user join_log_mimu
                 ON join_log_mimu.id = core_notify.onid
                 AND core_notify.ontable = 'mail_imap_message_user'
