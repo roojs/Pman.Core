@@ -108,9 +108,6 @@ class Pman_Core_ValidateEmail extends Pman
             }
 
             $payload = array(
-                'rootDir' => $rootDir,
-                'include_path' => $includePath,
-                'flexy' => $flexy,
                 'email' => $email,
                 'field' => $field,
                 'auth_user_id' => (int) $au->id,
@@ -118,13 +115,16 @@ class Pman_Core_ValidateEmail extends Pman
             file_put_contents($jobFile, json_encode($payload, JSON_UNESCAPED_UNICODE));
             @chmod($jobFile, 0600);
 
-            $cmd = escapeshellarg($phpBin) . ' ' . escapeshellarg($workerPath) . ' ' . escapeshellarg($jobFile);
+            $cmd = escapeshellarg($phpBin) . ' '
+                . escapeshellarg($entryScript) . ' '
+                . escapeshellarg('Core/Process/ValidateEmailWorker') . ' '
+                . escapeshellarg($jobFile);
             $descriptors = array(
                 0 => array('pipe', 'r'),
                 1 => array('pipe', 'w'),
                 2 => array('pipe', 'w'),
             );
-            $proc = proc_open($cmd, $descriptors, $pipes, $rootDir);
+            $proc = proc_open($cmd, $descriptors, $pipes, $childCwd);
             if (!is_resource($proc)) {
                 @unlink($jobFile);
                 $this->sendSSE('error', array(
