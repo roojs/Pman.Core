@@ -142,6 +142,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             COALESCE(NULLIF(TRIM(core_notify.to_email), ''), NULLIF(TRIM(join_person_id_id.email), ''), '') AS join_to_display,
             CASE
                 WHEN NULLIF(TRIM(core_email.from_email), '') IS NOT NULL THEN TRIM(core_email.from_email)
+                WHEN NULLIF(TRIM(join_log_ce_ontable.from_email), '') IS NOT NULL THEN TRIM(join_log_ce_ontable.from_email)
                 WHEN NULLIF(TRIM(join_log_mlmsg.from_email), '') IS NOT NULL THEN TRIM(join_log_mlmsg.from_email)
                 WHEN NULLIF(TRIM(join_log_mlmsg_direct.from_email), '') IS NOT NULL THEN TRIM(join_log_mlmsg_direct.from_email)
                 WHEN NULLIF(TRIM(join_log_miu.email), '') IS NOT NULL THEN TRIM(join_log_miu.email)
@@ -149,6 +150,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             END AS join_from_email,
             CASE
                 WHEN NULLIF(TRIM(core_email.from_email), '') IS NOT NULL THEN TRIM(core_email.from_name)
+                WHEN NULLIF(TRIM(join_log_ce_ontable.from_email), '') IS NOT NULL THEN TRIM(join_log_ce_ontable.from_name)
                 WHEN NULLIF(TRIM(join_log_mlmsg.from_email), '') IS NOT NULL THEN TRIM(join_log_mlmsg.from_name)
                 WHEN NULLIF(TRIM(join_log_mlmsg_direct.from_email), '') IS NOT NULL THEN TRIM(join_log_mlmsg_direct.from_name)
                 WHEN NULLIF(TRIM(join_log_miu.email), '') IS NOT NULL THEN TRIM(join_log_miu.name)
@@ -156,6 +158,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             END AS join_from_name,
             CASE
                 WHEN NULLIF(TRIM(core_email.subject), '') IS NOT NULL THEN core_email.subject
+                WHEN NULLIF(TRIM(join_log_ce_ontable.subject), '') IS NOT NULL THEN join_log_ce_ontable.subject
                 WHEN NULLIF(TRIM(join_log_mlmsg.subject), '') IS NOT NULL THEN join_log_mlmsg.subject
                 WHEN NULLIF(TRIM(join_log_mlmsg_direct.subject), '') IS NOT NULL THEN join_log_mlmsg_direct.subject
                 WHEN NULLIF(TRIM(join_log_mim.subject), '') IS NOT NULL THEN join_log_mim.subject
