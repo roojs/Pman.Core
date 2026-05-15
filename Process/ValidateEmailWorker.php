@@ -139,7 +139,8 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 $this->errorlog(
                     "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
                 );
-                return true; // Treat 421 as success
+                $mxOk = true; // Treat 421 as success
+                break;
             }
             if ($res->code == 421 || $res->code == 451) {
                 $mxOk = true;
