@@ -174,21 +174,22 @@ class Pman_Core_ValidateEmail extends Pman
                             fclose($pipes[2]);
                             proc_close($proc);
                             @unlink($jobFile);
-                            $this->error('Invalid JSON from worker: ' . substr($line, 0, 200), false);
                             $jobError = array(
                                 'message' => 'Invalid JSON from worker: ' . substr($line, 0, 200),
                                 'allowRetry' => false,
                             );
+                            break;
                         }
                         if (!empty($row['type']) && $row['type'] === 'email_fail') {
                             fclose($pipes[1]);
                             fclose($pipes[2]);
                             proc_close($proc);
                             @unlink($jobFile);
-                            $this->error(
-                                !empty($row['message']) ? $row['message'] : 'Email validation failed',
-                                true
+                            $jobError = array(
+                                'message' => !empty($row['message']) ? $row['message'] : 'Email validation failed',
+                                'allowRetry' => true,
                             );
+                            break;
                         }
                         $baseProg = ($idx / $total) * 100;
                         $sub = 0;
