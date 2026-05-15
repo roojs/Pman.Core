@@ -129,6 +129,7 @@ class Pman_Core_ValidateEmail extends Pman
             $lastHeartbeat = microtime(true);
             $heartbeatEvery = 10.0;
             $childTimeout = 120.0;
+            $jobError = false;
 
             while (true) {
                 $st = proc_get_status($proc);
@@ -174,6 +175,10 @@ class Pman_Core_ValidateEmail extends Pman
                             proc_close($proc);
                             @unlink($jobFile);
                             $this->error('Invalid JSON from worker: ' . substr($line, 0, 200), false);
+                            $jobError = array(
+                                'message' => 'Invalid JSON from worker: ' . substr($line, 0, 200),
+                                'allowRetry' => false,
+                            );
                         }
                         if (!empty($row['type']) && $row['type'] === 'email_fail') {
                             fclose($pipes[1]);
