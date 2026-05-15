@@ -217,6 +217,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             $this->jok('No SMTP debug data in event log (EXTRA empty or missing).');
         }
         
+        print_r($ev->toArray());
         print_r($data);
         echo "\n";
         $this->jok('Done');
