@@ -174,10 +174,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             return;
         }
         $tbl = DB_DataObject::factory($w->ontable);
-        if (!is_object($tbl) || !method_exists($tbl, 'getEmailInfo')) {
-            return;
-        }
-        if (!$tbl->get($onid)) {
+        if (!is_object($tbl) || !method_exists($tbl, 'getEmailInfo') || !$tbl->get($w->onid)) {
             return;
         }
         $info = $tbl->getEmailInfo();
