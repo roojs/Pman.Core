@@ -33,7 +33,7 @@ class Pman_Core_ValidateEmail extends Pman
     }
 
     /**
-     * Show an error message (SSE or jerr when not in SSE mode).
+     * Show an error message
      *
      * @param string $message The error message
      * @param bool $allowRetry Whether to allow the user to retry (maps to allowRetry 1/0 for Roo.form.Action.Sse)
