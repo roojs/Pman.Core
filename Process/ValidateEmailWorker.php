@@ -140,7 +140,13 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 $mxOk = true; // Treat 421 as success
                 break;
             }
-            if ($res->code == 421 || $res->code == 451) {
+
+            // Check for SMTP error 451 (Greylisting - temporary failure)
+            // This is a temporary error indicating greylisting, so treat it as a valid check
+            if ($res->code == 451) {
+                $this->errorlog(
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
+                );
                 $mxOk = true;
                 break;
             }
