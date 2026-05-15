@@ -27,6 +27,31 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
+    /**
+     * From/subject for Core/Notify/Log when core_notify.ontable points at this row
+     * and the list query join did not populate from/subject.
+     *
+     * @return array{from: string, subject: string}
+     */
+    function getEmailInfo()
+    {
+        if(empty($this->from_email)) {
+            return array('from' => '', 'subject' => $this->subject);
+        }
+        $email = trim((string) $this->from_email);
+        $name = trim((string) $this->from_name);
+        $from = '';
+        if ($email !== '') {
+            $from = $name === ''
+                ? $email
+                : trim('"' . addslashes($name) . '" <' . $email . '>');
+        }
+        return array(
+            'from' => $from,
+            'subject' => trim((string) $this->subject),
+        );
+    }
+    
     function applyFilters($q, $au, $roo)
     {
         $tn = $this->tableName();
