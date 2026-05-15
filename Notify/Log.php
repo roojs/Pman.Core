@@ -103,7 +103,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             $start = $toTs - 86400;
             $end = $toTs;
         } else {
-            $start = strtotime('-2400 hours');
+            $start = strtotime('-24 hours');
             $end = time();
         }
         
@@ -113,63 +113,73 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         $w = DB_DataObject::factory('core_notify');
         $w->autoJoin(array('exclude' => array('email_id')));
         $w->joinAdd(array('email_id', 'core_email:id'), 'LEFT');
-        $w->_join .= "
-            LEFT JOIN core_email join_log_ce_ontable
-                ON join_log_ce_ontable.id = core_notify.onid
-                AND core_notify.ontable = 'core_email'
-            LEFT JOIN crm_mailing_list_queue join_log_mlq
-                ON join_log_mlq.id = core_notify.onid
-                AND core_notify.ontable = 'crm_mailing_list_queue'
-                AND core_notify.evtype = 'MAIL'
-            LEFT JOIN crm_mailing_list_message join_log_mlmsg
-                ON join_log_mlmsg.id = join_log_mlq.message_id
-            LEFT JOIN crm_mailing_list_message join_log_mlmsg_direct
-                ON join_log_mlmsg_direct.id = core_notify.onid
-                AND core_notify.ontable = 'crm_mailing_list_message'
-            LEFT JOIN mail_imap_message_user join_log_mimu
-                ON join_log_mimu.id = core_notify.onid
-                AND core_notify.ontable = 'mail_imap_message_user'
-                AND core_notify.evtype = 'MAIL'
-            LEFT JOIN mail_imap_user join_log_miu
-                ON join_log_miu.id = join_log_mimu.imap_user_id
-            LEFT JOIN mail_imap_message join_log_mim
-                ON join_log_mim.id = join_log_mimu.msg_id
-        ";
+        // $w->_join .= "
+        //     LEFT JOIN core_email join_log_ce_ontable
+        //         ON join_log_ce_ontable.id = core_notify.onid
+        //         AND core_notify.ontable = 'core_email'
+        //     LEFT JOIN crm_mailing_list_queue join_log_mlq
+        //         ON join_log_mlq.id = core_notify.onid
+        //         AND core_notify.ontable = 'crm_mailing_list_queue'
+        //         AND core_notify.evtype = 'MAIL'
+        //     LEFT JOIN crm_mailing_list_message join_log_mlmsg
+        //         ON join_log_mlmsg.id = join_log_mlq.message_id
+        //     LEFT JOIN crm_mailing_list_message join_log_mlmsg_direct
+        //         ON join_log_mlmsg_direct.id = core_notify.onid
+        //         AND core_notify.ontable = 'crm_mailing_list_message'
+        //     LEFT JOIN mail_imap_message_user join_log_mimu
+        //         ON join_log_mimu.id = core_notify.onid
+        //         AND core_notify.ontable = 'mail_imap_message_user'
+        //         AND core_notify.evtype = 'MAIL'
+        //     LEFT JOIN mail_imap_user join_log_miu
+        //         ON join_log_miu.id = join_log_mimu.imap_user_id
+        //     LEFT JOIN mail_imap_message join_log_mim
+        //         ON join_log_mim.id = join_log_mimu.msg_id
+        // ";
         
         $w->selectAdd();
         $w->selectAdd("
             core_notify.id,
             COALESCE(NULLIF(TRIM(core_notify.to_email), ''), NULLIF(TRIM(join_person_id_id.email), ''), '') AS join_to_display,
-            CASE
-                WHEN NULLIF(TRIM(core_email.from_email), '') IS NOT NULL THEN TRIM(core_email.from_email)
-                WHEN NULLIF(TRIM(join_log_ce_ontable.from_email), '') IS NOT NULL THEN TRIM(join_log_ce_ontable.from_email)
-                WHEN NULLIF(TRIM(join_log_mlmsg.from_email), '') IS NOT NULL THEN TRIM(join_log_mlmsg.from_email)
-                WHEN NULLIF(TRIM(join_log_mlmsg_direct.from_email), '') IS NOT NULL THEN TRIM(join_log_mlmsg_direct.from_email)
-                WHEN NULLIF(TRIM(join_log_miu.email), '') IS NOT NULL THEN TRIM(join_log_miu.email)
-                ELSE ''
-            END AS join_from_email,
-            CASE
-                WHEN NULLIF(TRIM(core_email.from_email), '') IS NOT NULL THEN TRIM(core_email.from_name)
-                WHEN NULLIF(TRIM(join_log_ce_ontable.from_email), '') IS NOT NULL THEN TRIM(join_log_ce_ontable.from_name)
-                WHEN NULLIF(TRIM(join_log_mlmsg.from_email), '') IS NOT NULL THEN TRIM(join_log_mlmsg.from_name)
-                WHEN NULLIF(TRIM(join_log_mlmsg_direct.from_email), '') IS NOT NULL THEN TRIM(join_log_mlmsg_direct.from_name)
-                WHEN NULLIF(TRIM(join_log_miu.email), '') IS NOT NULL THEN TRIM(join_log_miu.name)
-                ELSE ''
-            END AS join_from_name,
-            CASE
-                WHEN NULLIF(TRIM(core_email.subject), '') IS NOT NULL THEN core_email.subject
-                WHEN NULLIF(TRIM(join_log_ce_ontable.subject), '') IS NOT NULL THEN join_log_ce_ontable.subject
-                WHEN NULLIF(TRIM(join_log_mlmsg.subject), '') IS NOT NULL THEN join_log_mlmsg.subject
-                WHEN NULLIF(TRIM(join_log_mlmsg_direct.subject), '') IS NOT NULL THEN join_log_mlmsg_direct.subject
-                WHEN NULLIF(TRIM(join_log_mim.subject), '') IS NOT NULL THEN join_log_mim.subject
-                ELSE ''
-            END AS join_subject,
+            core_email.from_email AS join_from_email,
+            core_email.from_name AS join_from_name,
+            core_email.subject AS join_subject,
             core_notify.sent,
             core_notify.evtype,
-            core_notify.server_id,
-            core_notify.ontable,
-            core_notify.onid
+            core_notify.server_id
         ");
+        // $w->selectAdd("
+        //     core_notify.id,
+        //     COALESCE(NULLIF(TRIM(core_notify.to_email), ''), NULLIF(TRIM(join_person_id_id.email), ''), '') AS join_to_display,
+        //     CASE
+        //         WHEN NULLIF(TRIM(core_email.from_email), '') IS NOT NULL THEN TRIM(core_email.from_email)
+        //         WHEN NULLIF(TRIM(join_log_ce_ontable.from_email), '') IS NOT NULL THEN TRIM(join_log_ce_ontable.from_email)
+        //         WHEN NULLIF(TRIM(join_log_mlmsg.from_email), '') IS NOT NULL THEN TRIM(join_log_mlmsg.from_email)
+        //         WHEN NULLIF(TRIM(join_log_mlmsg_direct.from_email), '') IS NOT NULL THEN TRIM(join_log_mlmsg_direct.from_email)
+        //         WHEN NULLIF(TRIM(join_log_miu.email), '') IS NOT NULL THEN TRIM(join_log_miu.email)
+        //         ELSE ''
+        //     END AS join_from_email,
+        //     CASE
+        //         WHEN NULLIF(TRIM(core_email.from_email), '') IS NOT NULL THEN TRIM(core_email.from_name)
+        //         WHEN NULLIF(TRIM(join_log_ce_ontable.from_email), '') IS NOT NULL THEN TRIM(join_log_ce_ontable.from_name)
+        //         WHEN NULLIF(TRIM(join_log_mlmsg.from_email), '') IS NOT NULL THEN TRIM(join_log_mlmsg.from_name)
+        //         WHEN NULLIF(TRIM(join_log_mlmsg_direct.from_email), '') IS NOT NULL THEN TRIM(join_log_mlmsg_direct.from_name)
+        //         WHEN NULLIF(TRIM(join_log_miu.email), '') IS NOT NULL THEN TRIM(join_log_miu.name)
+        //         ELSE ''
+        //     END AS join_from_name,
+        //     CASE
+        //         WHEN NULLIF(TRIM(core_email.subject), '') IS NOT NULL THEN core_email.subject
+        //         WHEN NULLIF(TRIM(join_log_ce_ontable.subject), '') IS NOT NULL THEN join_log_ce_ontable.subject
+        //         WHEN NULLIF(TRIM(join_log_mlmsg.subject), '') IS NOT NULL THEN join_log_mlmsg.subject
+        //         WHEN NULLIF(TRIM(join_log_mlmsg_direct.subject), '') IS NOT NULL THEN join_log_mlmsg_direct.subject
+        //         WHEN NULLIF(TRIM(join_log_mim.subject), '') IS NOT NULL THEN join_log_mim.subject
+        //         ELSE ''
+        //     END AS join_subject,
+        //     core_notify.sent,
+        //     core_notify.evtype,
+        //     core_notify.server_id,
+        //     core_notify.ontable,
+        //     core_notify.onid
+        // ");
         
         $w->whereAdd("
                 core_notify.msgid IS NOT NULL
