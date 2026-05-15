@@ -5,9 +5,6 @@ require_once 'Pman/Core/Cli.php';
 /**
  * CLI: list delivered core_notify rows (msgid set) in a time window on sent: id, to, sent, evtype, srv, ontable:onid, from, subject.
  * Uses join_person for to fallback; core_email for from/subject when email_id is set.
- * Without email_id: MAIL + crm_mailing_list_queue → crm_mailing_list_message; MAIL + mail_imap_message_user → mail_imap_user + mail_imap_message;
- * ontable crm_mailing_list_message (e.g. SendPreviewEmail): from/subject from that row by onid.
- * ontable core_email (e.g. Core_email::testData): from/subject from that row by onid when email_id is unset.
  *
  * php index.php Core/Notify/Log [--from "datetime"] [--to "datetime"] [-L N] [--debug]
  * php index.php Core/Notify/Log/{id}  — print raw SMTP debug (Events log EXTRA) for NOTIFYSENT on that core_notify id.
@@ -113,18 +110,21 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         $w = DB_DataObject::factory('core_notify');
         $w->autoJoin(array('exclude' => array('email_id')));
         $w->joinAdd(array('email_id', 'core_email:id'), 'LEFT');
-        $this->joinAddMessage($w);
+        
         $w->selectAdd();
         $w->selectAdd("
             core_notify.id,
             COALESCE(NULLIF(TRIM(core_notify.to_email), ''), NULLIF(TRIM(join_person_id_id.email), ''), '') AS join_to_display,
+            core_email.from_email AS join_from_email,
+            core_email.from_name AS join_from_name,
+            core_email.subject AS join_subject,
             core_notify.sent,
             core_notify.evtype,
             core_notify.server_id,
             core_notify.ontable,
             core_notify.onid
         ");
-        $this->selectAddMessageInfo($w);
+        
         $w->whereAdd("
                 core_notify.msgid IS NOT NULL
             AND
@@ -161,14 +161,6 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         }
         
         $this->jok('Done');
-    }
-
-    function joinAddMessage($w)
-    {
-    }
-
-    function selectAddMessageInfo($w)
-    {
     }
     
     /**
