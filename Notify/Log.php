@@ -165,6 +165,14 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         
         $this->jok('Done');
     }
+
+    function joinAddMessage($w)
+    {
+    }
+
+    function selectAddMessageInfo($w)
+    {
+    }
     
     /**
      * Print SMTP debug_str from NOTIFYSENT event log (EXTRA) for a core_notify id.
