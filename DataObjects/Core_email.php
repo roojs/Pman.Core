@@ -38,17 +38,14 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if(empty($this->from_email)) {
             return array('from' => '', 'subject' => $this->subject);
         }
-        $email = trim((string) $this->from_email);
-        $name = trim((string) $this->from_name);
-        $from = '';
-        if ($email !== '') {
-            $from = $name === ''
-                ? $email
-                : trim('"' . addslashes($name) . '" <' . $email . '>');
+
+        if(empty($this->from_name)) {
+            return array('from' => $this->from_email, 'subject' => $this->subject);
         }
+
         return array(
-            'from' => $from,
-            'subject' => trim((string) $this->subject),
+            'from' => '"' . addslashes($this->from_name) . '" <' . $this->from_email . '>', 
+            'subject' => $this->subject
         );
     }
     
