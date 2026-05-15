@@ -130,6 +130,7 @@ class Pman_Core_ValidateEmail extends Pman
             $heartbeatEvery = 10.0;
             $childTimeout = 120.0;
             $jobError = false;
+            $okRow = null;
 
             while (true) {
                 $st = proc_get_status($proc);
@@ -170,10 +171,6 @@ class Pman_Core_ValidateEmail extends Pman
                         }
                         $row = json_decode($line, true);
                         if (!is_array($row)) {
-                            fclose($pipes[1]);
-                            fclose($pipes[2]);
-                            proc_close($proc);
-                            @unlink($jobFile);
                             $jobError = array(
                                 'message' => 'Invalid JSON from worker: ' . substr($line, 0, 200),
                                 'allowRetry' => false,
@@ -181,23 +178,26 @@ class Pman_Core_ValidateEmail extends Pman
                             break;
                         }
                         if (!empty($row['type']) && $row['type'] === 'email_fail') {
-                            fclose($pipes[1]);
-                            fclose($pipes[2]);
-                            proc_close($proc);
-                            @unlink($jobFile);
                             $jobError = array(
                                 'message' => !empty($row['message']) ? $row['message'] : 'Email validation failed',
                                 'allowRetry' => true,
                             );
                             break;
                         }
+                        if (!empty($row['type']) && $row['type'] === 'email_ok') {
+                            $okRow = $row;
+                            continue;
+                        }
+                        if (empty($row['type']) || $row['type'] !== 'step') {
+                            continue;
+                        }
                         $baseProg = ($idx / $total) * 100;
                         $sub = 0;
                         if (!empty($row['step']) && !empty($row['of'])) {
-                            $sub = ($row['step'] / $row['of']) * (100 / $total);
+                            $sub = (($row['step'] - 1) / $row['of']) * (100 / $total);
                         }
                         $this->sendSSE('progress', array(
-                            'total' => $total,
+                            'total' => $total * 6,
                             'progress' => $baseProg + $sub,
                             'message' => !empty($row['message']) ? $row['message'] : json_encode($row),
                             'email' => $email,
@@ -238,12 +238,12 @@ class Pman_Core_ValidateEmail extends Pman
                 );
             }
 
-            $lines = array_filter(array_map('trim', explode("\n", trim($bufOut))));
-            $okRow = null;
-            foreach ($lines as $ln) {
-                $decoded = json_decode($ln, true);
-                if (is_array($decoded) && !empty($decoded['type']) && $decoded['type'] === 'email_ok') {
-                    $okRow = $decoded;
+            if ($okRow === null) {
+                foreach (array_filter(array_map('trim', explode("\n", trim($bufOut)))) as $ln) {
+                    $decoded = json_decode($ln, true);
+                    if (is_array($decoded) && !empty($decoded['type']) && $decoded['type'] === 'email_ok') {
+                        $okRow = $decoded;
+                    }
                 }
             }
             if ($okRow === null) {
@@ -258,7 +258,7 @@ class Pman_Core_ValidateEmail extends Pman
         }
 
         $this->sendSSE('progress', array(
-            'total' => $total,
+            'total' => $total * 6,
             'progress' => 100,
             'message' => 'Validation complete',
         ));
