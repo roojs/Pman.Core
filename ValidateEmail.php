@@ -204,6 +204,10 @@ class Pman_Core_ValidateEmail extends Pman
                             'worker' => $row,
                         ));
                     }
+
+                    if($jobError) {
+                        break;
+                    }
                 }
 
                 if (microtime(true) - $lastHeartbeat >= $heartbeatEvery) {
