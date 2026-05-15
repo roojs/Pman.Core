@@ -150,7 +150,10 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 $mxOk = true;
                 break;
             }
+
+            // Check for SMTP error 452 (out of storage space)
             if (in_array($res->code, array(452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
+                // Don't need to log error for out of storage space
                 $this->vewOut(array(
                     'type' => 'email_fail',
                     'field' => $this->field,
