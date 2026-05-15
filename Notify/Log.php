@@ -178,9 +178,6 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             return;
         }
         $info = $tbl->getEmailInfo();
-        if (!is_array($info)) {
-            return;
-        }
         if ($needFrom) {
             $from = trim((string) ($info['from'] ?? ''));
             if ($from !== '') {
