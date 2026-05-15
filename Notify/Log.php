@@ -173,7 +173,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         if(!empty($w->join_from_email) || empty($w->ontable) || empty($w->onid)) {
             return;
         }
-        $tbl = DB_DataObject::factory($ontable);
+        $tbl = DB_DataObject::factory($w->ontable);
         if (!is_object($tbl) || !method_exists($tbl, 'getEmailInfo')) {
             return;
         }
