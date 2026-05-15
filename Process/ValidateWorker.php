@@ -38,7 +38,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     {
         $jobPath = !empty($opts['file']) ? $opts['file'] : '';
         if ($jobPath === '') {
-            fwrite(STDERR, "Usage: ... Core/Process/ValidateWorker -f /path/to/job.json\n");
+            fwrite(STDERR, "Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json\n");
             exit(1);
         }
 
