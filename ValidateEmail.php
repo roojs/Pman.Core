@@ -223,6 +223,10 @@ class Pman_Core_ValidateEmail extends Pman
             $exitCode = proc_close($proc);
             @unlink($jobFile);
 
+            if($jobError) {
+                $this->error($jobError['message'], $jobError['allowRetry']);
+            }
+
             if ($exitCode !== 0) {
                 $this->error(
                     trim($bufErr) !== '' ? trim($bufErr) : ('Validation failed for ' . $field . ' (exit ' . $exitCode . ')'),
