@@ -1,10 +1,10 @@
 <?php
 /**
  * CLI: one email SMTP validation (NDJSON on stdout).
- *   php /path/to/press.local.php Core/Process/ValidateWorker -f /path/to/job.json
+ *   php /path/to/press.local.php Core/Process/ValidateEmailWorker -f /path/to/job.json
  * (job JSON: email, field, auth_user_id).
  */
-class Pman_Core_Process_ValidateWorker extends Pman
+class Pman_Core_Process_ValidateEmailWorker extends Pman
 {
     static $cli_desc = 'Validate one email via SMTP (used by Core/ValidateEmail SSE parent).';
 
