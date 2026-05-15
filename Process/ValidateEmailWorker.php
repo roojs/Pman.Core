@@ -1,12 +1,21 @@
 <?php
 /**
- * CLI: one email SMTP validation (NDJSON on stdout). Invoked like other Pman CLI pages, e.g.
- *   php /path/to/press.local.php Core/Process/ValidateEmailWorker /path/to/job.json
+ * CLI: one email SMTP validation (NDJSON on stdout).
+ *   php /path/to/press.local.php Core/Process/ValidateEmailWorker -f /path/to/job.json
  * (job JSON: email, field, auth_user_id).
  */
 class Pman_Core_Process_ValidateEmailWorker extends Pman
 {
     static $cli_desc = 'Validate one email via SMTP (used by Core/ValidateEmail SSE parent).';
+
+    static $cli_opts = array(
+        'file' => array(
+            'desc' => 'Job JSON file (email, field, auth_user_id)',
+            'short' => 'f',
+            'min' => 1,
+            'max' => 1,
+        ),
+    );
 
     var $stepOf = 5;
 
@@ -25,11 +34,11 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         return $this->authRequired();
     }
 
-    function get($request = '', $args = array(), $isRedirect = false)
+    function get($request = '', $opts = array(), $isRedirect = false)
     {
-        $jobPath = isset($args[0]) ? $args[0] : '';
+        $jobPath = !empty($opts['file']) ? $opts['file'] : '';
         if ($jobPath === '') {
-            fwrite(STDERR, "Usage: ... Core/Process/ValidateEmailWorker /path/to/job.json\n");
+            fwrite(STDERR, "Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json\n");
             exit(1);
         }
 
