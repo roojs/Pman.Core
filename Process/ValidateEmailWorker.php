@@ -4,6 +4,9 @@
  *   php /path/to/press.local.php Core/Process/ValidateEmailWorker -f /path/to/job.json
  * (job JSON: email, field, auth_user_id).
  */
+
+require_once 'Pman.php';
+
 class Pman_Core_Process_ValidateEmailWorker extends Pman
 {
     static $cli_desc = 'Validate one email via SMTP (used by Core/ValidateEmail SSE parent).';
@@ -17,7 +20,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         ),
     );
 
-    var $stepOf = 5;
+    var $stepOf = 6;
 
     var $phaseStep = 0;
 
@@ -134,7 +137,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 // no error log for 421 on yahoo.com as its a known issue
                 if($dom != 'yahoo.com') {
                     $this->errorlog(
-                        "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
+                        "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
                     );
                 }
                 $mxOk = true; // Treat 421 as success
@@ -145,7 +148,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             // This is a temporary error indicating greylisting, so treat it as a valid check
             if ($res->code == 451) {
                 $this->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
+                    "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 $mxOk = true;
                 break;
@@ -164,18 +167,29 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 ));
                 exit(1);
             }
+
+            // Check for SMTP error 550 with Spamhaus failure
+            // Spamhaus failures are false positives we can't fix, so treat as valid
+            // Also check for Mimecast which uses Spamhaus (zen.mimecast.org)
             if ($res->code == 550 && preg_match('/spamhaus/i', $errorMessage)) {
+                // Don't need to log error for spamhaus failures
                 $mxOk = true;
                 break;
             }
             if ($res->code == 554 && preg_match('/spam/i', $errorMessage)) {
+                // Don't need to log error for spam failures
                 $mxOk = true;
                 break;
             }
             if ($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
+                $this->errorlog(
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}"
+                );
                 $mxOk = true;
                 break;
             }
+
+            // We don't need to log these errors and don't need to show these errors to the user
             if (
                 $res->code == 553 && preg_match('/User unknown/i', $errorMessage)
                 || $res->code == 550 && preg_match('/does not exist|no mailbox here|User unknown/i', $errorMessage)
@@ -188,6 +202,14 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 ));
                 exit(1);
             }
+
+            // Only log errors that aren't known false positives
+            // PEAR_Error objects have both ->message property and getMessage() method
+            // Using getMessage() method is the standard approach
+            $this->errorlog(
+                "SMTP Validate Rejected Email {$res->code} Email: {$this->emailNorm} - Error: " . $errorMessage
+            );
+
             $lastErr = $res->getMessage();
         }
 
