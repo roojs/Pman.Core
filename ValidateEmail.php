@@ -192,7 +192,7 @@ class Pman_Core_ValidateEmail extends Pman
                         }
                         $this->sendSSE('progress', array(
                             'total' => $total,
-                            'progress' => min(99, $baseProg + $sub),
+                            'progress' => $baseProg + $sub,
                             'message' => !empty($row['message']) ? $row['message'] : json_encode($row),
                             'email' => $email,
                             'worker' => $row,
