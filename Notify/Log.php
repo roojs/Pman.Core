@@ -240,17 +240,15 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
     
     function formatFrom($w)
     {
-        if (!empty($w->join_from_email)) {
-            if (empty($w->join_from_name)) {
-                return trim($w->join_from_email);
-            }
-            return trim('"' . addslashes($w->join_from_name) . '" <' . $w->join_from_email . '>');
+        if(empty($w->join_from_email)) {
+            return '-';
         }
-        $disp = trim((string) ($w->join_from_display ?? ''));
-        if ($disp !== '') {
-            return $disp;
+
+        if(empty($w->join_from_name)) {
+            return trim($w->join_from_email);
         }
-        return '-';
+
+        return trim('"' . addslashes($w->join_from_name) . '" <' . $w->join_from_email . '>');
     }
     
     function formatSubject($w)
