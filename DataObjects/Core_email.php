@@ -35,16 +35,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
      */
     function getEmailInfo()
     {
-        if(empty($this->from_email)) {
-            return array('from' => '', 'subject' => $this->subject);
-        }
-
-        if(empty($this->from_name)) {
-            return array('from' => $this->from_email, 'subject' => $this->subject);
-        }
-
         return array(
-            'from' => '"' . addslashes($this->from_name) . '" <' . $this->from_email . '>', 
+            'email' => $this->from_email,
+            'name' => $this->from_name,
             'subject' => $this->subject
         );
     }
