@@ -113,29 +113,6 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         $w = DB_DataObject::factory('core_notify');
         $w->autoJoin(array('exclude' => array('email_id')));
         $w->joinAdd(array('email_id', 'core_email:id'), 'LEFT');
-        // $w->_join .= "
-        //     LEFT JOIN core_email join_log_ce_ontable
-        //         ON join_log_ce_ontable.id = core_notify.onid
-        //         AND core_notify.ontable = 'core_email'
-        //     LEFT JOIN crm_mailing_list_queue join_log_mlq
-        //         ON join_log_mlq.id = core_notify.onid
-        //         AND core_notify.ontable = 'crm_mailing_list_queue'
-        //         AND core_notify.evtype = 'MAIL'
-        //     LEFT JOIN crm_mailing_list_message join_log_mlmsg
-        //         ON join_log_mlmsg.id = join_log_mlq.message_id
-        //     LEFT JOIN crm_mailing_list_message join_log_mlmsg_direct
-        //         ON join_log_mlmsg_direct.id = core_notify.onid
-        //         AND core_notify.ontable = 'crm_mailing_list_message'
-        //     LEFT JOIN mail_imap_message_user join_log_mimu
-        //         ON join_log_mimu.id = core_notify.onid
-        //         AND core_notify.ontable = 'mail_imap_message_user'
-        //         AND core_notify.evtype = 'MAIL'
-        //     LEFT JOIN mail_imap_user join_log_miu
-        //         ON join_log_miu.id = join_log_mimu.imap_user_id
-        //     LEFT JOIN mail_imap_message join_log_mim
-        //         ON join_log_mim.id = join_log_mimu.msg_id
-        // ";
-        
         $w->selectAdd();
         $w->selectAdd("
             core_notify.id,
