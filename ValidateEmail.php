@@ -194,7 +194,6 @@ class Pman_Core_ValidateEmail extends Pman
                             'total' => $total,
                             'progress' => min(99, $baseProg + $sub),
                             'message' => !empty($row['message']) ? $row['message'] : json_encode($row),
-                            'field' => $field,
                             'email' => $email,
                             'worker' => $row,
                         ));
@@ -207,7 +206,6 @@ class Pman_Core_ValidateEmail extends Pman
                         'total' => $total,
                         'progress' => $idx / $total * 100,
                         'message' => 'Still validating ' . $field . '…',
-                        'field' => $field,
                         'heartbeat' => true,
                     ));
                 }
