@@ -128,6 +128,19 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             }
 
             $errorMessage = $res->getMessage();
+            // Check for SMTP error 421 (Service unavailable - server busy)
+            // This is a temporary error we can't fix, so treat it as a valid check
+            if ($res->code == 421) {
+                if($dom == 'yahoo.com') {
+                    // no error log for 421 on yahoo.com as its a known issue
+                    $mxOk = true;
+                    break;
+                }
+                $this->errorlog(
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
+                );
+                return true; // Treat 421 as success
+            }
             if ($res->code == 421 || $res->code == 451) {
                 $mxOk = true;
                 break;
