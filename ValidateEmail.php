@@ -8,8 +8,6 @@ require_once 'Pman.php';
  */
 class Pman_Core_ValidateEmail extends Pman
 {
-    var $sseEnabled = false;
-
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
@@ -42,10 +40,6 @@ class Pman_Core_ValidateEmail extends Pman
      */
     function error($message, $allowRetry = true)
     {
-        if (!$this->sseEnabled) {
-            $this->jerr($message);
-        }
-
         $this->sendSSE('error', array(
             'success' => false,
             'errorMsg' => $message,
@@ -65,7 +59,6 @@ class Pman_Core_ValidateEmail extends Pman
         while (ob_get_level()) {
             ob_end_flush();
         }
-        $this->sseEnabled = true;
 
         $au = $this->getAuthUser();
         if (!$au) {
