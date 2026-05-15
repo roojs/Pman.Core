@@ -107,8 +107,8 @@ class Pman_Core_ValidateEmail extends Pman
 
             $cmd = escapeshellarg($phpBin) . ' '
                 . escapeshellarg($entryScript) . ' '
-                . escapeshellarg('Core/Process/ValidateWorker')
-                . ' -f ' . escapeshellarg($jobFile);
+                . escapeshellarg('Core/Process/ValidateEmailWorker') . ' '
+                . escapeshellarg($jobFile);
             $descriptors = array(
                 0 => array('pipe', 'r'),
                 1 => array('pipe', 'w'),
