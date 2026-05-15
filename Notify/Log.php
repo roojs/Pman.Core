@@ -113,6 +113,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         $w = DB_DataObject::factory('core_notify');
         $w->autoJoin(array('exclude' => array('email_id')));
         $w->joinAdd(array('email_id', 'core_email:id'), 'LEFT');
+        $this->joinAddMessage($w);
         $w->selectAdd();
         $w->selectAdd("
             core_notify.id,
@@ -126,7 +127,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             core_notify.ontable,
             core_notify.onid
         ");
-        
+        $this->selectAddMessageInfo($w);
         $w->whereAdd("
                 core_notify.msgid IS NOT NULL
             AND
