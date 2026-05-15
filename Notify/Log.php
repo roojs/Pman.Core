@@ -103,7 +103,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             $start = $toTs - 86400;
             $end = $toTs;
         } else {
-            $start = strtotime('-24 hours');
+            $start = strtotime('-2400 hours');
             $end = time();
         }
         
