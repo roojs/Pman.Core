@@ -182,18 +182,6 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         $w->join_from_email = $info['email'];
         $w->join_from_name = $info['name'];
         $w->join_subject = $info['subject'];
-        if ($needFrom) {
-            $from = trim((string) ($info['from'] ?? ''));
-            if ($from !== '') {
-                $w->join_from_display = $from;
-            }
-        }
-        if ($needSubject) {
-            $sub = trim((string) ($info['subject'] ?? ''));
-            if ($sub !== '') {
-                $w->join_subject = $sub;
-            }
-        }
     }
     
     /**
