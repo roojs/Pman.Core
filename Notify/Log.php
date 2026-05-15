@@ -171,7 +171,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
      */
     private function fillOntableEmailInfo($w)
     {
-        if(!empty($w->join_from_email) || empty($w->ontable) || empty($w->onid)) {
+        if(!empty($w->join_email_id) || empty($w->ontable) || empty($w->onid)) {
             return;
         }
         $tbl = DB_DataObject::factory($w->ontable);
