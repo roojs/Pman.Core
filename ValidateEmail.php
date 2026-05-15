@@ -34,6 +34,25 @@ class Pman_Core_ValidateEmail extends Pman
         }
     }
 
+    /**
+     * Show an error message (SSE or jerr when not in SSE mode).
+     *
+     * @param string $message The error message
+     * @param bool $allowRetry Whether to allow the user to retry (maps to allowRetry 1/0 for Roo.form.Action.Sse)
+     */
+    function error($message, $allowRetry = true)
+    {
+        if (!$this->sseEnabled) {
+            $this->jerr($message);
+        }
+
+        $this->sendSSE('error', array(
+            'success' => false,
+            'errorMsg' => $message,
+            'allowRetry' => $allowRetry ? 1 : 0,
+        ));
+    }
+
     function post($base = '')
     {
         set_time_limit(0);
@@ -50,30 +69,18 @@ class Pman_Core_ValidateEmail extends Pman
 
         $au = $this->getAuthUser();
         if (!$au) {
-            $this->sendSSE('error', array(
-                'success' => false,
-                'errorMsg' => 'Not authenticated',
-                'allowRetry' => 0,
-            ));
+            $this->error('Not authenticated', false);
         }
 
         $jobsRaw = isset($_POST['validate_email_jobs']) ? $_POST['validate_email_jobs'] : '';
         $jobs = json_decode($jobsRaw, true);
         if (!is_array($jobs) || empty($jobs)) {
-            $this->sendSSE('error', array(
-                'success' => false,
-                'errorMsg' => 'Missing or invalid validate_email_jobs JSON',
-                'allowRetry' => 1,
-            ));
+            $this->error('Missing or invalid validate_email_jobs JSON', true);
         }
 
         $entryScript = realpath($_SERVER['SCRIPT_FILENAME']);
         if ($entryScript === false || !is_file($entryScript)) {
-            $this->sendSSE('error', array(
-                'success' => false,
-                'errorMsg' => 'Cannot resolve PHP entry script for worker (SCRIPT_FILENAME)',
-                'allowRetry' => 0,
-            ));
+            $this->error('Cannot resolve PHP entry script for worker (SCRIPT_FILENAME)', false);
         }
         $childCwd = dirname($entryScript);
 
@@ -83,11 +90,7 @@ class Pman_Core_ValidateEmail extends Pman
 
         foreach ($jobs as $idx => $jobRow) {
             if (empty($jobRow['field']) || !isset($jobRow['email'])) {
-                $this->sendSSE('error', array(
-                    'success' => false,
-                    'errorMsg' => 'Each job needs field and email',
-                    'allowRetry' => 1,
-                ));
+                $this->error('Each job needs field and email', true);
             }
 
             $field = $jobRow['field'];
@@ -98,11 +101,7 @@ class Pman_Core_ValidateEmail extends Pman
 
             $jobFile = tempnam(sys_get_temp_dir(), 'vew_');
             if ($jobFile === false) {
-                $this->sendSSE('error', array(
-                    'success' => false,
-                    'errorMsg' => 'Cannot create temp file',
-                    'allowRetry' => 1,
-                ));
+                $this->error('Cannot create temp file', true);
             }
 
             $payload = array(
@@ -125,11 +124,7 @@ class Pman_Core_ValidateEmail extends Pman
             $proc = proc_open($cmd, $descriptors, $pipes, $childCwd);
             if (!is_resource($proc)) {
                 @unlink($jobFile);
-                $this->sendSSE('error', array(
-                    'success' => false,
-                    'errorMsg' => 'Could not start validation subprocess',
-                    'allowRetry' => 1,
-                ));
+                $this->error('Could not start validation subprocess', true);
             }
             fclose($pipes[0]);
             stream_set_blocking($pipes[1], false);
@@ -153,11 +148,7 @@ class Pman_Core_ValidateEmail extends Pman
                     fclose($pipes[2]);
                     proc_close($proc);
                     @unlink($jobFile);
-                    $this->sendSSE('error', array(
-                        'success' => false,
-                        'errorMsg' => 'Validation timed out for ' . $field,
-                        'allowRetry' => 1,
-                    ));
+                    $this->error('Validation timed out for ' . $field, true);
                 }
 
                 $r = array($pipes[1], $pipes[2]);
@@ -189,22 +180,17 @@ class Pman_Core_ValidateEmail extends Pman
                             fclose($pipes[2]);
                             proc_close($proc);
                             @unlink($jobFile);
-                            $this->sendSSE('error', array(
-                                'success' => false,
-                                'errorMsg' => 'Invalid JSON from worker: ' . substr($line, 0, 200),
-                                'allowRetry' => 0,
-                            ));
+                            $this->error('Invalid JSON from worker: ' . substr($line, 0, 200), false);
                         }
                         if (!empty($row['type']) && $row['type'] === 'email_fail') {
                             fclose($pipes[1]);
                             fclose($pipes[2]);
                             proc_close($proc);
                             @unlink($jobFile);
-                            $this->sendSSE('error', array(
-                                'success' => false,
-                                'errorMsg' => !empty($row['message']) ? $row['message'] : 'Email validation failed',
-                                'allowRetry' => 1,
-                            ));
+                            $this->error(
+                                !empty($row['message']) ? $row['message'] : 'Email validation failed',
+                                true
+                            );
                         }
                         $baseProg = ($idx / $total) * 100;
                         $sub = 0;
@@ -244,11 +230,10 @@ class Pman_Core_ValidateEmail extends Pman
             @unlink($jobFile);
 
             if ($exitCode !== 0) {
-                $this->sendSSE('error', array(
-                    'success' => false,
-                    'errorMsg' => trim($bufErr) !== '' ? trim($bufErr) : ('Validation failed for ' . $field . ' (exit ' . $exitCode . ')'),
-                    'allowRetry' => 1,
-                ));
+                $this->error(
+                    trim($bufErr) !== '' ? trim($bufErr) : ('Validation failed for ' . $field . ' (exit ' . $exitCode . ')'),
+                    true
+                );
             }
 
             $lines = array_filter(array_map('trim', explode("\n", trim($bufOut))));
@@ -260,11 +245,7 @@ class Pman_Core_ValidateEmail extends Pman
                 }
             }
             if ($okRow === null) {
-                $this->sendSSE('error', array(
-                    'success' => false,
-                    'errorMsg' => 'No success result from worker for ' . $field,
-                    'allowRetry' => 1,
-                ));
+                $this->error('No success result from worker for ' . $field, true);
             }
 
             $results[$field] = array(
