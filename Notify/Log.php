@@ -118,9 +118,6 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         $w->selectAdd("
             core_notify.id,
             COALESCE(NULLIF(TRIM(core_notify.to_email), ''), NULLIF(TRIM(join_person_id_id.email), ''), '') AS join_to_display,
-            core_email.from_email AS join_from_email,
-            core_email.from_name AS join_from_name,
-            core_email.subject AS join_subject,
             core_notify.sent,
             core_notify.evtype,
             core_notify.server_id,
