@@ -28,9 +28,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     ###END_AUTOCODE
     
     /**
-     * From/subject for Core/Notify/Log when core_notify.ontable points at this row
-     * and the list query join did not populate from/subject.
-     *
      * @return array{from: string, subject: string}
      */
     function getEmailInfo()
