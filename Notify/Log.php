@@ -145,7 +145,9 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             core_email.subject AS join_subject,
             core_notify.sent,
             core_notify.evtype,
-            core_notify.server_id
+            core_notify.server_id,
+            core_notify.ontable,
+            core_notify.onid
         ");
         // $w->selectAdd("
         //     core_notify.id,
