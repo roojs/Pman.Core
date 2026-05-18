@@ -262,7 +262,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             return;
         }
         if (preg_match('/^Send:\\s*AUTH\\b/i', $msg)) {
-            $this->emitStep('auth', 'Authenticating');
+            $this->emitStep('auth', 'Step 1'); // 'Authenticating'
             return;
         }
         if (stripos($msg, 'Send: STARTTLS') === 0) {
