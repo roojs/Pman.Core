@@ -40,14 +40,14 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     function get($request = '', $opts = array(), $isRedirect = false)
     {
         $jobPath = !empty($opts['file']) ? $opts['file'] : '';
-        if ($jobPath === '') {
+        // if ($jobPath === '') {
             $this->vewOut(array(
                 'type' => 'error_log',
                 'message' => 'Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json',
                 'isHardFail' => true,
             ));
             exit(1);
-        }
+        // }
 
         $raw = @file_get_contents($jobPath);
         if ($raw === false || $raw === '') {
