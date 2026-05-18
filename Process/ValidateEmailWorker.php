@@ -231,10 +231,11 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             // Only log errors that aren't known false positives
             // PEAR_Error objects have both ->message property and getMessage() method
             // Using getMessage() method is the standard approach
-            $this->vewOut(array(
+            echo json_encode(array(
                 'type' => 'error_log',
                 'message' => "SMTP Validate Rejected Email $mx {$res->code} Email: {$this->emailNorm} - Error: " . $errorMessage
-            ));
+            ), JSON_UNESCAPED_UNICODE) . "\n";
+            fflush(STDOUT);
             $lastErr = $res->getMessage();
         }
 
