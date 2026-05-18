@@ -59,7 +59,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         if (!is_array($job) || empty($job['email'])) {
             echo json_encode(array(
                 'type' => 'error_log',
-                'message' => 'Invalid job JSON (need email, field)',
+                'message' => 'Invalid job JSON (need email)',
                 'isHardFailure' => true,
             ), JSON_UNESCAPED_UNICODE) . "\n";
             fflush(STDOUT);
@@ -72,8 +72,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 $this->authUser = $au;
             }
         }
-
-        $this->field = $job['field'];
+        
         $dar = explode('@', $job['email']);
         $dom = strtolower(array_pop($dar));
         $dar[] = $dom;
