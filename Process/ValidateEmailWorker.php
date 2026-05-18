@@ -20,9 +20,9 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         ),
     );
 
-    var $stepOf = 6;
+    // var $stepOf = 6;
 
-    var $phaseStep = 0;
+    // var $phaseStep = 0;
 
     var $field = '';
 
@@ -110,7 +110,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             exit(1);
         }
 
-        $this->phaseStep = 0;
+        // $this->phaseStep = 0;
         // $this->emitStep('connect', 'Connecting');
 
         $mxOk = false;
@@ -263,20 +263,20 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         exit(0);
     }
 
-    function emitStep($phase, $label)
-    {
-        $this->phaseStep++;
-        echo json_encode(array(
-            'type' => 'step',
-            'field' => $this->field,
-            'email' => $this->emailNorm,
-            'phase' => $phase,
-            'step' => $this->phaseStep,
-            'of' => $this->stepOf,
-            'message' => $label,
-        ), JSON_UNESCAPED_UNICODE) . "\n";
-        fflush(STDOUT);
-    }
+    // function emitStep($phase, $label)
+    // {
+    //     $this->phaseStep++;
+    //     echo json_encode(array(
+    //         'type' => 'step',
+    //         'field' => $this->field,
+    //         'email' => $this->emailNorm,
+    //         'phase' => $phase,
+    //         'step' => $this->phaseStep,
+    //         'of' => $this->stepOf,
+    //         'message' => $label,
+    //     ), JSON_UNESCAPED_UNICODE) . "\n";
+    //     fflush(STDOUT);
+    // }
 
     function mailerDebugLine($smtp, $message)
     {
