@@ -44,7 +44,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             $this->vewOut(array(
                 'type' => 'error_log',
                 'message' => 'Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json',
-                'isHardFail' => true,
+                'isHardFailure' => true,
             ));
             exit(1);
         }
@@ -54,7 +54,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             $this->vewOut(array(
                 'type' => 'error_log',
                 'message' => 'Cannot read job file',
-                'isHardFail' => true,
+                'isHardFailure' => true,
             ));
             exit(1);
         }
@@ -64,7 +64,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             $this->vewOut(array(
                 'type' => 'error_log',
                 'message' => 'Invalid job JSON (need email, field)',
-                'isHardFail' => true,
+                'isHardFailure' => true,
             ));
             exit(1);
         }
