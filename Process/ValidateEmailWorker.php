@@ -88,12 +88,13 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         $cd = DB_DataObject::factory('core_domain');
         $cdResult = $cd->getOrCreate($dom);
         if (!is_object($cdResult)) {
-            $this->vewOut(array(
+            echo json_encode(array(
                 'type' => 'email_fail',
                 'field' => $this->field,
                 'email' => $this->emailNorm,
                 'message' => is_string($cdResult) ? $cdResult : 'Invalid domain',
-            ));
+            ), JSON_UNESCAPED_UNICODE) . "\n";
+            fflush(STDOUT);
             exit(1);
         }
 
