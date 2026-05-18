@@ -271,10 +271,11 @@ Pman.Dialog.PreviewRowsImport = {
           var validateTypeIndex = 0;
           var validateValueIndex = 0;
           
+          /*
           // validate a value
           var validateValue = function() {
               // validation is done
-              if(validateTypes[validateTypeIndex] || validateTypeIndex == validateTypes.length) {
+              if(validateTypes == 'email' || validateTypeIndex == validateTypes.length) {
                   Roo.MessageBox.hide();
                   onValidate();
                   return;
@@ -335,6 +336,7 @@ Pman.Dialog.PreviewRowsImport = {
                   }
               });
           };
+          */
           
           Roo.MessageBox.progress("Validation", "Starting");
           
