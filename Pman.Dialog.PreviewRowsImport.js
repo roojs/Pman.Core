@@ -125,7 +125,7 @@ Pman.Dialog.PreviewRowsImport = {
               }
               
               ds.add(new Roo.data.Record(data));
-              rowsDisplayed ++;
+              rowsDisplayed ++;R
           });
           
           _this.grid.reconfigure(ds, new Roo.grid.ColumnModel(cols));
@@ -172,7 +172,6 @@ Pman.Dialog.PreviewRowsImport = {
                       });
                   }
               });
-              
           });
           
           // after all validations are done
@@ -284,7 +283,7 @@ Pman.Dialog.PreviewRowsImport = {
               var vValues = vType['values'];
               
               // validation of values with this type is done
-              if(validateValueIndex == vValues.length) {
+              if(validateTypes == 'email' || validateValueIndex == vValues.length) {
                   // validate values with the next type
                   validateTypeIndex ++;
                   // reset
