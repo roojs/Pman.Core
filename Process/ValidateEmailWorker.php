@@ -13,7 +13,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
     static $cli_opts = array(
         'file' => array(
-            'desc' => 'Job JSON file (email, field, auth_user_id)',
+            'desc' => 'Job JSON file (email, auth_user_id)',
             'short' => 'f',
             'min' => 1,
             'max' => 1,
