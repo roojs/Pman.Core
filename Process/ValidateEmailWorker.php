@@ -39,6 +39,9 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
     function get($request = '', $opts = array(), $isRedirect = false)
     {
+        ini_set('error_log', '/var/log/apache2/php-error.log');
+        ini_set('log_errors', '1');  // only helps if it was off
+
         $jobPath = !empty($opts['file']) ? $opts['file'] : '';
         if ($jobPath === '') {
             fwrite(STDERR, "Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json\n");
