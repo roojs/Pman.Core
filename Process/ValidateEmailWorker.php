@@ -136,9 +136,10 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             if ($res->code == 421) {
                 // no error log for 421 on yahoo.com as its a known issue
                 if($dom != 'yahoo.com') {
-                    $this->errorlog(
-                        "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
-                    );
+                    $this->vewOut(array(
+                        'type' => 'error_log',
+                        'message' => "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
+                    ));
                 }
                 $mxOk = true; // Treat 421 as success
                 break;
@@ -147,9 +148,10 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             // Check for SMTP error 451 (Greylisting - temporary failure)
             // This is a temporary error indicating greylisting, so treat it as a valid check
             if ($res->code == 451) {
-                $this->errorlog(
-                    "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
-                );
+                $this->vewOut(array(
+                    'type' => 'error_log',
+                    'message' => "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
+                ));
                 $mxOk = true;
                 break;
             }
@@ -182,9 +184,10 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 break;
             }
             if ($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
-                $this->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}"
-                );
+                $this->vewOut(array(
+                    'type' => 'error_log',
+                    'message' => "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}"
+                ));
                 $mxOk = true;
                 break;
             }
@@ -206,10 +209,10 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             // Only log errors that aren't known false positives
             // PEAR_Error objects have both ->message property and getMessage() method
             // Using getMessage() method is the standard approach
-            $this->errorlog(
-                "SMTP Validate Rejected Email {$res->code} Email: {$this->emailNorm} - Error: " . $errorMessage
-            );
-
+            $this->vewOut(array(
+                'type' => 'error_log',
+                'message' => "SMTP Validate Rejected Email {$res->code} Email: {$this->emailNorm} - Error: " . $errorMessage
+            ));
             $lastErr = $res->getMessage();
         }
 
