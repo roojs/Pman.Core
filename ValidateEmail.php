@@ -226,7 +226,7 @@ class Pman_Core_ValidateEmail extends Pman
                     $this->sendSSE('progress', array(
                         'total' => $total * $childTimeout,
                         'progress' => (microtime(true) - $childStarted + $idx * $childTimeout) / ($total * $childTimeout) * 100,
-                        'message' => 'Validating ' . $field . '…' . (int)(microtime(true) - $childStarted - $timeElapsed) ." seconds left",
+                        'message' => 'Validating ' . $field . '(' . $this->emailNorm . ')…' . (int)($childTimeout - microtime(true) - $childStarted) ." seconds left",
                     ));
                 }
             }
