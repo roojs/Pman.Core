@@ -199,21 +199,21 @@ class Pman_Core_ValidateEmail extends Pman
                             $okRow = $row;
                             continue;
                         }
-                        if (empty($row['type']) || $row['type'] !== 'step') {
-                            continue;
-                        }
-                        $baseProg = ($idx / $total) * 100;
-                        $sub = 0;
-                        if (!empty($row['step']) && !empty($row['of'])) {
-                            $sub = (($row['step'] - 1) / $row['of']) * (100 / $total);
-                        }
-                        $this->sendSSE('progress', array(
-                            'total' => $total * 6,
-                            'progress' => $baseProg + $sub,
-                            'message' => !empty($row['message']) ? $row['message'] : json_encode($row),
-                            'email' => $email,
-                            'worker' => $row,
-                        ));
+                        // if (empty($row['type']) || $row['type'] !== 'step') {
+                        //     continue;
+                        // }
+                        // $baseProg = ($idx / $total) * 100;
+                        // $sub = 0;
+                        // if (!empty($row['step']) && !empty($row['of'])) {
+                        //     $sub = (($row['step'] - 1) / $row['of']) * (100 / $total);
+                        // }
+                        // $this->sendSSE('progress', array(
+                        //     'total' => $total * 6,
+                        //     'progress' => $baseProg + $sub,
+                        //     'message' => !empty($row['message']) ? $row['message'] : json_encode($row),
+                        //     'email' => $email,
+                        //     'worker' => $row,
+                        // ));
                     }
 
                     if($jobError) {
