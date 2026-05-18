@@ -56,7 +56,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         }
 
         $job = json_decode($raw, true);
-        if (!is_array($job) || empty($job['email']) || empty($job['field'])) {
+        if (!is_array($job) || empty($job['email'])) {
             echo json_encode(array(
                 'type' => 'error_log',
                 'message' => 'Invalid job JSON (need email, field)',
