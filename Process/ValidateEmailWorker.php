@@ -40,7 +40,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     function get($request = '', $opts = array(), $isRedirect = false)
     {
         sleep(10);
-        
+
         $jobPath = !empty($opts['file']) ? $opts['file'] : '';
         if ($jobPath === '') {
             echo json_encode(array(
@@ -224,7 +224,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                     'type' => 'email_fail',
                     'field' => $this->field,
                     'email' => $this->emailNorm,
-                    'message' => 'This is email <B>does not work</B> - we checked it - nothing can be delivered to them.',
+                    'message' => 'This email <B>does not work</B> - we checked it - nothing can be delivered to them.',
                 ), JSON_UNESCAPED_UNICODE) . "\n";
                 fflush(STDOUT);
                 exit(1);
