@@ -125,8 +125,8 @@ class Pman_Core_ValidateEmail extends Pman
 
             $bufOut = '';
             $bufErr = '';
-            $childStarted = microtime(true);
-            $lastHeartbeat = microtime(true);
+            $childStarted = microtime();
+            $lastHeartbeat = microtime();
             $heartbeatEvery = 1;
             $childTimeout = 90;
             $jobError = false;
@@ -226,7 +226,7 @@ class Pman_Core_ValidateEmail extends Pman
                     $this->sendSSE('progress', array(
                         'total' => $total * $childTimeout,
                         'progress' => (microtime(true) - $childStarted + $idx * $childTimeout) / ($total * $childTimeout) * 100,
-                        'message' => 'Validating ' . $field . '…' . (microtime(true) - $childStarted) ." seconds left",
+                        'message' => 'Validating ' . $field . '…' . (microtime() - $childStarted) ." seconds left",
                     ));
                 }
             }
