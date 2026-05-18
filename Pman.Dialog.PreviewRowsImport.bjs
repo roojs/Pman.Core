@@ -460,7 +460,7 @@
      "            });",
      "            ",
      "            // start validation",
-     "            validateValue();",
+     "            //validateValue();",
      "        }",
      "    });",
      "}"

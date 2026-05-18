@@ -368,7 +368,7 @@ Pman.Dialog.PreviewRowsImport = {
                   });
                   
                   // start validation
-                  validateValue();
+                  //validateValue();
               }
           });
       }
