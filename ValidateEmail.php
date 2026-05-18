@@ -221,7 +221,7 @@ class Pman_Core_ValidateEmail extends Pman
                     }
                 }
 
-                if (microtime(true) - $lastHeartbeat >= $heartbeatEvery) {
+                if (microtime() - $lastHeartbeat >= $heartbeatEvery) {
                     $lastHeartbeat = microtime();
                     $timeElapsed = microtime() - $childStarted;
                     $this->sendSSE('progress', array(
