@@ -211,7 +211,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             // Using getMessage() method is the standard approach
             $this->vewOut(array(
                 'type' => 'error_log',
-                'message' => "SMTP Validate Rejected Email {$res->code} Email: {$this->emailNorm} - Error: " . $errorMessage
+                'message' => "SMTP Validate Rejected Email $mx {$res->code} Email: {$this->emailNorm} - Error: " . $errorMessage
             ));
             $lastErr = $res->getMessage();
         }
