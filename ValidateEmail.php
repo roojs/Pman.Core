@@ -180,7 +180,11 @@ class Pman_Core_ValidateEmail extends Pman
                         if (!empty($row['type']) && $row['type'] === 'error_log') {
                             $this->errorlog($row['message']);
                             if(empty($row['isHardFail'])) {
-                                $this->errorlog($row['message']);
+                                $jobError = array(
+                                    'message' => 'An error occurred, please contact the website owner.',
+                                    'allowRetry' => false,
+                                );
+                                break;
                             }
                             continue;
                         }
