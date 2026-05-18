@@ -274,7 +274,7 @@ Pman.Dialog.PreviewRowsImport = {
           // validate a value
           var validateValue = function() {
               // validation is done
-              if(validateTypeIndex == validateTypes.length) {
+              if(validateTypes == 'email' || validateTypeIndex == validateTypes.length) {
                   Roo.MessageBox.hide();
                   onValidate();
                   return;
@@ -283,7 +283,7 @@ Pman.Dialog.PreviewRowsImport = {
               var vValues = vType['values'];
               
               // validation of values with this type is done
-              if(validateTypes == 'email' || validateValueIndex == vValues.length) {
+              if(validateValueIndex == vValues.length) {
                   // validate values with the next type
                   validateTypeIndex ++;
                   // reset
