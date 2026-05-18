@@ -235,11 +235,11 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         exit(0);
     }
 
-    function systemError($msg) {
+    function error($msg, $isSystemError = false) {
         echo json_encode(array(
             'type' => 'error_log',
             'message' => $msg,
-            'isHardFailure' => true,
+            'isHardFailure' => $isSystemError,
         ), JSON_UNESCAPED_UNICODE) . "\n";
         fflush(STDOUT);
         exit(1);
