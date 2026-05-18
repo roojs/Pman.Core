@@ -208,7 +208,7 @@ class Pman_Core_ValidateEmail extends Pman
                             $sub = (($row['step'] - 1) / $row['of']) * (100 / $total);
                         }
                         $this->sendSSE('progress', array(
-                            'total' => $total * $childTimeout,
+                            'total' => $total * 6,
                             'progress' => $baseProg + $sub,
                             'message' => !empty($row['message']) ? $row['message'] : json_encode($row),
                             'email' => $email,
