@@ -41,6 +41,8 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     {
         ini_set('error_log', '/var/log/apache2/php-error.log');
         ini_set('log_errors', '1');  // only helps if it was off
+        $this->errorlog("TEST");
+        exit(1);
 
         $jobPath = !empty($opts['file']) ? $opts['file'] : '';
         if ($jobPath === '') {
