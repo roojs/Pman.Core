@@ -278,30 +278,30 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     //     fflush(STDOUT);
     // }
 
-    function mailerDebugLine($smtp, $message)
-    {
-        $msg = (string) $message;
-        if (strpos($msg, 'Send:') !== 0) {
-            return;
-        }
-        if (preg_match('/^Send:\\s*AUTH\\b/i', $msg)) {
-            $this->emitStep('auth', 'Authenticating');
-            return;
-        }
-        if (stripos($msg, 'Send: STARTTLS') === 0) {
-            $this->emitStep('starttls', 'Upgrading to a TLS connection');
-            return;
-        }
-        if (stripos($msg, 'Send: MAIL FROM:') === 0) {
-            $this->emitStep('mailFrom', 'Setting email sender');
-            return;
-        }
-        if (stripos($msg, 'Send: RCPT TO:') === 0) {
-            $this->emitStep('rcptTo', 'Setting email recipients');
-            return;
-        }
-        if (stripos($msg, 'Send: EHLO') === 0 || stripos($msg, 'Send: HELO') === 0) {
-            $this->emitStep('ehlo', 'EHLO');
-        }
-    }
+    // function mailerDebugLine($smtp, $message)
+    // {
+    //     $msg = (string) $message;
+    //     if (strpos($msg, 'Send:') !== 0) {
+    //         return;
+    //     }
+    //     if (preg_match('/^Send:\\s*AUTH\\b/i', $msg)) {
+    //         $this->emitStep('auth', 'Authenticating');
+    //         return;
+    //     }
+    //     if (stripos($msg, 'Send: STARTTLS') === 0) {
+    //         $this->emitStep('starttls', 'Upgrading to a TLS connection');
+    //         return;
+    //     }
+    //     if (stripos($msg, 'Send: MAIL FROM:') === 0) {
+    //         $this->emitStep('mailFrom', 'Setting email sender');
+    //         return;
+    //     }
+    //     if (stripos($msg, 'Send: RCPT TO:') === 0) {
+    //         $this->emitStep('rcptTo', 'Setting email recipients');
+    //         return;
+    //     }
+    //     if (stripos($msg, 'Send: EHLO') === 0 || stripos($msg, 'Send: HELO') === 0) {
+    //         $this->emitStep('ehlo', 'EHLO');
+    //     }
+    // }
 }
