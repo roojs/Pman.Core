@@ -128,7 +128,7 @@ class Pman_Core_ValidateEmail extends Pman
             $childStarted = microtime(true);
             $lastHeartbeat = microtime(true);
             $heartbeatEvery = 1.0;
-            $childTimeout = 90.0;
+            $childTimeout = 10.0;
             $jobError = false;
             $okRow = null;
 
