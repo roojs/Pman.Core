@@ -100,12 +100,13 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
         $mxs = $cd->mxHostsForValidation();
         if (empty($mxs)) {
-            $this->vewOut(array(
+            echo json_encode(array(
                 'type' => 'email_fail',
                 'field' => $this->field,
                 'email' => $this->emailNorm,
                 'message' => "{$this->emailNorm} {$dom} is not a valid domain (cant deliver email to it)",
-            ));
+            ), JSON_UNESCAPED_UNICODE) . "\n";
+            fflush(STDOUT);
             exit(1);
         }
 
@@ -118,12 +119,13 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         require_once 'Mail.php';
         $ffw = HTML_FlexyFramework::get();
         if (!isset($ffw->Mail['helo'])) {
-            $this->vewOut(array(
+            echo json_encode(array(
                 'type' => 'email_fail',
                 'field' => $this->field,
                 'email' => $this->emailNorm,
                 'message' => 'config Mail[helo] is not set',
-            ));
+            ), JSON_UNESCAPED_UNICODE) . "\n";
+            fflush(STDOUT);
             exit(1);
         }
 
