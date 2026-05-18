@@ -263,16 +263,10 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         exit(0);
     }
 
-    function vewOut($ar)
-    {
-        echo json_encode($ar, JSON_UNESCAPED_UNICODE) . "\n";
-        fflush(STDOUT);
-    }
-
     function emitStep($phase, $label)
     {
         $this->phaseStep++;
-        $this->vewOut(array(
+        echo json_encode(array(
             'type' => 'step',
             'field' => $this->field,
             'email' => $this->emailNorm,
@@ -280,7 +274,8 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             'step' => $this->phaseStep,
             'of' => $this->stepOf,
             'message' => $label,
-        ));
+        ), JSON_UNESCAPED_UNICODE) . "\n";
+        fflush(STDOUT);
     }
 
     function mailerDebugLine($smtp, $message)
