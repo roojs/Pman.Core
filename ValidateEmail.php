@@ -179,7 +179,7 @@ class Pman_Core_ValidateEmail extends Pman
                         }
                         if (!empty($row['type']) && $row['type'] === 'error_log') {
                             $this->errorlog($row['message']);
-                            if(empty($row['isHardFail'])) {
+                            if(!empty($row['isHardFail'])) {
                                 $jobError = array(
                                     'message' => 'An error occurred, please contact the website owner.',
                                     'allowRetry' => false,
@@ -238,7 +238,7 @@ class Pman_Core_ValidateEmail extends Pman
             $exitCode = proc_close($proc);
             @unlink($jobFile);
 
-            
+
 
             if($jobError) {
                 $this->error($jobError['message'], $jobError['allowRetry']);
