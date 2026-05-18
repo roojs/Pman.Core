@@ -2,7 +2,7 @@
 /**
  * CLI: one email SMTP validation (NDJSON on stdout).
  *   php /path/to/press.local.php Core/Process/ValidateEmailWorker -f /path/to/job.json
- * (job JSON: email, field, auth_user_id).
+ * (job JSON: email, auth_user_id).
  */
 
 require_once 'Pman.php';
@@ -72,7 +72,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 $this->authUser = $au;
             }
         }
-        
+
         $dar = explode('@', $job['email']);
         $dom = strtolower(array_pop($dar));
         $dar[] = $dom;
