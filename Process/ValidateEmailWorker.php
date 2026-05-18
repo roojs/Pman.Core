@@ -52,12 +52,24 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
         $raw = @file_get_contents($jobPath);
         if ($raw === false || $raw === '') {
-            $this->systemError('Cannot read job file');
+            echo json_encode(array(
+                'type' => 'error_log',
+                'message' => 'Cannot read job file',
+                'isHardFailure' => true,
+            ), JSON_UNESCAPED_UNICODE) . "\n";
+            fflush(STDOUT);
+            exit(1);
         }
 
         $job = json_decode($raw, true);
         if (!is_array($job) || empty($job['email']) || empty($job['field'])) {
-            $this->systemError('Invalid job JSON (need email, field)');
+            echo json_encode(array(
+                'type' => 'error_log',
+                'message' => 'Invalid job JSON (need email, field)',
+                'isHardFailure' => true,
+            ), JSON_UNESCAPED_UNICODE) . "\n";
+            fflush(STDOUT);
+            exit(1);
         }
 
         if (!empty($job['auth_user_id'])) {
