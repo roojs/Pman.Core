@@ -125,7 +125,7 @@ Pman.Dialog.PreviewRowsImport = {
               }
               
               ds.add(new Roo.data.Record(data));
-              rowsDisplayed ++;R
+              rowsDisplayed ++;
           });
           
           _this.grid.reconfigure(ds, new Roo.grid.ColumnModel(cols));
