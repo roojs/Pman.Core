@@ -118,7 +118,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
         require_once 'Mail.php';
         $ffw = HTML_FlexyFramework::get();
-        if (!isset($ffw->Mail['helo'])) {
+        // if (!isset($ffw->Mail['helo'])) {
             echo json_encode(array(
                 'type' => 'error_log',
                 'message' => 'config Mail[helo] is not set',
@@ -126,7 +126,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             ), JSON_UNESCAPED_UNICODE) . "\n";
             fflush(STDOUT);
             exit(1);
-        }
+        // }
 
         foreach ($mxs as $mx) {
             $mailer = $cd->createMailer($this, $mx, false);
