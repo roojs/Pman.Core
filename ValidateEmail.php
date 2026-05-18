@@ -179,6 +179,9 @@ class Pman_Core_ValidateEmail extends Pman
                         }
                         if (!empty($row['type']) && $row['type'] === 'error_log') {
                             $this->errorlog($row['message']);
+                            if(empty($row['isHardFail'])) {
+                                $this->errorlog($row['message']);
+                            }
                             continue;
                         }
                         if (!empty($row['type']) && $row['type'] === 'email_fail') {
