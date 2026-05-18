@@ -137,7 +137,7 @@ class Pman_Core_ValidateEmail extends Pman
                 if (empty($st['running'])) {
                     break;
                 }
-                if (microtime(true) - $childStarted > $childTimeout) {
+                if (microtime() - $childStarted > $childTimeout) {
                     proc_terminate($proc, 9);
                     fclose($pipes[1]);
                     fclose($pipes[2]);
