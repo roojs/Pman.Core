@@ -240,12 +240,13 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         }
 
         if (!$mxOk) {
-            $this->vewOut(array(
+            echo json_encode(array(
                 'type' => 'email_fail',
                 'field' => $this->field,
                 'email' => $this->emailNorm,
                 'message' => 'cannot send to ' . $this->emailNorm . ($lastErr ? " ({$lastErr})" : ' (connection failed to all MX servers)'),
-            ));
+            ), JSON_UNESCAPED_UNICODE) . "\n";
+            fflush(STDOUT);
             exit(1);
         }
 
