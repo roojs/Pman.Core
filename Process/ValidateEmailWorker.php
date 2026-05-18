@@ -195,7 +195,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             // We don't need to log these errors and don't need to show these errors to the user
             if (
                 $res->code == 553 && preg_match('/User unknown/i', $errorMessage)
-                || $res->code == 550 && preg_match('/does not exist|no mailbox here|User unknown/i', $errorMessage)
+                || $res->code == 550 && preg_match('/does not exist|no mailbox here|User unknown|user not exist/i', $errorMessage)
             ) {
                 $this->vewOut(array(
                     'type' => 'email_fail',
