@@ -338,6 +338,9 @@ Pman.Dialog.PreviewRowsImport = {
           };
           */
           
+          var validateEmail = function() {
+          };
+          
           Roo.MessageBox.progress("Validation", "Starting");
           
           new Pman.Request({
