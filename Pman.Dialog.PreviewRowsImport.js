@@ -274,7 +274,7 @@ Pman.Dialog.PreviewRowsImport = {
           // validate a value
           var validateValue = function() {
               // validation is done
-              if(validateTypes == 'email' || validateTypeIndex == validateTypes.length) {
+              if(validateTypes[validateTypeIndex] || validateTypeIndex == validateTypes.length) {
                   Roo.MessageBox.hide();
                   onValidate();
                   return;
