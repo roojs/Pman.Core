@@ -20,10 +20,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         ),
     );
 
-    // var $stepOf = 6;
-
-    // var $phaseStep = 0;
-
     var $field = '';
 
     var $emailNorm = '';
@@ -109,9 +105,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             fflush(STDOUT);
             exit(1);
         }
-
-        // $this->phaseStep = 0;
-        // $this->emitStep('connect', 'Connecting');
 
         $mxOk = false;
         $lastErr = '';
@@ -262,46 +255,4 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
         exit(0);
     }
-
-    // function emitStep($phase, $label)
-    // {
-    //     $this->phaseStep++;
-    //     echo json_encode(array(
-    //         'type' => 'step',
-    //         'field' => $this->field,
-    //         'email' => $this->emailNorm,
-    //         'phase' => $phase,
-    //         'step' => $this->phaseStep,
-    //         'of' => $this->stepOf,
-    //         'message' => $label,
-    //     ), JSON_UNESCAPED_UNICODE) . "\n";
-    //     fflush(STDOUT);
-    // }
-
-    // function mailerDebugLine($smtp, $message)
-    // {
-    //     $msg = (string) $message;
-    //     if (strpos($msg, 'Send:') !== 0) {
-    //         return;
-    //     }
-    //     if (preg_match('/^Send:\\s*AUTH\\b/i', $msg)) {
-    //         $this->emitStep('auth', 'Authenticating');
-    //         return;
-    //     }
-    //     if (stripos($msg, 'Send: STARTTLS') === 0) {
-    //         $this->emitStep('starttls', 'Upgrading to a TLS connection');
-    //         return;
-    //     }
-    //     if (stripos($msg, 'Send: MAIL FROM:') === 0) {
-    //         $this->emitStep('mailFrom', 'Setting email sender');
-    //         return;
-    //     }
-    //     if (stripos($msg, 'Send: RCPT TO:') === 0) {
-    //         $this->emitStep('rcptTo', 'Setting email recipients');
-    //         return;
-    //     }
-    //     if (stripos($msg, 'Send: EHLO') === 0 || stripos($msg, 'Send: HELO') === 0) {
-    //         $this->emitStep('ehlo', 'EHLO');
-    //     }
-    // }
 }
