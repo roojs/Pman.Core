@@ -248,7 +248,7 @@ class Pman_Core_ValidateEmail extends Pman
                 $this->error('No success result from worker for ' . $email, true);
             }
 
-            $results[$field] = array(
+            $results[$email] = array(
                 'email' => $okRow['email'],
                 'domain_id' => $okRow['domain_id'],
                 'token' => $okRow['token'],
