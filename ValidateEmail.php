@@ -221,12 +221,11 @@ class Pman_Core_ValidateEmail extends Pman
                     }
                 }
 
-                if (microtime() - $lastHeartbeat >= $heartbeatEvery) {
-                    $lastHeartbeat = microtime();
-                    $timeElapsed = microtime() - $childStarted;
+                if (microtime(true) - $lastHeartbeat >= $heartbeatEvery) {
+                    $lastHeartbeat = microtime(true);
                     $this->sendSSE('progress', array(
                         'total' => $total * $childTimeout,
-                        'progress' => ($timeElapsed + $idx * $childTimeout) / ($total * $childTimeout) * 100,
+                        'progress' => (microtime(true) - $childStarted + $idx * $childTimeout) / ($total * $childTimeout) * 100,
                         'message' => 'Validating ' . $field . '…' . ($childTimeout - $timeElapsed) ." seconds left",
                     ));
                 }
