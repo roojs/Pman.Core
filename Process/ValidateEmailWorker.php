@@ -20,8 +20,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         ),
     );
 
-    var $field = '';
-
     var $emailNorm = '';
 
     function getAuth()
