@@ -118,7 +118,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
         require_once 'Mail.php';
         $ffw = HTML_FlexyFramework::get();
-        // if (!isset($ffw->Mail['helo'])) {
+        if (!isset($ffw->Mail['helo'])) {
             echo json_encode(array(
                 'type' => 'error_log',
                 'message' => 'config Mail[helo] is not set',
@@ -126,7 +126,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             ), JSON_UNESCAPED_UNICODE) . "\n";
             fflush(STDOUT);
             exit(1);
-        // }
+        }
 
         foreach ($mxs as $mx) {
             $mailer = $cd->createMailer($this, $mx, false);
@@ -153,10 +153,11 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             if ($res->code == 421) {
                 // no error log for 421 on yahoo.com as its a known issue
                 if($dom != 'yahoo.com') {
-                    $this->vewOut(array(
+                    echo json_encode(array(
                         'type' => 'error_log',
-                        'message' => "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
-                    ));
+                        'message' => "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}",
+                    ), JSON_UNESCAPED_UNICODE) . "\n";
+                    fflush(STDOUT);
                 }
                 $mxOk = true; // Treat 421 as success
                 break;
@@ -165,10 +166,11 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             // Check for SMTP error 451 (Greylisting - temporary failure)
             // This is a temporary error indicating greylisting, so treat it as a valid check
             if ($res->code == 451) {
-                $this->vewOut(array(
+                echo json_encode(array(
                     'type' => 'error_log',
-                    'message' => "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
-                ));
+                    'message' => "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}",
+                ), JSON_UNESCAPED_UNICODE) . "\n";
+                fflush(STDOUT);
                 $mxOk = true;
                 break;
             }
