@@ -266,19 +266,19 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             return;
         }
         if (stripos($msg, 'Send: STARTTLS') === 0) {
-            $this->emitStep('starttls', 'Upgrading to a TLS connection');
+            $this->emitStep('starttls', 'Step 2'); // 'Upgrading to a TLS connection'
             return;
         }
         if (stripos($msg, 'Send: MAIL FROM:') === 0) {
-            $this->emitStep('mailFrom', 'Setting email sender');
+            $this->emitStep('mailFrom', 'Step 3'); // 'Setting email sender'
             return;
         }
         if (stripos($msg, 'Send: RCPT TO:') === 0) {
-            $this->emitStep('rcptTo', 'Setting email recipients');
+            $this->emitStep('rcptTo', 'Step 4'); // 'Setting email recipients'
             return;
         }
         if (stripos($msg, 'Send: EHLO') === 0 || stripos($msg, 'Send: HELO') === 0) {
-            $this->emitStep('ehlo', 'EHLO');
+            $this->emitStep('ehlo', 'Step 5'); // 'EHLO'
         }
     }
 }
