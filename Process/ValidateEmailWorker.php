@@ -41,10 +41,10 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     {
 
         $jobPath = !empty($opts['file']) ? $opts['file'] : '';
-        // if ($jobPath === '') {
+        if ($jobPath === '') {
             fwrite(STDERR, "Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json\n");
             exit(1);
-        // }
+        }
 
         $raw = @file_get_contents($jobPath);
         if ($raw === false || $raw === '') {
