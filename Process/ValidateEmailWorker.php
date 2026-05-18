@@ -41,7 +41,13 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     {
         $jobPath = !empty($opts['file']) ? $opts['file'] : '';
         if ($jobPath === '') {
-            $this->systemError('Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json');
+            echo json_encode(array(
+                'type' => 'error_log',
+                'message' => 'Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json',
+                'isHardFailure' => true,
+            ), JSON_UNESCAPED_UNICODE) . "\n";
+            fflush(STDOUT);
+            exit(1);
         }
 
         $raw = @file_get_contents($jobPath);
@@ -233,16 +239,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         ));
 
         exit(0);
-    }
-
-    function error($msg, $isSystemError = false) {
-        echo json_encode(array(
-            'type' => 'error_log',
-            'message' => $msg,
-            'isHardFailure' => $isSystemError,
-        ), JSON_UNESCAPED_UNICODE) . "\n";
-        fflush(STDOUT);
-        exit(1);
     }
 
     function vewOut($ar)
