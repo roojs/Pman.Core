@@ -120,10 +120,9 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         $ffw = HTML_FlexyFramework::get();
         if (!isset($ffw->Mail['helo'])) {
             echo json_encode(array(
-                'type' => 'email_fail',
-                'field' => $this->field,
-                'email' => $this->emailNorm,
+                'type' => 'error_log',
                 'message' => 'config Mail[helo] is not set',
+                'isHardFailure' => true,
             ), JSON_UNESCAPED_UNICODE) . "\n";
             fflush(STDOUT);
             exit(1);
