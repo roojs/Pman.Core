@@ -251,13 +251,14 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         }
 
         $token = md5($this->emailNorm . (int) $cd->id);
-        $this->vewOut(array(
+        echo json_encode(array(
             'type' => 'email_ok',
             'field' => $this->field,
             'email' => $this->emailNorm,
             'domain_id' => (int) $cd->id,
             'token' => $token,
-        ));
+        ), JSON_UNESCAPED_UNICODE) . "\n";
+        fflush(STDOUT);
 
         exit(0);
     }
