@@ -238,6 +238,8 @@ class Pman_Core_ValidateEmail extends Pman
             $exitCode = proc_close($proc);
             @unlink($jobFile);
 
+            
+
             if($jobError) {
                 $this->error($jobError['message'], $jobError['allowRetry']);
             }
