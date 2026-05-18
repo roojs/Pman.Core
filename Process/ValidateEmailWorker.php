@@ -130,9 +130,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 break;
             }
 
-            $this->errorlog("TEST");
-            exit(1);
-
             $errorMessage = $res->getMessage();
             // Check for SMTP error 421 (Service unavailable - server busy)
             // This is a temporary error we can't fix, so treat it as a valid check
