@@ -111,7 +111,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         }
 
         $this->phaseStep = 0;
-        $this->emitStep('connect', 'Connecting');
+        // $this->emitStep('connect', 'Connecting');
 
         $mxOk = false;
         $lastErr = '';
