@@ -39,6 +39,8 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
     function get($request = '', $opts = array(), $isRedirect = false)
     {
+        sleep(10);
+        
         $jobPath = !empty($opts['file']) ? $opts['file'] : '';
         if ($jobPath === '') {
             echo json_encode(array(
