@@ -39,6 +39,11 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
     function get($request = '', $opts = array(), $isRedirect = false)
     {
+        $this->vewOut(array(
+            'type' => 'error',
+            'message' => 'TEST error message'
+        ));
+        exit(1);
 
         $jobPath = !empty($opts['file']) ? $opts['file'] : '';
         if ($jobPath === '') {
