@@ -112,7 +112,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         }
 
         foreach ($mxs as $mx) {
-            $this->errorlog("TEST $mx");
             $mailer = $cd->createMailer($this, $mx, false);
             if ($mailer === false) {
                 continue;
