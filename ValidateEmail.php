@@ -231,7 +231,7 @@ class Pman_Core_ValidateEmail extends Pman
 
             if ($exitCode !== 0) {
                 $this->error(
-                    trim($bufErr) !== '' ? trim($bufErr) : ('Validation failed for ' . $field . ' (exit ' . $exitCode . ')'),
+                    trim($bufErr) !== '' ? trim($bufErr) : ('Validation failed for ' . $email . ' (exit ' . $exitCode . ')'),
                     true
                 );
             }
@@ -245,7 +245,7 @@ class Pman_Core_ValidateEmail extends Pman
                 }
             }
             if ($okRow === null) {
-                $this->error('No success result from worker for ' . $field, true);
+                $this->error('No success result from worker for ' . $email, true);
             }
 
             $results[$field] = array(
