@@ -66,7 +66,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if (!$this->get('domain', $dom)) {
 
             if (!dns_get_record($dom, DNS_A + DNS_AAAA + DNS_CNAME + DNS_MX + DNS_NS)) {
-                return "Domain {$dom} does not exist (no dns records found)";
+                return "The email domain @{$dom} could not be found. Please check that the email address is spelled correctly.";
             }
 
 
