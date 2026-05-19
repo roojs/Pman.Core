@@ -4,7 +4,8 @@ require_once 'Pman/Core/Cli.php';
 
 /**
  * CLI: list delivered core_notify rows (msgid set) in a time window on sent: id, to, sent, evtype, srv, ontable:onid, from, subject.
- * Uses join_person for to fallback; core_email for from/subject when email_id is set.
+ * Uses join_person for to fallback; core_email join for from/subject when email_id is set.
+ * When from/subject are still empty, loads core_notify.ontable/onid and uses getEmailInfo() if present.
  *
  * php index.php Core/Notify/Log [--from "datetime"] [--to "datetime"] [-L N] [--debug]
  * php index.php Core/Notify/Log/{id}  — print raw SMTP debug (Events log EXTRA) for NOTIFYSENT on that core_notify id.
@@ -115,6 +116,7 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         $w->selectAdd("
             core_notify.id,
             COALESCE(NULLIF(TRIM(core_notify.to_email), ''), NULLIF(TRIM(join_person_id_id.email), ''), '') AS join_to_display,
+            core_email.id AS join_email_id,
             core_email.from_email AS join_from_email,
             core_email.from_name AS join_from_name,
             core_email.subject AS join_subject,
@@ -157,10 +159,29 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
         echo str_repeat('-', 283) . "\n";
         
         while ($w->fetch()) {
+            $this->fillOntableEmailInfo($w);
             $this->printRow($w);
         }
         
         $this->jok('Done');
+    }
+    
+    /**
+     * When the list SELECT left from/subject empty, resolve from the ontable row (getEmailInfo).
+     */
+    private function fillOntableEmailInfo($w)
+    {
+        if(!empty($w->join_email_id) || empty($w->ontable) || empty($w->onid)) {
+            return;
+        }
+        $tbl = DB_DataObject::factory($w->ontable);
+        if (!is_object($tbl) || !method_exists($tbl, 'getEmailInfo') || !$tbl->get($w->onid)) {
+            return;
+        }
+        $info = $tbl->getEmailInfo();
+        $w->join_from_email = $info['email'];
+        $w->join_from_name = $info['name'];
+        $w->join_subject = $info['subject'];
     }
     
     /**
@@ -196,7 +217,8 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
             $this->jok('No SMTP debug data in event log (EXTRA empty or missing).');
         }
         
-        echo $data['EXTRA'];
+        print_r($ev->toArray());
+        print_r($data);
         echo "\n";
         $this->jok('Done');
     }
@@ -219,12 +241,14 @@ class Pman_Core_Notify_Log extends Pman_Core_Cli
     
     function formatFrom($w)
     {
-        if (empty($w->join_from_email)) {
+        if(empty($w->join_from_email)) {
             return '-';
         }
-        if (empty($w->join_from_name)) {
+
+        if(empty($w->join_from_name)) {
             return trim($w->join_from_email);
         }
+
         return trim('"' . addslashes($w->join_from_name) . '" <' . $w->join_from_email . '>');
     }
     
