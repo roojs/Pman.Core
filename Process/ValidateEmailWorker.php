@@ -121,8 +121,26 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             exit(1);
         }
 
+        $validUser = false;
+        if (!empty($ffw->Mail_Validate['routes'])) {
+            $authUser = $this->authUser;
+            if ($authUser) {
+                $fromUser = DB_DataObject::factory('mail_imap_user');
+                if ($fromUser->get('email', $authUser->email)) {
+                    $validUser = $fromUser->validateAsOAuth();
+                }
+            }
+
+            if ($validUser === false && !empty($ffw->Mail_Validate['test_user'])) {
+                $fromUser = DB_DataObject::factory('mail_imap_user');
+                if ($fromUser->get('email', $ffw->Mail_Validate['test_user'])) {
+                    $validUser = $fromUser->validateAsOAuth();
+                }
+            }
+        }
+
         foreach ($mxs as $mx) {
-            $mailer = $cd->createMailer($this, $mx, false);
+            $mailer = $cd->createMailer($this, $mx, $validUser);
             if ($mailer === false) {
                 continue;
             }
