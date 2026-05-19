@@ -381,7 +381,7 @@ Pman.Dialog.PreviewRowsImport = {
               });
               sse.on('fetcherror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
               sse.on('readerror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
-              sse.on('parseerror', function(s, t) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', 'Bad response from server'); });
+              sse.on('parseerror', function(s, t) { Roo.log(t); Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', 'Bad response from server'); });
               sse.start(baseURL + '/Core/ValidateEmail', fd);
           };
           
