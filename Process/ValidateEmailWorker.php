@@ -126,8 +126,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             if ($mailer === false) {
                 continue;
             }
-            // $mailer->debug = true;
-            // $mailer->debug_handler = array($this, 'mailerDebugLine');
 
             PEAR::setErrorHandling(PEAR_ERROR_RETURN);
             $res = $mailer->send($this->emailNorm, array(
