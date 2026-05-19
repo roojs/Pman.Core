@@ -150,8 +150,7 @@ class Pman_Core_ValidateEmail extends Pman
                     fclose($pipes[2]);
                     proc_close($proc);
                     @unlink($jobFile);
-                    $this->errorlog('Validation timed out for ' . $field);
-                    $this->error('An error occurred, please contact the website owner.');
+                    $this->error('Validation timed out for ' . $field, true);
                 }
 
                 $r = array($pipes[1], $pipes[2]);
