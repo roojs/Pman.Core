@@ -508,6 +508,7 @@
      "            ",
      "            // start validation",
      "            //validateValue();",
+     "            validateEmail();",
      "        }",
      "    });",
      "}"
