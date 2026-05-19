@@ -222,16 +222,16 @@ class Pman_Core_ValidateEmail extends Pman
 
 
 
-            if($jobError) {
-                $this->error($jobError['message']);
-            }
+            // if($jobError) {
+            //     $this->error($jobError['message']);
+            // }
 
-            if ($exitCode !== 0) {
-                $this->error(
-                    trim($bufErr) !== '' ? trim($bufErr) : ('Validation failed for ' . $field . ' (exit ' . $exitCode . ')'),
-                    true
-                );
-            }
+            // if ($exitCode !== 0) {
+            //     $this->error(
+            //         trim($bufErr) !== '' ? trim($bufErr) : ('Validation failed for ' . $field . ' (exit ' . $exitCode . ')'),
+            //         true
+            //     );
+            // }
 
             if ($okRow === null) {
                 foreach (array_filter(array_map('trim', explode("\n", trim($bufOut)))) as $ln) {
