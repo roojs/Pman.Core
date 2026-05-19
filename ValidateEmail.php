@@ -117,7 +117,8 @@ class Pman_Core_ValidateEmail extends Pman
             $proc = proc_open($cmd, $descriptors, $pipes, $childCwd);
             if (!is_resource($proc)) {
                 @unlink($jobFile);
-                $this->error('Could not start validation subprocess', true);
+                $this->errorlog('Could not start validation subprocess');
+                $this->error('An error occurred, please contact the website owner.');
             }
             fclose($pipes[0]);
             stream_set_blocking($pipes[1], false);
@@ -149,7 +150,8 @@ class Pman_Core_ValidateEmail extends Pman
                     fclose($pipes[2]);
                     proc_close($proc);
                     @unlink($jobFile);
-                    $this->error('Validation timed out for ' . $field, true);
+                    $this->errorlog('Validation timed out for ' . $field);
+                    $this->error('An error occurred, please contact the website owner.');
                 }
 
                 $r = array($pipes[1], $pipes[2]);
