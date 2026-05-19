@@ -80,12 +80,6 @@ class Pman_Core_ValidateEmail extends Pman
         $phpBin = defined('PHP_BINARY') && PHP_BINARY ? PHP_BINARY : 'php';
 
         foreach ($jobs as $idx => $jobRow) {
-            $this->sendSSE('progress', array(
-                'total' => $total * 6,
-                'progress' => ($idx * $childTimeout) / ($total * $childTimeout) * 100,
-                'message' => 'Validating email (' . $email . ')',
-            ));
-            
             if (empty($jobRow['field']) || !isset($jobRow['email'])) {
                 $this->error('Each job needs field and email', true);
             }
