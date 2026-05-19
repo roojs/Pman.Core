@@ -813,9 +813,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         foreach( $this->settings() as $k=>$v) {
             $ret['core_person_settings['. $k .']'] = $v;
         }
+
+        if (!empty($request['_with_group_ids'])) {
+            $ret['group_ids'] = implode(',', DB_DataObject::factory('core_group_member')->listGroupMembership($this));
+        }
     
         return $ret;
     }
+
     //   ----------PERMS------  ----------------
     function getPerms() 
     {
@@ -1537,12 +1542,18 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (!empty($req['core_person_settings'])) {
             $this->updateSettings($req['core_person_settings'], $roo);
         }
+        if (isset($req['group_ids'])) {
+            DB_DataObject::factory('core_group_member')->syncGroupIds($this, $req['group_ids'], $roo);
+        }
     }
     
     function onUpdate($old, $req,$roo, $event)
     {
         if (!empty($req['core_person_settings'])) {
             $this->updateSettings($req['core_person_settings'], $roo);
+        }
+        if (isset($req['group_ids'])) {
+            DB_DataObject::factory('core_group_member')->syncGroupIds($this, $req['group_ids'], $roo);
         }
     }
     
