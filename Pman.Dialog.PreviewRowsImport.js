@@ -361,8 +361,7 @@ Pman.Dialog.PreviewRowsImport = {
               sse.on('complete', function(s, res) {
                   Roo.MessageBox.hide();
                   Object.entries(res.data).forEach(function(entry) {
-                      var keyArr = entry[0].split('_');
-                      var vValue = validateTypes[typeToIndex['email']]['values'][keyArr[0]];
+                      var vValue = validateTypes[typeToIndex['email']]['values'][entry[0].split('_')[0]];
                       var rec = _this.grid.dataSource.getAt(vValue['rowIndex']);
                       if(typeof(res.data.error) !== 'undefined') {
                           vValue['error'] = res.data.error;
@@ -376,6 +375,8 @@ Pman.Dialog.PreviewRowsImport = {
                           }
                       }
                   });
+                  Roo.MessageBox.hide();
+                  onValidate();
               });
               sse.on('fetcherror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
               sse.on('readerror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
