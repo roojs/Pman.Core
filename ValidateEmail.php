@@ -136,7 +136,7 @@ class Pman_Core_ValidateEmail extends Pman
             $okRow = null;
 
             $this->sendSSE('progress', array(
-                'total' => $total * 6,
+                'total' => $total * $childTimeout,
                 'progress' => $idx / $total * 100,
                 'message' => 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left',
             ));
