@@ -229,7 +229,7 @@ class Pman_Core_ValidateEmail extends Pman
                 foreach (array_filter(array_map('trim', explode("\n", trim($bufOut)))) as $ln) {
                     $decoded = json_decode($ln, true);
                     if(!is_array($decoded)) {
-                        $jobError = 'Invalid JSON from worker: ' . substr($line, 0, 200);
+                        $jobError = 'Invalid JSON from worker: ' . substr($ln, 0, 200);
                         break;
                     }
                     if (!empty($decoded['type']) && $decoded['type'] === 'email_ok') {
