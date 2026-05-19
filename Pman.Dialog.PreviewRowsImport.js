@@ -347,7 +347,6 @@ Pman.Dialog.PreviewRowsImport = {
               });
               if (!jobs.length) {
                   Roo.MessageBox.hide();
-                  onValidate();
                   return;
               }
               var fd = new FormData();
