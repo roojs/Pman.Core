@@ -214,6 +214,12 @@ class Pman_Core_ValidateEmail extends Pman
             $exitCode = proc_close($proc);
             @unlink($jobFile);
 
+            $this->sendSSE('progress', array(
+                'total' => $total * 6,
+                'progress' => (microtime(true) - $childStarted + $idx * $childTimeout) / ($total * $childTimeout) * 100,
+                'message' => 'Validating email (' . $email . ') - ' . round($childTimeout - (microtime(true) - $childStarted)) ." seconds left",
+            ));
+
             // if($jobError) {
             //     $this->error($jobError);
             // }
