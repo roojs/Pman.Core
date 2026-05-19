@@ -146,14 +146,14 @@ class Pman_Core_ValidateEmail extends Pman
                 if (empty($st['running'])) {
                     break;
                 }
-                if (microtime(true) - $childStarted > $childTimeout) {
+                // if (microtime(true) - $childStarted > $childTimeout) {
                     proc_terminate($proc, 9);
                     fclose($pipes[1]);
                     fclose($pipes[2]);
                     proc_close($proc);
                     @unlink($jobFile);
                     $this->error('Validation timed out for ' . $email, true);
-                }
+                // }
 
                 $r = array($pipes[1], $pipes[2]);
                 $w = null;
