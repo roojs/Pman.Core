@@ -238,7 +238,7 @@ class Pman_Core_ValidateEmail extends Pman
                         }
                     }
                 }
-                if($okRow === null) {
+                if(empty($jobError) && $okRow === null) {
                     $jobError = 'No success result from worker for ' . $email;
                 }
             }
