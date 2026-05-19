@@ -80,10 +80,10 @@ class Pman_Core_ValidateEmail extends Pman
         $phpBin = defined('PHP_BINARY') && PHP_BINARY ? PHP_BINARY : 'php';
 
         foreach ($jobs as $idx => $jobRow) {
-            // if (empty($jobRow['field']) || !isset($jobRow['email'])) {
+            if (empty($jobRow['field']) || !isset($jobRow['email'])) {
                 $this->errorlog('Each job needs field and email');
                 $this->error('An error occurred, please contact the website owner.');
-            // }
+            }
 
             $field = $jobRow['field'];
             $email = $jobRow['email'];
