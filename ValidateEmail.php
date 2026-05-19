@@ -80,6 +80,7 @@ class Pman_Core_ValidateEmail extends Pman
         $total = count($jobs);
         $results = array();
         $phpBin = defined('PHP_BINARY') && PHP_BINARY ? PHP_BINARY : 'php';
+        $childTimeout = 90.0;
 
         foreach ($jobs as $idx => $jobRow) {
             if (empty($jobRow['field']) || !isset($jobRow['email'])) {
@@ -131,12 +132,11 @@ class Pman_Core_ValidateEmail extends Pman
             $childStarted = microtime(true);
             $lastHeartbeat = microtime(true);
             $heartbeatEvery = 1.0;
-            $childTimeout = 90.0;
             $jobError = false;
             $okRow = null;
 
             $this->sendSSE('progress', array(
-                'total' => 1, //$total * $childTimeout,
+                'total' => $total * $childTimeout,
                 'progress' => $idx / $total * 100,
                 'message' => 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left',
             ));
@@ -209,7 +209,7 @@ class Pman_Core_ValidateEmail extends Pman
                 if (microtime(true) - $lastHeartbeat >= $heartbeatEvery) {
                     $lastHeartbeat = microtime(true);
                     $this->sendSSE('progress', array(
-                        'total' => 1, // $total * $childTimeout,
+                        'total' =>  $total * $childTimeout,
                         'progress' => (microtime(true) - $childStarted + $idx * $childTimeout) / ($total * $childTimeout) * 100,
                         'message' => 'Validating email (' . $email . ') - ' . round($childTimeout - (microtime(true) - $childStarted)) ." seconds left",
                     ));
@@ -245,7 +245,7 @@ class Pman_Core_ValidateEmail extends Pman
         }
 
         $this->sendSSE('progress', array(
-            'total' => 1, // $total,
+            'total' => $total * $childTimeout,
             'progress' => 100,
             'message' => 'Validation complete',
         ));
