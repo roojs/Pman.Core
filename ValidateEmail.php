@@ -205,7 +205,7 @@ class Pman_Core_ValidateEmail extends Pman
                     $lastHeartbeat = microtime(true);
                     $this->sendSSE('progress', array(
                         'total' => $total * $childTimeout,
-                        'progress' => (($idx + 1) * $childTimeout) / ($total * $childTimeout) * 100,
+                        'progress' => (microtime(true) - $childStarted + $idx * $childTimeout) / ($total * $childTimeout) * 100,
                         'message' => 'Validating email (' . $email . ') - ' . round($childTimeout - (microtime(true) - $childStarted)) ." seconds left",
                     ));
                 }
@@ -226,8 +226,8 @@ class Pman_Core_ValidateEmail extends Pman
                 // $this->error($jobError['message']);
                 $this->sendSSE('progress', array(
                     'total' => $total * $childTimeout,
-                    'progress' => (microtime(true) - $childStarted + $idx * $childTimeout) / ($total * $childTimeout) * 100,
-                    'message' => 'Validating email (' . $email . ') - ' . round($childTimeout - (microtime(true) - $childStarted)) ." seconds left",
+                    'progress' => (($idx + 1) * $childTimeout) / ($total * $childTimeout) * 100,
+                    'message' => $jobError['message'],
                 ));
             }
 
