@@ -195,7 +195,6 @@ class Pman_Core_ValidateEmail extends Pman
             $bufErr .= stream_get_contents($pipes[2]);
             fclose($pipes[1]);
             fclose($pipes[2]);
-            $exitCode = proc_close($proc);
             @unlink($jobFile);
 
             if(empty($jobError)) {
