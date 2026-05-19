@@ -271,11 +271,11 @@ Pman.Dialog.PreviewRowsImport = {
           var validateTypeIndex = 0;
           var validateValueIndex = 0;
           
-          /*
+          
           // validate a value
           var validateValue = function() {
               // validation is done
-              if(validateTypes == 'email' || validateTypeIndex == validateTypes.length) {
+              if(validateTypeIndex == validateTypes.length) {
                   Roo.MessageBox.hide();
                   onValidate();
                   return;
@@ -284,7 +284,8 @@ Pman.Dialog.PreviewRowsImport = {
               var vValues = vType['values'];
               
               // validation of values with this type is done
-              if(validateValueIndex == vValues.length) {
+              // email validation is done in validateEmail before
+              if(validateTypes[validateTypeIndex]['type'] == 'email' || validateValueIndex == vValues.length) {
                   // validate values with the next type
                   validateTypeIndex ++;
                   // reset
@@ -336,7 +337,6 @@ Pman.Dialog.PreviewRowsImport = {
                   }
               });
           };
-          */
           
           var validateEmail = function() {
               var jobs = [];
