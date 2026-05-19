@@ -361,11 +361,8 @@ Pman.Dialog.PreviewRowsImport = {
               sse.on('complete', function(s, data) {
                   Roo.MessageBox.hide();
                   Roo.log(data);
-                  Object.entries(data).forEach(function(entry) {
-                      Roo.log(entry[0]);
-                      Roo.log(entry[1]);
-                  });
                   Roo.log("????");
+                  Roo.log(Object.entries("data"));
               });
               sse.on('fetcherror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
               sse.on('readerror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
