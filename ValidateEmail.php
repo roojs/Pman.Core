@@ -93,7 +93,8 @@ class Pman_Core_ValidateEmail extends Pman
 
             $jobFile = tempnam(sys_get_temp_dir(), 'vew_');
             if ($jobFile === false) {
-                $this->error('Cannot create temp file', true);
+                $this->errorlog('Cannot create temp file');
+                $this->error('An error occurred, please contact the website owner.');
             }
 
             $payload = array(
