@@ -136,7 +136,7 @@ class Pman_Core_ValidateEmail extends Pman
             $okRow = null;
 
             $this->sendSSE('progress', array(
-                'total' => $total * $childTimeout,
+                'total' => 1, //$total * $childTimeout,
                 'progress' => $idx / $total * 100,
                 'message' => 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left',
             ));
@@ -209,7 +209,7 @@ class Pman_Core_ValidateEmail extends Pman
                 if (microtime(true) - $lastHeartbeat >= $heartbeatEvery) {
                     $lastHeartbeat = microtime(true);
                     $this->sendSSE('progress', array(
-                        'total' => $total * $childTimeout,
+                        'total' => 1, // $total * $childTimeout,
                         'progress' => (microtime(true) - $childStarted + $idx * $childTimeout) / ($total * $childTimeout) * 100,
                         'message' => 'Validating email (' . $email . ') - ' . round($childTimeout - (microtime(true) - $childStarted)) ." seconds left",
                     ));
