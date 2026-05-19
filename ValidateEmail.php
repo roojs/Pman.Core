@@ -83,7 +83,6 @@ class Pman_Core_ValidateEmail extends Pman
             if (empty($jobRow['field']) || !isset($jobRow['email'])) {
                 $this->errorlog('Each job needs field and email');
                 $this->error('An error occurred, please contact the website owner.');
-                continue;
             }
 
             $field = $jobRow['field'];
