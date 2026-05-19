@@ -223,12 +223,7 @@ class Pman_Core_ValidateEmail extends Pman
 
 
             if($jobError) {
-                // $this->error($jobError['message']);
-                $this->sendSSE('progress', array(
-                    'total' => $total * $childTimeout,
-                    'progress' => (($idx + 1) * $childTimeout) / ($total * $childTimeout) * 100,
-                    'message' => $jobError['message'],
-                ));
+                $this->error($jobError['message']);
             }
 
             if ($exitCode !== 0) {
