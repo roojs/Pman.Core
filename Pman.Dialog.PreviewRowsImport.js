@@ -341,7 +341,7 @@ Pman.Dialog.PreviewRowsImport = {
           var validateEmail = function() {
               var jobs = [];
               Roo.each(validateTypes[typeToIndex['email']]['values'], function(email, index) {
-                  jobs.push({field: 'email::' + email['rowIndex'] + '::' + email['col'], email: email['value']});
+                  jobs.push({field: email['rowIndex'] + '_' + email['col'], email: email['value']});
               });
               var doneSubmit = function() {
                   _this.form.doAction('submit');
