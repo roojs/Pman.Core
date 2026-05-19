@@ -82,10 +82,11 @@ class Pman_Core_ValidateEmail extends Pman
         $phpBin = defined('PHP_BINARY') && PHP_BINARY ? PHP_BINARY : 'php';
 
         foreach ($jobs as $idx => $jobRow) {
-            if (!isset($jobRow['email'])) {
-                $this->error('Each job needs email', true);
+            if (empty($jobRow['field']) || !isset($jobRow['email'])) {
+                $this->error('Each job needs field and email', true);
             }
 
+            $field = $jobRow['field'];
             $email = $jobRow['email'];
             if ($email === '' || $email === null) {
                 continue;
@@ -98,6 +99,7 @@ class Pman_Core_ValidateEmail extends Pman
 
             $payload = array(
                 'email' => $email,
+                'field' => $field,
                 'auth_user_id' => (int) $au->id,
             );
             file_put_contents($jobFile, json_encode($payload, JSON_UNESCAPED_UNICODE));
@@ -141,7 +143,7 @@ class Pman_Core_ValidateEmail extends Pman
                     fclose($pipes[2]);
                     proc_close($proc);
                     @unlink($jobFile);
-                    $this->error('Validation timed out for ' . $email, true);
+                    $this->error('Validation timed out for ' . $field, true);
                 }
 
                 $r = array($pipes[1], $pipes[2]);
@@ -231,7 +233,7 @@ class Pman_Core_ValidateEmail extends Pman
 
             if ($exitCode !== 0) {
                 $this->error(
-                    trim($bufErr) !== '' ? trim($bufErr) : ('Validation failed for ' . $email . ' (exit ' . $exitCode . ')'),
+                    trim($bufErr) !== '' ? trim($bufErr) : ('Validation failed for ' . $field . ' (exit ' . $exitCode . ')'),
                     true
                 );
             }
@@ -245,10 +247,10 @@ class Pman_Core_ValidateEmail extends Pman
                 }
             }
             if ($okRow === null) {
-                $this->error('No success result from worker for ' . $email, true);
+                $this->error('No success result from worker for ' . $field, true);
             }
 
-            $results[$email] = array(
+            $results[$field] = array(
                 'email' => $okRow['email'],
                 'domain_id' => $okRow['domain_id'],
                 'token' => $okRow['token'],
