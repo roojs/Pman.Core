@@ -285,4 +285,36 @@ class Pman_Core_ValidateEmail extends Pman
         ));
         exit;
     }
+
+    function parseWorkerOutput(&$bufOut, &$jobError, &$okRow) 
+    {
+        while (($p = strpos($bufOut, "\n")) !== false) {
+            $line = trim(substr($bufOut, 0, $p));
+            $bufOut = substr($bufOut, $p + 1);
+            if ($line === '') {
+                continue;
+            }
+            $row = json_decode($line, true);
+            if (!is_array($row)) {
+                $jobError = 'Invalid JSON from worker: ' . substr($line, 0, 200);
+                break;
+            }
+            if (!empty($row['type']) && $row['type'] === 'error_log') {
+                $this->errorlog($row['message']);
+                if(!empty($row['isHardFailure'])) {
+                    $jobError = 'An error occurred, please contact the website owner.';
+                    break;
+                }
+                continue;
+            }
+            if (!empty($row['type']) && $row['type'] === 'email_fail') {
+                $jobError = !empty($row['message']) ? $row['message'] : 'Email validation failed';
+                break;
+            }
+            if (!empty($row['type']) && $row['type'] === 'email_ok') {
+                $okRow = $row;
+                continue;
+            }
+        }
+    }
 }
