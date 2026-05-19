@@ -339,6 +339,50 @@ Pman.Dialog.PreviewRowsImport = {
           */
           
           var validateEmail = function() {
+              var jobs = [];
+              Roo.each(validateTypes[typeToIndex['email']['values']], function(email, index) {
+                  jobs.push({field: 'email_' + index, email: email});
+              });
+              Roo.log("JOBS");
+              Roo.log(jobs);
+              /*
+              var doneSubmit = function() {
+                  _this.form.doAction('submit');
+              };
+              if (!jobs.length) {
+                  doneSubmit();
+                  return;
+              }
+              var fd = new FormData();
+              fd.append('validate_email_jobs', JSON.stringify(jobs));
+              Roo.MessageBox.progress('Validating', 'Checking email addresses…');
+              var sse = new Roo.form.Action.Sse();
+              sse.on('error', function(s, data) {
+                  Roo.MessageBox.hide();
+                  Roo.MessageBox.alert('Error', (data && data.errorMsg) ? data.errorMsg : 'Validation failed');
+              });
+              sse.on('complete', function(s, data) {
+                  Roo.MessageBox.hide();
+                  if (!data || !data.success) {
+                      return;
+                  }
+                  var r = data.data || {};
+                  for (var fld in r) {
+                      if (!r.hasOwnProperty(fld)) {
+                          continue;
+                      }
+                      var hf = fld + '_validated';
+                      if (_this.form.findField(hf)) {
+                          _this.form.findField(hf).setValue(r[fld].token);
+                      }
+                  }
+                  doneSubmit();
+              });
+              sse.on('fetcherror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
+              sse.on('readerror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
+              sse.on('parseerror', function(s, t) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', 'Bad response from server'); });
+              sse.start(baseURL + '/Core/ValidateEmail', fd);
+              */
           };
           
           Roo.MessageBox.progress("Validation", "Starting");
