@@ -224,14 +224,14 @@ class Pman_Core_ValidateEmail extends Pman
             @unlink($jobFile);
 
             if(empty($jobError)) {
-                if ($okRow === null) {
-                    foreach (array_filter(array_map('trim', explode("\n", trim($bufOut)))) as $ln) {
-                        $decoded = json_decode($ln, true);
-                        if (is_array($decoded) && !empty($decoded['type']) && $decoded['type'] === 'email_ok') {
-                            $okRow = $decoded;
-                        }
-                    }
-                }
+                // if ($okRow === null) {
+                //     foreach (array_filter(array_map('trim', explode("\n", trim($bufOut)))) as $ln) {
+                //         $decoded = json_decode($ln, true);
+                //         if (is_array($decoded) && !empty($decoded['type']) && $decoded['type'] === 'email_ok') {
+                //             $okRow = $decoded;
+                //         }
+                //     }
+                // }
                 if ($okRow === null) {
                     $jobError = 'No success result from worker for ' . $field;
                 }
