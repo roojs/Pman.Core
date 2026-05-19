@@ -213,7 +213,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                     'type' => 'email_fail',
                     'field' => $this->field,
                     'email' => $this->emailNorm,
-                    'message' => 'This email <B>does not work</B> - we checked it - nothing can be delivered to them.',
+                    'message' => 'Email ' . $this->emailNorm . ' <B>does not work</B> - we checked it - nothing can be delivered to them.',
                 ), JSON_UNESCAPED_UNICODE) . "\n";
                 fflush(STDOUT);
                 exit(1);
