@@ -346,21 +346,6 @@ Pman.Dialog.PreviewRowsImport = {
                   jobs.push({field: 'email_' + index, email: email['value']});
               });
               var doneSubmit = function() {
-                  _this.form.doAction('submit');
-              };
-              if (!jobs.length) {
-                  doneSubmit();
-                  return;
-              }
-              var fd = new FormData();
-              fd.append('validate_email_jobs', JSON.stringify(jobs));
-              Roo.MessageBox.progress('Validating', 'Checking email addresses…');
-              var sse = new Roo.form.Action.Sse();
-              sse.on('error', function(s, data) {
-                  Roo.MessageBox.hide();
-                  Roo.MessageBox.alert('Error', (data && data.errorMsg) ? data.errorMsg : 'Validation failed');
-              });
-              sse.on('complete', function(s, res) {
                   Roo.MessageBox.hide();
                   Object.entries(res.data).forEach(function(entry) {
                       var vValue = validateTypes[typeToIndex['email']]['values'][entry[0].split('_')[1]];
@@ -378,6 +363,20 @@ Pman.Dialog.PreviewRowsImport = {
                       }
                   });
                   onValidate();
+              };
+              if (!jobs.length) {
+                  doneSubmit();
+                  return;
+              }
+              var fd = new FormData();
+              fd.append('validate_email_jobs', JSON.stringify(jobs));
+              Roo.MessageBox.progress('Validating', 'Checking email addresses…');
+              var sse = new Roo.form.Action.Sse();
+              sse.on('error', function(s, data) {
+                  Roo.MessageBox.hide();
+                  Roo.MessageBox.alert('Error', (data && data.errorMsg) ? data.errorMsg : 'Validation failed');
+              });
+              sse.on('complete', function(s, res) {
               });
               sse.on('fetcherror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
               sse.on('readerror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
