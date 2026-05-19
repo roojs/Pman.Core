@@ -364,7 +364,6 @@ Pman.Dialog.PreviewRowsImport = {
                       var keyArr = entry[0].split('_');
                       var vValue = validateTypes[typeToIndex['email']]['values'][keyArr[0]];
                       var rec = _this.grid.dataSource.getAt(vValue['rowIndex']);
-                      var col = vValue['col'];
                       if(typeof(res.data.error) !== 'undefined') {
                           vValue['error'] = res.data.error;
                           if(rec) {
@@ -373,7 +372,7 @@ Pman.Dialog.PreviewRowsImport = {
                       }
                       else {
                           if(rec) {
-                              rec.set(col + '_valid', true);
+                              rec.set(vValue['col'] + '_valid', true);
                           }
                       }
                   });
