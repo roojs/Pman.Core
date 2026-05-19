@@ -346,6 +346,7 @@ Pman.Dialog.PreviewRowsImport = {
                   jobs.push({field: 'email_' + index, email: email['value']});
               });
               if (!jobs.length) {
+                  Roo.MessageBox.hide();
                   onValidate();
                   return;
               }
