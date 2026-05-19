@@ -361,6 +361,8 @@ Pman.Dialog.PreviewRowsImport = {
               sse.on('complete', function(s, res) {
                   Roo.MessageBox.hide();
                   Object.entries(res.data).forEach(function(entry) {
+                      Roo.log(entry);
+                      /*
                       var vValue = validateTypes[typeToIndex['email']]['values'][entry[0].split('_')[0]];
                       var rec = _this.grid.dataSource.getAt(vValue['rowIndex']);
                       if(typeof(res.data.error) !== 'undefined') {
@@ -374,6 +376,7 @@ Pman.Dialog.PreviewRowsImport = {
                               rec.set(vValue['col'] + '_valid', true);
                           }
                       }
+                      */
                   });
                   // onValidate();
               });
