@@ -198,7 +198,9 @@ class Pman_Core_ValidateEmail extends Pman
             $exitCode = proc_close($proc);
             @unlink($jobFile);
 
-            $this->parseWorkerOutput($bufOut, $jobError, $okRow);
+            if(empty($jobError)) {
+                $this->parseWorkerOutput($bufOut, $jobError, $okRow);
+            }
 
             if(empty($jobError) && $okRow === null) {
                 $jobError = 'No success result from worker for ' . $email;
