@@ -377,7 +377,7 @@ Pman.Dialog.PreviewRowsImport = {
                           }
                       }
                   });
-                  // onValidate();
+                  onValidate();
               });
               sse.on('fetcherror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
               sse.on('readerror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
