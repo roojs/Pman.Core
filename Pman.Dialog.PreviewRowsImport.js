@@ -362,6 +362,7 @@ Pman.Dialog.PreviewRowsImport = {
                   Roo.MessageBox.hide();
                   Object.entries(res.data).forEach(function(entry) {
                       var vValue = validateTypes[typeToIndex['email']]['values'][entry[0].split('_')[0]];
+                      Roo.log(vValue);
                       var rec = _this.grid.dataSource.getAt(vValue['rowIndex']);
                       if(typeof(res.data.error) !== 'undefined') {
                           vValue['error'] = res.data.error;
