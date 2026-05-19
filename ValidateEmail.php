@@ -223,7 +223,7 @@ class Pman_Core_ValidateEmail extends Pman
 
 
             if($jobError) {
-                // $this->error($jobError['message'], $jobError['allowRetry']);
+                $this->error($jobError['message']);
 
             }
 
