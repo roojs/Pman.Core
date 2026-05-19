@@ -341,7 +341,7 @@ Pman.Dialog.PreviewRowsImport = {
           var validateEmail = function() {
               var jobs = [];
               Roo.each(validateTypes[typeToIndex['email']]['values'], function(email, index) {
-                  jobs.push({field: 'email_' + index, email: email['value']});
+                  jobs.push({field: 'email::' + email['rowIndex'] + '::' + email['col'], email: email['value']});
               });
               var doneSubmit = function() {
                   _this.form.doAction('submit');
@@ -361,6 +361,11 @@ Pman.Dialog.PreviewRowsImport = {
               sse.on('complete', function(s, data) {
                   Roo.MessageBox.hide();
                   Roo.log(data);
+                  Roo.each(data, function(d) {
+                      if(typeof(d.error) === 'undefined') {
+                          rec.set(
+                      }
+                  });
               });
               sse.on('fetcherror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
               sse.on('readerror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
