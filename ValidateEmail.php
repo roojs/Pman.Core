@@ -214,6 +214,9 @@ class Pman_Core_ValidateEmail extends Pman
             $exitCode = proc_close($proc);
             @unlink($jobFile);
 
+            var_dump($jobError);
+            die('test');
+
             // if($jobError) {
             //     $this->error($jobError);
             // }
