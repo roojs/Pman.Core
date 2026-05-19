@@ -36,14 +36,12 @@ class Pman_Core_ValidateEmail extends Pman
      * Show an error message
      *
      * @param string $message The error message
-     * @param bool $allowRetry Whether to allow the user to retry (maps to allowRetry 1/0 for Roo.form.Action.Sse)
      */
-    function error($message, $allowRetry = true)
+    function error($message)
     {
         $this->sendSSE('error', array(
             'success' => false,
-            'errorMsg' => $message,
-            'allowRetry' => $allowRetry ? 1 : 0,
+            'errorMsg' => $message
         ));
     }
 
@@ -173,7 +171,6 @@ class Pman_Core_ValidateEmail extends Pman
                         if (!is_array($row)) {
                             $jobError = array(
                                 'message' => 'Invalid JSON from worker: ' . substr($line, 0, 200),
-                                'allowRetry' => false,
                             );
                             break;
                         }
@@ -182,7 +179,6 @@ class Pman_Core_ValidateEmail extends Pman
                             if(!empty($row['isHardFailure'])) {
                                 $jobError = array(
                                     'message' => 'An error occurred, please contact the website owner.',
-                                    'allowRetry' => false,
                                 );
                                 break;
                             }
@@ -191,7 +187,6 @@ class Pman_Core_ValidateEmail extends Pman
                         if (!empty($row['type']) && $row['type'] === 'email_fail') {
                             $jobError = array(
                                 'message' => !empty($row['message']) ? $row['message'] : 'Email validation failed',
-                                'allowRetry' => true,
                             );
                             break;
                         }
@@ -228,7 +223,8 @@ class Pman_Core_ValidateEmail extends Pman
 
 
             if($jobError) {
-                $this->error($jobError['message'], $jobError['allowRetry']);
+                // $this->error($jobError['message'], $jobError['allowRetry']);
+
             }
 
             if ($exitCode !== 0) {
