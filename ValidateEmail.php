@@ -223,7 +223,7 @@ class Pman_Core_ValidateEmail extends Pman
             $exitCode = proc_close($proc);
             @unlink($jobFile);
 
-            if(empty($jobError)) {
+
                 // if ($okRow === null) {
                 //     foreach (array_filter(array_map('trim', explode("\n", trim($bufOut)))) as $ln) {
                 //         $decoded = json_decode($ln, true);
@@ -232,9 +232,8 @@ class Pman_Core_ValidateEmail extends Pman
                 //         }
                 //     }
                 // }
-                if ($okRow === null) {
-                    $jobError = 'No success result from worker for ' . $field;
-                }
+            if(empty($jobError) && $okRow === null) {
+                $jobError = 'No success result from worker for ' . $field;
             }
 
             if($jobError) {
