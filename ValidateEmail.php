@@ -130,6 +130,12 @@ class Pman_Core_ValidateEmail extends Pman
             $jobError = false;
             $okRow = null;
 
+            $this->sendSSE('progress', array(
+                'total' => $total * 6,
+                'progress' => $idx / $total * 100,
+                'message' => 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left',
+            ));
+
             while (true) {
                 $st = proc_get_status($proc);
                 if (empty($st['running'])) {
