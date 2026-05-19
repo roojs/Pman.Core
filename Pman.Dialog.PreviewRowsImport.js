@@ -363,9 +363,8 @@ Pman.Dialog.PreviewRowsImport = {
                   Object.entries(res.data).forEach(function(entry) {
                       Roo.log(entry);
       
-                      var vValue = validateTypes[typeToIndex['email']]['values'][entry[0].split('_')[0]];
+                      var vValue = validateTypes[typeToIndex['email']]['values'][entry[0].split('_')[1]];
                       var rec = _this.grid.dataSource.getAt(vValue['rowIndex']);
-                      /*
                       if(typeof(res.data.error) !== 'undefined') {
                           vValue['error'] = res.data.error;
                           if(rec) {
@@ -377,7 +376,6 @@ Pman.Dialog.PreviewRowsImport = {
                               rec.set(vValue['col'] + '_valid', true);
                           }
                       }
-                      */
                   });
                   // onValidate();
               });
