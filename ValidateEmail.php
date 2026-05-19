@@ -225,22 +225,21 @@ class Pman_Core_ValidateEmail extends Pman
             $exitCode = proc_close($proc);
             @unlink($jobFile);
 
-            if(empty($jobError)) {
-                if($okRow == null) {
-                    foreach (array_filter(array_map('trim', explode("\n", trim($bufOut)))) as $ln) {
-                        $decoded = json_decode($ln, true);
-                        if(!is_array($decoded)) {
-                            $jobError = 'Invalid JSON from worker: ' . substr($line, 0, 200);
-                            break;
-                        }
-                        if (!empty($decoded['type']) && $decoded['type'] === 'email_ok') {
-                            $okRow = $decoded;
-                        }
+            if(empty($jobError) && $okRow == null) {
+                foreach (array_filter(array_map('trim', explode("\n", trim($bufOut)))) as $ln) {
+                    $decoded = json_decode($ln, true);
+                    if(!is_array($decoded)) {
+                        $jobError = 'Invalid JSON from worker: ' . substr($line, 0, 200);
+                        break;
+                    }
+                    if (!empty($decoded['type']) && $decoded['type'] === 'email_ok') {
+                        $okRow = $decoded;
                     }
                 }
-                if(empty($jobError) && $okRow === null) {
-                    $jobError = 'No success result from worker for ' . $email;
-                }
+            }
+
+            if(empty($jobError) && $okRow === null) {
+                $jobError = 'No success result from worker for ' . $email;
             }
 
             if($jobError) {
