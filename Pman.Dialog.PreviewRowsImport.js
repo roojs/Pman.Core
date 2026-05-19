@@ -410,7 +410,6 @@ Pman.Dialog.PreviewRowsImport = {
                   });
                   
                   // start validation
-                  //validateValue();
                   validateEmail();
               }
           });

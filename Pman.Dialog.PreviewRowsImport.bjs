@@ -502,7 +502,6 @@
      "            });",
      "            ",
      "            // start validation",
-     "            //validateValue();",
      "            validateEmail();",
      "        }",
      "    });",
