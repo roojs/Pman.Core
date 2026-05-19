@@ -345,11 +345,8 @@ Pman.Dialog.PreviewRowsImport = {
               Roo.each(validateTypes[typeToIndex['email']]['values'], function(email, index) {
                   jobs.push({field: 'email_' + index, email: email['value']});
               });
-              var doneSubmit = function() {
-                  _this.form.doAction('submit');
-              };
               if (!jobs.length) {
-                  doneSubmit();
+                  onValidate();
                   return;
               }
               var fd = new FormData();
@@ -377,7 +374,7 @@ Pman.Dialog.PreviewRowsImport = {
                           }
                       }
                   });
-                  doneSubmit();
+                  onValidate();
               });
               sse.on('fetcherror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
               sse.on('readerror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
