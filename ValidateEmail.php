@@ -217,7 +217,7 @@ class Pman_Core_ValidateEmail extends Pman
 
 
             // if($jobError) {
-            //     $this->error($jobError['message']);
+            //     $this->error($jobError);
             // }
 
             // if ($exitCode !== 0) {
@@ -236,7 +236,8 @@ class Pman_Core_ValidateEmail extends Pman
                 }
             }
             if ($okRow === null) {
-                $this->error('No success result from worker for ' . $field, true);
+                // $this->error('No success result from worker for ' . $field, true);
+                $jobError = 'No success result from worker for ' . $field;
             }
 
             $results[$field] = array(
