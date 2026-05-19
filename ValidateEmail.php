@@ -60,18 +60,20 @@ class Pman_Core_ValidateEmail extends Pman
 
         $au = $this->getAuthUser();
         if (!$au) {
-            $this->error('Not authenticated', false);
+            $this->error('Not authenticated');
         }
 
         $jobsRaw = isset($_POST['validate_email_jobs']) ? $_POST['validate_email_jobs'] : '';
         $jobs = json_decode($jobsRaw, true);
         if (!is_array($jobs) || empty($jobs)) {
-            $this->error('Missing or invalid validate_email_jobs JSON', true);
+            $this->errorlog('Missing or invalid validate_email_jobs JSON');
+            $this->error('An error occurred, please contact the website owner.');
         }
 
         $entryScript = realpath($_SERVER['SCRIPT_FILENAME']);
         if ($entryScript === false || !is_file($entryScript)) {
-            $this->error('Cannot resolve PHP entry script for worker (SCRIPT_FILENAME)', false);
+            $this->errorlog('Cannot resolve PHP entry script for worker (SCRIPT_FILENAME)');
+            $this->error('An error occurred, please contact the website owner.');
         }
         $childCwd = dirname($entryScript);
 
@@ -222,7 +224,7 @@ class Pman_Core_ValidateEmail extends Pman
             fclose($pipes[2]);
             $exitCode = proc_close($proc);
             @unlink($jobFile);
-            
+
             if(empty($jobError) && $okRow === null) {
                 $jobError = 'No success result from worker for ' . $field;
             }
