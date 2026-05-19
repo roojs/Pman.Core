@@ -169,25 +169,19 @@ class Pman_Core_ValidateEmail extends Pman
                         }
                         $row = json_decode($line, true);
                         if (!is_array($row)) {
-                            $jobError = array(
-                                'message' => 'Invalid JSON from worker: ' . substr($line, 0, 200),
-                            );
+                            $jobError = 'Invalid JSON from worker: ' . substr($line, 0, 200);
                             break;
                         }
                         if (!empty($row['type']) && $row['type'] === 'error_log') {
                             $this->errorlog($row['message']);
                             if(!empty($row['isHardFailure'])) {
-                                $jobError = array(
-                                    'message' => 'An error occurred, please contact the website owner.',
-                                );
+                                $jobError = 'An error occurred, please contact the website owner.';
                                 break;
                             }
                             continue;
                         }
                         if (!empty($row['type']) && $row['type'] === 'email_fail') {
-                            $jobError = array(
-                                'message' => !empty($row['message']) ? $row['message'] : 'Email validation failed',
-                            );
+                            $jobError = !empty($row['message']) ? $row['message'] : 'Email validation failed';
                             break;
                         }
                         if (!empty($row['type']) && $row['type'] === 'email_ok') {
