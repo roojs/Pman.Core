@@ -84,12 +84,6 @@ class Pman_Core_ValidateEmail extends Pman
         $validatedEmails = array();
 
         foreach ($jobs as $idx => $jobRow) {
-            // avoid re-validating emails that have already been validated
-            if(isset($validatedEmails[$jobRow['email']])) {
-                $result[$jobRow['field']] = $validatedEmails[$jobRow['email']];
-                continue;
-            }
-
             if (empty($jobRow['field']) || !isset($jobRow['email'])) {
                 $this->errorlog('Each job needs field and email');
                 $this->error('An error occurred, please contact the website owner.');
@@ -98,6 +92,12 @@ class Pman_Core_ValidateEmail extends Pman
             $field = $jobRow['field'];
             $email = $jobRow['email'];
             if ($email === '' || $email === null) {
+                continue;
+            }
+
+            // avoid re-validating emails that have already been validated
+            if(isset($validatedEmails[$email])) {
+                $results[$field] = $validatedEmails[$email];
                 continue;
             }
 
