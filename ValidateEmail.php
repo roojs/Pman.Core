@@ -86,7 +86,7 @@ class Pman_Core_ValidateEmail extends Pman
         foreach ($jobs as $idx => $jobRow) {
             // avoid re-validating emails that have already been validated
             if(in_array($jobRow['email'], $validatedEmails)) {
-                $result[$field] = $validatedEmails[$jobRow['email']];
+                $result[$jobRow['field']] = $validatedEmails[$jobRow['email']];
                 continue;
             }
 
