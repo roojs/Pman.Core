@@ -228,7 +228,7 @@ class Pman_Core_ValidateEmail extends Pman
             }
             
             $validatedEmails[$email] = $row;
-            $results[] = $row;
+            $results[$field] = $row;
         }
 
         $this->sendSSE('progress', array(
