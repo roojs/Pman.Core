@@ -2,7 +2,7 @@
 /**
  * CLI: one email SMTP validation (NDJSON on stdout).
  *   php /path/to/press.local.php Core/Process/ValidateEmailWorker -f /path/to/job.json
- * (job JSON: email, field, auth_user_id).
+ * (job JSON: email, auth_user_id).
  */
 
 require_once 'Pman.php';
@@ -13,14 +13,12 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
     static $cli_opts = array(
         'file' => array(
-            'desc' => 'Job JSON file (email, field, auth_user_id)',
+            'desc' => 'Job JSON file (email, auth_user_id)',
             'short' => 'f',
             'min' => 1,
             'max' => 1,
         ),
     );
-
-    var $field = '';
 
     var $emailNorm = '';
 
@@ -58,10 +56,10 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         }
 
         $job = json_decode($raw, true);
-        if (!is_array($job) || empty($job['email']) || empty($job['field'])) {
+        if (!is_array($job) || empty($job['email'])) {
             echo json_encode(array(
                 'type' => 'error_log',
-                'message' => 'Invalid job JSON (need email, field)',
+                'message' => 'Invalid job JSON (need email)',
                 'isHardFailure' => true,
             ), JSON_UNESCAPED_UNICODE) . "\n";
             fflush(STDOUT);
@@ -75,7 +73,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             }
         }
 
-        $this->field = $job['field'];
         $dar = explode('@', $job['email']);
         $dom = strtolower(array_pop($dar));
         $dar[] = $dom;
@@ -86,7 +83,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         if (!is_object($cdResult)) {
             echo json_encode(array(
                 'type' => 'email_fail',
-                'field' => $this->field,
                 'email' => $this->emailNorm,
                 'message' => is_string($cdResult) ? $cdResult : 'Invalid domain',
             ), JSON_UNESCAPED_UNICODE) . "\n";
@@ -98,7 +94,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         if (empty($mxs)) {
             echo json_encode(array(
                 'type' => 'email_fail',
-                'field' => $this->field,
                 'email' => $this->emailNorm,
                 'message' => "{$this->emailNorm} {$dom} is not a valid domain (cant deliver email to it)",
             ), JSON_UNESCAPED_UNICODE) . "\n";
@@ -189,7 +184,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 // Don't need to log error for out of storage space
                 echo json_encode(array(
                     'type' => 'email_fail',
-                    'field' => $this->field,
                     'email' => $this->emailNorm,
                     'message' => 'The email address is over quota - which probably means its a dead email address - '
                         . 'we do not add these as we would just get rejections - you should contact this user before adding '
@@ -229,7 +223,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             ) {
                 echo json_encode(array(
                     'type' => 'email_fail',
-                    'field' => $this->field,
                     'email' => $this->emailNorm,
                     'message' => 'Email ' . $this->emailNorm . ' does not work - we checked it - nothing can be delivered to them.',
                 ), JSON_UNESCAPED_UNICODE) . "\n";
@@ -251,7 +244,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         if (!$mxOk) {
             echo json_encode(array(
                 'type' => 'email_fail',
-                'field' => $this->field,
                 'email' => $this->emailNorm,
                 'message' => 'cannot send to ' . $this->emailNorm . ($lastErr ? " ({$lastErr})" : ' (connection failed to all MX servers)'),
             ), JSON_UNESCAPED_UNICODE) . "\n";
@@ -262,7 +254,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         $token = md5($this->emailNorm . (int) $cd->id);
         echo json_encode(array(
             'type' => 'email_ok',
-            'field' => $this->field,
             'email' => $this->emailNorm,
             'domain_id' => (int) $cd->id,
             'token' => $token,
