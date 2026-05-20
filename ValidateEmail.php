@@ -84,10 +84,11 @@ class Pman_Core_ValidateEmail extends Pman
         $validatedEmails = array();
 
         foreach ($jobs as $idx => $jobRow) {
+            // avoid re-validating emails that have already been validated
             if(in_array($jobRow['email'], $validatedEmails)) {
                 continue;
             }
-            
+
             if (empty($jobRow['field']) || !isset($jobRow['email'])) {
                 $this->errorlog('Each job needs field and email');
                 $this->error('An error occurred, please contact the website owner.');
