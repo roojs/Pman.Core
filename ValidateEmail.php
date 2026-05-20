@@ -206,6 +206,8 @@ class Pman_Core_ValidateEmail extends Pman
                 $jobError = 'No success result from worker for ' . $email;
             }
 
+            $validatedEmails[] = $email;
+
             if($jobError) {
                 $results[$field] = array(
                     'email' => $email,
