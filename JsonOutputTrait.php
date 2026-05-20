@@ -89,7 +89,6 @@ trait Pman_Core_JsonOutputTrait {
     function jerror($type, $str, $errors=array(), $content_type = false) // standard error reporting..
     {
         if ($this->transObj) {
-            var_dump("ROLLBACK");
             $this->transObj->query('ROLLBACK');
         }
         
