@@ -312,7 +312,7 @@ class Pman_Core_NotifyRouter
                     $this->notifySend->server->updateNotifyToNextServer(
                         $this->notifySend->notify , date("Y-m-d H:i:s", time() + $seconds), 
                         true, $this->notifySend->server_ipv6, self::$all_mx_ipv4s);
-                    $this->notifySend->errorHandler(" Too many emails sent by {$this->notifySend->emailDomain->domain} - requeing");
+                    $this->notifySend->errorHandler('GREYLISTED', " Too many emails sent by {$this->notifySend->emailDomain->domain} - requeing");
                 }
                 // Keep using the IP we built (smtpHost); only use route hostname when we have no IP (hostname fallback)
                 if (!filter_var($this->smtpHost, FILTER_VALIDATE_IP)) {
