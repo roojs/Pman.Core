@@ -102,7 +102,6 @@ class Pman_Core_ValidateEmail extends Pman
 
             $payload = array(
                 'email' => $email,
-                'field' => $field,
                 'auth_user_id' => (int) $au->id,
             );
             file_put_contents($jobFile, json_encode($payload, JSON_UNESCAPED_UNICODE));
