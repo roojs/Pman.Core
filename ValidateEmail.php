@@ -212,13 +212,12 @@ class Pman_Core_ValidateEmail extends Pman
                 $jobError = 'No success result from worker for ' . $email;
             }
 
-            $validatedEmails[] = $email;
-
             if($jobError) {
                 $results[$field] = array(
                     'email' => $email,
                     'error' => $jobError,
                 );
+                $validatedEmails[$email] = $email;
                 continue;
             }
 
@@ -227,6 +226,7 @@ class Pman_Core_ValidateEmail extends Pman
                 'domain_id' => $okRow['domain_id'],
                 'token' => $okRow['token'],
             );
+            $validatedEmails[$email] = $okRow['email'];
         }
 
         $this->sendSSE('progress', array(
