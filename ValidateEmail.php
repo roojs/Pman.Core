@@ -81,6 +81,7 @@ class Pman_Core_ValidateEmail extends Pman
         $results = array();
         $phpBin = defined('PHP_BINARY') && PHP_BINARY ? PHP_BINARY : 'php';
         $childTimeout = 90.0;
+        $validatedEmails = array();
 
         foreach ($jobs as $idx => $jobRow) {
             if (empty($jobRow['field']) || !isset($jobRow['email'])) {
