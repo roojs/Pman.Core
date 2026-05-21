@@ -93,6 +93,29 @@ class Pman_Core_DataObjects_Core_group_member extends DB_DataObject
         return $ret;
         
     }
+
+    function syncGroupIds($person, $group_ids, $roo)
+    {
+        $cur = $this->listGroupMembership($person);
+        $new = strlen($group_ids) ? explode(',', $group_ids) : array();
+
+        $g = DB_DataObject::factory('core_group');
+        foreach ($cur as $gid) {
+            if (in_array($gid, $new)) {
+                continue;
+            }
+            $g->get($gid);
+            $g->removeMember($person, $roo);
+        }
+
+        foreach ($new as $gid) {
+            if (in_array($gid, $cur)) {
+                continue;
+            }
+            $g->get($gid);
+            $g->addMember($person, $roo);
+        }
+    }
     
     function checkPerm($lvl, $au) 
     {

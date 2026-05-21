@@ -27,6 +27,18 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
+    /**
+     * @return array{from: string, subject: string}
+     */
+    function getEmailInfo()
+    {
+        return array(
+            'email' => $this->from_email,
+            'name' => $this->from_name,
+            'subject' => $this->subject
+        );
+    }
+    
     function applyFilters($q, $au, $roo)
     {
         $tn = $this->tableName();
