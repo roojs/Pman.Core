@@ -99,7 +99,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         }
         
         // exit loop if mx is ok
-        for($pass = 0; $pass < 2 && !$mxOk; $pass++) {
+        for($pass = 0; $pass < 1 && !$mxOk; $pass++) {
             foreach ($mxs as $mx) {
                 $mailer = $cd->createMailer($this, $mx, $validUser, array(
                     'bind_notify_interface' => $pass > 0,
