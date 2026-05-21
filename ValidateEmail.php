@@ -199,7 +199,7 @@ class Pman_Core_ValidateEmail extends Pman
                             }
                         }
                     }
-                    $isHardFailure = $this->parseWorkerOutput($bufOut, $jobError, $okRow);
+                    $shouldContinue = $this->parseWorkerOutput($bufOut, $jobError, $okRow);
 
                     if($jobError) {
                         break;
@@ -226,7 +226,7 @@ class Pman_Core_ValidateEmail extends Pman
             @unlink($jobFile);
 
             if(empty($jobError)) {
-                $this->parseWorkerOutput($bufOut, $jobError, $okRow);
+                $shouldContinue = $this->parseWorkerOutput($bufOut, $jobError, $okRow);
             }
 
             if(empty($jobError) && $okRow === null) {
