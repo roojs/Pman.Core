@@ -45,21 +45,6 @@ class Pman_Core_ValidateEmail extends Pman
         ));
     }
 
-    /**
-     * Lowercase domain only (matches Crm_person / Pressrelease_contact save + getOldEmails).
-     */
-    function normalizeValidationEmail($email)
-    {
-        $email = trim($email);
-        if ($email === '') {
-            return '';
-        }
-        $dar = explode('@', $email);
-        $dom = trim(strtolower(array_pop($dar)));
-        $dar[] = $dom;
-        return implode('@', $dar);
-    }
-
     function post($base = '')
     {
         set_time_limit(0);
