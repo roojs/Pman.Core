@@ -183,6 +183,7 @@ class Pman_Core_ValidateEmail extends Pman
                             }
                         }
                     }
+                    die('a');
                     $this->parseWorkerOutput($bufOut, $jobError, $okRow);
 
                     if($jobError) {
@@ -209,7 +210,6 @@ class Pman_Core_ValidateEmail extends Pman
             $exitCode = proc_close($proc);
             @unlink($jobFile);
 
-            var_dump($bufOut);
             if(empty($jobError)) {
                 $this->parseWorkerOutput($bufOut, $jobError, $okRow);
             }
