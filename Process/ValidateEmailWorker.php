@@ -138,14 +138,9 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             // Check for SMTP error 452 (out of storage space)
             if (in_array($res->code, array(452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
                 // Don't need to log error for out of storage space
-                echo json_encode(array(
-                    'type' => 'email_fail',
-                    'message' => 'The email address is over quota - which probably means its a dead email address - '
+                $this->out('email_fail', 'The email address is over quota - which probably means its a dead email address - '
                         . 'we do not add these as we would just get rejections - you should contact this user before adding '
-                        . 'and see if they have another email address',
-                ), JSON_UNESCAPED_UNICODE) . "\n";
-                fflush(STDOUT);
-                exit(1);
+                        . 'and see if they have another email address', true);
             }
 
             // Check for SMTP error 550 with Spamhaus failure
