@@ -202,6 +202,9 @@ Pman.Dialog.PreviewRowsImport = {
                   errMsg = fails + " " + vType['type'] + " have failed, " + errMsg;
               });
               
+              Roo.log("FAILURESBYROW");
+              Roo.log(failuresByRow);
+              
               var failures = [];
               for (var ri in failuresByRow) {
                   if (!failuresByRow.hasOwnProperty(ri)) {
