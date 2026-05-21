@@ -102,11 +102,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         for($pass = 0; $pass < 2 && !$mxOk; $pass++) {
             $fromAddr = 'newswire-reply@media-outreach.com';
             if ($pass > 0) {
-                $sendDomain = $ffw->Mail['helo'];
-                if (substr_count($sendDomain, '.') >= 2) {
-                    $sendDomain = preg_replace('/^[^.]+\./', '', $sendDomain);
-                }
-                $fromAddr = $dom . '@' . $sendDomain;
+                $fromAddr = $dom . '@media-outreach.com';
                 $this->out('error_log', "ValidateEmail retry: From {$fromAddr}");
             }
             foreach ($mxs as $mx) {
