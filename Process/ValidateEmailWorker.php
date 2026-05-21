@@ -98,7 +98,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             }
         }
         
-        for($pass = 0; $pass < 2; $pass++) {
+        for($pass = 0; $pass < 2 && !$mxOk; $pass++) {
             foreach ($mxs as $mx) {
                 $mailer = $cd->createMailer($this, $mx, $validUser);
                 if ($mailer === false) {
@@ -177,17 +177,9 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 $this->out('error_log', "SMTP Validate Rejected Email $mx {$res->code} Email: {$this->emailNorm} - Error: " . $errorMessage);
                 $lastErr = $res->getMessage();
             }
-            if($mxOk) {
-                break;
-            }
-            // second pass failed, we fails
-            if ($pass > 0) {
-                $this->out('email_fail', 'cannot send to ' . $this->emailNorm . ($lastErr ? " ({$lastErr})" : ' (connection failed to all MX servers)'), true);
-            }
-
-            // first pass failed, we try again
         }
 
+        // fails after multiple passes
         if(!$mxOk) {
             $this->out('email_fail', 'cannot send to ' . $this->emailNorm . ($lastErr ? " ({$lastErr})" : ' (connection failed to all MX servers)'), true);
         }
