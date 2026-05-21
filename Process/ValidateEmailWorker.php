@@ -130,11 +130,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             // Check for SMTP error 451 (Greylisting - temporary failure)
             // This is a temporary error indicating greylisting, so treat it as a valid check
             if ($res->code == 451) {
-                echo json_encode(array(
-                    'type' => 'error_log',
-                    'message' => "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}",
-                ), JSON_UNESCAPED_UNICODE) . "\n";
-                fflush(STDOUT);
+                $this->out('error_log', "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}");
                 $mxOk = true;
                 break;
             }
