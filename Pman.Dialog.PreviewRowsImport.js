@@ -188,7 +188,7 @@ Pman.Dialog.PreviewRowsImport = {
               Roo.each(validateTypes, function(vType) {
                   var fails = 0;
                   Roo.each(vType['values'], function(vValue) {
-                      if(vValue['error'] !== false) {
+                      if(!vValue['error']) {
                           return;
                       }
                       
