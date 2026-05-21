@@ -182,9 +182,6 @@ Pman.Dialog.PreviewRowsImport = {
               var errMsg = '';
               var failuresByRow = {};
               
-              Roo.log("VALIDATETYPES");
-              Roo.log(validateTypes);
-              
               Roo.each(validateTypes, function(vType) {
                   var fails = 0;
                   Roo.each(vType['values'], function(vValue) {
@@ -204,9 +201,6 @@ Pman.Dialog.PreviewRowsImport = {
                   
                   errMsg = fails + " " + vType['type'] + " have failed, " + errMsg;
               });
-              
-              Roo.log("FAILURESBYROW");
-              Roo.log(failuresByRow);
               
               var failures = [];
               for (var ri in failuresByRow) {
@@ -244,7 +238,8 @@ Pman.Dialog.PreviewRowsImport = {
                                   method : 'POST',
                                   params: {
                                       'fileId': _this.data.fileId,
-                                      'failures': Roo.encode(_this.importFailures)
+                                      'failures': Roo.encode(_this.importFailures),
+                                      '_get': 1
                                   }
                               });
                               return;
