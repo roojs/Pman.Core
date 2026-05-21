@@ -215,7 +215,7 @@ class Pman_Core_ValidateEmail extends Pman
 
             // unexpected error
             if(empty($jobError) && $okRow === null) {
-                $jobError = 'No success result from worker for ' . $emailNorm . '. Please contact the website admin.';
+                $jobError = 'An error occurred. Please contact the website admin.';
                 // log fatal php error
                 if(!empty($bufErr)) {
                     $this->errorlog($bufErr);
