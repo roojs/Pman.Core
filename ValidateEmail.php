@@ -270,7 +270,7 @@ class Pman_Core_ValidateEmail extends Pman
      * @param string $bufOut The output from the worker process.
      * @param string $jobError The error message to return if an error occurs.
      * @param array $okRow The row to return if the email is valid.
-     * @return bool True if the output is valid, false otherwise.
+     * @return bool false if an hard failure occurs, true otherwise.
      */
     function parseWorkerOutput(&$bufOut, &$jobError, &$okRow) 
     {
