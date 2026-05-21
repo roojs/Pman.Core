@@ -160,6 +160,7 @@ class Pman_Core_ValidateEmail extends Pman
             $heartbeatEvery = 1.0;
             $jobError = false;
             $okRow = null;
+            $isHardFailure = false;
 
             $this->sendSSE('progress', array(
                 'total' => $total * $childTimeout,
