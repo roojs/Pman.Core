@@ -182,6 +182,9 @@ Pman.Dialog.PreviewRowsImport = {
               var errMsg = '';
               var failuresByRow = {};
               
+              Roo.log("VALIDATETYPES");
+              Roo.log(validateTypes);
+              
               Roo.each(validateTypes, function(vType) {
                   var fails = 0;
                   Roo.each(vType['values'], function(vValue) {
