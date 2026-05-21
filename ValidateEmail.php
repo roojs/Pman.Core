@@ -230,6 +230,9 @@ class Pman_Core_ValidateEmail extends Pman
 
             if(empty($jobError) && $okRow === null) {
                 $jobError = 'No success result from worker for ' . $emailNorm;
+                if(!empty($bufErr)) {
+                    $this->errorlog($bufErr);
+                }
             }
 
 
