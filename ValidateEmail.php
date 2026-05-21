@@ -266,6 +266,7 @@ class Pman_Core_ValidateEmail extends Pman
 
     function parseWorkerOutput(&$bufOut, &$jobError, &$okRow) 
     {
+        var_dump($bufOut);
         while (($p = strpos($bufOut, "\n")) !== false) {
             $line = trim(substr($bufOut, 0, $p));
             $bufOut = substr($bufOut, $p + 1);
