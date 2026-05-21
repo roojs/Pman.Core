@@ -45,13 +45,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
         $job = json_decode($raw, true);
         if (!is_array($job) || empty($job['email'])) {
-            echo json_encode(array(
-                'type' => 'error_log',
-                'message' => 'Invalid job JSON (need email)',
-                'isHardFailure' => true,
-            ), JSON_UNESCAPED_UNICODE) . "\n";
-            fflush(STDOUT);
-            exit(1);
+            $this->out('error_log', 'Invalid job JSON (need email)', true);
         }
 
         if (!empty($job['auth_user_id'])) {
