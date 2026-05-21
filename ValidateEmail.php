@@ -183,7 +183,8 @@ class Pman_Core_ValidateEmail extends Pman
                             }
                         }
                     }
-                    die('a');
+                    var_dump($bufOut);
+                    die('test');
                     $this->parseWorkerOutput($bufOut, $jobError, $okRow);
 
                     if($jobError) {
