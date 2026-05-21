@@ -250,6 +250,10 @@ class Pman_Core_ValidateEmail extends Pman
             
             $validationResults[$emailNorm] = $row;
             $results[$field] = $row;
+
+            if(!$shouldContinue) {
+                break;
+            }
         }
 
         $this->sendSSE('progress', array(
