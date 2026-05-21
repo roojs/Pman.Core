@@ -380,6 +380,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $socket_options['socket'] = array(
                     'bindto' => $ipv4_bind_ip . ':0'
                 );
+                var_dump($socket_options['socket']['bindto']);
                 if (is_object($roo) && method_exists($roo, 'out')) {
                     die('aa');
                     $roo->out('error_log', "ValidateEmail retry: IPv4 bind {$currentServer->interface} ({$ipv4_bind_ip})");
