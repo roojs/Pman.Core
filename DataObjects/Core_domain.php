@@ -377,12 +377,11 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if (array_key_exists($currentServer->interface, $ifaces)
                 && !empty($ifaces[$currentServer->interface]['unicast'][1]['address'])) {
                 $ipv4_bind_ip = $ifaces[$currentServer->interface]['unicast'][1]['address'];
-                var_dump($ipv4_bind_ip);
-                die('test');
                 $socket_options['socket'] = array(
                     'bindto' => $ipv4_bind_ip . ':0'
                 );
                 if (is_object($roo) && method_exists($roo, 'out')) {
+                    die('aa');
                     $roo->out('error_log', "ValidateEmail retry: IPv4 bind {$currentServer->interface} ({$ipv4_bind_ip})");
                 }
             }
