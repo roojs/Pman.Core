@@ -261,5 +261,5 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         fflush(STDOUT);
 
         exit(0);
-    })
+    }
 }
