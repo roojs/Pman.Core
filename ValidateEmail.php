@@ -198,7 +198,7 @@ class Pman_Core_ValidateEmail extends Pman
                             }
                         }
                     }
-                    $shouldStop = $this->parseWorkerOutput($bufOut, $jobError, $okRow);
+                    $isHardFailure = $this->parseWorkerOutput($bufOut, $jobError, $okRow);
 
                     if($jobError) {
                         break;
