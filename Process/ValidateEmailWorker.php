@@ -35,25 +35,12 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     {
         $jobPath = !empty($opts['file']) ? $opts['file'] : '';
         if ($jobPath === '') {
-            
-            echo json_encode(array(
-                'type' => 'error_log',
-                'message' => 'Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json',
-                'isHardFailure' => true,
-            ), JSON_UNESCAPED_UNICODE) . "\n";
-            fflush(STDOUT);
-            exit(1);
+            $this->out('error_log', 'Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json', true);
         }
 
         $raw = @file_get_contents($jobPath);
         if ($raw === false || $raw === '') {
-            echo json_encode(array(
-                'type' => 'error_log',
-                'message' => 'Cannot read job file',
-                'isHardFailure' => true,
-            ), JSON_UNESCAPED_UNICODE) . "\n";
-            fflush(STDOUT);
-            exit(1);
+            $this->out('error_log', 'Cannot read job file', true);
         }
 
         $job = json_decode($raw, true);
