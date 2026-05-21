@@ -160,7 +160,6 @@ class Pman_Core_ValidateEmail extends Pman
             $heartbeatEvery = 1.0;
             $jobError = false;
             $okRow = null;
-            $shouldContinue = true;
 
             $this->sendSSE('progress', array(
                 'total' => $total * $childTimeout,
@@ -199,7 +198,7 @@ class Pman_Core_ValidateEmail extends Pman
                             }
                         }
                     }
-                    $shouldContinue = $this->parseWorkerOutput($bufOut, $jobError, $okRow);
+                    $this->parseWorkerOutput($bufOut, $jobError, $okRow);
 
                     if($jobError) {
                         break;
@@ -226,7 +225,7 @@ class Pman_Core_ValidateEmail extends Pman
             @unlink($jobFile);
 
             if(empty($jobError)) {
-                $shouldContinue = $this->parseWorkerOutput($bufOut, $jobError, $okRow);
+                $this->parseWorkerOutput($bufOut, $jobError, $okRow);
             }
 
             if(empty($jobError) && $okRow === null) {
@@ -250,10 +249,6 @@ class Pman_Core_ValidateEmail extends Pman
             
             $validationResults[$emailNorm] = $row;
             $results[$field] = $row;
-
-            if(!$shouldContinue) {
-                break;
-            }
         }
 
         $this->sendSSE('progress', array(
@@ -269,14 +264,6 @@ class Pman_Core_ValidateEmail extends Pman
         exit;
     }
 
-    /**
-     * Parse the output from the worker process.
-     *
-     * @param string $bufOut The output from the worker process.
-     * @param string $jobError The error message to return if an error occurs.
-     * @param array $okRow The row to return if the email is valid.
-     * @return bool false if an hard failure occurs, true otherwise.
-     */
     function parseWorkerOutput(&$bufOut, &$jobError, &$okRow) 
     {
         while (($p = strpos($bufOut, "\n")) !== false) {
@@ -294,7 +281,7 @@ class Pman_Core_ValidateEmail extends Pman
                 $this->errorlog($row['message']);
                 if(!empty($row['isHardFailure'])) {
                     $jobError = 'An error occurred, please contact the website owner.';
-                    return false;
+                    break;
                 }
                 continue;
             }
@@ -307,6 +294,5 @@ class Pman_Core_ValidateEmail extends Pman
                 continue;
             }
         }
-        return true;
     }
 }
