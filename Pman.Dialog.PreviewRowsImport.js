@@ -239,7 +239,7 @@ Pman.Dialog.PreviewRowsImport = {
                                   params: {
                                       'fileId': _this.data.fileId,
                                       'failures': Roo.encode(_this.importFailures),
-                                      '_get': 1
+                                      '_download_failed_contacts': 1
                                   }
                               });
                               return;
