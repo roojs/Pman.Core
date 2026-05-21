@@ -34,7 +34,8 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     function get($request = '', $opts = array(), $isRedirect = false)
     {
         $jobPath = !empty($opts['file']) ? $opts['file'] : '';
-        // if ($jobPath === '') {
+        if ($jobPath === '') {
+            
             echo json_encode(array(
                 'type' => 'error_log',
                 'message' => 'Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json',
@@ -42,7 +43,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             ), JSON_UNESCAPED_UNICODE) . "\n";
             fflush(STDOUT);
             exit(1);
-        // }
+        }
 
         $raw = @file_get_contents($jobPath);
         if ($raw === false || $raw === '') {
