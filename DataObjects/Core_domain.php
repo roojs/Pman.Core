@@ -384,6 +384,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                     die('aa');
                     $roo->out('error_log', "ValidateEmail retry: IPv4 bind {$currentServer->interface} ({$ipv4_bind_ip})");
                 }
+                die('bb');
             }
         }
         
