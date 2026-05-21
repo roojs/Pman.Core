@@ -105,10 +105,15 @@ class Pman_Core_ValidateEmail extends Pman
             }
 
             $field = $jobRow['field'];
-            $emailNorm = $this->normalizeValidationEmail($jobRow['email']);
+            $emailNorm = trim($jobRow['email']);
             if ($emailNorm === '') {
                 continue;
             }
+            $dar = explode('@', $emailNorm);
+            $dom = trim(strtolower(array_pop($dar)));
+            $dar[] = $dom;
+            $emailNorm = implode('@', $dar);
+
 
             // avoid re-validating emails that have already been validated
             if(isset($validationResults[$emailNorm])) {
