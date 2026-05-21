@@ -294,5 +294,6 @@ class Pman_Core_ValidateEmail extends Pman
                 continue;
             }
         }
+        return true;
     }
 }
