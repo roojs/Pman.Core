@@ -373,11 +373,12 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         if (!$ipv6Bound && $bindNotifyInterface && $currentServer->interface != '') {
             $ifaces = net_get_interfaces();
-            var_dump($ifaces[$currentServer->interface]['unicast'][1]['address']);
-            die('test');
+
             if (array_key_exists($currentServer->interface, $ifaces)
                 && !empty($ifaces[$currentServer->interface]['unicast'][1]['address'])) {
                 $ipv4_bind_ip = $ifaces[$currentServer->interface]['unicast'][1]['address'];
+                var_dump($ipv4_bind_ip);
+                die('test');
                 $socket_options['socket'] = array(
                     'bindto' => $ipv4_bind_ip . ':0'
                 );
