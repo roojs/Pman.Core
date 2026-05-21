@@ -256,4 +256,22 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
         exit(0);
     }
+
+    function output($type, $message, $exit = false) 
+    {
+        $res = array(
+            'type' => $type,
+            'message' => $message
+        );
+
+        if($type == 'error_log' && $exit) {
+            $res['isHardFailure'] = true;
+        }
+        echo json_encode($res, JSON_UNESCAPED_UNICODE) . "\n";
+        fflush(STDOUT);
+        
+        if($exit) {
+            exit(1);
+        }
+    }
 }
