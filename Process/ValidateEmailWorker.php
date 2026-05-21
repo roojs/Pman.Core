@@ -103,6 +103,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             foreach ($mxs as $mx) {
                 $mailer = $cd->createMailer($this, $mx, $validUser, array(
                     'bind_notify_interface' => $pass > 0,
+                    'recipient_domain' => $dom,
                 ));
                 if ($mailer === false) {
                     continue;
