@@ -186,15 +186,17 @@ Pman.Dialog.PreviewRowsImport = {
                   var fails = 0;
                   Roo.each(vType['values'], function(vValue) {
                       if(vValue['error'] !== false) {
-                          fails++;
-                          errors.push(vValue['error']);
-                          _this.validIndexes.remove(vValue['rowIndex']);
-                          var ri = vValue['rowIndex'];
-                          if (!failuresByRow[ri]) {
-                              failuresByRow[ri] = [];
-                          }
-                          failuresByRow[ri].push(vValue['error']);
+                          return;
                       }
+                      
+                      fails++;
+                      errors.push(vValue['error']);
+                      _this.validIndexes.remove(vValue['rowIndex']);
+                      var ri = vValue['rowIndex'];
+                      if (!failuresByRow[ri]) {
+                          failuresByRow[ri] = [];
+                      }
+                      failuresByRow[ri].push(vValue['error']);
                   });
                   
                   errMsg = fails + " " + vType['type'] + " have failed, " + errMsg;
@@ -362,7 +364,7 @@ Pman.Dialog.PreviewRowsImport = {
               }
               var fd = new FormData();
               fd.append('validate_email_jobs', JSON.stringify(jobs));
-              Roo.MessageBox.progress('Validating', 'Checking email addresses?');
+              Roo.MessageBox.progress('Validating', 'Checking email addresses…');
               var sse = new Roo.form.Action.Sse();
               sse.on('error', function(s, data) {
                   Roo.MessageBox.hide();
