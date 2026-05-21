@@ -383,7 +383,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 if (is_object($roo) && method_exists($roo, 'out')) {
                     $roo->out('error_log', "ValidateEmail retry: IPv4 bind {$currentServer->interface} ({$ipv4_bind_ip})");
                 }
-                $roo->out('error_log', "VValidateEmail retry: IPv4 bind {$currentServer->interface} ({$ipv4_bind_ip})");
             }
         }
         
