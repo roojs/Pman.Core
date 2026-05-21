@@ -195,7 +195,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     /**
      * Output a message to the standard output.
      *
-     * @param string $type The type of message (error_log, email_fail, email_ok).
+     * @param string $type The type of message (error_log, email_fail).
      * @param string $message The message to output.
      * @param bool $exit Whether to exit the script after outputting the message.
      */
