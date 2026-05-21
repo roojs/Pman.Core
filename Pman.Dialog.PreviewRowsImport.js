@@ -193,7 +193,7 @@ Pman.Dialog.PreviewRowsImport = {
                       errors.push(vValue['error']);
                       _this.validIndexes.remove(vValue['rowIndex']);
                       var ri = vValue['rowIndex'];
-                      if (!failuresByRow[ri]) {
+                      if (typeof(failuresByRow[ri]) == 'undefined') {
                           failuresByRow[ri] = [];
                       }
                       failuresByRow[ri].push(vValue['error']);
