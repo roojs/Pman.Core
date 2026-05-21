@@ -281,7 +281,7 @@ class Pman_Core_ValidateEmail extends Pman
                 $this->errorlog($row['message']);
                 if(!empty($row['isHardFailure'])) {
                     $jobError = 'An error occurred, please contact the website owner.';
-                    break;
+                    return false;
                 }
                 continue;
             }
