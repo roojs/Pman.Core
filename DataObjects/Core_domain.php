@@ -342,6 +342,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         $currentServer = DB_DataObject::Factory('core_notify_server')->getCurrent($roo, true, 'core');
         $bindNotifyInterface = !empty($opts['bind_notify_interface']);
+        var_dump("bindNotifyInterface: {$bindNotifyInterface}");
+        var_dump($currentServer->interface);
+        die('test');
         if ($bindNotifyInterface && $currentServer->interface == '' && !empty($currentServer->hostname)) {
             $ifaceServer = DB_DataObject::factory('core_notify_server');
             $ifaceServer->poolname = $currentServer->poolname;
@@ -368,6 +371,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $ipv6Bound = true;
             }
         }
+
+
 
         if (!$ipv6Bound && $bindNotifyInterface && $currentServer->interface != '') {
             $ifaces = net_get_interfaces();
