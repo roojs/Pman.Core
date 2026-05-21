@@ -100,10 +100,18 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         
         // exit loop if mx is ok
         for($pass = 0; $pass < 2 && !$mxOk; $pass++) {
+            $fromAddr = 'newswire-reply@media-outreach.com';
+            if ($pass > 0) {
+                $sendDomain = $ffw->Mail['helo'];
+                if (substr_count($sendDomain, '.') >= 2) {
+                    $sendDomain = preg_replace('/^[^.]+\./', '', $sendDomain);
+                }
+                $fromAddr = $dom . '@' . $sendDomain;
+                $this->out('error_log', "ValidateEmail retry: From {$fromAddr}");
+            }
             foreach ($mxs as $mx) {
                 $mailer = $cd->createMailer($this, $mx, $validUser, array(
                     'bind_notify_interface' => $pass > 0,
-                    'recipient_domain' => $dom,
                 ));
                 if ($mailer === false) {
                     continue;
@@ -112,7 +120,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 PEAR::setErrorHandling(PEAR_ERROR_RETURN);
                 $res = $mailer->send($this->emailNorm, array(
                     'To' => $this->emailNorm,
-                    'From' => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>',
+                    'From' => '"Media OutReach Newswire" <' . $fromAddr . '>',
                 ), '');
 
                 if (!is_object($res)) {

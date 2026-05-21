@@ -386,21 +386,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
         }
 
-        $localhost = $ff->Mail['helo'];
-        if ($bindNotifyInterface && !empty($opts['recipient_domain'])) {
-            $sendDomain = $ff->Mail['helo'];
-            if (substr_count($sendDomain, '.') >= 2) {
-                $sendDomain = preg_replace('/^[^.]+\./', '', $sendDomain);
-            }
-            $localhost = $opts['recipient_domain'] . '@' . $sendDomain;
-            if (is_object($roo) && method_exists($roo, 'out')) {
-                $roo->out('error_log', "ValidateEmail retry: HELO {$localhost}");
-            }
-        }
-        
         $mailer = Mail::factory('smtp', array(
             'host'    => $mx,
-            'localhost' => $localhost,
+            'localhost' => $ff->Mail['helo'],
             'timeout' => 90,
             'socket_options' => $socket_options,
             'test' => true
