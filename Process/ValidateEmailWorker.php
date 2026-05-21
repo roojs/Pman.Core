@@ -83,7 +83,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         if (!is_object($cdResult)) {
             echo json_encode(array(
                 'type' => 'email_fail',
-                'email' => $this->emailNorm,
                 'message' => is_string($cdResult) ? $cdResult : 'Invalid domain',
             ), JSON_UNESCAPED_UNICODE) . "\n";
             fflush(STDOUT);
@@ -94,7 +93,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         if (empty($mxs)) {
             echo json_encode(array(
                 'type' => 'email_fail',
-                'email' => $this->emailNorm,
                 'message' => "{$this->emailNorm} {$dom} is not a valid domain (cant deliver email to it)",
             ), JSON_UNESCAPED_UNICODE) . "\n";
             fflush(STDOUT);
@@ -184,7 +182,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 // Don't need to log error for out of storage space
                 echo json_encode(array(
                     'type' => 'email_fail',
-                    'email' => $this->emailNorm,
                     'message' => 'The email address is over quota - which probably means its a dead email address - '
                         . 'we do not add these as we would just get rejections - you should contact this user before adding '
                         . 'and see if they have another email address',
@@ -223,7 +220,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             ) {
                 echo json_encode(array(
                     'type' => 'email_fail',
-                    'email' => $this->emailNorm,
                     'message' => 'Email ' . $this->emailNorm . ' does not work - we checked it - nothing can be delivered to them.',
                 ), JSON_UNESCAPED_UNICODE) . "\n";
                 fflush(STDOUT);
@@ -244,7 +240,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         if (!$mxOk) {
             echo json_encode(array(
                 'type' => 'email_fail',
-                'email' => $this->emailNorm,
                 'message' => 'cannot send to ' . $this->emailNorm . ($lastErr ? " ({$lastErr})" : ' (connection failed to all MX servers)'),
             ), JSON_UNESCAPED_UNICODE) . "\n";
             fflush(STDOUT);
@@ -254,7 +249,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         $token = md5($this->emailNorm . (int) $cd->id);
         echo json_encode(array(
             'type' => 'email_ok',
-            'email' => $this->emailNorm,
             'domain_id' => (int) $cd->id,
             'token' => $token,
         ), JSON_UNESCAPED_UNICODE) . "\n";

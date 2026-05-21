@@ -45,6 +45,21 @@ class Pman_Core_ValidateEmail extends Pman
         ));
     }
 
+    /**
+     * Lowercase domain only (matches Crm_person / Pressrelease_contact save + getOldEmails).
+     */
+    function normalizeValidationEmail($email)
+    {
+        $email = trim($email);
+        if ($email === '') {
+            return '';
+        }
+        $dar = explode('@', $email);
+        $dom = trim(strtolower(array_pop($dar)));
+        $dar[] = $dom;
+        return implode('@', $dar);
+    }
+
     function post($base = '')
     {
         set_time_limit(0);
@@ -90,14 +105,14 @@ class Pman_Core_ValidateEmail extends Pman
             }
 
             $field = $jobRow['field'];
-            $email = $jobRow['email'];
-            if ($email === '' || $email === null) {
+            $emailNorm = $this->normalizeValidationEmail($jobRow['email']);
+            if ($emailNorm === '') {
                 continue;
             }
 
             // avoid re-validating emails that have already been validated
-            if(isset($validationResults[$email])) {
-                $results[$field] = $validationResults[$email];
+            if(isset($validationResults[$emailNorm])) {
+                $results[$field] = $validationResults[$emailNorm];
                 continue;
             }
 
@@ -108,7 +123,7 @@ class Pman_Core_ValidateEmail extends Pman
             }
 
             $payload = array(
-                'email' => $email,
+                'email' => $emailNorm,
                 'auth_user_id' => (int) $au->id,
             );
             file_put_contents($jobFile, json_encode($payload, JSON_UNESCAPED_UNICODE));
@@ -144,7 +159,7 @@ class Pman_Core_ValidateEmail extends Pman
             $this->sendSSE('progress', array(
                 'total' => $total * $childTimeout,
                 'progress' => $idx / $total * 100,
-                'message' => 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left',
+                'message' => 'Validating email (' . $emailNorm . ') - ' . round($childTimeout) . ' seconds left',
             ));
 
             while (true) {
@@ -158,7 +173,7 @@ class Pman_Core_ValidateEmail extends Pman
                     fclose($pipes[2]);
                     proc_close($proc);
                     @unlink($jobFile);
-                    $this->error('Validation timed out for ' . $email, true);
+                    $this->error('Validation timed out for ' . $emailNorm, true);
                 }
 
                 $r = array($pipes[1], $pipes[2]);
@@ -190,7 +205,7 @@ class Pman_Core_ValidateEmail extends Pman
                     $this->sendSSE('progress', array(
                         'total' =>  $total * $childTimeout,
                         'progress' => (microtime(true) - $childStarted + $idx * $childTimeout) / ($total * $childTimeout) * 100,
-                        'message' => 'Validating email (' . $email . ') - ' . round($childTimeout - (microtime(true) - $childStarted)) ." seconds left",
+                        'message' => 'Validating email (' . $emailNorm . ') - ' . round($childTimeout - (microtime(true) - $childStarted)) ." seconds left",
                     ));
                 }
             }
@@ -209,25 +224,25 @@ class Pman_Core_ValidateEmail extends Pman
             }
 
             if(empty($jobError) && $okRow === null) {
-                $jobError = 'No success result from worker for ' . $email;
+                $jobError = 'No success result from worker for ' . $emailNorm;
             }
 
 
             if($jobError) {
                 $row = array(
-                    'email' => $email,
+                    'email' => $emailNorm,
                     'error' => $jobError,
                 );
             }
             else {
                 $row = array(
-                    'email' => $okRow['email'],
+                    'email' => $emailNorm,
                     'domain_id' => $okRow['domain_id'],
                     'token' => $okRow['token'],
                 );
             }
             
-            $validationResults[$email] = $row;
+            $validationResults[$emailNorm] = $row;
             $results[$field] = $row;
         }
 
