@@ -167,12 +167,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 $res->code == 553 && preg_match('/User unknown/i', $errorMessage)
                 || $res->code == 550 && preg_match('/does not exist|no mailbox here|User unknown|user not exist/i', $errorMessage)
             ) {
-                echo json_encode(array(
-                    'type' => 'email_fail',
-                    'message' => 'Email ' . $this->emailNorm . ' does not work - we checked it - nothing can be delivered to them.',
-                ), JSON_UNESCAPED_UNICODE) . "\n";
-                fflush(STDOUT);
-                exit(1);
+                $this->out('email_fail', 'Email ' . $this->emailNorm . ' does not work - we checked it - nothing can be delivered to them.', true);
             }
 
             // Only log errors that aren't known false positives
