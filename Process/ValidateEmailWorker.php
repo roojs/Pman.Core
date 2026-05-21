@@ -157,11 +157,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 break;
             }
             if ($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
-                echo json_encode(array(
-                    'type' => 'error_log',
-                    'message' => "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}"
-                ), JSON_UNESCAPED_UNICODE) . "\n";
-                fflush(STDOUT);
+                $this->out('error_log', "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}");
                 $mxOk = true;
                 break;
             }
