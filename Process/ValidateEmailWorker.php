@@ -98,83 +98,85 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             }
         }
 
-        foreach ($mxs as $mx) {
-            $mailer = $cd->createMailer($this, $mx, $validUser);
-            if ($mailer === false) {
-                continue;
-            }
-
-            PEAR::setErrorHandling(PEAR_ERROR_RETURN);
-            $res = $mailer->send($this->emailNorm, array(
-                'To' => $this->emailNorm,
-                'From' => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>',
-            ), '');
-
-            if (!is_object($res)) {
-                $mxOk = true;
-                break;
-            }
-
-            $errorMessage = $res->getMessage();
-            // Check for SMTP error 421 (Service unavailable - server busy)
-            // This is a temporary error we can't fix, so treat it as a valid check
-            if ($res->code == 421) {
-                // no error log for 421 on yahoo.com as its a known issue
-                if($dom != 'yahoo.com') {
-                    $this->out('error_log', "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}");
+        for($pass = 0; $pass < 2; $pass++) {
+            foreach ($mxs as $mx) {
+                $mailer = $cd->createMailer($this, $mx, $validUser);
+                if ($mailer === false) {
+                    continue;
                 }
-                $mxOk = true; // Treat 421 as success
-                break;
+    
+                PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+                $res = $mailer->send($this->emailNorm, array(
+                    'To' => $this->emailNorm,
+                    'From' => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>',
+                ), '');
+    
+                if (!is_object($res)) {
+                    $mxOk = true;
+                    break;
+                }
+    
+                $errorMessage = $res->getMessage();
+                // Check for SMTP error 421 (Service unavailable - server busy)
+                // This is a temporary error we can't fix, so treat it as a valid check
+                if ($res->code == 421) {
+                    // no error log for 421 on yahoo.com as its a known issue
+                    if($dom != 'yahoo.com') {
+                        $this->out('error_log', "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}");
+                    }
+                    $mxOk = true; // Treat 421 as success
+                    break;
+                }
+    
+                // Check for SMTP error 451 (Greylisting - temporary failure)
+                // This is a temporary error indicating greylisting, so treat it as a valid check
+                if ($res->code == 451) {
+                    $this->out('error_log', "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}");
+                    $mxOk = true;
+                    break;
+                }
+    
+                // Check for SMTP error 452 (out of storage space)
+                if (in_array($res->code, array(452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
+                    // Don't need to log error for out of storage space
+                    $this->out('email_fail', 'The email address is over quota - which probably means its a dead email address - '
+                            . 'we do not add these as we would just get rejections - you should contact this user before adding '
+                            . 'and see if they have another email address', true);
+                }
+    
+                // Check for SMTP error 550 with Spamhaus failure
+                // Spamhaus failures are false positives we can't fix, so treat as valid
+                // Also check for Mimecast which uses Spamhaus (zen.mimecast.org)
+                if ($res->code == 550 && preg_match('/spamhaus/i', $errorMessage)) {
+                    // Don't need to log error for spamhaus failures
+                    $mxOk = true;
+                    break;
+                }
+                if ($res->code == 554 && preg_match('/spam/i', $errorMessage)) {
+                    // Don't need to log error for spam failures
+                    $mxOk = true;
+                    break;
+                }
+                if ($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
+                    $this->out('error_log', "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}");
+                    $mxOk = true;
+                    break;
+                }
+    
+                // We don't need to log these errors and don't need to show these errors to the user
+                if (
+                    $res->code == 553 && preg_match('/User unknown/i', $errorMessage)
+                    || $res->code == 550 && preg_match('/does not exist|no mailbox here|User unknown|user not exist/i', $errorMessage)
+                ) {
+                    $this->out('email_fail', 'Email ' . $this->emailNorm . ' does not work - we checked it - nothing can be delivered to them.', true);
+                }
+    
+                // Only log errors that aren't known false positives
+                // PEAR_Error objects have both ->message property and getMessage() method
+                // Using getMessage() method is the standard approach
+                $this->out('error_log', "SMTP Validate Rejected Email $mx {$res->code} Email: {$this->emailNorm} - Error: " . $errorMessage);
+                $lastErr = $res->getMessage();
             }
-
-            // Check for SMTP error 451 (Greylisting - temporary failure)
-            // This is a temporary error indicating greylisting, so treat it as a valid check
-            if ($res->code == 451) {
-                $this->out('error_log', "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}");
-                $mxOk = true;
-                break;
-            }
-
-            // Check for SMTP error 452 (out of storage space)
-            if (in_array($res->code, array(452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
-                // Don't need to log error for out of storage space
-                $this->out('email_fail', 'The email address is over quota - which probably means its a dead email address - '
-                        . 'we do not add these as we would just get rejections - you should contact this user before adding '
-                        . 'and see if they have another email address', true);
-            }
-
-            // Check for SMTP error 550 with Spamhaus failure
-            // Spamhaus failures are false positives we can't fix, so treat as valid
-            // Also check for Mimecast which uses Spamhaus (zen.mimecast.org)
-            if ($res->code == 550 && preg_match('/spamhaus/i', $errorMessage)) {
-                // Don't need to log error for spamhaus failures
-                $mxOk = true;
-                break;
-            }
-            if ($res->code == 554 && preg_match('/spam/i', $errorMessage)) {
-                // Don't need to log error for spam failures
-                $mxOk = true;
-                break;
-            }
-            if ($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
-                $this->out('error_log', "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}");
-                $mxOk = true;
-                break;
-            }
-
-            // We don't need to log these errors and don't need to show these errors to the user
-            if (
-                $res->code == 553 && preg_match('/User unknown/i', $errorMessage)
-                || $res->code == 550 && preg_match('/does not exist|no mailbox here|User unknown|user not exist/i', $errorMessage)
-            ) {
-                $this->out('email_fail', 'Email ' . $this->emailNorm . ' does not work - we checked it - nothing can be delivered to them.', true);
-            }
-
-            // Only log errors that aren't known false positives
-            // PEAR_Error objects have both ->message property and getMessage() method
-            // Using getMessage() method is the standard approach
-            $this->out('error_log', "SMTP Validate Rejected Email $mx {$res->code} Email: {$this->emailNorm} - Error: " . $errorMessage);
-            $lastErr = $res->getMessage();
         }
 
         if (!$mxOk) {
