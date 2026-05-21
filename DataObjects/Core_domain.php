@@ -326,7 +326,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return $cnsi2;
     }
 
-    function createMailer($roo, $mx, $validUser = false)
+    function createMailer($roo, $mx, $validUser = false, $opts = array())
     {
         $ff = HTML_FlexyFramework::get();
 
@@ -341,7 +341,21 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         );
 
         $currentServer = DB_DataObject::Factory('core_notify_server')->getCurrent($roo, true, 'core');
+        $bindNotifyInterface = !empty($opts['bind_notify_interface']);
+        if ($bindNotifyInterface && $currentServer->interface == '' && !empty($currentServer->hostname)) {
+            $ifaceServer = DB_DataObject::factory('core_notify_server');
+            $ifaceServer->poolname = $currentServer->poolname;
+            $ifaceServer->hostname = $currentServer->hostname;
+            $ifaceServer->is_active = 1;
+            $ifaceServer->whereAdd("interface != ''");
+            $ifaceServer->limit(1);
+            if ($ifaceServer->find(true)) {
+                $currentServer = $ifaceServer;
+            }
+        }
+
         $ipv6Map = isset($ff->Mail_Validate['ipv6']) ? $ff->Mail_Validate['ipv6'] : array();
+        $ipv6Bound = false;
 
         // current server has ipv6 address
         if(!empty($currentServer->id) && !empty($currentServer->hostname) && !empty($ipv6Map[$currentServer->hostname])) {
@@ -350,7 +364,22 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if (!empty($aaaa_records)) {
                 $socket_options['socket'] = array(
                     'bindto' => '[' . $ipv6Map[$currentServer->hostname] . ']:0'
-                ); 
+                );
+                $ipv6Bound = true;
+            }
+        }
+
+        if (!$ipv6Bound && $bindNotifyInterface && $currentServer->interface != '') {
+            $ifaces = net_get_interfaces();
+            if (array_key_exists($currentServer->interface, $ifaces)
+                && !empty($ifaces[$currentServer->interface]['unicast'][1]['address'])) {
+                $ipv4_bind_ip = $ifaces[$currentServer->interface]['unicast'][1]['address'];
+                $socket_options['socket'] = array(
+                    'bindto' => $ipv4_bind_ip . ':0'
+                );
+                if (is_object($roo) && method_exists($roo, 'out')) {
+                    $roo->out('error_log', "ValidateEmail retry: IPv4 bind {$currentServer->interface} ({$ipv4_bind_ip})");
+                }
             }
         }
         
