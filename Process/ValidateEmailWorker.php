@@ -178,7 +178,13 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         }
 
         if (!$mxOk) {
-            $this->out('email_fail', 'cannot send to ' . $this->emailNorm . ($lastErr ? " ({$lastErr})" : ' (connection failed to all MX servers)'), true);
+            echo json_encode(array(
+                'type' => 'email_fail',
+                'message' => 'cannot send to ' . $this->emailNorm . ($lastErr ? " ({$lastErr})" : ' (connection failed to all MX servers)'),
+                'retry' => true
+            ), JSON_UNESCAPED_UNICODE) . "\n";
+            fflush(STDOUT);
+            exit(1);
         }
 
         $token = md5($this->emailNorm . (int) $cd->id);
