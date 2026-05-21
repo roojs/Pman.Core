@@ -121,11 +121,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             if ($res->code == 421) {
                 // no error log for 421 on yahoo.com as its a known issue
                 if($dom != 'yahoo.com') {
-                    echo json_encode(array(
-                        'type' => 'error_log',
-                        'message' => "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}",
-                    ), JSON_UNESCAPED_UNICODE) . "\n";
-                    fflush(STDOUT);
+                    $this->out('error_log', "WARNING: Email test failed for {$this->emailNorm} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}");
                 }
                 $mxOk = true; // Treat 421 as success
                 break;
