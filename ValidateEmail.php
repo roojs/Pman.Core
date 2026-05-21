@@ -228,6 +228,7 @@ class Pman_Core_ValidateEmail extends Pman
                 $this->parseWorkerOutput($bufOut, $jobError, $okRow);
             }
 
+            // unexpected error
             if(empty($jobError) && $okRow === null) {
                 $jobError = 'No success result from worker for ' . $emailNorm . '. Please contact the website admin.';
                 // log fatal php error
