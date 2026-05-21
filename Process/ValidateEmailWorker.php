@@ -98,6 +98,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             }
         }
         
+        
         for($pass = 0; $pass < 2 && !$mxOk; $pass++) {
             foreach ($mxs as $mx) {
                 $mailer = $cd->createMailer($this, $mx, $validUser);
