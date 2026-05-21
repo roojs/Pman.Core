@@ -257,7 +257,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         exit(0);
     }
 
-    function output($type, $message, $exit = false) 
+    function out($type, $message, $exit = false) 
     {
         $res = array(
             'type' => $type,
