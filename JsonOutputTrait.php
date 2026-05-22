@@ -122,7 +122,7 @@ trait Pman_Core_JsonOutputTrait {
              * When no manipulation transaction (INSERT, UPDATE, DELETE, etc...) is done after BEGIN in Roo post(),
              * calling "$this->transObj->query('ROLLBACK')" won't rollback the transaction and set the AUTOCOMMIT to 1 on MySQL,
              * but it will change the autocommit flag of the connection back to true.
-             * (MySQL transaction is still open, but the autocommit flag is true.)
+             * (Inconsistent state: MySQL transaction is still open, but the autocommit flag is true.)
              * 
              * That's why we need to commit the transaction manually and set the AUTOCOMMIT to 1.
              */
