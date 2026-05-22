@@ -121,7 +121,7 @@ trait Pman_Core_JsonOutputTrait {
              * Problem:
              * When no manipulation transaction (INSERT, UPDATE, DELETE, etc...) is done after BEGIN,
              * calling "$this->transObj->query('ROLLBACK')" will not rollback the transaction and set the AUTOCOMMIT to 1 on MySQL,
-             * but it will change the autocommit flag back to true.
+             * but it will change the autocommit flag of the connection back to true.
              * 
              * That's why we need to commit the transaction manually and set the AUTOCOMMIT to 1.
              */
