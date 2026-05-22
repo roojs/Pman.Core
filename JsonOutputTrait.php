@@ -114,6 +114,16 @@ trait Pman_Core_JsonOutputTrait {
             }
             
             $this->addEvent($type, false, $str);
+
+            /**
+             * make sure the event insert transaction is committed
+             * 
+             * Problem:
+             * When no manipulation transaction (INSERT, UPDATE, DELETE, etc...) is done after BEGIN,
+             * calling "$this->transObj->query('ROLLBACK')" will not rollback the transaction and set the AUTOCOMMIT to 1.
+             * 
+             * That's why we need to commit the transaction manually and set the AUTOCOMMIT to 1.
+             */
             if ($this->transObj) {
                 global $_DB_DATAOBJECT;
                 $DB = $_DB_DATAOBJECT['CONNECTIONS'][$this->transObj->_database_dsn_md5];
