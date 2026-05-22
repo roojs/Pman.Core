@@ -116,11 +116,10 @@ trait Pman_Core_JsonOutputTrait {
             $this->addEvent($type, false, $str);
             if ($this->transObj) {
                 $this->transObj->query('SET AUTOCOMMIT=1');
-                $DB = $this->transObj->getDatabaseConnection();
-                if ($DB && !PEAR::isError($DB)) {
-                    $DB->autoCommit(true);
-                    $DB->transaction_opcount = 0;
-                }
+                global $_DB_DATAOBJECT;
+                $DB = $_DB_DATAOBJECT['CONNECTIONS'][$this->transObj->_database_dsn_md5];
+                $DB->autoCommit(true);
+                $DB->transaction_opcount = 0;
             }
             
         }
