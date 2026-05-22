@@ -114,6 +114,9 @@ trait Pman_Core_JsonOutputTrait {
             }
             
             $this->addEvent($type, false, $str);
+            if($this->transObj) {
+                $this->transObj->query('COMMIT');
+            }
             
         }
          
