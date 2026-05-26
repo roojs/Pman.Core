@@ -237,15 +237,13 @@ class Pman_Core_ValidateEmail extends Pman
                 }
             }
 
-            $row = array(
+            $validationResults[$emailNorm] = array(
                 'email' => $emailNorm,
                 'error' => $jobError ? $jobError : '',
                 'domain_id' => $jobError ? '' : $okRow['domain_id'],
                 'token' => $jobError ? '' : $okRow['token'],
             );
-            
-            $validationResults[$emailNorm] = $row;
-            $results[$field] = $row;
+            $results[$field] = $validationResults[$emailNorm];
         }
 
         $this->sendSSE('progress', array(
