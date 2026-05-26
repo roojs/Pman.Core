@@ -525,22 +525,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         );
 
         $currentServer = DB_DataObject::Factory('core_notify_server')->getCurrent($roo, true, 'core');
-        if (!empty($opts['bind_notify_interface']) && $currentServer->interface == '') {
-            $srv = DB_DataObject::factory('core_notify_server');
-            $srv->setFrom(array(
-                'poolname' => $currentServer->poolname,
-                'hostname' => $currentServer->hostname,
-                'is_active' => 1,
-            ));
-            $srv->whereAdd("interface != ''");
-            $srv->limit(1);
-            if ($srv->find(true)) {
-                $currentServer = $srv;
-            }
-        }
-
         $ipv6Map = isset($ff->Mail_Validate['ipv6']) ? $ff->Mail_Validate['ipv6'] : array();
-        $ipv6Bound = false;
 
         // current server has ipv6 address
         if(!empty($currentServer->id) && !empty($currentServer->hostname) && !empty($ipv6Map[$currentServer->hostname])) {
@@ -549,28 +534,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if (!empty($aaaa_records)) {
                 $socket_options['socket'] = array(
                     'bindto' => '[' . $ipv6Map[$currentServer->hostname] . ']:0'
-                );
-                $ipv6Bound = true;
+                ); 
             }
         }
-
-
-
-        if (!$ipv6Bound && !empty($opts['bind_notify_interface']) && $currentServer->interface != '') {
-            $ifaces = net_get_interfaces();
-
-            if (array_key_exists($currentServer->interface, $ifaces)
-                && !empty($ifaces[$currentServer->interface]['unicast'][1]['address'])) {
-                $ipv4_bind_ip = $ifaces[$currentServer->interface]['unicast'][1]['address'];
-                $socket_options['socket'] = array(
-                    'bindto' => $ipv4_bind_ip . ':0'
-                );
-                if (is_object($roo) && method_exists($roo, 'out')) {
-                    $roo->out('error_log', "ValidateEmail retry: IPv4 bind {$currentServer->interface} ({$ipv4_bind_ip})");
-                }
-            }
-        }
-
+        
         $mailer = Mail::factory('smtp', array(
             'host'    => $mx,
             'localhost' => $ff->Mail['helo'],
@@ -626,35 +593,5 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         return $mailer;
-    }
-
-    /**
-     * MX hostnames in priority order for SMTP probe, or empty if domain cannot receive mail
-     * (same preconditions as validateEmail before the MX loop).
-     *
-     * @return array list of MX host strings
-     */
-    function mxHostsForValidation()
-    {
-        if (!(($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) 
-            ? $this->has_mx : $this->hasValidMx($this->domain))) {
-            return array();
-        }
-
-        $mx_records = array();
-        $mx_weight = array();
-        if (!getmxrr($this->domain, $mx_records, $mx_weight)) {
-            return array();
-        }
-        asort($mx_weight, SORT_NUMERIC);
-
-        $mxs = array();
-        foreach ($mx_weight as $k => $weight) {
-            if (!empty($mx_records[$k])) {
-                $mxs[] = $mx_records[$k];
-            }
-        }
-
-        return $mxs;
     }
 }
