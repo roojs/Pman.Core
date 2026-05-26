@@ -329,16 +329,14 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     /**
      * validate email
      * 
-     * @param object $roo page
+     * @param object $roo page (must provide debuglog() for validation warning NDJSON)
      * @param string $email email address to validate
-     * @param callable|false $reporter optional callback(type, message, exit) for ValidateEmailWorker NDJSON
      * @param int $pass 0 = default From, 1 = retry From / bind notify interface
      * @return bool|string true on success, error message string if this pass failed (caller may retry)
      * @throws Exception if domain is not set on this object
      */
-    function validateEmail($roo, $email, $reporter = false, $pass = 0)
+    function validateEmail($roo, $email, $pass = 0)
     {
-        $reporter = $reporter === false ? function () {} : $reporter;
         $ff = HTML_FlexyFramework::get();
 
         $dom = $this->domain;
@@ -349,9 +347,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if ($pass == 0) {
             // Check MX records - use cache if updated within last 30 days
             if (!(($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) ? $this->has_mx : $this->hasValidMx($dom))) {
-                $msg = "{$email} {$dom} is not a valid domain (cant deliver email to it)";
-                $reporter('email_fail', $msg, true);
-                return $msg;
+                return "{$email} {$dom} is not a valid domain (cant deliver email to it)";
             }
         }
 
@@ -359,15 +355,12 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         if (!isset($ff->Mail['helo'])) {
             $roo->errorlog('config Mail[helo] is not set');
-            echo 'config Mail[helo] is not set';
             exit(1);
         }
 
         $mxs = $this->mxHostsForValidation();
         if (empty($mxs)) {
-            $msg = "cannot send to {$email} (no MX records found)";
-            $reporter('email_fail', $msg, true);
-            return $msg;
+            return "cannot send to {$email} (no MX records found)";
         }
 
         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
@@ -395,7 +388,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         $mxOk = false;
-        $lastErr = '';
+        $lastError = '';
 
         foreach ($mxs as $mx) {
             $mailer = $this->createMailer($roo, $mx, $validUser, array(
@@ -427,7 +420,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                     $mxOk = true;
                     break;
                 }
-                $roo->errorlog(
+                $roo->debuglog(
+                    'error_log',
                     "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 $mxOk = true;
@@ -437,7 +431,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // Check for SMTP error 451 (Greylisting - temporary failure)
             // This is a temporary error indicating greylisting, so treat it as a valid check
             if ($res->code == 451) {
-                $roo->errorlog(
+                $roo->debuglog(
+                    'error_log',
                     "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 $mxOk = true;
@@ -447,11 +442,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // Check for SMTP error 452 (out of storage space)
             if (in_array($res->code, array( 452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
                 // Don't need to log error for out of storage space
-                $msg = "The email address is over quota - which probably means its a dead email address - " .
+                return "The email address is over quota - which probably means its a dead email address - " .
                 "we don't add these as we would just get rejections - you should contact this user before adding " .
                 "and see if they have another email address";
-                $reporter('email_fail', $msg, true);
-                return $msg;
             }
             
             // Check for SMTP error 550 with Spamhaus failure
@@ -473,7 +466,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
 
             if($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
-                $roo->errorlog(
+                $roo->debuglog(
+                    'error_log',
                     "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 $mxOk = true;
@@ -490,23 +484,22 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 ||
                 $res->code == 550 && preg_match('/User unknown/i', $errorMessage)
             ) {
-                $msg = "This email is invalid - we tested it and it does not exist";
-                $reporter('email_fail', $msg, true);
-                return $msg;
+                return "This email is invalid - we tested it and it does not exist";
             }
 
             // Only log errors that aren't known false positives
             // PEAR_Error objects have both ->message property and getMessage() method
             // Using getMessage() method is the standard approach
-            $roo->errorlog(
+            $roo->debuglog(
+                'error_log',
                 "SMTP Validate Rejected Email {$res->code} Email: {$email} - Error: " . $errorMessage
             );
               
-            $lastErr = $res->getMessage();
+            $lastError = $res->getMessage();
         }
 
         if (!$mxOk) {
-            return "cannot send to {$email}" . ($lastErr ? " ({$lastErr})" : " (connection failed to all MX servers)");
+            return "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
         }
 
         return true;
@@ -567,9 +560,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $socket_options['socket'] = array(
                     'bindto' => $ipv4_bind_ip . ':0'
                 );
-                if (is_object($roo) && method_exists($roo, 'out')) {
-                    $roo->out('error_log', "ValidateEmail retry: IPv4 bind {$currentServer->interface} ({$ipv4_bind_ip})");
-                }
+                $roo->errorlog("ValidateEmail retry: IPv4 bind {$currentServer->interface} ({$ipv4_bind_ip})");
             }
         }
 
