@@ -4,6 +4,13 @@
  */
 class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
+class Pman_Core_DataObjects_Core_domain_DummyReporter
+{
+    function report($type, $message, $exit = false)
+    {
+    }
+}
+
 class Pman_Core_DataObjects_Core_domain extends DB_DataObject 
 {
     ###START_AUTOCODE
@@ -341,16 +348,17 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         );
 
         $currentServer = DB_DataObject::Factory('core_notify_server')->getCurrent($roo, true, 'core');
-        $bindNotifyInterface = !empty($opts['bind_notify_interface']);
-        if ($bindNotifyInterface && $currentServer->interface == '' && !empty($currentServer->hostname)) {
-            $ifaceServer = DB_DataObject::factory('core_notify_server');
-            $ifaceServer->poolname = $currentServer->poolname;
-            $ifaceServer->hostname = $currentServer->hostname;
-            $ifaceServer->is_active = 1;
-            $ifaceServer->whereAdd("interface != ''");
-            $ifaceServer->limit(1);
-            if ($ifaceServer->find(true)) {
-                $currentServer = $ifaceServer;
+        if (!empty($opts['bind_notify_interface']) && $currentServer->interface == '') {
+            $srv = DB_DataObject::factory('core_notify_server');
+            $srv->setFrom(array(
+                'poolname' => $currentServer->poolname,
+                'hostname' => $currentServer->hostname,
+                'is_active' => 1,
+            ));
+            $srv->whereAdd("interface != ''");
+            $srv->limit(1);
+            if ($srv->find(true)) {
+                $currentServer = $srv;
             }
         }
 
@@ -371,7 +379,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
 
 
-        if (!$ipv6Bound && $bindNotifyInterface && $currentServer->interface != '') {
+        if (!$ipv6Bound && !empty($opts['bind_notify_interface']) && $currentServer->interface != '') {
             $ifaces = net_get_interfaces();
 
             if (array_key_exists($currentServer->interface, $ifaces)
@@ -451,18 +459,14 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      */
     function mxHostsForValidation()
     {
-        $dom = $this->domain;
-        if (empty($dom)) {
-            return array();
-        }
-
-        if (!(($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) ? $this->has_mx : $this->hasValidMx($dom))) {
+        if (!(($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) 
+            ? $this->has_mx : $this->hasValidMx($this->domain))) {
             return array();
         }
 
         $mx_records = array();
         $mx_weight = array();
-        if (!getmxrr($dom, $mx_records, $mx_weight)) {
+        if (!getmxrr($this->domain, $mx_records, $mx_weight)) {
             return array();
         }
         asort($mx_weight, SORT_NUMERIC);
@@ -475,5 +479,165 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         return $mxs;
+    }
+
+    /**
+     * SMTP probe for an email on this domain.
+     *
+     * @param object $roo page or CLI context
+     * @param string $email normalized address
+     * @param callable|false $reporter optional callback(type, message, exit) for SSE worker NDJSON
+     * @return true|string true on success, error message otherwise (reporter may exit on failure)
+     */
+    function validateEmail($roo, $email, $reporter = false)
+    {
+        $reporter = $reporter === false ? function () {} : $reporter;
+
+        $dom = $this->domain;
+        if (empty($dom)) {
+            throw new Exception('Domain not set on core_domain object');
+        }
+
+        $mxs = $this->mxHostsForValidation();
+        if (empty($mxs)) {
+            $msg = "{$email} {$dom} is not a valid domain (cant deliver email to it)";
+            $reporter('email_fail', $msg, true);
+            return $msg;
+        }
+
+        require_once 'Mail.php';
+        $ff = HTML_FlexyFramework::get();
+        if (!isset($ff->Mail['helo'])) {
+            $reporter('error_log', 'config Mail[helo] is not set', true);
+            throw new Exception('config Mail[helo] is not set');
+        }
+
+        $validUser = false;
+        if (!empty($ff->Mail_Validate['routes'])) {
+            $authUser = false;
+            if (is_object($roo) && !empty($roo->authUser)) {
+                $authUser = $roo->authUser;
+            } elseif (!empty($ff->page) && method_exists($ff->page, 'getAuthUser')) {
+                $authUser = $ff->page->getAuthUser();
+            }
+            if ($authUser) {
+                $fromUser = DB_DataObject::factory('mail_imap_user');
+                if ($fromUser->get('email', $authUser->email)) {
+                    $validUser = $fromUser->validateAsOAuth();
+                }
+            }
+            if ($validUser === false && !empty($ff->Mail_Validate['test_user'])) {
+                $fromUser = DB_DataObject::factory('mail_imap_user');
+                if ($fromUser->get('email', $ff->Mail_Validate['test_user'])) {
+                    $validUser = $fromUser->validateAsOAuth();
+                }
+            }
+        }
+
+        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+
+        $mxOk = false;
+        $lastErr = '';
+
+        for ($pass = 0; $pass < 2 && !$mxOk; $pass++) {
+            $fromAddr = 'newswire-reply@media-outreach.com';
+            if ($pass > 0) {
+                $fromAddr = $dom . '@media-outreach.com';
+                $reporter('error_log', "ValidateEmail retry: From {$fromAddr}", false);
+            }
+
+            foreach ($mxs as $mx) {
+                $mailer = $this->createMailer($roo, $mx, $validUser, array(
+                    'bind_notify_interface' => $pass > 0,
+                ));
+                if ($mailer === false) {
+                    continue;
+                }
+
+                $res = $mailer->send($email, array(
+                    'To' => $email,
+                    'From' => '"Media OutReach Newswire" <' . $fromAddr . '>',
+                ), '');
+
+                if (!is_object($res)) {
+                    $mxOk = true;
+                    break;
+                }
+
+                $errorMessage = $res->getMessage();
+
+                if ($res->code == 421) {
+                    if ($dom != 'yahoo.com') {
+                        $reporter(
+                            'error_log',
+                            "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}",
+                            false
+                        );
+                    }
+                    $mxOk = true;
+                    break;
+                }
+
+                if ($res->code == 451) {
+                    $reporter(
+                        'error_log',
+                        "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}",
+                        false
+                    );
+                    $mxOk = true;
+                    break;
+                }
+
+                if (in_array($res->code, array(452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
+                    $msg = 'The email address is over quota - which probably means its a dead email address - '
+                        . 'we do not add these as we would just get rejections - you should contact this user before adding '
+                        . 'and see if they have another email address';
+                    $reporter('email_fail', $msg, true);
+                    return $msg;
+                }
+
+                if ($res->code == 550 && preg_match('/spamhaus/i', $errorMessage)) {
+                    $mxOk = true;
+                    break;
+                }
+                if ($res->code == 554 && preg_match('/spam/i', $errorMessage)) {
+                    $mxOk = true;
+                    break;
+                }
+                if ($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
+                    $reporter(
+                        'error_log',
+                        "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}",
+                        false
+                    );
+                    $mxOk = true;
+                    break;
+                }
+
+                if (
+                    $res->code == 553 && preg_match('/User unknown/i', $errorMessage)
+                    || $res->code == 550 && preg_match('/does not exist|no mailbox here|User unknown|user not exist/i', $errorMessage)
+                ) {
+                    $msg = 'Email ' . $email . ' does not work - we checked it - nothing can be delivered to them.';
+                    $reporter('email_fail', $msg, true);
+                    return $msg;
+                }
+
+                $reporter(
+                    'error_log',
+                    "SMTP Validate Rejected Email $mx {$res->code} Email: {$email} - Error: " . $errorMessage,
+                    false
+                );
+                $lastErr = $res->getMessage();
+            }
+        }
+
+        if (!$mxOk) {
+            $msg = 'cannot send to ' . $email . ($lastErr ? " ({$lastErr})" : ' (connection failed to all MX servers)');
+            $reporter('email_fail', $msg, true);
+            return $msg;
+        }
+
+        return true;
     }
 }
