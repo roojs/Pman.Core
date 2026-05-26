@@ -83,34 +83,19 @@ class Pman_Core_ValidateEmail extends Pman
         }
         $childCwd = dirname($entryScript);
 
-        $fieldsByEmail = array();
-        foreach ($jobs as $jobRow) {
-            if (empty($jobRow['field']) || !isset($jobRow['email'])) {
-                $this->errorlog('Each job needs field and email');
-                $this->error('An error occurred, please contact the website owner.');
-            }
-            $emailNorm = trim($jobRow['email']);
-            if ($emailNorm === '') {
-                continue;
-            }
-            $dar = explode('@', $emailNorm);
-            $dom = trim(strtolower(array_pop($dar)));
-            $dar[] = $dom;
-            $emailNorm = implode('@', $dar);
-            $fieldsByEmail[$emailNorm][] = $jobRow['field'];
-        }
-        if (empty($fieldsByEmail)) {
-            $this->errorlog('No emails to validate after normalization');
-            $this->error('An error occurred, please contact the website owner.');
-        }
-
-        $total = count($fieldsByEmail);
+        $total = count($jobs);
         $results = array();
         $phpBin = defined('PHP_BINARY') && PHP_BINARY ? PHP_BINARY : 'php';
         $childTimeout = 90.0;
 
-        $idx = 0;
-        foreach ($fieldsByEmail as $emailNorm => $fields) {
+        foreach ($jobs as $idx => $jobRow) {
+            if (empty($jobRow['field']) || empty($jobRow['email'])) {
+                $this->errorlog('Each job needs field and email');
+                $this->error('An error occurred, please contact the website owner.');
+            }
+
+            $field = $jobRow['field'];
+            $email = $jobRow['email'];
 
             $jobFile = tempnam(sys_get_temp_dir(), 'vew_');
             if ($jobFile === false) {
@@ -119,7 +104,7 @@ class Pman_Core_ValidateEmail extends Pman
             }
 
             $payload = array(
-                'email' => $emailNorm,
+                'email' => $email,
                 'auth_user_id' => $au->id,
             );
             file_put_contents($jobFile, json_encode($payload, JSON_UNESCAPED_UNICODE));
@@ -157,7 +142,7 @@ class Pman_Core_ValidateEmail extends Pman
             $this->sendSSE('progress', array(
                 'total' => $total * $childTimeout,
                 'progress' => $idx / $total * 100,
-                'message' => 'Validating email (' . $emailNorm . ') - ' . round($childTimeout) . ' seconds left',
+                'message' => 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left',
             ));
 
             while (true) {
@@ -173,7 +158,7 @@ class Pman_Core_ValidateEmail extends Pman
                     if (file_exists($jobFile)) {
                         unlink($jobFile);
                     }
-                    $this->error('Validation timed out for ' . $emailNorm);
+                    $this->error('Validation timed out for ' . $email);
                 }
 
                 $r = array($pipes[1], $pipes[2]);
@@ -208,7 +193,7 @@ class Pman_Core_ValidateEmail extends Pman
                     $this->sendSSE('progress', array(
                         'total' =>  $total * $childTimeout,
                         'progress' => (microtime(true) - $childStarted + $idx * $childTimeout) / ($total * $childTimeout) * 100,
-                        'message' => 'Validating email (' . $emailNorm . ') - ' . round($childTimeout - (microtime(true) - $childStarted)) ." seconds left",
+                        'message' => 'Validating email (' . $email . ') - ' . round($childTimeout - (microtime(true) - $childStarted)) ." seconds left",
                     ));
                 }
             }
@@ -237,16 +222,12 @@ class Pman_Core_ValidateEmail extends Pman
                 }
             }
 
-            $row = array(
-                'email' => $emailNorm,
+            $results[$field] = array(
+                'email' => $email,
                 'error' => $jobError ? $jobError : '',
                 'domain_id' => $jobError ? '' : $okRow['domain_id'],
                 'token' => $jobError ? '' : $okRow['token'],
             );
-            foreach ($fields as $field) {
-                $results[$field] = $row;
-            }
-            $idx++;
         }
 
         $this->sendSSE('progress', array(
