@@ -66,7 +66,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if (!$this->get('domain', $dom)) {
 
             if (!dns_get_record($dom, DNS_A + DNS_AAAA + DNS_CNAME + DNS_MX + DNS_NS)) {
-                return "Domain {$dom} does not exist (no dns records found)";
+                return "Email domain @{$dom} does not exist. The company may not have paid to renew the domain or the company does not exist anymore.";
             }
 
 
@@ -478,7 +478,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
                 $reporter(
                     'error_log',
-                    "SMTP Validate Rejected Email {$res->code} Email: {$email} - Error: " . $errorMessage,
+                    "SMTP Validate Rejected Email $mx {$res->code} Email: {$email} - Error: " . $errorMessage,
                     false
                 );
                 $lastErr = $res->getMessage();
