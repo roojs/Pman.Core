@@ -68,14 +68,18 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             exit(1);
         }
 
+        // true = RCPT accepted; false = soft/inconclusive (retry pass 1); string = hard fail
         $result = false;
         for ($pass = 0; $pass < 2; $pass++) {
             $result = $cd->validateEmail($this, $emailNorm, $pass);
             if ($result === true) {
                 break;
             }
+            if ($result !== false) {
+                break;
+            }
         }
-        if ($result !== true) {
+        if (is_string($result)) {
             $this->debuglog('email_fail', $result);
             exit(1);
         }
