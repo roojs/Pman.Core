@@ -4,12 +4,6 @@
  */
 class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
-class Pman_Core_DataObjects_Core_domain_DummyReporter
-{
-    function report($type, $message, $exit = false)
-    {
-    }
-}
 
 class Pman_Core_DataObjects_Core_domain extends DB_DataObject 
 {
