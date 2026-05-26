@@ -239,13 +239,10 @@ class Pman_Core_ValidateEmail extends Pman
 
             $row = array(
                 'email' => $emailNorm,
+                'error' => $jobError ? $jobError : '',
+                'domain_id' => $jobError ? '' : $okRow['domain_id'],
+                'token' => $jobError ? '' : $okRow['token'],
             );
-            if ($jobError) {
-                $row['error'] = $jobError;
-            } else {
-                $row['domain_id'] = $okRow['domain_id'];
-                $row['token'] = $okRow['token'];
-            }
             
             $validationResults[$emailNorm] = $row;
             $results[$field] = $row;
