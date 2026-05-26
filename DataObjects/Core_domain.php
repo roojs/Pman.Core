@@ -354,10 +354,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         require_once 'Mail.php';
 
-        if (!isset($ff->Mail['helo'])) {
-            throw new Exception("config Mail[helo] is not set");
-        }
-
         // Get MX records for the domain
         $mx_records = array();
         $mx_weight = array();
