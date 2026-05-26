@@ -384,7 +384,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if (!empty($ff->Mail_Validate['routes'])) {
             $authUser = $roo->getAuthUser();
             $fromUser = DB_DataObject::factory('mail_imap_user');
-            if ($authUser && $fromUser->get('email', $authUser->email)) {
+            if ($fromUser->get('email', $authUser->email)) {
                 $validUser = $fromUser->validateAsOAuth();
             }
             
