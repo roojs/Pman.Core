@@ -262,24 +262,6 @@ class Pman_Core_ValidateEmail extends Pman
         exit;
     }
 
-    /**
-     * Lowercase domain; same rules as Pressrelease_contact::getOldEmails().
-     *
-     * @param string $email
-     * @return string normalized address or '' if empty after trim
-     */
-    function normalizeEmailAddress($email)
-    {
-        $email = trim($email);
-        if ($email === '') {
-            return '';
-        }
-        $dar = explode('@', $email);
-        $dom = trim(strtolower(array_pop($dar)));
-        $dar[] = $dom;
-        return implode('@', $dar);
-    }
-
     function parseWorkerOutput(&$bufOut, &$jobError, &$okRow) 
     {
         while (($p = strpos($bufOut, "\n")) !== false) {
