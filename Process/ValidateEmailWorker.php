@@ -65,10 +65,20 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         }
 
         $worker = $this;
-        $cd->validateEmail($this, $emailNorm, 
-            function ($type, $message, $exit = false) use ($worker) {
+        $reporter = function ($type, $message, $exit = false) use ($worker) {
             $worker->out($type, $message, $exit);
-        });
+        };
+
+        $result = false;
+        for ($pass = 0; $pass < 2; $pass++) {
+            $result = $cd->validateEmail($this, $emailNorm, $reporter, $pass);
+            if ($result === true) {
+                break;
+            }
+        }
+        if ($result !== true) {
+            $reporter('email_fail', $result, true);
+        }
 
         echo json_encode(array(
             'type' => 'email_ok',
