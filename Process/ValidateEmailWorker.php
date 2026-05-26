@@ -89,6 +89,12 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         exit(0);
     }
 
+    function errorlog($msg)
+    {
+        parent::errorlog($msg);
+        $this->debuglog('error_log', $msg);
+    }
+
     function debuglog($type, $message)
     {
         echo json_encode(array(
