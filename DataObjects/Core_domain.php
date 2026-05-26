@@ -332,10 +332,11 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      * @param object $roo page
      * @param string $email email address to validate
      * @param callable|false $reporter optional callback(type, message, exit) for ValidateEmailWorker NDJSON
-     * @return bool|string true on success, error message string on failure
+     * @param int $pass 0 = default From, 1 = retry From / bind notify interface
+     * @return bool|string true on success, error message string if this pass failed (caller may retry)
      * @throws Exception if configuration is invalid
      */
-    function validateEmail($roo, $email, $reporter = false)
+    function validateEmail($roo, $email, $reporter = false, $pass = 0)
     {
         $reporter = $reporter === false ? function () {} : $reporter;
         $ff = HTML_FlexyFramework::get();
@@ -345,11 +346,13 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             throw new Exception("Domain not set on core_domain object");
         }
 
-        // Check MX records - use cache if updated within last 30 days
-        if (!(($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) ? $this->has_mx : $this->hasValidMx($dom))) {
-            $msg = "{$email} {$dom} is not a valid domain (cant deliver email to it)";
-            $reporter('email_fail', $msg, true);
-            return $msg;
+        if ($pass == 0) {
+            // Check MX records - use cache if updated within last 30 days
+            if (!(($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) ? $this->has_mx : $this->hasValidMx($dom))) {
+                $msg = "{$email} {$dom} is not a valid domain (cant deliver email to it)";
+                $reporter('email_fail', $msg, true);
+                return $msg;
+            }
         }
 
         require_once 'Mail.php';
@@ -384,111 +387,104 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
         }
 
+        $fromAddr = 'newswire-reply@media-outreach.com';
+        if ($pass > 0) {
+            $fromAddr = $dom . '@media-outreach.com';
+            $reporter('error_log', "ValidateEmail retry: From {$fromAddr}", false);
+        }
+
         $mxOk = false;
         $lastErr = '';
 
-        for ($pass = 0; $pass < 2 && !$mxOk; $pass++) {
-            $fromAddr = 'newswire-reply@media-outreach.com';
-            if ($pass > 0) {
-                $fromAddr = $dom . '@media-outreach.com';
-                $reporter('error_log', "ValidateEmail retry: From {$fromAddr}", false);
+        foreach ($mxs as $mx) {
+            $mailer = $this->createMailer($roo, $mx, $validUser, array(
+                'bind_notify_interface' => $pass > 0,
+            ));
+            if ($mailer === false) {
+                continue;
             }
 
-            foreach ($mxs as $mx) {
-                $mailer = $this->createMailer($roo, $mx, $validUser, array(
-                    'bind_notify_interface' => $pass > 0,
-                ));
-                if ($mailer === false) {
-                    continue;
-                }
+            $res = $mailer->send($email, array(
+                'To' => $email,
+                'From' => '"Media OutReach Newswire" <' . $fromAddr . '>',
+            ), '');
 
-                $res = $mailer->send($email, array(
-                    'To' => $email,
-                    'From' => '"Media OutReach Newswire" <' . $fromAddr . '>',
-                ), '');
+            if (!is_object($res)) {
+                $mxOk = true;
+                break;
+            }
 
-                if (!is_object($res)) {
-                    $mxOk = true;
-                    break;
-                }
+            $errorMessage = $res->getMessage();
 
-                $errorMessage = $res->getMessage();
-
-                if ($res->code == 421) {
-                    if ($dom != 'yahoo.com') {
-                        $reporter(
-                            'error_log',
-                            "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}",
-                            false
-                        );
-                    }
-                    $mxOk = true;
-                    break;
-                }
-
-                if ($res->code == 451) {
+            if ($res->code == 421) {
+                if ($dom != 'yahoo.com') {
                     $reporter(
                         'error_log',
-                        "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}",
+                        "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}",
                         false
                     );
-                    $mxOk = true;
-                    break;
                 }
+                $mxOk = true;
+                break;
+            }
 
-                if (in_array($res->code, array(452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
-                    $msg = "The email address is over quota - which probably means its a dead email address - " .
-                "we don't add these as we would just get rejections - you should contact this user before adding " .
-                "and see if they have another email address";
-                    $reporter('email_fail', $msg, true);
-                    return $msg;
-                }
-
-                if ($res->code == 550 && preg_match('/spamhaus/i', $errorMessage)) {
-                    $mxOk = true;
-                    break;
-                }
-                if ($res->code == 554 && preg_match('/spam/i', $errorMessage)) {
-                    $mxOk = true;
-                    break;
-                }
-                if ($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
-                    $reporter(
-                        'error_log',
-                        "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}",
-                        false
-                    );
-                    $mxOk = true;
-                    break;
-                }
-
-                if(
-                    $res->code == 553 && preg_match('/User unknown/i', $errorMessage)
-                    ||
-                    $res->code == 550 && preg_match('/does not exist/i', $errorMessage)
-                    ||
-                    $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
-                    ||
-                    $res->code == 550 && preg_match('/User unknown/i', $errorMessage)
-                ) {
-                    $msg = "This email is invalid - we tested it and it does not exist";
-                    $reporter('email_fail', $msg, true);
-                    return $msg;
-                }
-
+            if ($res->code == 451) {
                 $reporter(
                     'error_log',
-                    "SMTP Validate Rejected Email $mx {$res->code} Email: {$email} - Error: " . $errorMessage,
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}",
                     false
                 );
-                $lastErr = $res->getMessage();
+                $mxOk = true;
+                break;
             }
+
+            if (in_array($res->code, array(452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
+                $msg = "The email address is over quota - which probably means its a dead email address - " .
+                "we don't add these as we would just get rejections - you should contact this user before adding " .
+                "and see if they have another email address";
+                $reporter('email_fail', $msg, true);
+                return $msg;
+            }
+
+            if ($res->code == 550 && preg_match('/spamhaus/i', $errorMessage)) {
+                $mxOk = true;
+                break;
+            }
+            if ($res->code == 554 && preg_match('/spam/i', $errorMessage)) {
+                $mxOk = true;
+                break;
+            }
+            if ($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
+                $reporter(
+                    'error_log',
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}",
+                    false
+                );
+                $mxOk = true;
+                break;
+            }
+
+            if (
+                $res->code == 553 && preg_match('/User unknown/i', $errorMessage)
+                || $res->code == 550 && preg_match('/does not exist/i', $errorMessage)
+                || $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
+                || $res->code == 550 && preg_match('/User unknown/i', $errorMessage)
+            ) {
+                $msg = "This email is invalid - we tested it and it does not exist";
+                $reporter('email_fail', $msg, true);
+                return $msg;
+            }
+
+            $reporter(
+                'error_log',
+                "SMTP Validate Rejected Email {$res->code} Email: {$email} - Error: " . $errorMessage,
+                false
+            );
+            $lastErr = $res->getMessage();
         }
 
         if (!$mxOk) {
-            $msg = 'cannot send to ' . $email . ($lastErr ? " ({$lastErr})" : ' (connection failed to all MX servers)');
-            $reporter('email_fail', $msg, true);
-            return $msg;
+            return 'cannot send to ' . $email . ($lastErr ? " ({$lastErr})" : ' (connection failed to all MX servers)');
         }
 
         return true;
