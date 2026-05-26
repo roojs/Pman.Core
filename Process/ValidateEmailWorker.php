@@ -37,7 +37,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             exit(1);
         }
 
-        $raw = @file_get_contents($jobPath);
+        $raw = file_get_contents($jobPath);
         if ($raw === false || $raw === '') {
             echo 'Cannot read job file: ' . $jobPath . "\n";
             exit(1);

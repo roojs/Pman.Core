@@ -123,7 +123,9 @@ class Pman_Core_ValidateEmail extends Pman
                 'auth_user_id' => $au->id,
             );
             file_put_contents($jobFile, json_encode($payload, JSON_UNESCAPED_UNICODE));
-            @chmod($jobFile, 0600);
+            if (chmod($jobFile, 0600) === false) {
+                $this->errorlog('Could not set permissions on job file: ' . $jobFile);
+            }
 
             $cmd = escapeshellarg($phpBin) . ' '
                 . escapeshellarg($entryScript) . ' '
@@ -136,7 +138,9 @@ class Pman_Core_ValidateEmail extends Pman
             );
             $proc = proc_open($cmd, $descriptors, $pipes, $childCwd);
             if (!is_resource($proc)) {
-                @unlink($jobFile);
+                if (file_exists($jobFile)) {
+                    unlink($jobFile);
+                }
                 $this->errorlog('Could not start validation subprocess');
                 $this->error('An error occurred, please contact the website owner.');
             }
@@ -168,7 +172,9 @@ class Pman_Core_ValidateEmail extends Pman
                     fclose($pipes[1]);
                     fclose($pipes[2]);
                     proc_close($proc);
-                    @unlink($jobFile);
+                    if (file_exists($jobFile)) {
+                        unlink($jobFile);
+                    }
                     $this->error('Validation timed out for ' . $emailNorm);
                 }
 
@@ -176,7 +182,10 @@ class Pman_Core_ValidateEmail extends Pman
                 $w = null;
                 $e = null;
                 $tv = 1;
-                $n = @stream_select($r, $w, $e, $tv);
+                $n = stream_select($r, $w, $e, $tv);
+                if ($n === false) {
+                    continue;
+                }
                 if ($n > 0) {
                     foreach ($r as $pipe) {
                         $chunk = fread($pipe, 8192);
@@ -213,7 +222,9 @@ class Pman_Core_ValidateEmail extends Pman
             fclose($pipes[1]);
             fclose($pipes[2]);
             $exitCode = proc_close($proc);
-            @unlink($jobFile);
+            if (file_exists($jobFile)) {
+                unlink($jobFile);
+            }
 
             if (empty($jobError)) {
                 $this->parseWorkerOutput($bufOut, $jobError, $okRow);
