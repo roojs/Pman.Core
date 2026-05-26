@@ -332,7 +332,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      * @param object $roo page (must provide errorlog())
      * @param string $email email address to validate
      * @param int $pass 0 = default From, 1 = retry From / bind notify interface
-     * @return bool|string true on success, error message string if this pass failed (caller may retry)
+     * @return bool|string true RCPT accepted; false soft/inconclusive (caller may run pass 1);
+     *     string hard failure (do not retry)
      * @throws Exception if domain is not set on this object
      */
     function validateEmail($roo, $email, $pass = 0)
@@ -358,7 +359,18 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             exit(1);
         }
 
-        $mxs = $this->mxHostsForValidation();
+        $mx_records = array();
+        $mx_weight = array();
+        getmxrr($dom, $mx_records, $mx_weight);
+        asort($mx_weight, SORT_NUMERIC);
+
+        $mxs = array();
+        foreach ($mx_weight as $k => $weight) {
+            if (!empty($mx_records[$k])) {
+                $mxs[] = $mx_records[$k];
+            }
+        }
+
         if (empty($mxs)) {
             return "cannot send to {$email} (no MX records found)";
         }
@@ -387,10 +399,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $roo->errorlog("ValidateEmail retry: From {$fromAddr}");
         }
 
-        $mxOk = false;
         $lastError = '';
 
         foreach ($mxs as $mx) {
+            // SMTP probe only: createMailer sets Mail test=true (MAIL FROM + RCPT TO, no DATA).
             $mailer = $this->createMailer($roo, $mx, $validUser, array(
                 'bind_notify_interface' => $pass > 0,
             ));
@@ -404,74 +416,54 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             ), '');
 
             if (!is_object($res)) {
-                $mxOk = true; // Success
-                break;
+                return true;
             }
             
-            // Check for known false positives BEFORE logging 
-            // These are temporary errors or false positives we can't fix, so treat as valid
+            // Soft SMTP: return false so caller can retry pass 1. Hard rejects return a string.
             $errorMessage = $res->getMessage();
             
-            // Check for SMTP error 421 (Service unavailable - server busy)
-            // This is a temporary error we can't fix, so treat it as a valid check
             if ($res->code == 421) {
                 if($dom == 'yahoo.com') {
                     // no error log for 421 on yahoo.com as its a known issue
-                    $mxOk = true;
-                    break;
+                    return true;
                 }
                 $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), inconclusive. Error: {$errorMessage}"
                 );
-                $mxOk = true;
-                break;
+                return false;
             }
             
-            // Check for SMTP error 451 (Greylisting - temporary failure)
-            // This is a temporary error indicating greylisting, so treat it as a valid check
             if ($res->code == 451) {
                 $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), inconclusive. Error: {$errorMessage}"
                 );
-                $mxOk = true;
-                break;
+                return false;
             }
 
-            // Check for SMTP error 452 (out of storage space)
             if (in_array($res->code, array( 452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
-                // Don't need to log error for out of storage space
                 return "The email address is over quota - which probably means its a dead email address - " .
                 "we don't add these as we would just get rejections - you should contact this user before adding " .
                 "and see if they have another email address";
             }
             
-            // Check for SMTP error 550 with Spamhaus failure
-            // Spamhaus failures are false positives we can't fix, so treat as valid
-            // Also check for Mimecast which uses Spamhaus (zen.mimecast.org)
             if ($res->code == 550 && (
                 preg_match('/spamhaus/i', $errorMessage)  
             )) {
-                // Don't need to log error for spamhaus failures
-                $mxOk = true;
-                break;
+                return false;
             }
             if ($res->code == 554 && (
                 preg_match('/spam/i', $errorMessage)  
             )) {
-                // Don't need to log error for spam failures
-                $mxOk = true;
-                break;
+                return false;
             }
 
             if($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
                 $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}"
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), inconclusive. Error: {$errorMessage}"
                 );
-                $mxOk = true;
-                break;
+                return false;
             }
 
-            // We don't need to log these errors and don't need to show these errors to the user
             if(
                 $res->code == 553 && preg_match('/User unknown/i', $errorMessage)
                 ||
@@ -484,9 +476,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 return "This email is invalid - we tested it and it does not exist";
             }
 
-            // Only log errors that aren't known false positives
-            // PEAR_Error objects have both ->message property and getMessage() method
-            // Using getMessage() method is the standard approach
             $roo->errorlog(
                 "SMTP Validate Rejected Email {$res->code} Email: {$email} - Error: " . $errorMessage
             );
@@ -494,11 +483,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $lastError = $res->getMessage();
         }
 
-        if (!$mxOk) {
-            return "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
-        }
-
-        return true;
+        return "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
     }
 
     function createMailer($roo, $mx, $validUser = false, $opts = array())
@@ -615,35 +600,5 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         return $mailer;
-    }
-
-    /**
-     * MX hostnames in priority order for SMTP probe, or empty if domain cannot receive mail
-     * (same preconditions as validateEmail before the MX loop).
-     *
-     * @return array list of MX host strings
-     */
-    function mxHostsForValidation()
-    {
-        if (!(($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) 
-            ? $this->has_mx : $this->hasValidMx($this->domain))) {
-            return array();
-        }
-
-        $mx_records = array();
-        $mx_weight = array();
-        if (!getmxrr($this->domain, $mx_records, $mx_weight)) {
-            return array();
-        }
-        asort($mx_weight, SORT_NUMERIC);
-
-        $mxs = array();
-        foreach ($mx_weight as $k => $weight) {
-            if (!empty($mx_records[$k])) {
-                $mxs[] = $mx_records[$k];
-            }
-        }
-
-        return $mxs;
     }
 }
