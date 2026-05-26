@@ -237,17 +237,14 @@ class Pman_Core_ValidateEmail extends Pman
                 }
             }
 
+            $row = array(
+                'email' => $emailNorm,
+            );
             if ($jobError) {
-                $row = array(
-                    'email' => $emailNorm,
-                    'error' => $jobError,
-                );
+                $row['error'] = $jobError;
             } else {
-                $row = array(
-                    'email' => $emailNorm,
-                    'domain_id' => $okRow['domain_id'],
-                    'token' => $okRow['token'],
-                );
+                $row['domain_id'] = $okRow['domain_id'];
+                $row['token'] = $okRow['token'];
             }
             
             $validationResults[$emailNorm] = $row;
