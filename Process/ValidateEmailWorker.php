@@ -52,6 +52,8 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 $this->authUser = $au;
             }
         }
+        $ff = HTML_FlexyFramework::get();
+        $ff->page = $this;
 
         $dar = explode('@', $job['email']);
         $dom = strtolower(array_pop($dar));

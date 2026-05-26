@@ -359,19 +359,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             throw new Exception("config Mail[helo] is not set");
         }
 
-        // Get MX records for the domain
-        $mx_records = array();
-        $mx_weight = array();
-        getmxrr($dom, $mx_records, $mx_weight);
-        asort($mx_weight, SORT_NUMERIC);
-        
-        $mxs = array();
-        foreach($mx_weight as $k => $weight) {
-            if (!empty($mx_records[$k])) {
-                $mxs[] = $mx_records[$k];
-            }
-        }
-
+        $mxs = $this->mxHostsForValidation();
         if (empty($mxs)) {
             $msg = "cannot send to {$email} (no MX records found)";
             $reporter('email_fail', $msg, true);
@@ -382,7 +370,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         $validUser = false;
         if (!empty($ff->Mail_Validate['routes'])) {
-            $authUser = $roo->getAuthUser();
+            $authUser = $ff->page->getAuthUser();
             $fromUser = DB_DataObject::factory('mail_imap_user');
             if ($fromUser->get('email', $authUser->email)) {
                 $validUser = $fromUser->validateAsOAuth();
@@ -396,121 +384,117 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
         }
 
-        $lastError = '';
-        foreach($mxs as $mx) {
-            $mailer = $this->createMailer($roo, $mx, $validUser);
-            if ($mailer === false) {
-                continue;
+        $mxOk = false;
+        $lastErr = '';
+
+        for ($pass = 0; $pass < 2 && !$mxOk; $pass++) {
+            $fromAddr = 'newswire-reply@media-outreach.com';
+            if ($pass > 0) {
+                $fromAddr = $dom . '@media-outreach.com';
+                $reporter('error_log', "ValidateEmail retry: From {$fromAddr}", false);
             }
 
-            $res = $mailer->send($email, array(
-                'To'   => $email,  
-                'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
-            ), '');
-
-            if (!is_object($res)) {
-                return true; // Success
-            }
-            
-            // Check for known false positives BEFORE logging
-            // These are temporary errors or false positives we can't fix, so treat as valid
-            $errorMessage = $res->getMessage();
-            
-            // Check for SMTP error 421 (Service unavailable - server busy)
-            // This is a temporary error we can't fix, so treat it as a valid check
-            if ($res->code == 421) {
-                if($dom == 'yahoo.com') {
-                    // no error log for 421 on yahoo.com as its a known issue
-                    return true;
+            foreach ($mxs as $mx) {
+                $mailer = $this->createMailer($roo, $mx, $validUser, array(
+                    'bind_notify_interface' => $pass > 0,
+                ));
+                if ($mailer === false) {
+                    continue;
                 }
-                $reporter(
-                    'error_log',
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}",
-                    false
-                );
-                return true; // Treat 421 as success
-            }
-            
-            // Check for SMTP error 451 (Greylisting - temporary failure)
-            // This is a temporary error indicating greylisting, so treat it as a valid check
-            if ($res->code == 451) {
-                $reporter(
-                    'error_log',
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}",
-                    false
-                );
-                return true; // Treat 451 as success
-            }
 
-            // Check for SMTP error 452 (out of storage space)
-            if (in_array($res->code, array( 452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
-                // Don't need to log error for out of storage space
-                $msg = "The email address is over quota - which probably means its a dead email address - " .
+                $res = $mailer->send($email, array(
+                    'To' => $email,
+                    'From' => '"Media OutReach Newswire" <' . $fromAddr . '>',
+                ), '');
+
+                if (!is_object($res)) {
+                    $mxOk = true;
+                    break;
+                }
+
+                $errorMessage = $res->getMessage();
+
+                if ($res->code == 421) {
+                    if ($dom != 'yahoo.com') {
+                        $reporter(
+                            'error_log',
+                            "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}",
+                            false
+                        );
+                    }
+                    $mxOk = true;
+                    break;
+                }
+
+                if ($res->code == 451) {
+                    $reporter(
+                        'error_log',
+                        "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}",
+                        false
+                    );
+                    $mxOk = true;
+                    break;
+                }
+
+                if (in_array($res->code, array(452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
+                    $msg = "The email address is over quota - which probably means its a dead email address - " .
                 "we don't add these as we would just get rejections - you should contact this user before adding " .
                 "and see if they have another email address";
-                $reporter('email_fail', $msg, true);
-                return $msg;
-            }
-            
-            // Check for SMTP error 550 with Spamhaus failure
-            // Spamhaus failures are false positives we can't fix, so treat as valid
-            // Also check for Mimecast which uses Spamhaus (zen.mimecast.org)
-            if ($res->code == 550 && (
-                preg_match('/spamhaus/i', $errorMessage)  
-            )) {
-                // Don't need to log error for spamhaus failures
-                return true; // Treat 550 Spamhaus/Mimecast as success
-            }
-            if ($res->code == 554 && (
-                preg_match('/spam/i', $errorMessage)  
-            )) {
-                // Don't need to log error for spam failures
-                return true; // Treat 550 Spamhaus/Mimecast as success
-            }
+                    $reporter('email_fail', $msg, true);
+                    return $msg;
+                }
 
-            if($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
+                if ($res->code == 550 && preg_match('/spamhaus/i', $errorMessage)) {
+                    $mxOk = true;
+                    break;
+                }
+                if ($res->code == 554 && preg_match('/spam/i', $errorMessage)) {
+                    $mxOk = true;
+                    break;
+                }
+                if ($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
+                    $reporter(
+                        'error_log',
+                        "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}",
+                        false
+                    );
+                    $mxOk = true;
+                    break;
+                }
+
+                if(
+                    $res->code == 553 && preg_match('/User unknown/i', $errorMessage)
+                    ||
+                    $res->code == 550 && preg_match('/does not exist/i', $errorMessage)
+                    ||
+                    $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
+                    ||
+                    $res->code == 550 && preg_match('/User unknown/i', $errorMessage)
+                ) {
+                    $msg = "This email is invalid - we tested it and it does not exist";
+                    $reporter('email_fail', $msg, true);
+                    return $msg;
+                }
+
                 $reporter(
                     'error_log',
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}",
+                    "SMTP Validate Rejected Email {$res->code} Email: {$email} - Error: " . $errorMessage,
                     false
                 );
-                return true;
+                $lastErr = $res->getMessage();
             }
-
-            // We don't need to log these errors and don't need to show these errors to the user
-            if(
-                $res->code == 553 && preg_match('/User unknown/i', $errorMessage)
-                ||
-                $res->code == 550 && preg_match('/does not exist/i', $errorMessage)
-                ||
-                $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
-                ||
-                $res->code == 550 && preg_match('/User unknown/i', $errorMessage)
-            ) {
-                $msg = "This email is invalid - we tested it and it does not exist";
-                $reporter('email_fail', $msg, true);
-                return $msg;
-            }
-
-            // Only log errors that aren't known false positives
-            // PEAR_Error objects have both ->message property and getMessage() method
-            // Using getMessage() method is the standard approach
-            $reporter(
-                'error_log',
-                "SMTP Validate Rejected Email {$res->code} Email: {$email} - Error: " . $errorMessage,
-                false
-            );
-              
-            
-            $lastError = $res->getMessage();
         }
 
-        $msg = "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
-        $reporter('email_fail', $msg, true);
-        return $msg;
+        if (!$mxOk) {
+            $msg = 'cannot send to ' . $email . ($lastErr ? " ({$lastErr})" : ' (connection failed to all MX servers)');
+            $reporter('email_fail', $msg, true);
+            return $msg;
+        }
+
+        return true;
     }
 
-    function createMailer($roo, $mx, $validUser = false)
+    function createMailer($roo, $mx, $validUser = false, $opts = array())
     {
         $ff = HTML_FlexyFramework::get();
 
@@ -525,7 +509,22 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         );
 
         $currentServer = DB_DataObject::Factory('core_notify_server')->getCurrent($roo, true, 'core');
+        if (!empty($opts['bind_notify_interface']) && $currentServer->interface == '') {
+            $srv = DB_DataObject::factory('core_notify_server');
+            $srv->setFrom(array(
+                'poolname' => $currentServer->poolname,
+                'hostname' => $currentServer->hostname,
+                'is_active' => 1,
+            ));
+            $srv->whereAdd("interface != ''");
+            $srv->limit(1);
+            if ($srv->find(true)) {
+                $currentServer = $srv;
+            }
+        }
+
         $ipv6Map = isset($ff->Mail_Validate['ipv6']) ? $ff->Mail_Validate['ipv6'] : array();
+        $ipv6Bound = false;
 
         // current server has ipv6 address
         if(!empty($currentServer->id) && !empty($currentServer->hostname) && !empty($ipv6Map[$currentServer->hostname])) {
@@ -534,10 +533,28 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if (!empty($aaaa_records)) {
                 $socket_options['socket'] = array(
                     'bindto' => '[' . $ipv6Map[$currentServer->hostname] . ']:0'
-                ); 
+                );
+                $ipv6Bound = true;
             }
         }
-        
+
+
+
+        if (!$ipv6Bound && !empty($opts['bind_notify_interface']) && $currentServer->interface != '') {
+            $ifaces = net_get_interfaces();
+
+            if (array_key_exists($currentServer->interface, $ifaces)
+                && !empty($ifaces[$currentServer->interface]['unicast'][1]['address'])) {
+                $ipv4_bind_ip = $ifaces[$currentServer->interface]['unicast'][1]['address'];
+                $socket_options['socket'] = array(
+                    'bindto' => $ipv4_bind_ip . ':0'
+                );
+                if (is_object($roo) && method_exists($roo, 'out')) {
+                    $roo->out('error_log', "ValidateEmail retry: IPv4 bind {$currentServer->interface} ({$ipv4_bind_ip})");
+                }
+            }
+        }
+
         $mailer = Mail::factory('smtp', array(
             'host'    => $mx,
             'localhost' => $ff->Mail['helo'],
@@ -593,5 +610,35 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         return $mailer;
+    }
+
+    /**
+     * MX hostnames in priority order for SMTP probe, or empty if domain cannot receive mail
+     * (same preconditions as validateEmail before the MX loop).
+     *
+     * @return array list of MX host strings
+     */
+    function mxHostsForValidation()
+    {
+        if (!(($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) 
+            ? $this->has_mx : $this->hasValidMx($this->domain))) {
+            return array();
+        }
+
+        $mx_records = array();
+        $mx_weight = array();
+        if (!getmxrr($this->domain, $mx_records, $mx_weight)) {
+            return array();
+        }
+        asort($mx_weight, SORT_NUMERIC);
+
+        $mxs = array();
+        foreach ($mx_weight as $k => $weight) {
+            if (!empty($mx_records[$k])) {
+                $mxs[] = $mx_records[$k];
+            }
+        }
+
+        return $mxs;
     }
 }
