@@ -83,34 +83,30 @@ class Pman_Core_ValidateEmail extends Pman
         }
         $childCwd = dirname($entryScript);
 
-        $total = count($jobs);
-        $results = array();
-        $phpBin = defined('PHP_BINARY') && PHP_BINARY ? PHP_BINARY : 'php';
-        $childTimeout = 90.0;
-        $validationResults = array();
-
-        foreach ($jobs as $idx => $jobRow) {
+        $fieldsByEmail = array();
+        foreach ($jobs as $jobRow) {
             if (empty($jobRow['field']) || !isset($jobRow['email'])) {
                 $this->errorlog('Each job needs field and email');
                 $this->error('An error occurred, please contact the website owner.');
             }
-
-            $field = $jobRow['field'];
-            $emailNorm = trim($jobRow['email']);
+            $emailNorm = $this->normalizeEmailAddress($jobRow['email']);
             if ($emailNorm === '') {
                 continue;
             }
-            $dar = explode('@', $emailNorm);
-            $dom = trim(strtolower(array_pop($dar)));
-            $dar[] = $dom;
-            $emailNorm = implode('@', $dar);
+            $fieldsByEmail[$emailNorm][] = $jobRow['field'];
+        }
+        if (empty($fieldsByEmail)) {
+            $this->errorlog('No emails to validate after normalization');
+            $this->error('An error occurred, please contact the website owner.');
+        }
 
+        $total = count($fieldsByEmail);
+        $results = array();
+        $phpBin = defined('PHP_BINARY') && PHP_BINARY ? PHP_BINARY : 'php';
+        $childTimeout = 90.0;
 
-            // avoid re-validating emails that have already been validated
-            if (isset($validationResults[$emailNorm])) {
-                $results[$field] = $validationResults[$emailNorm];
-                continue;
-            }
+        $idx = 0;
+        foreach ($fieldsByEmail as $emailNorm => $fields) {
 
             $jobFile = tempnam(sys_get_temp_dir(), 'vew_');
             if ($jobFile === false) {
@@ -237,13 +233,16 @@ class Pman_Core_ValidateEmail extends Pman
                 }
             }
 
-            $validationResults[$emailNorm] = array(
+            $row = array(
                 'email' => $emailNorm,
                 'error' => $jobError ? $jobError : '',
                 'domain_id' => $jobError ? '' : $okRow['domain_id'],
                 'token' => $jobError ? '' : $okRow['token'],
             );
-            $results[$field] = $validationResults[$emailNorm];
+            foreach ($fields as $field) {
+                $results[$field] = $row;
+            }
+            $idx++;
         }
 
         $this->sendSSE('progress', array(
@@ -257,6 +256,24 @@ class Pman_Core_ValidateEmail extends Pman
             'data' => $results,
         ));
         exit;
+    }
+
+    /**
+     * Lowercase domain; same rules as Pressrelease_contact::getOldEmails().
+     *
+     * @param string $email
+     * @return string normalized address or '' if empty after trim
+     */
+    function normalizeEmailAddress($email)
+    {
+        $email = trim($email);
+        if ($email === '') {
+            return '';
+        }
+        $dar = explode('@', $email);
+        $dom = trim(strtolower(array_pop($dar)));
+        $dar[] = $dom;
+        return implode('@', $dar);
     }
 
     function parseWorkerOutput(&$bufOut, &$jobError, &$okRow) 
