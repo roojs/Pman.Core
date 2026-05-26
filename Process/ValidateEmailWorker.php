@@ -49,8 +49,15 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             exit(1);
         }
 
+        $ff = HTML_FlexyFramework::get();
+        if (!isset($ff->Mail['helo'])) {
+            echo "config Mail[helo] is not set\n";
+            exit(1);
+        }
+
         if (!empty($job['auth_user_id'])) {
             $au = DB_DataObject::factory('core_person');
+            // job JSON id may be string; get() expects scalar key
             if ($au->get((int) $job['auth_user_id'])) {
                 $this->authUser = $au;
             }
@@ -84,10 +91,12 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             exit(1);
         }
 
+        // core_domain.id is numeric; DB layer may return string
+        $domainId = (int) $cd->id;
         echo json_encode(array(
             'type' => 'email_ok',
-            'domain_id' => (int) $cd->id,
-            'token' => md5($emailNorm . (int) $cd->id),
+            'domain_id' => $domainId,
+            'token' => md5($emailNorm . $domainId),
         ), JSON_UNESCAPED_UNICODE) . "\n";
         fflush(STDOUT);
         exit(0);

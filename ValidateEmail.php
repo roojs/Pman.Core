@@ -107,7 +107,7 @@ class Pman_Core_ValidateEmail extends Pman
 
 
             // avoid re-validating emails that have already been validated
-            if(isset($validationResults[$emailNorm])) {
+            if (isset($validationResults[$emailNorm])) {
                 $results[$field] = $validationResults[$emailNorm];
                 continue;
             }
@@ -120,7 +120,7 @@ class Pman_Core_ValidateEmail extends Pman
 
             $payload = array(
                 'email' => $emailNorm,
-                'auth_user_id' => (int) $au->id,
+                'auth_user_id' => $au->id,
             );
             file_put_contents($jobFile, json_encode($payload, JSON_UNESCAPED_UNICODE));
             @chmod($jobFile, 0600);
@@ -191,7 +191,7 @@ class Pman_Core_ValidateEmail extends Pman
                     }
                     $this->parseWorkerOutput($bufOut, $jobError, $okRow);
 
-                    if($jobError) {
+                    if ($jobError) {
                         break;
                     }
                 }
@@ -215,31 +215,28 @@ class Pman_Core_ValidateEmail extends Pman
             $exitCode = proc_close($proc);
             @unlink($jobFile);
 
-            if(empty($jobError)) {
+            if (empty($jobError)) {
                 $this->parseWorkerOutput($bufOut, $jobError, $okRow);
             }
 
-            // unexpected error
-            if(empty($jobError) && $okRow === null) {
+            if (empty($jobError) && $okRow === null) {
                 $jobError = 'An error occurred. Please contact the website admin.';
-                // log fatal php error
-                if(!empty($bufErr)) {
+                if (!empty($bufErr)) {
                     $this->errorlog($bufErr);
+                } elseif ($exitCode !== 0) {
+                    $this->errorlog('ValidateEmail worker exited with code ' . $exitCode);
                 }
             }
 
-
-            if($jobError) {
+            $row = array(
+                'email' => $emailNorm,
+                'domain_id' => $okRow['domain_id'],
+                'token' => $okRow['token'],
+            );
+            if ($jobError) {
                 $row = array(
                     'email' => $emailNorm,
                     'error' => $jobError,
-                );
-            }
-            else {
-                $row = array(
-                    'email' => $emailNorm,
-                    'domain_id' => $okRow['domain_id'],
-                    'token' => $okRow['token'],
                 );
             }
             
@@ -274,11 +271,7 @@ class Pman_Core_ValidateEmail extends Pman
                 break;
             }
             if (!empty($row['type']) && $row['type'] === 'error_log') {
-                $this->errorlog($row['message']);
-                if(!empty($row['isHardFailure'])) {
-                    $jobError = 'An error occurred, please contact the website owner.';
-                    break;
-                }
+                // already logged in worker via errorlog()
                 continue;
             }
             if (!empty($row['type']) && $row['type'] === 'email_fail') {
