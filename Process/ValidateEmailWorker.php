@@ -33,23 +33,20 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     {
         $jobPath = !empty($opts['file']) ? $opts['file'] : '';
         if ($jobPath === '') {
-            $this->out('error_log', 'Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json', true);
+            echo "Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json\n";
+            exit(1);
         }
 
         $raw = @file_get_contents($jobPath);
         if ($raw === false || $raw === '') {
-            $this->out('error_log', 'Cannot read job file', true);
+            echo 'Cannot read job file: ' . $jobPath . "\n";
+            exit(1);
         }
 
         $job = json_decode($raw, true);
         if (!is_array($job) || empty($job['email'])) {
-            $this->out('error_log', 'Invalid job JSON (need email)', true);
-        }
-
-        $ff = HTML_FlexyFramework::get();
-        if (!isset($ff->Mail['helo'])) {
-            $this->errorlog('config Mail[helo] is not set');
-            $this->out('error_log', 'config Mail[helo] is not set', true);
+            echo "Invalid job JSON (need email)\n";
+            exit(1);
         }
 
         if (!empty($job['auth_user_id'])) {
@@ -67,23 +64,20 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         $cd = DB_DataObject::factory('core_domain');
         $cdResult = $cd->getOrCreate($dom);
         if (!is_object($cdResult)) {
-            $this->out('email_fail', is_string($cdResult) ? $cdResult : 'Invalid domain', true);
+            $this->debuglog('email_fail', is_string($cdResult) ? $cdResult : 'Invalid domain');
+            exit(1);
         }
-
-        $worker = $this;
-        $reporter = function ($type, $message, $exit = false) use ($worker) {
-            $worker->out($type, $message, $exit);
-        };
 
         $result = false;
         for ($pass = 0; $pass < 2; $pass++) {
-            $result = $cd->validateEmail($this, $emailNorm, $reporter, $pass);
+            $result = $cd->validateEmail($this, $emailNorm, $pass);
             if ($result === true) {
                 break;
             }
         }
         if ($result !== true) {
-            $reporter('email_fail', $result, true);
+            $this->debuglog('email_fail', $result);
+            exit(1);
         }
 
         echo json_encode(array(
@@ -95,19 +89,12 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         exit(0);
     }
 
-    function out($type, $message, $exit = false)
+    function debuglog($type, $message)
     {
-        $res = array(
+        echo json_encode(array(
             'type' => $type,
             'message' => $message,
-        );
-        if ($type == 'error_log' && $exit) {
-            $res['isHardFailure'] = true;
-        }
-        echo json_encode($res, JSON_UNESCAPED_UNICODE) . "\n";
+        ), JSON_UNESCAPED_UNICODE) . "\n";
         fflush(STDOUT);
-        if ($exit) {
-            exit(1);
-        }
     }
 }
