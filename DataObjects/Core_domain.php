@@ -414,7 +414,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 break;
             }
             
-            // Check for known false positives BEFORE logging
+            // Check for known false positives BEFORE logging 
             // These are temporary errors or false positives we can't fix, so treat as valid
             $errorMessage = $res->getMessage();
             
