@@ -63,6 +63,12 @@ class Pman_Core_ValidateEmail extends Pman
             $this->error('Not authenticated');
         }
 
+        $ff = HTML_FlexyFramework::get();
+        if (!isset($ff->Mail['helo'])) {
+            $this->errorlog('config Mail[helo] is not set');
+            $this->error('An error occurred, please contact the website owner.');
+        }
+
         $jobsRaw = isset($_POST['validate_email_jobs']) ? $_POST['validate_email_jobs'] : '';
         $jobs = json_decode($jobsRaw, true);
         if (!is_array($jobs) || empty($jobs)) {

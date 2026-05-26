@@ -46,6 +46,12 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             $this->out('error_log', 'Invalid job JSON (need email)', true);
         }
 
+        $ff = HTML_FlexyFramework::get();
+        if (!isset($ff->Mail['helo'])) {
+            $this->errorlog('config Mail[helo] is not set');
+            $this->out('error_log', 'config Mail[helo] is not set', true);
+        }
+
         if (!empty($job['auth_user_id'])) {
             $au = DB_DataObject::factory('core_person');
             if ($au->get((int) $job['auth_user_id'])) {
