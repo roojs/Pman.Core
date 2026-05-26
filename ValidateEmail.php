@@ -89,10 +89,14 @@ class Pman_Core_ValidateEmail extends Pman
                 $this->errorlog('Each job needs field and email');
                 $this->error('An error occurred, please contact the website owner.');
             }
-            $emailNorm = $this->normalizeEmailAddress($jobRow['email']);
+            $emailNorm = trim($jobRow['email']);
             if ($emailNorm === '') {
                 continue;
             }
+            $dar = explode('@', $emailNorm);
+            $dom = trim(strtolower(array_pop($dar)));
+            $dar[] = $dom;
+            $emailNorm = implode('@', $dar);
             $fieldsByEmail[$emailNorm][] = $jobRow['field'];
         }
         if (empty($fieldsByEmail)) {
