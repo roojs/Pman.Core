@@ -334,7 +334,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      * @param callable|false $reporter optional callback(type, message, exit) for ValidateEmailWorker NDJSON
      * @param int $pass 0 = default From, 1 = retry From / bind notify interface
      * @return bool|string true on success, error message string if this pass failed (caller may retry)
-     * @throws Exception if configuration is invalid
+     * @throws Exception if domain is not set on this object
      */
     function validateEmail($roo, $email, $reporter = false, $pass = 0)
     {
@@ -356,10 +356,11 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         require_once 'Mail.php';
-        
+
         if (!isset($ff->Mail['helo'])) {
-            $reporter('error_log', 'config Mail[helo] is not set', true);
-            throw new Exception("config Mail[helo] is not set");
+            $roo->errorlog('config Mail[helo] is not set');
+            echo 'config Mail[helo] is not set';
+            exit(1);
         }
 
         $mxs = $this->mxHostsForValidation();
@@ -390,7 +391,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $fromAddr = 'newswire-reply@media-outreach.com';
         if ($pass > 0) {
             $fromAddr = $dom . '@media-outreach.com';
-            $reporter('error_log', "ValidateEmail retry: From {$fromAddr}", false);
+            $roo->errorlog("ValidateEmail retry: From {$fromAddr}");
         }
 
         $mxOk = false;
@@ -426,10 +427,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                     $mxOk = true;
                     break;
                 }
-                $reporter(
-                    'error_log',
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}",
-                    false
+                $roo->errorlog(
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 $mxOk = true;
                 break;
@@ -438,10 +437,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // Check for SMTP error 451 (Greylisting - temporary failure)
             // This is a temporary error indicating greylisting, so treat it as a valid check
             if ($res->code == 451) {
-                $reporter(
-                    'error_log',
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}",
-                    false
+                $roo->errorlog(
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 $mxOk = true;
                 break;
@@ -476,10 +473,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
 
             if($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
-                $reporter(
-                    'error_log',
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}",
-                    false
+                $roo->errorlog(
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 $mxOk = true;
                 break;
@@ -503,10 +498,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // Only log errors that aren't known false positives
             // PEAR_Error objects have both ->message property and getMessage() method
             // Using getMessage() method is the standard approach
-            $reporter(
-                'error_log',
-                "SMTP Validate Rejected Email {$res->code} Email: {$email} - Error: " . $errorMessage,
-                false
+            $roo->errorlog(
+                "SMTP Validate Rejected Email {$res->code} Email: {$email} - Error: " . $errorMessage
             );
               
             $lastErr = $res->getMessage();
