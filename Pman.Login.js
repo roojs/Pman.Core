@@ -46,14 +46,17 @@ Pman.Login =  new Roo.util.Observable({
         // load 
         // exclude chrome extensions. - this only works on https (crypto is not available in http - except localhost
         var has_crypto = document.location.protocol == 'https:' || (
-            document.location.protocol == 'http:'  && document.location.hostname == 'localhost'    
+            document.location.protocol == 'http:'  && document.location.hostname == 'localhost'
         );
-        if (Pman.Login.window_id === false && has_crypto) {
-            // persitant in windows..
+        if (Pman.Login.window_id === false) {
             Pman.Login.window_id = window.sessionStorage.getItem('windowid');
             if (!Pman.Login.window_id) {
-                Pman.Login.window_id = crypto.randomUUID();
-                window.sessionStorage.setItem('windowid', Pman.Login.window_id);               
+                if (has_crypto && typeof crypto !== 'undefined' && crypto.randomUUID) {
+                    Pman.Login.window_id = crypto.randomUUID();
+                } else {
+                    Pman.Login.window_id = 'ext-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+                }
+                window.sessionStorage.setItem('windowid', Pman.Login.window_id);
             }
         }
         
