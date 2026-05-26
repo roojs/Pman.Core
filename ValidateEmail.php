@@ -19,9 +19,9 @@ class Pman_Core_ValidateEmail extends Pman
 
     function sendSSE($event, $data)
     {
-        echo "\n";
-        echo "event: {$event}\n";
-        echo "data: " . json_encode($data) . "\n";
+        echo "\n"
+            . "event: {$event}\n"
+            . 'data: ' . json_encode($data) . "\n";
         if (ob_get_level()) {
             ob_flush();
         }
