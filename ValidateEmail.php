@@ -123,9 +123,7 @@ class Pman_Core_ValidateEmail extends Pman
                 'auth_user_id' => $au->id,
             );
             file_put_contents($jobFile, json_encode($payload, JSON_UNESCAPED_UNICODE));
-            if (chmod($jobFile, 0600) === false) {
-                $this->errorlog('Could not set permissions on job file: ' . $jobFile);
-            }
+            chmod($jobFile, 0600);
 
             $cmd = escapeshellarg($phpBin) . ' '
                 . escapeshellarg($entryScript) . ' '
