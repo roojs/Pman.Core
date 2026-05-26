@@ -97,11 +97,7 @@ class Pman_Core_ValidateEmail extends Pman
             $field = $jobRow['field'];
             $email = $jobRow['email'];
 
-            $jobFile = tempnam(sys_get_temp_dir(), 'vew_');
-            if ($jobFile === false) {
-                $this->errorlog('Cannot create temp file');
-                $this->error('An error occurred, please contact the website owner.');
-            }
+            $jobFile = $this->tempName('json');
 
             $payload = array(
                 'email' => $email,
@@ -181,11 +177,6 @@ class Pman_Core_ValidateEmail extends Pman
                             }
                         }
                     }
-                    $this->parseWorkerOutput($bufOut, $jobError, $okRow);
-
-                    if ($jobError) {
-                        break;
-                    }
                 }
 
                 if (microtime(true) - $lastHeartbeat >= $heartbeatEvery) {
@@ -209,8 +200,25 @@ class Pman_Core_ValidateEmail extends Pman
                 unlink($jobFile);
             }
 
-            if (empty($jobError)) {
-                $this->parseWorkerOutput($bufOut, $jobError, $okRow);
+            while (($p = strpos($bufOut, "\n")) !== false) {
+                $line = trim(substr($bufOut, 0, $p));
+                $bufOut = substr($bufOut, $p + 1);
+                if ($line === '') {
+                    continue;
+                }
+                $row = json_decode($line, true);
+                if (!is_array($row)) {
+                    $jobError = 'Invalid JSON from worker: ' . substr($line, 0, 200);
+                    break;
+                }
+                switch ($row['type'] ?? '') {
+                    case 'email_fail':
+                        $jobError = $row['message'];
+                        break 2;
+                    case 'email_ok':
+                        $okRow = $row;
+                        break;
+                }
             }
 
             if (empty($jobError) && $okRow === null) {
@@ -241,33 +249,5 @@ class Pman_Core_ValidateEmail extends Pman
             'data' => $results,
         ));
         exit;
-    }
-
-    function parseWorkerOutput(&$bufOut, &$jobError, &$okRow) 
-    {
-        while (($p = strpos($bufOut, "\n")) !== false) {
-            $line = trim(substr($bufOut, 0, $p));
-            $bufOut = substr($bufOut, $p + 1);
-            if ($line === '') {
-                continue;
-            }
-            $row = json_decode($line, true);
-            if (!is_array($row)) {
-                $jobError = 'Invalid JSON from worker: ' . substr($line, 0, 200);
-                break;
-            }
-            if (!empty($row['type']) && $row['type'] === 'error_log') {
-                // already logged in worker via errorlog()
-                continue;
-            }
-            if (!empty($row['type']) && $row['type'] === 'email_fail') {
-                $jobError = !empty($row['message']) ? $row['message'] : 'Email validation failed';
-                break;
-            }
-            if (!empty($row['type']) && $row['type'] === 'email_ok') {
-                $okRow = $row;
-                continue;
-            }
-        }
     }
 }
