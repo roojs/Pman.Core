@@ -221,6 +221,9 @@ class Pman_Core_ValidateEmail extends Pman
                 }
             }
 
+            var_dump($jobError);
+            var_dump($okRow);
+
             if (empty($jobError) && $okRow === null) {
                 $jobError = 'An error occurred. Please contact the website admin.';
                 if (!empty($bufErr)) {
