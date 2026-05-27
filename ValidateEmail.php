@@ -201,6 +201,9 @@ class Pman_Core_ValidateEmail extends Pman
                 unlink($jobFile);
             }
 
+            var_dump($bufOut);
+            die('test');
+
             while (($p = strpos($bufOut, "\n")) !== false) {
                 $line = trim(substr($bufOut, 0, $p));
                 $bufOut = substr($bufOut, $p + 1);
