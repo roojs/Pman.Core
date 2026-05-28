@@ -80,7 +80,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
             empty($res['data']['type']) || 
             !in_array($res['data']['type'], array('email_fail', 'email_ok'))
         ) {
-            $this->jerr('Invalid response from worker: ' . $body);
+            $this->sseError('Invalid response from worker: ' . $body);
         }
         $row = $res['data'];
 
@@ -103,7 +103,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
 
         $ff = HTML_FlexyFramework::get();
         if (!isset($ff->Mail['helo'])) {
-            $this->jerr('config Mail[helo] is not set');
+            $this->sseError('config Mail[helo] is not set');
         }
 
         $total = count($jobs);
