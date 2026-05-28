@@ -101,7 +101,8 @@ class Pman_Core_ValidateEmail extends Pman
         curl_close($ch);
         curl_multi_close($mh);
 
-        $row = json_decode(trim($body), true);
+        $res = json_decode(trim($body), true);
+        $row = $res['data'];
 
         if ($row['type'] === 'email_fail') {
             return array(
