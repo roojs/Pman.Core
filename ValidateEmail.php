@@ -101,22 +101,6 @@ class Pman_Core_ValidateEmail extends Pman
         curl_close($ch);
         curl_multi_close($mh);
 
-        if ($curlErr !== '') {
-            $this->errorlog('ValidateEmail worker curl error: ' . $curlErr);
-            return array('ok' => null, 'error' => 'curl');
-        }
-
-        if ($httpCode < 200 || $httpCode >= 300) {
-            $this->errorlog('ValidateEmail worker HTTP ' . $httpCode . ': ' . substr((string) $body, 0, 500));
-            return array('ok' => null, 'error' => 'http');
-        }
-
-        $parsed = json_decode(trim((string) $body), true);
-        if (!is_array($parsed)) {
-            $this->errorlog('Invalid JSON from worker: ' . substr((string) $body, 0, 500));
-            return array('ok' => null, 'error' => 'json');
-        }
-
         if (isset($parsed['success']) && $parsed['success'] === false) {
             return array(
                 'ok' => null,
