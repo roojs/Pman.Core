@@ -1,7 +1,7 @@
 <?php
 /**
  * Internal HTTP worker: one email SMTP validation (POST from Core/ValidateEmail).
- * Loopback only. POST: email, auth_user_id.
+ * POST: email, auth_user_id.
  *
  * Ops: php-fpm request_terminate_timeout and nginx fastcgi_read_timeout should be >= 90s
  * for this route (see ValidateEmail parent).
@@ -13,7 +13,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 {
     function getAuth()
     {
-        return $this->authRequired();
+        return true;
     }
 
     function get($request = '', $opts = array(), $isRedirect = false)
@@ -25,28 +25,16 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     {
         set_time_limit(90);
 
-        $authUserId = isset($_POST['auth_user_id']) ? $_POST['auth_user_id'] : '';
-        $this->jdata($this->runJob($email, $authUserId));
-    }
+        $au = DB_DataObject::factory('core_person');
+        $au->get($_POST['auth_user_id']);
+        $this->authUser = $au;
 
-    /**
-     * @return array{type: string, domain_id?: int, token?: string, message?: string}
-     */
-    function runJob($email, $authUserId)
-    {
         $ff = HTML_FlexyFramework::get();
         if (!isset($ff->Mail['helo'])) {
             $this->jerr('Mail configuration error');
         }
 
-        if ($authUserId !== '' && $authUserId !== null) {
-            $au = DB_DataObject::factory('core_person');
-            if ($au->get($authUserId)) {
-                $this->authUser = $au;
-            }
-        }
-
-        $dar = explode('@', $email);
+        $dar = explode('@', $_POST['email']);
         $dom = strtolower(array_pop($dar));
         $dar[] = $dom;
         $emailNorm = implode('@', $dar);
@@ -54,10 +42,10 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         $cd = DB_DataObject::factory('core_domain');
         $cdResult = $cd->getOrCreate($dom);
         if (!is_object($cdResult)) {
-            return array(
+            $this->jdata(array(
                 'type' => 'email_fail',
                 'message' => is_string($cdResult) ? $cdResult : 'Invalid domain',
-            );
+            ));
         }
 
         $result = false;
@@ -71,17 +59,16 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             }
         }
         if (is_string($result)) {
-            return array(
+            $this->jdata(array(
                 'type' => 'email_fail',
                 'message' => $result,
-            );
+            ));
         }
 
-        $domainId = (int) $cd->id;
-        return array(
+        $this->jdata(array(
             'type' => 'email_ok',
-            'domain_id' => $domainId,
-            'token' => md5($emailNorm . $domainId),
-        );
+            'domain_id' => $cd->id,
+            'token' => md5($emailNorm . $cd->id),
+        ));
     }
 }
