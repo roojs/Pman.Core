@@ -58,10 +58,10 @@ class Pman_Core_Sse extends Pman
     function jerr($str, $errors=array(), $content_type = false)
     {
         $this->errorlog($str);
-        $this->sendSSE('error', array_merge(array(
+        $this->sendSSE('error', array(
             'success' => false,
             'errorMsg' => $str
-        ), $options));
+        ));
     }
 
     function sseComplete($data = array())
