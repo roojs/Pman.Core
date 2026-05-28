@@ -30,6 +30,9 @@ class Pman_Core_Sse extends Pman
 
     function sendSSE($event, $data)
     {
+        if(!$this->sse) {
+            return;
+        }
         echo "\n"
             . "event: {$event}\n"
             . 'data: ' . json_encode($data) . "\n";
