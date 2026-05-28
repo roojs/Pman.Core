@@ -119,9 +119,7 @@ class Pman_Core_ValidateEmail extends Pman
             );
         }
 
-        if ($row['type'] === 'email_ok') {
-            return array('ok' => $row, 'error' => '');
-        }
+        return array('ok' => $row, 'error' => '');
     }
 
     function post($base = '')
