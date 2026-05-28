@@ -170,7 +170,7 @@ class Pman_Core_ValidateEmail extends Pman
             ));
 
             $workerResult = $this->runWorkerHttp(
-                $ff->Pman['local_base_url'] . '/Core/Process/ValidateEmailWorker',
+                $this->baseURL . '/Core/Process/ValidateEmailWorker',
                 $email,
                 $au->id,
                 $childTimeout,
