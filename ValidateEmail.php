@@ -131,7 +131,11 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
                         return;
                     }
                     $lastHeartbeat = microtime(true);
-                    $this->sseProgress(($elapsed + $idx * $childTimeout) / ($total * $childTimeout) * 100, 'Validating email (' . $email . ') - ' . round($childTimeout - $elapsed) . ' seconds left');
+                    $this->sendSSE('progress', array(
+                        'total' => $total * $childTimeout,
+                        'progress' => ($elapsed + $idx * $childTimeout) / ($total * $childTimeout) * 100,
+                        'message' => 'Validating email (' . $email . ') - ' . round($childTimeout - $elapsed) . ' seconds left'
+                    ));
                 }
             );
 
