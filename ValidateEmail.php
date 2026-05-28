@@ -150,8 +150,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
             );
 
             if ($workerResult['error'] === 'timeout') {
-                $this->errorlog('ValidateEmail timed out for ' . $email);
-                $this->error('Validation timed out for ' . $email);
+                $this->jerr('Validation timed out for ' . $email);
             }
 
             if ($workerResult['ok'] !== null) {
