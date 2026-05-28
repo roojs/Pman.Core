@@ -45,11 +45,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     {
         $ff = HTML_FlexyFramework::get();
         if (!isset($ff->Mail['helo'])) {
-            $this->errorlog('config Mail[helo] is not set');
-            return array(
-                'type' => 'email_fail',
-                'message' => 'Mail configuration error',
-            );
+            $this->jerr('Mail configuration error');
         }
 
         if ($authUserId !== '' && $authUserId !== null) {
