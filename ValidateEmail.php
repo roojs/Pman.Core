@@ -3,8 +3,12 @@
 require_once 'Pman.php';
 
 /**
- * SSE multi-email SMTP validation (one child process per address).
+ * SSE multi-email SMTP validation (one loopback HTTP worker request per address).
  * URL: Core/ValidateEmail (POST, FormData; use Roo.form.Action.Sse).
+ *
+ * Ops: parent SSE may run up to N*90s; Cloudflare/proxy read timeout should allow that.
+ * Child worker (Core/Process/ValidateEmailWorker): php-fpm request_terminate_timeout and
+ * nginx fastcgi_read_timeout should be >= 90s for loopback requests.
  */
 class Pman_Core_ValidateEmail extends Pman
 {
@@ -45,6 +49,103 @@ class Pman_Core_ValidateEmail extends Pman
         ));
     }
 
+    function workerUrl($ff)
+    {
+        if (empty($ff->Pman['local_base_url'])) {
+            $this->errorlog('Pman[local_base_url] is not set');
+            $this->error('An error occurred, please contact the website owner.');
+        }
+        $base = $ff->Pman['local_base_url'];
+        if (strpos($base, 'http') !== 0) {
+            $base = 'http://127.0.0.1' . $base;
+        }
+        $base = preg_replace('#^http://localhost#i', 'http://127.0.0.1', $base);
+        return rtrim($base, '/') . '/Core/Process/ValidateEmailWorker';
+    }
+
+  /**
+     * POST one email to loopback worker; SSE progress while waiting (max $childTimeout s).
+     *
+     * @return array{ok: ?array, error: string}
+     */
+    function runWorkerHttp($workerUrl, $email, $authUserId, $childTimeout, $heartbeatCb)
+    {
+        $ch = curl_init($workerUrl);
+        curl_setopt_array($ch, array(
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => http_build_query(array(
+                'email' => $email,
+                'auth_user_id' => $authUserId,
+            )),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => (int) ceil($childTimeout + 5),
+            CURLOPT_CONNECTTIMEOUT => 10,
+            CURLOPT_HTTPHEADER => array('Content-Type: application/x-www-form-urlencoded'),
+        ));
+
+        $mh = curl_multi_init();
+        curl_multi_add_handle($mh, $ch);
+
+        $childStarted = microtime(true);
+        $running = true;
+        $body = '';
+        $httpCode = 0;
+
+        do {
+            $status = curl_multi_exec($mh, $running);
+
+            if (microtime(true) - $childStarted > $childTimeout) {
+                curl_multi_remove_handle($mh, $ch);
+                curl_close($ch);
+                curl_multi_close($mh);
+                return array('ok' => null, 'error' => 'timeout');
+            }
+
+            $heartbeatCb(microtime(true) - $childStarted);
+
+            if ($running) {
+                curl_multi_select($mh, 1.0);
+            }
+        } while ($running && $status === CURLM_OK);
+
+        $body = curl_multi_getcontent($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curlErr = curl_error($ch);
+        curl_multi_remove_handle($mh, $ch);
+        curl_close($ch);
+        curl_multi_close($mh);
+
+        if ($curlErr !== '') {
+            $this->errorlog('ValidateEmail worker curl error: ' . $curlErr);
+            return array('ok' => null, 'error' => 'curl');
+        }
+
+        if ($httpCode < 200 || $httpCode >= 300) {
+            $this->errorlog('ValidateEmail worker HTTP ' . $httpCode . ': ' . substr((string) $body, 0, 500));
+            return array('ok' => null, 'error' => 'http');
+        }
+
+        $row = json_decode(trim((string) $body), true);
+        if (!is_array($row) || empty($row['type'])) {
+            $this->errorlog('Invalid JSON from worker: ' . substr((string) $body, 0, 500));
+            return array('ok' => null, 'error' => 'json');
+        }
+
+        if ($row['type'] === 'email_fail') {
+            return array(
+                'ok' => null,
+                'error' => !empty($row['message']) ? $row['message'] : 'Validation failed',
+            );
+        }
+
+        if ($row['type'] === 'email_ok') {
+            return array('ok' => $row, 'error' => '');
+        }
+
+        $this->errorlog('Unknown worker response type: ' . $row['type']);
+        return array('ok' => null, 'error' => 'json');
+    }
+
     function post($base = '')
     {
         set_time_limit(0);
@@ -76,17 +177,11 @@ class Pman_Core_ValidateEmail extends Pman
             $this->error('An error occurred, please contact the website owner.');
         }
 
-        $entryScript = realpath($_SERVER['SCRIPT_FILENAME']);
-        if ($entryScript === false || !is_file($entryScript)) {
-            $this->errorlog('Cannot resolve PHP entry script for worker (SCRIPT_FILENAME)');
-            $this->error('An error occurred, please contact the website owner.');
-        }
-        $childCwd = dirname($entryScript);
-
+        $workerUrl = $this->workerUrl($ff);
         $total = count($jobs);
         $results = array();
-        $phpBin = defined('PHP_BINARY') && PHP_BINARY ? PHP_BINARY : 'php';
         $childTimeout = 90.0;
+        $heartbeatEvery = 1.0;
 
         foreach ($jobs as $idx => $jobRow) {
             if (empty($jobRow['field']) || empty($jobRow['email'])) {
@@ -96,42 +191,7 @@ class Pman_Core_ValidateEmail extends Pman
 
             $field = $jobRow['field'];
             $email = $jobRow['email'];
-
-            $jobFile = $this->tempName('json');
-
-            $payload = array(
-                'email' => $email,
-                'auth_user_id' => $au->id,
-            );
-            file_put_contents($jobFile, json_encode($payload, JSON_UNESCAPED_UNICODE));
-            chmod($jobFile, 0600);
-
-            $cmd = escapeshellarg($phpBin) . ' '
-                . escapeshellarg($entryScript) . ' '
-                . escapeshellarg('Core/Process/ValidateEmailWorker')
-                . ' -f ' . escapeshellarg($jobFile);
-            $descriptors = array(
-                0 => array('pipe', 'r'),
-                1 => array('pipe', 'w'),
-                2 => array('pipe', 'w'),
-            );
-            $proc = proc_open($cmd, $descriptors, $pipes, $childCwd);
-            if (!is_resource($proc)) {
-                if (file_exists($jobFile)) {
-                    unlink($jobFile);
-                }
-                $this->errorlog('Could not start validation subprocess');
-                $this->error('An error occurred, please contact the website owner.');
-            }
-            fclose($pipes[0]);
-            stream_set_blocking($pipes[1], false);
-            stream_set_blocking($pipes[2], false);
-
-            $bufOut = '';
-            $bufErr = '';
-            $childStarted = microtime(true);
-            $lastHeartbeat = microtime(true);
-            $heartbeatEvery = 1.0;
+            $lastHeartbeat = 0.0;
             $jobError = false;
             $okRow = null;
 
@@ -141,92 +201,44 @@ class Pman_Core_ValidateEmail extends Pman
                 'message' => 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left',
             ));
 
-            while (true) {
-                $st = proc_get_status($proc);
-                if (empty($st['running'])) {
-                    break;
-                }
-                if (microtime(true) - $childStarted > $childTimeout) {
-                    proc_terminate($proc, 9);
-                    fclose($pipes[1]);
-                    fclose($pipes[2]);
-                    proc_close($proc);
-                    if (file_exists($jobFile)) {
-                        unlink($jobFile);
+            $workerResult = $this->runWorkerHttp(
+                $workerUrl,
+                $email,
+                $au->id,
+                $childTimeout,
+                function ($elapsed) use (
+                    &$lastHeartbeat,
+                    $heartbeatEvery,
+                    $childTimeout,
+                    $total,
+                    $idx,
+                    $email
+                ) {
+                    if (microtime(true) - $lastHeartbeat < $heartbeatEvery) {
+                        return;
                     }
-                    $this->error('Validation timed out for ' . $email);
-                }
-
-                $r = array($pipes[1], $pipes[2]);
-                $w = null;
-                $e = null;
-                $tv = 1;
-                $n = stream_select($r, $w, $e, $tv);
-                if ($n === false) {
-                    continue;
-                }
-                if ($n > 0) {
-                    foreach ($r as $pipe) {
-                        $chunk = fread($pipe, 8192);
-                        if ($chunk !== false && $chunk !== '') {
-                            if ($pipe === $pipes[1]) {
-                                $bufOut .= $chunk;
-                            }
-                            if ($pipe === $pipes[2]) {
-                                $bufErr .= $chunk;
-                            }
-                        }
-                    }
-                }
-
-                if (microtime(true) - $lastHeartbeat >= $heartbeatEvery) {
                     $lastHeartbeat = microtime(true);
                     $this->sendSSE('progress', array(
-                        'total' =>  $total * $childTimeout,
-                        'progress' => (microtime(true) - $childStarted + $idx * $childTimeout) / ($total * $childTimeout) * 100,
-                        'message' => 'Validating email (' . $email . ') - ' . round($childTimeout - (microtime(true) - $childStarted)) ." seconds left",
+                        'total' => $total * $childTimeout,
+                        'progress' => ($elapsed + $idx * $childTimeout) / ($total * $childTimeout) * 100,
+                        'message' => 'Validating email (' . $email . ') - ' . round($childTimeout - $elapsed) . ' seconds left',
                     ));
                 }
+            );
+
+            if ($workerResult['error'] === 'timeout') {
+                $this->error('Validation timed out for ' . $email);
             }
 
-            stream_set_blocking($pipes[1], true);
-            stream_set_blocking($pipes[2], true);
-            $bufOut .= stream_get_contents($pipes[1]);
-            $bufErr .= stream_get_contents($pipes[2]);
-            fclose($pipes[1]);
-            fclose($pipes[2]);
-            $exitCode = proc_close($proc);
-            if (file_exists($jobFile)) {
-                unlink($jobFile);
+            if ($workerResult['ok'] !== null) {
+                $okRow = $workerResult['ok'];
             }
-
-            while (($p = strpos($bufOut, "\n")) !== false) {
-                $line = trim(substr($bufOut, 0, $p));
-                $bufOut = substr($bufOut, $p + 1);
-                if ($line === '') {
-                    continue;
-                }
-                $row = json_decode($line, true);
-                if (!is_array($row)) {
-                    $jobError = 'Invalid JSON from worker: ' . substr($line, 0, 200);
-                    break;
-                }
-                switch ($row['type'] ?? '') {
-                    case 'email_fail':
-                        $jobError = $row['message'];
-                        break 2;
-                    case 'email_ok':
-                        $okRow = $row;
-                        break;
-                }
+            if ($workerResult['error'] !== '' && $workerResult['error'] !== 'timeout') {
+                $jobError = $workerResult['error'];
             }
-
-            if (empty($jobError) && $okRow === null) {
-                $jobError = 'An error occurred. Please contact the website admin.';
-                if (!empty($bufErr)) {
-                    $this->errorlog($bufErr);
-                } elseif ($exitCode !== 0) {
-                    $this->errorlog('ValidateEmail worker exited with code ' . $exitCode);
+            if ($workerResult['ok'] === null && $workerResult['error'] !== '' && $workerResult['error'] !== 'timeout') {
+                if (in_array($workerResult['error'], array('curl', 'http', 'json'), true)) {
+                    $jobError = 'An error occurred. Please contact the website admin.';
                 }
             }
 
