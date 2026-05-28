@@ -169,10 +169,8 @@ class Pman_Core_ValidateEmail extends Pman
                 'message' => 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left',
             ));
 
-            $this->error($this->baseURL);
-
             $workerResult = $this->runWorkerHttp(
-                $this->baseURL . '/Core/Process/ValidateEmailWorker',
+                'http://localhost' .$this->baseURL . '/Core/Process/ValidateEmailWorker',
                 $email,
                 $au->id,
                 $childTimeout,
