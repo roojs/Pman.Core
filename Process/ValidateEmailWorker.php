@@ -13,16 +13,11 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 {
     function getAuth()
     {
-        if ($this->isLoopbackRequest()) {
+        $ff = HTML_FlexyFramework::get();
+        if (!empty($ff->cli)) {
             return true;
         }
         return $this->authRequired();
-    }
-
-    function isLoopbackRequest()
-    {
-        return !empty($_SERVER['REMOTE_ADDR'])
-            && in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'), true);
     }
 
     function get($request = '', $opts = array(), $isRedirect = false)
