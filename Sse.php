@@ -39,9 +39,9 @@ class Pman_Core_Sse extends Pman
     function error($message, $options = array())
     {
         $this->errorlog($message);
-        $this->sendSSE('error', [
+        $this->sendSSE('error', array_merge(array(
             'success' => false,
             'errorMsg' => $message
-        ]);
+        ), $options));
     }
 }
