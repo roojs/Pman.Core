@@ -1,70 +1,84 @@
 <?php
 /**
- * CLI: one email SMTP validation (NDJSON on stdout).
- *   php /path/to/press.local.php Core/Process/ValidateEmailWorker -f /path/to/job.json
- * (job JSON: email, auth_user_id).
+ * Internal HTTP worker: one email SMTP validation (POST from Core/ValidateEmail).
+ * Loopback only. POST: email, auth_user_id.
+ *
+ * Ops: php-fpm request_terminate_timeout and nginx fastcgi_read_timeout should be >= 90s
+ * for this route (see ValidateEmail parent).
  */
 
 require_once 'Pman.php';
 
 class Pman_Core_Process_ValidateEmailWorker extends Pman
 {
-    static $cli_desc = 'Validate one email via SMTP (used by Core/ValidateEmail SSE parent).';
-
-    static $cli_opts = array(
-        'file' => array(
-            'desc' => 'Job JSON file (email, auth_user_id)',
-            'short' => 'f',
-            'min' => 1,
-            'max' => 1,
-        ),
-    );
-
     function getAuth()
     {
-        $ff = HTML_FlexyFramework::get();
-        if (!empty($ff->cli)) {
+        if ($this->isLoopbackRequest()) {
             return true;
         }
         return $this->authRequired();
     }
 
+    function isLoopbackRequest()
+    {
+        return !empty($_SERVER['REMOTE_ADDR'])
+            && in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'), true);
+    }
+
     function get($request = '', $opts = array(), $isRedirect = false)
     {
-        $this->errorlog('ValidateEmailWorker started');
-        $jobPath = !empty($opts['file']) ? $opts['file'] : '';
-        if ($jobPath === '') {
-            echo "Usage: ... Core/Process/ValidateEmailWorker -f /path/to/job.json\n";
-            exit(1);
+        header('Content-Type: application/json; charset=utf-8');
+        $this->respondJson(array(
+            'type' => 'email_fail',
+            'message' => 'POST required',
+        ));
+    }
+
+    function post($base = '')
+    {
+        set_time_limit(90);
+        header('Content-Type: application/json; charset=utf-8');
+
+        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+        if ($email === '') {
+            $this->respondJson(array(
+                'type' => 'email_fail',
+                'message' => 'Missing email',
+            ));
         }
 
-        $raw = file_get_contents($jobPath);
-        if ($raw === false || $raw === '') {
-            echo 'Cannot read job file: ' . $jobPath . "\n";
-            exit(1);
-        }
+        $authUserId = isset($_POST['auth_user_id']) ? $_POST['auth_user_id'] : '';
+        $this->respondJson($this->runJob($email, $authUserId));
+    }
 
-        $job = json_decode($raw, true);
-        if (!is_array($job) || empty($job['email'])) {
-            echo "Invalid job JSON (need email)\n";
-            exit(1);
-        }
+    function respondJson($row)
+    {
+        echo json_encode($row, JSON_UNESCAPED_UNICODE);
+        exit;
+    }
 
+    /**
+     * @return array{type: string, domain_id?: int, token?: string, message?: string}
+     */
+    function runJob($email, $authUserId)
+    {
         $ff = HTML_FlexyFramework::get();
         if (!isset($ff->Mail['helo'])) {
-            echo "config Mail[helo] is not set\n";
-            exit(1);
+            $this->errorlog('config Mail[helo] is not set');
+            return array(
+                'type' => 'email_fail',
+                'message' => 'Mail configuration error',
+            );
         }
 
-        if (!empty($job['auth_user_id'])) {
+        if ($authUserId !== '' && $authUserId !== null) {
             $au = DB_DataObject::factory('core_person');
-            // job JSON id may be string; get() expects scalar key
-            if ($au->get((int) $job['auth_user_id'])) {
+            if ($au->get((int) $authUserId)) {
                 $this->authUser = $au;
             }
         }
 
-        $dar = explode('@', $job['email']);
+        $dar = explode('@', $email);
         $dom = strtolower(array_pop($dar));
         $dar[] = $dom;
         $emailNorm = implode('@', $dar);
@@ -72,11 +86,12 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         $cd = DB_DataObject::factory('core_domain');
         $cdResult = $cd->getOrCreate($dom);
         if (!is_object($cdResult)) {
-            $this->debuglog('email_fail', is_string($cdResult) ? $cdResult : 'Invalid domain');
-            exit(1);
+            return array(
+                'type' => 'email_fail',
+                'message' => is_string($cdResult) ? $cdResult : 'Invalid domain',
+            );
         }
 
-        // true = RCPT accepted; false = soft/inconclusive (retry pass 1); string = hard fail
         $result = false;
         for ($pass = 0; $pass < 2; $pass++) {
             $result = $cd->validateEmail($this, $emailNorm, $pass);
@@ -87,29 +102,18 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 break;
             }
         }
-        $this->errorlog('ValidateEmailWorker ended');
         if (is_string($result)) {
-            $this->debuglog('email_fail', $result);
-            exit(1);
+            return array(
+                'type' => 'email_fail',
+                'message' => $result,
+            );
         }
 
-        // core_domain.id is numeric; DB layer may return string
         $domainId = (int) $cd->id;
-        echo json_encode(array(
+        return array(
             'type' => 'email_ok',
             'domain_id' => $domainId,
             'token' => md5($emailNorm . $domainId),
-        ), JSON_UNESCAPED_UNICODE) . "\n";
-        fflush(STDOUT);
-        exit(0);
-    }
-
-    function debuglog($type, $message)
-    {
-        echo json_encode(array(
-            'type' => $type,
-            'message' => $message,
-        ), JSON_UNESCAPED_UNICODE) . "\n";
-        fflush(STDOUT);
+        );
     }
 }
