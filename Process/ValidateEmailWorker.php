@@ -26,8 +26,9 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         set_time_limit(90);
 
         $au = DB_DataObject::factory('core_person');
-        $au->get($_POST['auth_user_id']);
-        $this->authUser = $au;
+        if($au->get($_POST['auth_user_id'])) {
+            $this->authUser = $au;
+        }
 
         $dar = explode('@', $_POST['email']);
         $dom = strtolower(array_pop($dar));
