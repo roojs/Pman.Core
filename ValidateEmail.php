@@ -56,7 +56,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
                 curl_multi_remove_handle($mh, $ch);
                 curl_close($ch);
                 curl_multi_close($mh);
-                return array('ok' => null, 'error' => 'timeout');
+                return array('ok' => null, 'error' => 'Validation timed out: ' . $email);
             }
 
             $heartbeatCb(microtime(true) - $childStarted);
