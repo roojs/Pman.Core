@@ -120,11 +120,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
             $jobError = '';
             $okRow = null;
 
-            $this->sendSSE('progress', array(
-                'total' => $total * $childTimeout,
-                'progress' => $idx / $total * 100,
-                'message' => 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left',
-            ));
+            $this->sseProgress($idx / $total * 100, 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left');
 
             $workerResult = $this->runWorkerHttp(
                 'http://localhost' . $this->baseURL . '/Core/Process/ValidateEmailWorker',
