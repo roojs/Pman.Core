@@ -176,18 +176,13 @@ class Pman_Core_ValidateEmail extends Pman
             $this->error('An error occurred, please contact the website owner.');
         }
         $base = $ff->Pman['local_base_url'] . '/Core/Process/ValidateEmailWorker';
-        
+
         $total = count($jobs);
         $results = array();
         $childTimeout = 90.0;
         $heartbeatEvery = 1.0;
 
         foreach ($jobs as $idx => $jobRow) {
-            if (empty($jobRow['field']) || empty($jobRow['email'])) {
-                $this->errorlog('Each job needs field and email');
-                $this->error('An error occurred, please contact the website owner.');
-            }
-
             $field = $jobRow['field'];
             $email = $jobRow['email'];
             $lastHeartbeat = 0.0;
