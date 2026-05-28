@@ -75,7 +75,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
 
         $res = json_decode(trim($body), true);
         if(
-            is_array($res) || 
+            !is_array($res) || 
             empty($res['data']) || 
             empty($res['data']['type']) || 
             !in_array($res['data']['type'], array('email_fail', 'email_ok'))
