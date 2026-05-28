@@ -5,6 +5,7 @@ require_once 'Pman.php';
 class Pman_Core_Sse extends Pman
 {
     var $sse = false;
+    var $progressTotal = 100;
 
     function sendSSE($event, $data)
     {
