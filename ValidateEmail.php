@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Pman.php';
+require_once 'Pman/Core/Sse.php';
 
 /**
  * SSE multi-email SMTP validation (one loopback HTTP worker request per address).
@@ -10,7 +10,7 @@ require_once 'Pman.php';
  * Child worker (Core/Process/ValidateEmailWorker): php-fpm request_terminate_timeout and
  * nginx fastcgi_read_timeout should be >= 90s for loopback requests.
  */
-class Pman_Core_ValidateEmail extends Pman
+class Pman_Core_ValidateEmail extends Pman_Core_Sse
 {
     function getAuth()
     {
@@ -19,48 +19,6 @@ class Pman_Core_ValidateEmail extends Pman
             return true;
         }
         return $this->authRequired();
-    }
-
-    function sendSSE($event, $data)
-    {
-        echo "\n"
-            . "event: {$event}\n"
-            . 'data: ' . json_encode($data) . "\n";
-        if (ob_get_level()) {
-            ob_flush();
-        }
-        flush();
-
-        if ($event === 'error') {
-            exit;
-        }
-    }
-
-    function startSse()
-    {
-        set_time_limit(0);
-
-        header('Content-Type: text/event-stream');
-        header('Cache-Control: no-cache');
-        header('Connection: keep-alive');
-        header('X-Accel-Buffering: no');
-
-        while (ob_get_level()) {
-            ob_end_flush();
-        }
-    }
-
-    /**
-     * Show an error message
-     *
-     * @param string $message The error message
-     */
-    function error($message)
-    {
-        $this->sendSSE('error', array(
-            'success' => false,
-            'errorMsg' => $message
-        ));
     }
 
     /**
