@@ -25,6 +25,12 @@ class Pman_Core_Sse extends Pman
     function startSse($options = array())
     {
         $this->sse = true;
+        foreach($options as $key => $value) {
+            if(!property_exists($this, $key)) {
+                continue;
+            }
+            $this->{$key} = $value;
+        }
         set_time_limit(0);
 
         header('Content-Type: text/event-stream');
