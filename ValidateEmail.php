@@ -188,6 +188,7 @@ class Pman_Core_ValidateEmail extends Pman
         }
 
         $workerUrl = $this->workerUrl($ff);
+        die('test');
         $total = count($jobs);
         $results = array();
         $childTimeout = 90.0;
