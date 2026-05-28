@@ -31,6 +31,7 @@ class Pman_Core_Sse extends Pman
     function sendSSE($event, $data)
     {
         if(!$this->sse) {
+            $this->jerr("SSE is not enabled");
             return;
         }
         echo "\n"
