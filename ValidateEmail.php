@@ -99,7 +99,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
         $au = $this->getAuthUser();
         $jobs = json_decode($_POST['validate_email_jobs'], true);
         $total = count($jobs);
-        $childTimeout = 90.0;
+        $childTimeout = 1.0;
         $heartbeatEvery = 1.0;
 
         $this->startSse(array(
@@ -160,11 +160,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
         }
 
         $this->sseProgress(100, 'Validation complete');
-
-        $this->sendSSE('complete', array(
-            'success' => true,
-            'data' => $results,
-        ));
+        $this->sseComplete($results);
         exit;
     }
 }
