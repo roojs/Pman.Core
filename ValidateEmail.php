@@ -185,10 +185,6 @@ class Pman_Core_ValidateEmail extends Pman
 
         $jobsRaw = isset($_POST['validate_email_jobs']) ? $_POST['validate_email_jobs'] : '';
         $jobs = json_decode($jobsRaw, true);
-        if (!is_array($jobs) || empty($jobs)) {
-            $this->errorlog('Missing or invalid validate_email_jobs JSON');
-            $this->error('An error occurred, please contact the website owner.');
-        }
 
         $ff = HTML_FlexyFramework::get();
         if (!isset($ff->Mail['helo'])) {
