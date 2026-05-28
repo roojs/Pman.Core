@@ -14,7 +14,7 @@ class Pman_Core_Sse extends Pman
             return true;
         }
         $this->authRequired();
-        
+
         set_time_limit(0);
 
         header('Content-Type: text/event-stream');
@@ -53,12 +53,12 @@ class Pman_Core_Sse extends Pman
         ));
     }
 
-    function jerr($message, $options = array())
+    function jerr($str, $errors=array(), $content_type = false)
     {
-        $this->errorlog($message);
+        $this->errorlog($str);
         $this->sendSSE('error', array_merge(array(
             'success' => false,
-            'errorMsg' => $message
+            'errorMsg' => $str
         ), $options));
     }
 
