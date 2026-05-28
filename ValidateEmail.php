@@ -113,8 +113,7 @@ class Pman_Core_ValidateEmail extends Pman
         if ($row['type'] === 'email_ok') {
             return array('ok' => $row, 'error' => '');
         }
-
-        $this->errorlog('Unknown worker response type: ' . $row['type']);
+        
         return array('ok' => null, 'error' => 'json');
     }
 
