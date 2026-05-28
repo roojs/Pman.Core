@@ -63,20 +63,6 @@ class Pman_Core_ValidateEmail extends Pman
         return rtrim($base, '/') . '/Core/Process/ValidateEmailWorker';
     }
 
-    function workerUrl($ff)
-    {
-        if (empty($ff->Pman['local_base_url'])) {
-            $this->errorlog('Pman[local_base_url] is not set');
-            $this->error('An error occurred, please contact the website owner.');
-        }
-        $base = $ff->Pman['local_base_url'];
-        if (strpos($base, 'http') !== 0) {
-            $base = 'http://127.0.0.1' . $base;
-        }
-        $base = preg_replace('#^http://localhost#i', 'http://127.0.0.1', $base);
-        return rtrim($base, '/') . '/Core/Process/ValidateEmailWorker';
-    }
-
     /**
      * POST one email to loopback worker; SSE progress while waiting (max $childTimeout s).
      *
