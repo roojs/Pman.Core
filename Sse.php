@@ -43,6 +43,15 @@ class Pman_Core_Sse extends Pman
         }
     }
 
+    function sseProgress($progress, $message = '')
+    {
+        $this->sendSSE('progress', array(
+            'total' => $this->progressTotal,
+            'progress' => $progress,
+            'message' => $message
+        ));
+    }
+
     function sseError($message, $options = array())
     {
         $this->errorlog($message);
