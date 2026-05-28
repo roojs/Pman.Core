@@ -179,8 +179,7 @@ class Pman_Core_ValidateEmail extends Pman
         }
 
         $au = $this->getAuthUser();
-        $jobsRaw = isset($_POST['validate_email_jobs']) ? $_POST['validate_email_jobs'] : '';
-        $jobs = json_decode($jobsRaw, true);
+        $jobs = json_decode($_POST['validate_email_jobs'], true);
 
         $ff = HTML_FlexyFramework::get();
         if (!isset($ff->Mail['helo'])) {
