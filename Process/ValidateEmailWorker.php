@@ -50,7 +50,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
         if ($authUserId !== '' && $authUserId !== null) {
             $au = DB_DataObject::factory('core_person');
-            if ($au->get((int) $authUserId)) {
+            if ($au->get($authUserId)) {
                 $this->authUser = $au;
             }
         }
