@@ -102,7 +102,9 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
         $childTimeout = 90.0;
         $heartbeatEvery = 1.0;
 
-        $this->startSse();
+        $this->startSse(array(
+            'progressTotal' => $total * $childTimeout
+        ));
 
         $ff = HTML_FlexyFramework::get();
         if (!isset($ff->Mail['helo'])) {
