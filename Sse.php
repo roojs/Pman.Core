@@ -53,6 +53,8 @@ class Pman_Core_Sse extends Pman
         ));
     }
 
+    // reuse the name jerr even if the logic is different
+    // easier to read and understand
     function jerr($str, $errors=array(), $content_type = false)
     {
         $this->errorlog($str);
