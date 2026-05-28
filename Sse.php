@@ -60,4 +60,9 @@ class Pman_Core_Sse extends Pman
             'errorMsg' => $message
         ), $options));
     }
+
+    function sseComplete($data = array())
+    {
+        $this->sendSSE('complete', $data);
+    }
 }
