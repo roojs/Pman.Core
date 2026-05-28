@@ -12,14 +12,6 @@ require_once 'Pman/Core/Sse.php';
  */
 class Pman_Core_ValidateEmail extends Pman_Core_Sse
 {
-    function getAuth()
-    {
-        $ff = HTML_FlexyFramework::get();
-        if (!empty($ff->cli)) {
-            return true;
-        }
-        return $this->authRequired();
-    }
 
     /**
      * POST one email to loopback worker; SSE progress while waiting (max $childTimeout s).
