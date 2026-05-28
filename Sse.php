@@ -52,7 +52,7 @@ class Pman_Core_Sse extends Pman
         ));
     }
 
-    function sseError($message, $options = array())
+    function jerr($message, $options = array())
     {
         $this->errorlog($message);
         $this->sendSSE('error', array_merge(array(
