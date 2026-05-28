@@ -87,6 +87,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 break;
             }
         }
+        $this->errorlog('ValidateEmailWorker ended');
         if (is_string($result)) {
             $this->debuglog('email_fail', $result);
             exit(1);
