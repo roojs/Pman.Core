@@ -36,13 +36,12 @@ class Pman_Core_Sse extends Pman
         }
     }
 
-    function error($message, $allowRetry = false)
+    function error($message, $options = array())
     {
         $this->errorlog($message);
         $this->sendSSE('error', [
             'success' => false,
-            'errorMsg' => $message,
-            'allowRetry' => $allowRetry
+            'errorMsg' => $message
         ]);
     }
 }
