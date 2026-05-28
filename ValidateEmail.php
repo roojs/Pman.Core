@@ -113,8 +113,8 @@ class Pman_Core_ValidateEmail extends Pman
         if ($row['type'] === 'email_ok') {
             return array('ok' => $row, 'error' => '');
         }
-        
-        return array('ok' => null, 'error' => 'json');
+
+        return array('ok' => null, 'error' => 'Invalid response from worker: ' . $body);
     }
 
     function post($base = '')
