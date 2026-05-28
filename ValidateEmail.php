@@ -63,7 +63,7 @@ class Pman_Core_ValidateEmail extends Pman
         return rtrim($base, '/') . '/Core/Process/ValidateEmailWorker';
     }
 
-  /**
+    /**
      * POST one email to loopback worker; SSE progress while waiting (max $childTimeout s).
      *
      * @return array{ok: ?array, error: string}
@@ -192,7 +192,7 @@ class Pman_Core_ValidateEmail extends Pman
             $field = $jobRow['field'];
             $email = $jobRow['email'];
             $lastHeartbeat = 0.0;
-            $jobError = false;
+            $jobError = '';
             $okRow = null;
 
             $this->sendSSE('progress', array(
@@ -232,21 +232,21 @@ class Pman_Core_ValidateEmail extends Pman
 
             if ($workerResult['ok'] !== null) {
                 $okRow = $workerResult['ok'];
-            }
-            if ($workerResult['error'] !== '' && $workerResult['error'] !== 'timeout') {
-                $jobError = $workerResult['error'];
-            }
-            if ($workerResult['ok'] === null && $workerResult['error'] !== '' && $workerResult['error'] !== 'timeout') {
+            } elseif ($workerResult['error'] !== '') {
                 if (in_array($workerResult['error'], array('curl', 'http', 'json'), true)) {
                     $jobError = 'An error occurred. Please contact the website admin.';
+                } else {
+                    $jobError = $workerResult['error'];
                 }
+            } else {
+                $jobError = 'An error occurred. Please contact the website admin.';
             }
 
             $results[$field] = array(
                 'email' => $email,
-                'error' => $jobError ? $jobError : '',
-                'domain_id' => $jobError ? '' : $okRow['domain_id'],
-                'token' => $jobError ? '' : $okRow['token'],
+                'error' => $jobError,
+                'domain_id' => $jobError !== '' ? '' : $okRow['domain_id'],
+                'token' => $jobError !== '' ? '' : $okRow['token'],
             );
         }
 
