@@ -93,14 +93,10 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
         $total = count($jobs);
         $childTimeout = 1.0;
         $heartbeatEvery = 1.0;
-
-        $this->startSse(array(
-            'progressTotal' => $total * $childTimeout
-        ));
-
+        
         $ff = HTML_FlexyFramework::get();
         if (!isset($ff->Mail['helo'])) {
-            $this->sseError('config Mail[helo] is not set');
+            $this->jerr('config Mail[helo] is not set');
         }
 
         $results = array();
@@ -112,7 +108,11 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
             $jobError = '';
             $okRow = null;
 
-            $this->sseProgress($idx / $total * 100, 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left');
+            $this->sendSSE('progress', array(
+                'total' => $total * $childTimeout,
+                'progress' => ($idx + 1) / $total * 100,
+                'message' => 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left'
+            ));
 
             $workerResult = $this->runWorkerHttp(
                 'http://localhost' . $this->baseURL . '/Core/Process/ValidateEmailWorker',
