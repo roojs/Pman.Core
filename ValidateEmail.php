@@ -96,6 +96,9 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
 
     function post($base = '')
     {
+        $childTimeout = 90.0;
+        $heartbeatEvery = 1.0;
+        
         $this->startSse();
 
         $au = $this->getAuthUser();
@@ -108,8 +111,6 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
 
         $total = count($jobs);
         $results = array();
-        $childTimeout = 1.0;
-        $heartbeatEvery = 1.0;
 
         foreach ($jobs as $idx => $jobRow) {
             $field = $jobRow['field'];
