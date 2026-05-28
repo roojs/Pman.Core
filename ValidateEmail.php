@@ -103,9 +103,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
 
         $ff = HTML_FlexyFramework::get();
         if (!isset($ff->Mail['helo'])) {
-            $this->errorlog('config Mail[helo] is not set');
-            $this->error('An error occurred, please contact the website owner.');
-            
+            $this->jerr('config Mail[helo] is not set');
         }
 
         $total = count($jobs);
