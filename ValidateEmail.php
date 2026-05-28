@@ -195,11 +195,7 @@ class Pman_Core_ValidateEmail extends Pman
             if ($workerResult['ok'] !== null) {
                 $okRow = $workerResult['ok'];
             } elseif ($workerResult['error'] !== '') {
-                if (in_array($workerResult['error'], array('curl', 'http', 'json'), true)) {
-                    $jobError = 'An error occurred. Please contact the website admin.';
-                } else {
-                    $jobError = $workerResult['error'];
-                }
+                $jobError = $workerResult['error'];
             } else {
                 $jobError = 'An error occurred. Please contact the website admin.';
             }
