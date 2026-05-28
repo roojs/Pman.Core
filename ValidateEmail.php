@@ -125,8 +125,25 @@ class Pman_Core_ValidateEmail extends Pman
             return array('ok' => null, 'error' => 'http');
         }
 
-        $row = json_decode(trim((string) $body), true);
-        if (!is_array($row) || empty($row['type'])) {
+        $parsed = json_decode(trim((string) $body), true);
+        if (!is_array($parsed)) {
+            $this->errorlog('Invalid JSON from worker: ' . substr((string) $body, 0, 500));
+            return array('ok' => null, 'error' => 'json');
+        }
+
+        if (isset($parsed['success']) && $parsed['success'] === false) {
+            return array(
+                'ok' => null,
+                'error' => !empty($parsed['errorMsg']) ? $parsed['errorMsg'] : 'Validation failed',
+            );
+        }
+
+        $row = $parsed;
+        if (!empty($parsed['success']) && isset($parsed['data']) && is_array($parsed['data'])) {
+            $row = $parsed['data'];
+        }
+
+        if (empty($row['type'])) {
             $this->errorlog('Invalid JSON from worker: ' . substr((string) $body, 0, 500));
             return array('ok' => null, 'error' => 'json');
         }

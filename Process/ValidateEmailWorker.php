@@ -13,11 +13,16 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 {
     function getAuth()
     {
-        $ff = HTML_FlexyFramework::get();
-        if (!empty($ff->cli)) {
+        if ($this->isLoopbackRequest()) {
             return true;
         }
         return $this->authRequired();
+    }
+
+    function isLoopbackRequest()
+    {
+        return !empty($_SERVER['REMOTE_ADDR'])
+            && in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'), true);
     }
 
     function get($request = '', $opts = array(), $isRedirect = false)
@@ -28,16 +33,14 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     function post($base = '')
     {
         set_time_limit(90);
-        header('Content-Type: application/json; charset=utf-8');
+
+        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+        if ($email === '') {
+            $this->jerr('Missing email');
+        }
 
         $authUserId = isset($_POST['auth_user_id']) ? $_POST['auth_user_id'] : '';
-        $this->respondJson($this->runJob($email, $authUserId));
-    }
-
-    function respondJson($row)
-    {
-        echo json_encode($row, JSON_UNESCAPED_UNICODE);
-        exit;
+        $this->jdata($this->runJob($email, $authUserId));
     }
 
     /**
