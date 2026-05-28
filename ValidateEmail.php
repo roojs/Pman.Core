@@ -101,6 +101,8 @@ class Pman_Core_ValidateEmail extends Pman
         curl_close($ch);
         curl_multi_close($mh);
 
+        $parsed = json_decode(trim((string) $body), true);
+
         if (isset($parsed['success']) && $parsed['success'] === false) {
             return array(
                 'ok' => null,
