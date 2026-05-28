@@ -102,9 +102,9 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
         $jobs = json_decode($_POST['validate_email_jobs'], true);
 
         $ff = HTML_FlexyFramework::get();
-        if (!isset($ff->Mail['helo'])) {
+        // if (!isset($ff->Mail['helo'])) {
             $this->sseError('config Mail[helo] is not set');
-        }
+        // }
 
         $total = count($jobs);
         $results = array();
