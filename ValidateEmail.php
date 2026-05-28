@@ -152,7 +152,7 @@ class Pman_Core_ValidateEmail extends Pman
 
         $total = count($jobs);
         $results = array();
-        $childTimeout = 90.0;
+        $childTimeout = 1.0;
         $heartbeatEvery = 1.0;
 
         foreach ($jobs as $idx => $jobRow) {
