@@ -138,6 +138,7 @@ class Pman_Core_ValidateEmail extends Pman
         if (!isset($ff->Mail['helo'])) {
             $this->errorlog('config Mail[helo] is not set');
             $this->error('An error occurred, please contact the website owner.');
+            
         }
 
         if (empty($ff->Pman['local_base_url'])) {
