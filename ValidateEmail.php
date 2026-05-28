@@ -146,11 +146,6 @@ class Pman_Core_ValidateEmail extends Pman
             
         }
 
-        if (empty($ff->Pman['local_base_url'])) {
-            $this->errorlog('Pman[local_base_url] is not set');
-            $this->error('An error occurred, please contact the website owner.');
-        }
-
         $total = count($jobs);
         $results = array();
         $childTimeout = 90.0;
@@ -170,7 +165,7 @@ class Pman_Core_ValidateEmail extends Pman
             ));
 
             $workerResult = $this->runWorkerHttp(
-                'http://localhost' .$this->baseURL . '/Core/Process/ValidateEmailWorker',
+                'http://localhost' . $this->baseURL . '/Core/Process/ValidateEmailWorker',
                 $email,
                 $au->id,
                 $childTimeout,
