@@ -56,7 +56,6 @@ class Pman_Core_ValidateEmail extends Pman
      */
     function runWorkerHttp($workerUrl, $email, $authUserId, $childTimeout, $heartbeatCb)
     {
-        $this->error('runWorkerHttp: ' . $workerUrl);
         $ch = curl_init($workerUrl);
         curl_setopt_array($ch, array(
             CURLOPT_POST => true,
