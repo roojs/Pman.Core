@@ -59,6 +59,8 @@ class Pman_Core_ValidateEmail extends Pman
         if (strpos($base, 'http') !== 0) {
             $base = 'http://127.0.0.1' . $base;
         }
+        var_dump($base);
+        die('test');
         $base = preg_replace('#^http://localhost#i', 'http://127.0.0.1', $base);
         return rtrim($base, '/') . '/Core/Process/ValidateEmailWorker';
     }
