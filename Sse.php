@@ -22,7 +22,7 @@ class Pman_Core_Sse extends Pman
         }
     }
 
-    function startSse()
+    function startSse($options = array())
     {
         $this->sse = true;
         set_time_limit(0);
