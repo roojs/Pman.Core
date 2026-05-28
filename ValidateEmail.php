@@ -176,8 +176,7 @@ class Pman_Core_ValidateEmail extends Pman
             $this->error('An error occurred, please contact the website owner.');
         }
         $base = $ff->Pman['local_base_url'] . '/Core/Process/ValidateEmailWorker';
-        $this->error($base);
-        die('test');
+        
         $total = count($jobs);
         $results = array();
         $childTimeout = 90.0;
