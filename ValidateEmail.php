@@ -96,20 +96,19 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
 
     function post($base = '')
     {
-        $childTimeout = 90.0;
-        $heartbeatEvery = 1.0;
-        
-        $this->startSse();
-
         $au = $this->getAuthUser();
         $jobs = json_decode($_POST['validate_email_jobs'], true);
+        $total = count($jobs);
+        $childTimeout = 90.0;
+        $heartbeatEvery = 1.0;
+
+        $this->startSse();
 
         $ff = HTML_FlexyFramework::get();
         if (!isset($ff->Mail['helo'])) {
             $this->sseError('config Mail[helo] is not set');
         }
 
-        $total = count($jobs);
         $results = array();
 
         foreach ($jobs as $idx => $jobRow) {
