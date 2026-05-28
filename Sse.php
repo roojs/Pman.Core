@@ -38,18 +38,11 @@ class Pman_Core_Sse extends Pman
 
     function error($message)
     {
-        $this->jerr($message);
-    }
-
-    function jerr($str, $errors=array(), $content_type = false)
-    {
-        parent::jerror('ERROR', $str, $errors, $content_type);
-        $this->sendSSE('error', array(
-            'success'=> false,
-            'errorMsg' => $str,
-            'message' => $str,
-            'errors' => $errors ? $errors : true,
-            'authFailure' => !empty($errors['authFailure']),
-        ));
+        $this->errorlog($message);
+        $this->sendSSE('error', [
+            'success' => false,
+            'errorMsg' => $message,
+            'allowRetry' => $allowRetry ? 1 : 0 // allow retry if error is shown to user
+        ]);
     }
 }
