@@ -170,17 +170,17 @@ class Pman_Core_ValidateEmail extends Pman
             $this->errorlog('config Mail[helo] is not set');
             $this->error('An error occurred, please contact the website owner.');
         }
-        
+
         if (empty($ff->Pman['local_base_url'])) {
             $this->errorlog('Pman[local_base_url] is not set');
             $this->error('An error occurred, please contact the website owner.');
         }
         $base = $ff->Pman['local_base_url'];
+        $this->error($base);
+        die('test');
         if (strpos($base, 'http') !== 0) {
             $base = 'http://127.0.0.1' . $base;
         }
-        var_dump($base);
-        die('test');
         $base = preg_replace('#^http://localhost#i', 'http://127.0.0.1', $base);
         $workerUrl = rtrim($base, '/') . '/Core/Process/ValidateEmailWorker';
         die('test');
