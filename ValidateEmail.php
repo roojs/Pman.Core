@@ -47,7 +47,6 @@ class Pman_Core_ValidateEmail extends Pman
 
     function post($base = '')
     {
-        $this->errorlog('ValidateEmail started');
         set_time_limit(0);
 
         header('Content-Type: text/event-stream');
@@ -200,10 +199,6 @@ class Pman_Core_ValidateEmail extends Pman
             if (file_exists($jobFile)) {
                 unlink($jobFile);
             }
-
-            var_dump($bufOut);
-            var_dump($bufErr);
-            // die('test');
 
             while (($p = strpos($bufOut, "\n")) !== false) {
                 $line = trim(substr($bufOut, 0, $p));
