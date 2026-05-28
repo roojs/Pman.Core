@@ -4,6 +4,8 @@ require_once 'Pman.php';
 
 class Pman_Core_Sse extends Pman
 {
+    var $sse = false;
+
     function sendSSE($event, $data)
     {
         echo "\n"
@@ -21,6 +23,7 @@ class Pman_Core_Sse extends Pman
 
     function startSse()
     {
+        $this->sse = true;
         set_time_limit(0);
 
         header('Content-Type: text/event-stream');
@@ -35,9 +38,18 @@ class Pman_Core_Sse extends Pman
 
     function error($message)
     {
+        $this->jerr($message);
+    }
+
+    function jerr($str, $errors=array(), $content_type = false)
+    {
+        parent::jerror('ERROR', $str, $errors, $content_type);
         $this->sendSSE('error', array(
-            'success' => false,
-            'errorMsg' => $message
+            'success'=> false,
+            'errorMsg' => $str,
+            'message' => $str,
+            'errors' => $errors ? $errors : true,
+            'authFailure' => !empty($errors['authFailure']),
         ));
     }
 }
