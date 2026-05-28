@@ -22,11 +22,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
     function get($request = '', $opts = array(), $isRedirect = false)
     {
-        header('Content-Type: application/json; charset=utf-8');
-        $this->respondJson(array(
-            'type' => 'email_fail',
-            'message' => 'POST required',
-        ));
+        $this->jerr('Invalid get');
     }
 
     function post($base = '')
