@@ -152,7 +152,10 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
         }
 
         $this->sseProgress(100, 'Validation complete');
-        $this->sseComplete($results);
+        $this->sendSSE('complete', array(
+            'success' => true,
+            'data' => $results
+        ));
         exit;
     }
 }
