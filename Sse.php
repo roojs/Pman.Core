@@ -44,15 +44,6 @@ class Pman_Core_Sse extends Pman
         }
     }
 
-    function sseProgress($progress, $message = '')
-    {
-        $this->sendSSE('progress', array(
-            'total' => $this->progressTotal,
-            'progress' => $progress,
-            'message' => $message
-        ));
-    }
-
     // reuse the name jerr even if the logic is different
     // easier to read and understand
     function jerr($str, $errors=array(), $content_type = false)
@@ -61,14 +52,6 @@ class Pman_Core_Sse extends Pman
         $this->sendSSE('error', array(
             'success' => false,
             'errorMsg' => $str
-        ));
-    }
-
-    function sseComplete($data = array())
-    {
-        $this->sendSSE('complete', array(
-            'success' => true,
-            'data' => $data
         ));
     }
 }
