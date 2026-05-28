@@ -7,21 +7,6 @@ class Pman_Core_Sse extends Pman
     var $sse = false;
     var $progressTotal = 100;
 
-    function sendSSE($event, $data)
-    {
-        echo "\n"
-            . "event: {$event}\n"
-            . 'data: ' . json_encode($data) . "\n";
-        if (ob_get_level()) {
-            ob_flush();
-        }
-        flush();
-
-        if ($event === 'error') {
-            exit;
-        }
-    }
-
     function startSse($options = array())
     {
         $this->sse = true;
@@ -40,6 +25,21 @@ class Pman_Core_Sse extends Pman
 
         while (ob_get_level()) {
             ob_end_flush();
+        }
+    }
+
+    function sendSSE($event, $data)
+    {
+        echo "\n"
+            . "event: {$event}\n"
+            . 'data: ' . json_encode($data) . "\n";
+        if (ob_get_level()) {
+            ob_flush();
+        }
+        flush();
+
+        if ($event === 'error') {
+            exit;
         }
     }
 
@@ -63,6 +63,9 @@ class Pman_Core_Sse extends Pman
 
     function sseComplete($data = array())
     {
-        $this->sendSSE('complete', $data);
+        $this->sendSSE(array(
+            'success' => true,
+            'data' => $data
+        ));
     }
 }
