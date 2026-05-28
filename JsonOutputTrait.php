@@ -137,6 +137,10 @@ trait Pman_Core_JsonOutputTrait {
             }
             
         }
+
+        if (!empty($this->sse)) {
+            return;
+        }
          
         $cli = HTML_FlexyFramework::get()->cli;
         if ($cli) {
