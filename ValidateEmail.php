@@ -36,6 +36,20 @@ class Pman_Core_ValidateEmail extends Pman
         }
     }
 
+    function startSse()
+    {
+        set_time_limit(0);
+
+        header('Content-Type: text/event-stream');
+        header('Cache-Control: no-cache');
+        header('Connection: keep-alive');
+        header('X-Accel-Buffering: no');
+
+        while (ob_get_level()) {
+            ob_end_flush();
+        }
+    }
+
     /**
      * Show an error message
      *
@@ -124,16 +138,7 @@ class Pman_Core_ValidateEmail extends Pman
 
     function post($base = '')
     {
-        set_time_limit(0);
-
-        header('Content-Type: text/event-stream');
-        header('Cache-Control: no-cache');
-        header('Connection: keep-alive');
-        header('X-Accel-Buffering: no');
-
-        while (ob_get_level()) {
-            ob_end_flush();
-        }
+        $this->startSse();
 
         $au = $this->getAuthUser();
         $jobs = json_decode($_POST['validate_email_jobs'], true);
