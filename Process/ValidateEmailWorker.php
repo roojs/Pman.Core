@@ -34,11 +34,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
     {
         set_time_limit(90);
 
-        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-        if ($email === '') {
-            $this->jerr('Missing email');
-        }
-
         $authUserId = isset($_POST['auth_user_id']) ? $_POST['auth_user_id'] : '';
         $this->jdata($this->runJob($email, $authUserId));
     }
