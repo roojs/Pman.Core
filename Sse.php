@@ -63,7 +63,7 @@ class Pman_Core_Sse extends Pman
 
     function sseComplete($data = array())
     {
-        $this->sendSSE(array(
+        $this->sendSSE('complete', array(
             'success' => true,
             'data' => $data
         ));
