@@ -7,9 +7,14 @@ class Pman_Core_Sse extends Pman
     var $sse = false;
     var $progressTotal = 100;
 
-    function startSse($options = array())
+    function getAuth()
     {
-        $this->sse = true;
+        $ff = HTML_FlexyFramework::get();
+        if (!empty($ff->cli)) {
+            return true;
+        }
+        $this->authRequired();
+
         foreach($options as $key => $value) {
             if(!property_exists($this, $key)) {
                 continue;
@@ -26,6 +31,8 @@ class Pman_Core_Sse extends Pman
         while (ob_get_level()) {
             ob_end_flush();
         }
+
+        return true;
     }
 
     function sendSSE($event, $data)
