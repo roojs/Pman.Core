@@ -188,6 +188,12 @@ class Pman_Core_ValidateEmail extends Pman
             $this->error('An error occurred, please contact the website owner.');
         }
 
+        $ff = HTML_FlexyFramework::get();
+        if (!isset($ff->Mail['helo'])) {
+            $this->errorlog('config Mail[helo] is not set');
+            $this->error('An error occurred, please contact the website owner.');
+        }
+
         $workerUrl = $this->workerUrl($ff);
         $total = count($jobs);
         $results = array();

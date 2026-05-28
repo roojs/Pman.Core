@@ -29,11 +29,6 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         $au->get($_POST['auth_user_id']);
         $this->authUser = $au;
 
-        $ff = HTML_FlexyFramework::get();
-        if (!isset($ff->Mail['helo'])) {
-            $this->jerr('Mail configuration error');
-        }
-
         $dar = explode('@', $_POST['email']);
         $dom = strtolower(array_pop($dar));
         $dar[] = $dom;
