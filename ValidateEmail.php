@@ -75,12 +75,12 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
 
         $res = json_decode(trim($body), true);
         if(
-            !is_array($res) || 
+            is_array($res) || 
             empty($res['data']) || 
             empty($res['data']['type']) || 
             !in_array($res['data']['type'], array('email_fail', 'email_ok'))
         ) {
-            return array('ok' => null, 'error' => 'Invalid response from worker: ' . $body);
+            $this->jerr('Invalid response from worker: ' . $body);
         }
         $row = $res['data'];
 
