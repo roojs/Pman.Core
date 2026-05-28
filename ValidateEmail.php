@@ -179,10 +179,6 @@ class Pman_Core_ValidateEmail extends Pman
         }
 
         $au = $this->getAuthUser();
-        if (!$au) {
-            $this->error('Not authenticated');
-        }
-
         $jobsRaw = isset($_POST['validate_email_jobs']) ? $_POST['validate_email_jobs'] : '';
         $jobs = json_decode($jobsRaw, true);
 
