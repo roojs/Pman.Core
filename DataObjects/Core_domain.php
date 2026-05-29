@@ -398,6 +398,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $lastError = '';
 
         foreach ($mxs as $mx) {
+            $roo->log("PASS: {$pass}");
             // SMTP probe only: createMailer sets Mail test=true (MAIL FROM + RCPT TO, no DATA).
             $mailer = $this->createMailer($roo, $mx, $validUser, array(
                 'bind_notify_interface' => $pass > 0,
