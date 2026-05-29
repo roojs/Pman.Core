@@ -432,12 +432,12 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             
             // Check for SMTP error 451 (Greylisting - temporary failure)
             // This is a temporary error indicating greylisting, so treat it as a valid check
-            if ($res->code == 451) {
+            // if ($res->code == 451) {
                 $roo->errorlog(
                     "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 return false; // soft: retry pass 1; accepted as valid if still inconclusive
-            }
+            // }
 
             // Check for SMTP error 452 (out of storage space)
             if (in_array($res->code, array( 452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
