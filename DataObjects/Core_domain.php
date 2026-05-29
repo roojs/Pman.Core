@@ -398,7 +398,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $lastError = '';
 
         foreach ($mxs as $mx) {
-            $roo->errorlog("PASS: {$pass}");
             // SMTP probe only: createMailer sets Mail test=true (MAIL FROM + RCPT TO, no DATA).
             $mailer = $this->createMailer($roo, $mx, $validUser, array(
                 'bind_notify_interface' => $pass > 0,
@@ -540,15 +539,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
         }
 
-        $roo->errorlog("BEFORE CHECK IFACE");
-        $roo->errorlog($currentServer->interface);
-        $roo->errorlog($ipv6Bound);
-        $roo->errorlog($opts['bind_notify_interface']);
-
         if (!$ipv6Bound && !empty($opts['bind_notify_interface']) && $currentServer->interface != '') {
             $ifaces = net_get_interfaces();
-
-            $roo->errorlog($ifaces);
 
             if (array_key_exists($currentServer->interface, $ifaces)
                 && !empty($ifaces[$currentServer->interface]['unicast'][1]['address'])) {
