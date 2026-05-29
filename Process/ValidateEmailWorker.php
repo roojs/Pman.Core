@@ -46,6 +46,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 
         $result = false;
         for ($pass = 0; $pass < 2; $pass++) {
+            $this->errorlog("PASS IN LOOP: {$pass}");
             $result = $cd->validateEmail($this, $emailNorm, $pass);
             if ($result === true) {
                 break;
