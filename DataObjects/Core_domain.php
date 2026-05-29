@@ -541,6 +541,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         $roo->errorlog("BEFORE CHECK IFACE");
         $roo->errorlog($currentServer->interface);
+        $roo->errorlog($ipv6Bound);
+        $roo->errorlog($opts['bind_notify_interface']);
 
         if (!$ipv6Bound && !empty($opts['bind_notify_interface']) && $currentServer->interface != '') {
             $ifaces = net_get_interfaces();
