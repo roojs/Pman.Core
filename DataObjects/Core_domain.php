@@ -511,7 +511,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         $currentServer = DB_DataObject::Factory('core_notify_server')->getCurrent($roo, true, 'core');
         if (!empty($opts['bind_notify_interface']) && $currentServer->interface == '') {
-            $roo->errorlog("ValidateEmail retry: No notify interface found for {$mx}, using fallback");
             $srv = DB_DataObject::factory('core_notify_server');
             $srv->setFrom(array(
                 'poolname' => $currentServer->poolname,
