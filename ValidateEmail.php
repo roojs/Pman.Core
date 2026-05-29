@@ -72,7 +72,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
             empty($res['data']['type']) || 
             !in_array($res['data']['type'], array('email_fail', 'email_ok'))
         ) {
-            $this->sseError('Invalid response from worker: ' . $body);
+            $this->jerr('Invalid response from worker: ' . $body);
         }
         $row = $res['data'];
 
