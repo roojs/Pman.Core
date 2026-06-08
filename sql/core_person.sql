@@ -17,7 +17,7 @@ ALTER TABLE core_person ADD COLUMN   lastname_alt varchar(128) NOT NULL DEFAULT 
 ALTER TABLE core_person ADD COLUMN   chosen_title TEXT NOT NULL DEFAULT ''; 
 
 
-ALTER TABLE core_person ADD COLUMN   role varchar(254)  NOT NULL DEFAULT '';
+ALTER TABLE core_person ADD COLUMN   role TEXT NOT NULL DEFAULT '';
 ALTER TABLE core_person ADD COLUMN   remarks text NOT NULL;
 ALTER TABLE core_person ADD COLUMN   lang varchar(8) default 'en';
 ALTER TABLE core_person ADD COLUMN   country varchar(8) default '';
@@ -90,7 +90,7 @@ ALTER TABLE core_person ADD COLUMN point_score INT(11) NOT NULL DEFAULT 0;
 
 -- old mysql
 alter table core_person change column active active int(11) NOT NULL DEFAULT 1 ;
-alter table core_person change role role varchar(254) NOT NULL DEFAULT '';
+alter table core_person change role role TEXT NOT NULL DEFAULT '';
 alter table core_person change email email varchar(254) NOT NULL DEFAULT '';
 
 ALTER TABLE core_person ADD COLUMN authorize_md5 varchar(254)  NOT NULL DEFAULT '';
@@ -112,3 +112,5 @@ ALTER TABLE core_person ADD COLUMN oath_key VARCHAR(254) NOT NULL DEFAULT '';
 alter table core_person add index lookup_company_id( company_id);
 -- update core_person set email = CONCAT(id,'@fake.email') where email = '';
 -- alter table core_person add unique index company_email( company_id, email );
+
+ALTER TABLE core_person CHANGE COLUMN role role TEXT NOT NULL DEFAULT '';
