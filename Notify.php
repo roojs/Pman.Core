@@ -143,6 +143,11 @@ class Pman_Core_Notify extends Pman
      */
     var $deferred_domains = array();
     
+    /**
+     * @var {Array} deferred_notify_ids - notify row ids to defer (id => true), collected during this run
+     */
+    var $deferred_notify_ids = array();
+    
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
@@ -212,6 +217,14 @@ class Pman_Core_Notify extends Pman
         
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
+
+        $q = DB_DataObject::factory('core_notify_server');
+        $q->setFrom(array(
+            'poolname' => $this->poolname,
+            'hostname' => gethostbyaddr("127.0.1.1"),
+            'is_active' => 1,
+        ));
+        $sids = $q->fetchAll('id');
         
         // Check if server is disabled or not found (id = 0 means no servers exist)
         if (empty($this->server->id)) {
@@ -237,7 +250,7 @@ class Pman_Core_Notify extends Pman
             $w->evtype = $this->evtype;
         }
         
-        $w->server_id = $this->server->id;
+        $w->whereAddIn('server_id', $sids, 'int');
 
         
         if (!empty($opts['old'])) {
@@ -353,6 +366,7 @@ class Pman_Core_Notify extends Pman
             $emailDomain = $this->getDomainFromEmail($email);
             $matchedPattern = $this->matchesDeferPattern($emailDomain, $this->deferred_domains);
             if ($matchedPattern !== false) {
+                $this->deferred_notify_ids[$p->id] = true;
                 $this->logecho("SKIPPING - domain {$emailDomain} matches deferred pattern '{$matchedPattern}' - {$email}");
                 continue;
             }
@@ -386,7 +400,8 @@ class Pman_Core_Notify extends Pman
             }
             
             
-            $this->run($p->id,$email); 
+            $this->run($p->id, $email, '', 
+                ($p->server_id_interface == '') ? '' : ' (iface:' . $p->server_id_interface . ')'); 
             
             
             
@@ -409,8 +424,8 @@ class Pman_Core_Notify extends Pman
             sleep(3);
         }
         
-        // Defer all notifications for domains that were flagged as temporarily deferred
-        if (!empty($this->deferred_domains)) {
+        // Defer notify rows collected during this run (greylisted / skipped for deferred domains)
+        if (!empty($this->deferred_notify_ids)) {
             $this->bulkDeferDomains();
         }
         
@@ -461,7 +476,7 @@ class Pman_Core_Notify extends Pman
     
      
     
-    function run($id, $email='', $cmdOpts="")
+    function run($id, $email='', $cmdOpts="", $iface = '')
     {
         
         static $renice = false;
@@ -505,7 +520,7 @@ class Pman_Core_Notify extends Pman
         //$this->logecho("call proc_open $cmd");
         
         if ($this->max_pool_size === 1) {
-            $this->logecho("call passthru [{$email}] $cmd");
+            $this->logecho("call passthru [{$email}]{$iface} $cmd");
             passthru($cmd);
             return;
         }
@@ -532,11 +547,12 @@ class Pman_Core_Notify extends Pman
                 'email' => $email,
                 'pipes' => $pipes,
                 'notify_id' => $id,
-                'started' => time()
+                'started' => time(),
+                'iface' => $iface,
             
                 
         );
-        $this->logecho("RUN [{$email}] ({$info['pid']}) $cmd ");
+        $this->logecho("RUN [{$email}] ({$info['pid']}){$iface} $cmd ");
     }
     
     function poolfree()
@@ -614,7 +630,7 @@ class Pman_Core_Notify extends Pman
             //}
             $output = file_exists($p['out']) ? file_get_contents($p['out']) : '';
             $outputErr = file_exists($p['oute']) ? file_get_contents($p['oute']) : '';
-            $endMsg = "ENDED: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . $output;
+            $endMsg = "ENDED: ({$p['pid']}){$p['iface']} {$p['email']} " . $p['cmd'] . " : " . $output;
             if ($outputErr !== '') {
                 $endMsg .= " : " . $outputErr;
             }
@@ -625,6 +641,7 @@ class Pman_Core_Notify extends Pman
                 $domain = $this->getDomainFromEmail($p['email']);
                 $matchedPattern = $this->matchesDeferPattern($domain, $this->greylist_defer_domains);
                 if ($matchedPattern !== false) {
+                    $this->deferred_notify_ids[$p['notify_id']] = true;
                     if (!in_array($matchedPattern, $this->deferred_domains)) {
                         $this->logecho("GREYLISTING DETECTED for {$domain} (matches '{$matchedPattern}') - flagging for deferral");
                         $this->deferred_domains[] = $matchedPattern;
@@ -781,46 +798,58 @@ class Pman_Core_Notify extends Pman
     }
     
     /**
-     * Bulk defer all notifications for domains that were flagged as temporarily deferred.
-     * Uses a single UPDATE query per domain for efficiency.
+     * Defer notify rows collected during this run (greylisted sends and skipped queue items).
+     * Updates by id in chunks (same approach as assignQueues) to avoid wide LIKE scans.
      * Defers to NOW + 15 minutes and passes to next server.
-     * 
+     *
      * @return int Total number of notifications deferred
      */
     function bulkDeferDomains()
     {
-        if (empty($this->deferred_domains)) {
+        foreach ($this->next_queue as $p) {
+            $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : '') : $p->to_email;
+            if ($this->matchesDeferPattern($this->getDomainFromEmail($email), $this->deferred_domains) !== false) {
+                $this->deferred_notify_ids[$p->id] = true;
+            }
+        }
+        if ($this->domain_queue !== false) {
+            foreach ($this->domain_queue as $dom => $ar) {
+                if ($this->matchesDeferPattern($dom, $this->deferred_domains) === false) {
+                    continue;
+                }
+                foreach ($ar as $p) {
+                    $this->deferred_notify_ids[$p->id] = true;
+                }
+            }
+        }
+        
+        if (empty($this->deferred_notify_ids)) {
             return 0;
         }
         
-        $totalCount = 0;
+        $ids = array_keys($this->deferred_notify_ids);
         $deferTime = date('Y-m-d H:i:s', strtotime('NOW + 15 MINUTES'));
+        $nextServerId = (int) $this->getNextServerId();
+        $serverId = (int) $this->server->id;
+        $totalCount = 0;
+        $chunkSize = 500;
         
-        // Find the next server (similar to updateNotifyToNextServer logic)
-        $nextServerId = $this->getNextServerId();
-        
-        foreach ($this->deferred_domains as $domain) {
-            $domain = strtolower($domain);
-            
-            // Build domain condition for LIKE matching
-            $notify = DB_DataObject::factory($this->table);
-            $escapedDomain = $notify->escape($domain);
-            
-            // Count how many will be affected (using substring match on domain pattern)
+        foreach (array_chunk($ids, $chunkSize) as $chunk) {
             $countQuery = DB_DataObject::factory($this->table);
-            $countQuery->server_id = $this->server->id;
-            $countQuery->whereAdd("sent < '1970-01-01' OR sent IS NULL");
-            $countQuery->whereAdd('act_when < NOW()');
-            $countQuery->whereAdd("to_email LIKE '%@%{$escapedDomain}%'");
-            $countQuery->whereAdd('act_start > NOW() - INTERVAL 14 DAY');
+            $countQuery->whereAddIn('id', $chunk, 'int');
+            $countQuery->server_id = $serverId;
+            $countQuery->whereAdd("
+                (sent < '1970-01-01' OR sent IS NULL)
+                AND act_when < NOW()
+                AND act_start > NOW() - INTERVAL 14 DAY
+            ");
             $count = $countQuery->count();
-            
-            if ($count == 0) {
-                $this->logecho("GREYLISTED DEFER: No pending notifications matching pattern '{$domain}'");
+            if ($count < 1) {
                 continue;
             }
             
-            // Do single UPDATE query (using substring match on domain pattern)
+            $idList = implode(',', $chunk);
+            $notify = DB_DataObject::factory($this->table);
             $notify->query("
                 UPDATE
                     {$this->table}
@@ -828,15 +857,19 @@ class Pman_Core_Notify extends Pman
                     server_id = {$nextServerId},
                     act_when = '{$deferTime}'
                 WHERE
-                    server_id = {$this->server->id}
+                    id IN ({$idList})
+                    AND server_id = {$serverId}
                     AND (sent < '1970-01-01' OR sent IS NULL)
                     AND act_when < NOW()
-                    AND to_email LIKE '%@%{$escapedDomain}%'
                     AND act_start > NOW() - INTERVAL 14 DAY
             ");
-            
-            $this->logecho("GREYLISTED DEFER: Deferred {$count} notifications matching pattern '{$domain}' to {$deferTime} (server_id: {$nextServerId})");
             $totalCount += $count;
+        }
+        
+        if ($totalCount > 0) {
+            $this->logecho("GREYLISTED DEFER: Deferred {$totalCount} notification(s) by id to {$deferTime} (server_id: {$nextServerId})");
+        } else {
+            $this->logecho("GREYLISTED DEFER: No pending notifications to defer for collected ids");
         }
         
         return $totalCount;

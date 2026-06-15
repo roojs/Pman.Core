@@ -48,6 +48,15 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
  
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+
+    /**
+     * core_notify_server row for this notify's server_id, or false if none.
+     */
+    function server()
+    {
+        $s = DB_DataObject::factory('core_notify_server');
+        return $s->get($this->server_id) ? $s : false;
+    }
     
     function person($set = false)
     {

@@ -66,7 +66,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if (!$this->get('domain', $dom)) {
 
             if (!dns_get_record($dom, DNS_A + DNS_AAAA + DNS_CNAME + DNS_MX + DNS_NS)) {
-                return "Domain {$dom} does not exist (no dns records found)";
+                return "Email domain @{$dom} does not exist. The company may not have paid to renew the domain or the company does not exist anymore.";
             }
 
 
@@ -329,38 +329,39 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     /**
      * validate email
      * 
-     * @param object $roo Roo object
+     * @param object $roo page (must provide errorlog())
      * @param string $email email address to validate
-     * @return bool|string true on success, error message string on failure
-     * @throws Exception if configuration is invalid
+     * @param int $pass 0 = default From, 1 = retry From / bind notify interface
+     * @return bool|string true RCPT accepted; false soft/inconclusive (caller may run pass 1);
+     *     string hard failure (do not retry)
+     * @throws Exception if domain is not set on this object
      */
-    function validateEmail($roo, $email)
+    function validateEmail($roo, $email, $pass = 0)
     {
+        $ff = HTML_FlexyFramework::get();
+
         $dom = $this->domain;
         if (empty($dom)) {
             throw new Exception("Domain not set on core_domain object");
         }
 
-        // Check MX records - use cache if updated within last 30 days
-        if (!(($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) ? $this->has_mx : $this->hasValidMx($dom))) {
-            return "{$email} {$dom} is not a valid domain (cant deliver email to it)";
+        if ($pass == 0) {
+            // Check MX records - use cache if updated within last 30 days
+            if (!(($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) ? $this->has_mx : $this->hasValidMx($dom))) {
+                return "{$email} {$dom} is not a valid domain (cant deliver email to it)";
+            }
         }
 
         require_once 'Mail.php';
-        $ff = HTML_FlexyFramework::get();
-        
-        if (!isset($ff->Mail['helo'])) {
-            throw new Exception("config Mail[helo] is not set");
-        }
 
         // Get MX records for the domain
         $mx_records = array();
         $mx_weight = array();
         getmxrr($dom, $mx_records, $mx_weight);
         asort($mx_weight, SORT_NUMERIC);
-        
+
         $mxs = array();
-        foreach($mx_weight as $k => $weight) {
+        foreach ($mx_weight as $k => $weight) {
             if (!empty($mx_records[$k])) {
                 $mxs[] = $mx_records[$k];
             }
@@ -388,16 +389,23 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
         }
 
+        $fromAddr = 'newswire-reply@media-outreach.com';
+        if ($pass > 0) {
+            $fromAddr = $dom . '@media-outreach.com';
+            $roo->errorlog("ValidateEmail retry: From {$fromAddr}");
+        }
+
         $lastError = '';
-        foreach($mxs as $mx) {
-            $mailer = $this->createMailer($roo, $mx, $validUser);
-            if ($mailer === false) {
-                continue;
-            }
+
+        foreach ($mxs as $mx) {
+            // SMTP probe only: createMailer sets Mail test=true (MAIL FROM + RCPT TO, no DATA).
+            $mailer = $this->createMailer($roo, $mx, $validUser, array(
+                'bind_notify_interface' => $pass > 0,
+            ));
 
             $res = $mailer->send($email, array(
-                'To'   => $email,  
-                'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
+                'To' => $email,
+                'From' => '"Media OutReach Newswire" <' . $fromAddr . '>',
             ), '');
 
             if (!is_object($res)) {
@@ -418,7 +426,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $roo->errorlog(
                     "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
                 );
-                return true; // Treat 421 as success
+                return false; // soft: retry pass 1; accepted as valid if still inconclusive
             }
             
             // Check for SMTP error 451 (Greylisting - temporary failure)
@@ -427,7 +435,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $roo->errorlog(
                     "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
                 );
-                return true; // Treat 451 as success
+                return false; // soft: retry pass 1; accepted as valid if still inconclusive
             }
 
             // Check for SMTP error 452 (out of storage space)
@@ -445,20 +453,20 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 preg_match('/spamhaus/i', $errorMessage)  
             )) {
                 // Don't need to log error for spamhaus failures
-                return true; // Treat 550 Spamhaus/Mimecast as success
+                return false; // soft: retry pass 1; accepted as valid if still inconclusive
             }
             if ($res->code == 554 && (
                 preg_match('/spam/i', $errorMessage)  
             )) {
                 // Don't need to log error for spam failures
-                return true; // Treat 550 Spamhaus/Mimecast as success
+                return false; // soft: retry pass 1; accepted as valid if still inconclusive
             }
 
-            if($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
+            if ($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
                 $roo->errorlog(
                     "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}"
                 );
-                return true;
+                return false; // soft: retry pass 1; accepted as valid if still inconclusive
             }
 
             // We don't need to log these errors and don't need to show these errors to the user
@@ -481,14 +489,13 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 "SMTP Validate Rejected Email {$res->code} Email: {$email} - Error: " . $errorMessage
             );
               
-            
             $lastError = $res->getMessage();
         }
 
         return "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
     }
 
-    function createMailer($roo, $mx, $validUser = false)
+    function createMailer($roo, $mx, $validUser = false, $opts = array())
     {
         $ff = HTML_FlexyFramework::get();
 
@@ -503,7 +510,22 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         );
 
         $currentServer = DB_DataObject::Factory('core_notify_server')->getCurrent($roo, true, 'core');
+        if (!empty($opts['bind_notify_interface']) && $currentServer->interface == '') {
+            $srv = DB_DataObject::factory('core_notify_server');
+            $srv->setFrom(array(
+                'poolname' => $currentServer->poolname,
+                'hostname' => $currentServer->hostname,
+                'is_active' => 1,
+            ));
+            $srv->whereAdd("interface != ''");
+            $srv->limit(1);
+            if ($srv->find(true)) {
+                $currentServer = $srv;
+            }
+        }
+
         $ipv6Map = isset($ff->Mail_Validate['ipv6']) ? $ff->Mail_Validate['ipv6'] : array();
+        $ipv6Bound = false;
 
         // current server has ipv6 address
         if(!empty($currentServer->id) && !empty($currentServer->hostname) && !empty($ipv6Map[$currentServer->hostname])) {
@@ -512,14 +534,28 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if (!empty($aaaa_records)) {
                 $socket_options['socket'] = array(
                     'bindto' => '[' . $ipv6Map[$currentServer->hostname] . ']:0'
-                ); 
+                );
+                $ipv6Bound = true;
             }
         }
-        
+
+        if (!$ipv6Bound && !empty($opts['bind_notify_interface']) && $currentServer->interface != '') {
+            $ifaces = net_get_interfaces();
+
+            if (array_key_exists($currentServer->interface, $ifaces)
+                && !empty($ifaces[$currentServer->interface]['unicast'][1]['address'])) {
+                $ipv4_bind_ip = $ifaces[$currentServer->interface]['unicast'][1]['address'];
+                $socket_options['socket'] = array(
+                    'bindto' => $ipv4_bind_ip . ':0'
+                );
+                $roo->errorlog("ValidateEmail retry: IPv4 bind {$currentServer->interface} ({$ipv4_bind_ip})");
+            }
+        }
+
         $mailer = Mail::factory('smtp', array(
             'host'    => $mx,
             'localhost' => $ff->Mail['helo'],
-            'timeout' => 15,
+            'timeout' => 90,
             'socket_options' => $socket_options,
             'test' => true
         ));

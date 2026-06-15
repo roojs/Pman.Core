@@ -16,6 +16,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     public $poolname;
     public $is_active;
     public $last_send;
+    public $interface;
     
     function  applyFilters($q, $au, $roo)
     {
@@ -28,8 +29,30 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
     }
 
+    function beforeInsert($q, $roo)
+    {
+        if ($this->interface == '') {
+            return;
+        }
+        if ($this->hostname != gethostbyaddr("127.0.1.1")) {
+            $roo->jerr('core_notify_server: hostname must match this machine to set interface'); // match tree
+        }
+        if (!array_key_exists($this->interface, net_get_interfaces())) {
+            $roo->jerr('core_notify_server: invalid interface'); // match tree
+        }
+    }
+
     function beforeUpdate($old, $q, $roo)
     {
+        if ($old->interface != $this->interface && $this->interface != '') {
+            if ($this->hostname != gethostbyaddr("127.0.1.1")) {
+                $roo->jerr('core_notify_server: hostname must match this machine to change interface'); // match tree
+            }
+            if (!array_key_exists($this->interface, net_get_interfaces())) {
+                $roo->jerr('core_notify_server: invalid interface'); // match tree
+            }
+        }
+
         // if any of the ipv6 fields is set, make sure all of them are set
         if(
             !empty($q['ipv6_range_from_str'])
@@ -140,6 +163,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $ns->poolname = ($poolname !== false) ? $poolname : $roo->poolname;
         $ns->is_active = 1;
         $ns->hostname = gethostbyaddr("127.0.1.1");
+        $ns->interface = '';
         $ns->limit(1);
         if (strlen($ns->hostname) && $ns->find(true)) {
             $current = $ns;
@@ -159,6 +183,18 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         $current = $ns;
         return $ns;
+    }
+
+    /**
+     * True if this loaded row is for the same host/pool (and is_active when !$force) as $roo — not a getCurrent() wrapper.
+     */
+    function isCurrent($roo, $force = false)
+    {
+        $host = gethostbyaddr("127.0.1.1");
+        return strlen($host)
+            && $this->poolname == $roo->poolname
+            && $this->hostname == $host
+            && ($force || $this->is_active);
     }
     
     

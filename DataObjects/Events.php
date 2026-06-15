@@ -125,7 +125,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->selectAdd("count($tn.id) as qty");
             $this->selectAdd("count( distinct $tn.on_id) as uqty");
             $this->whereAdd('LENGTH(join_person_id_id.name) > 0 ');
-            $this->groupBy('person_id,join_person_id_id.name,join_person_id_id.email');
+            $this->groupBy('person_id');
         }
          if (isset($q['query']['table_sum'])) {
             //DB_DataObject::debugLevel(1);

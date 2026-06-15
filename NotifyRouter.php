@@ -39,9 +39,6 @@ class Pman_Core_NotifyRouter
     /** Base socket options from config (set in ctor) */
     var $base_socket_options;
 
-    /** SMTP connection timeout (seconds); used for each host so 2nd/3rd MX also time out. */
-    const SMTP_CONNECT_TIMEOUT = 15;
-
     /**
      * Constructor
      * @param Pman_Core_NotifySend $notifySend The NotifySend instance
@@ -123,26 +120,37 @@ class Pman_Core_NotifyRouter
     }
 
     /**
-     * Socket options from $this->base_socket_options, with IPv6 binding if applicable.
+     * Socket options from $this->base_socket_options, with optional per-server IPv4 bind and IPv6 binding if applicable.
      * @return array
      */
     private function socketOptions()
     {
         $socket_options = $this->base_socket_options;
-        
-        // Return early if not using IPv6
+
+        $ipv4_bind_ip = '';
+        if ($this->notifySend->server->interface != '') {
+            $iface = $this->notifySend->server->interface;
+            $ipv4_bind_ip = net_get_interfaces()[$iface]['unicast'][1]['address'];
+        }
+
         if (empty($this->smtpHost) || !$this->useIpv6) {
             $ipv6_addr_str = !empty($this->notifySend->server_ipv6) ? $this->notifySend->server_ipv6->ipv6_addr_str : false;
             $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->notifySend->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($ipv6_addr_str ?: 'empty') . ")");
+            if ($ipv4_bind_ip != '') {
+                $socket_options['socket'] = array(
+                    'bindto' => $ipv4_bind_ip . ':0'
+                );
+                $this->debug("IPv4 bind from interface {$iface}: {$ipv4_bind_ip}");
+            }
             return $socket_options;
         }
-        
-        // Add IPv6 binding if serverIpv6 is configured
+
         $socket_options['socket'] = array(
             'bindto' => '[' . $this->notifySend->server_ipv6->ipv6_addr_str . ']:0'
         );
         $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $this->notifySend->server_ipv6->ipv6_addr_str);
-        
+        // ⚠️ Precedence: when $this->useIpv6 is true, this IPv6 bindto wins; per-server $iface IPv4 bind is not merged here.
+
         return $socket_options;
     }
     
@@ -156,16 +164,13 @@ class Pman_Core_NotifyRouter
             $this->mailer = Mail::factory('smtp', array(
                 'host'          => $this->useIpv6 ? '[' . $this->smtpHost . ']' : $this->smtpHost,
                 'localhost'     => $this->heloName(),
-                'timeout'       => self::SMTP_CONNECT_TIMEOUT,
+                'timeout'       => 15,
                 'socket_options'=> $this->socketOptions(),
                 'debug'         => 1,
                 'debug_handler' => array($this->notifySend, 'debugHandler'),
                 'dkim'          => true
             ));
             $this->applyConfig();
-            // Ensure connect timeout is always set (Mail_smtp passes this to Net_SMTP::connect() for each new connection)
-            $this->mailer->timeout = self::SMTP_CONNECT_TIMEOUT;
-            $this->debug("SMTP connect timeout set to " . $this->mailer->timeout . "s for host " . $this->smtpHost . " (passed to Net_SMTP::connect() when send() runs)");
         }
         return $this->mailer;
     }
@@ -301,7 +306,7 @@ class Pman_Core_NotifyRouter
                     $this->notifySend->server->updateNotifyToNextServer(
                         $this->notifySend->notify , date("Y-m-d H:i:s", time() + $seconds), 
                         true, $this->notifySend->server_ipv6, self::$all_mx_ipv4s);
-                    $this->notifySend->errorHandler(" Too many emails sent by {$this->notifySend->emailDomain->domain} - requeing");
+                    $this->notifySend->errorHandler('GREYLISTED', " Too many emails sent by {$this->notifySend->emailDomain->domain} - requeing");
                 }
                 // Keep using the IP we built (smtpHost); only use route hostname when we have no IP (hostname fallback)
                 if (!filter_var($this->smtpHost, FILTER_VALIDATE_IP)) {
