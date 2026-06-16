@@ -38,6 +38,12 @@ class Pman_Core_Auth_State extends Pman_Core_Auth
             //exit;
         }
         
+        // Check firewall option - only for authenticated users
+        if (!empty($_REQUEST['check_firewall'])) {
+            $this->checkFirewall();
+            return;
+        }
+        
         $au = $u->getAuthUser();
         
         if (!DB_DataObject::factory('core_person_window')->check($au, $_REQUEST)) {
@@ -51,12 +57,35 @@ class Pman_Core_Auth_State extends Pman_Core_Auth
         
         
     }
+    
+    function checkFirewall()
+    {
+        $ff = HTML_FlexyFramework::get();
+        
+        if(empty($ff->Pman_Core_Auth['cloudflare']['account']) || empty($ff->Pman_Core_Auth['cloudflare']['apiToken'])) {
+            $this->jerror('CLOUDFLARE-NOT-CONFIGURED', 'Cloudflare firewall is not configured');
+        }
+        
+        require_once 'Services/Cloudflare/Firewall.php';
+        
+        $fw = new Services_Cloudflare_Firewall($ff->Pman_Core_Auth['cloudflare']);
+        
+        // Get firewall rules for this IP
+        $rules = $fw->get(!empty($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR']);
+        
+        // Debug output - just print the raw results
+        echo "<pre>Cloudflare Firewall Rules:\n";
+        print_r($rules);
+        echo "</pre>";
+        exit;
+    }
     function isUserValid($u)
     {
         $ff= HTML_FlexyFramework::get();
         $ct = isset($ff->Pman['auth_comptype']) ? $ff->Pman['auth_comptype'] : 'OWNER';
+         
         if ($u->company()->comptype != $ct) {
-            //print_r($u->company());
+              
             $this->jerror('LOGIN-BADUSER'. $this->event_suffix, "Login not permited to outside companies"); // serious failure
         }
         

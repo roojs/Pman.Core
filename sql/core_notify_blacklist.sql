@@ -8,4 +8,6 @@ CREATE  TABLE core_notify_blacklist (
     PRIMARY KEY (id)
 ) ENGINE=InnoDB;;
 
+ALTER TABLE core_notify_blacklist ADD COLUMN ip VARBINARY(16) NOT NULL DEFAULT 0x0;
+
 ALTER TABLE core_notify_blacklist ADD INDEX lookup (server_id,domain_id);

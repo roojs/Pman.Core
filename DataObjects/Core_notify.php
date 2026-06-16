@@ -48,6 +48,15 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
  
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+
+    /**
+     * core_notify_server row for this notify's server_id, or false if none.
+     */
+    function server()
+    {
+        $s = DB_DataObject::factory('core_notify_server');
+        return $s->get($this->server_id) ? $s : false;
+    }
     
     function person($set = false)
     {
@@ -234,7 +243,36 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
         
     }
-    
+
+    function reachEmailLimit()
+    {
+        $ce = DB_DataObject::factory('core_email');
+        if(!isset($this->email_id) ||!$ce->get($this->email_id)) {
+            // 0 as email_id
+            // not linked to any email template
+            return false;
+        }
+        
+        if($ce->daily_email_limit == 0) {
+            // no limit
+            return false;
+        }
+
+        $cn = DB_DataObject::factory('core_notify');
+        $cn->email_id = $this->email_id; // same email template
+        $cn->person_id = $this->person_id; // same person
+        $cn->whereAdd("core_notify.msgid IS NOT NULL AND core_notify.msgid != '' AND core_notify.sent > '1000-01-01 00:00:00'"); // successfully sent
+        $cn->whereAdd("DATE(core_notify.sent) = DATE('" . $this->act_start . "')"); // on the same day
+        $cn->whereAdd("core_notify.id != " . $this->id); // not the same notify
+        $cn->whereAdd("core_notify.evtype != 'Core_email::testData'"); // do not count test emails
+        if($cn->count() >= $ce->daily_email_limit) {
+            // reach the limit
+            return true;
+        }
+
+        // not reach the limit
+        return false;
+    }
     
     function applyFilters($q, $au, $roo)
     {
@@ -359,7 +397,9 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     function flagDone($event,$msgid)
     {
         $ww = clone($this);
-        if(strtotime($this->act_when) > strtotime("NOW")){
+        // Only modify act_when if notification hasn't been sent yet
+        $already_sent = !empty($this->sent) && strtotime($this->sent) > strtotime('1500-01-01 00:00:00');
+        if (!$already_sent && strtotime($this->act_when) > strtotime("NOW")){
             $this->act_when = $this->sqlValue('NOW()');
         }
         $this->sent = empty($this->sent) || strtotime($this->sent) < 1 ? $this->sqlValue('NOW()') :$this->sent; // do not update if sent.....

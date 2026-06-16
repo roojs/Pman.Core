@@ -31,16 +31,25 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         
 
         $u = $this->userdb();
+        $ff = HTML_FlexyFramework::get();
         
         $ip =  DB_DataObject::factory('core_person_window')->ip_lookup();
-        // ratelimit
-        if (!empty($ip)) {
+        // ratelimit — skip if this IP had a successful login (core_person_window.register) in the last 10 minutes
+       
+        // else count LOGIN-BAD events after max(rolling 10 min window, person's updated_dt), in PHP
+        if (!empty($ip)  ) {
+            $recentWin = DB_DataObject::factory('core_person_window');
+            $recentWin->ip = $ip;
+            $recentWin->whereAdd('login_dt > NOW() - INTERVAL 1 HOUR');
+            $recentWin->limit(1);
+             
+
             //DB_DataObject::DebugLevel(1);
             $e = DB_DataObject::Factory('Events');
             $e->action = 'LOGIN-BAD'. $this->event_suffix;
             $e->ipaddr = $ip;
             $e->whereAdd('event_when > NOW() - INTERVAL 10 MINUTE');
-            if ($e->count() > 5) {
+            if (!$recentWin->find(true) && $e->count() > 5) {
                 $this->jerror('LOGIN-RATE'. $this->event_suffix, "Login failures are rate limited - please try later");
             }
         }
@@ -231,8 +240,11 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $fw = new Services_Cloudflare_Firewall($ff->Pman_Core_Auth['cloudflare']);
 
-        // whitelist the address
-        $fw->update($ip, "logged in via {$ff->appName}");
+        $ret = $fw->update($ip, "logged in via {$ff->appName}");
+        if (is_a($ret, 'PEAR_Error')) {
+            $this->errorlog('Cloudflare whitelist failed: ' . $ret->getMessage());
+            return;
+        }
 
         $this->addEvent("CLOUDFLARE-WHITELIST", false, $ip);
     }

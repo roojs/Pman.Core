@@ -27,8 +27,10 @@ Roo.XComponent.on('buildcomplete',
         Pman.finalize();
         Pman.fireEvent('load',this);
         
-        if (!Pman.layout.getRegion('south').panels.length) {
-            Pman.layout.getRegion('south').hide();
+        var south = Pman.layout.getRegion('south');
+        if (south.panels.getCount() < 1) {
+            south.config.collapsible = false;
+            south.hide();
         }
     
     

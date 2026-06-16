@@ -114,6 +114,27 @@ trait Pman_Core_JsonOutputTrait {
             }
             
             $this->addEvent($type, false, $str);
+
+            /**
+             * Ensure the error event row from addEvent() is committed.
+             * 
+             * Problem:
+             * When there is no manipulation operation (INSERT, UPDATE, DELETE, etc...) after Roo post() calls BEGIN,
+             * calling "$this->transObj->query('ROLLBACK')" won't set the AUTOCOMMIT to 1 on MySQL,
+             * but it will change the autocommit flag of the connection back to true.
+             * (Inconsistent state: MySQL transaction is still open, but the autocommit flag is true.)
+             * 
+             * That's why we need to manully commit the transaction and set the AUTOCOMMIT to 1 
+             * instead of calling "$this->transObj->query('COMMIT')" which won't work as expected.
+             */
+            if ($this->transObj) {
+                global $_DB_DATAOBJECT;
+                $DB = $_DB_DATAOBJECT['CONNECTIONS'][$this->transObj->_database_dsn_md5];
+                @mysqli_query($DB->connection, 'COMMIT');
+                @mysqli_query($DB->connection, 'SET AUTOCOMMIT=1');
+                $DB->autoCommit(true);
+                $DB->transaction_opcount = 0;
+            }
             
         }
          

@@ -86,6 +86,11 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     ###END_AUTOCODE
     function register($user, $req)
     {
+        static $done = false;
+        if ($done) {
+            return;
+        }
+        
         if (empty($req['window_id']) )   { // we don't do any checks on no window data.
             return;
         }
@@ -108,6 +113,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             $w->ip = $this->ip_lookup();
             $w->user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
             $w->update($ww);
+            $done = true;
             return; /// already registered?
         }
         
@@ -118,6 +124,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $w->user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
         $w->status = 'IN';
         $w->insert();
+        $done = true;
     }
   
     
@@ -126,12 +133,35 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         if (empty($req['window_id']) ) { // we don't do any checks on no window data.
             return true;
         }
+        
+        $ff = HTML_FlexyFramework::get();
+        if (!empty($ff->Pman['local_autoauth']) ) { // we don't do any checks on no window data.
+            return true;
+        }
+        
+        // Check session cache first (window_id is the key)
+        if (isset($_SESSION[__CLASS__][$req['window_id']])) {
+            $cached = $_SESSION[__CLASS__][$req['window_id']];
+            if ((time() - strtotime($cached['last_access_dt'])) < 300) {
+                // Fresh cache (< 5 minutes), no DB queries needed
+                return true;
+            }
+            // Cache is stale but we have the data - use it instead of finding
+            $w = DB_DataObject::factory('core_person_window');
+            $w->get($cached['id']);
+            $ww= clone($w);
+            $w->last_access_dt = date('Y-m-d H:i:s');
+            $w->update($ww);
+            
+            // Update cache with new timestamp
+            $_SESSION[__CLASS__][$req['window_id']] = $w->toArray();
+            return true;
+        }
+        
+        // Cache miss - query DB, update with date(), and cache result
         $w = DB_DataObject::factory('core_person_window');
         $w->person_id = $user->id;
-        $ff = HTML_FlexyFramework::get();
-		$w->app_id = $ff->appNameShort;
-       
-        
+        $w->app_id = $ff->appNameShort;
         $mw = clone($w);
         $w->window_id = $req['window_id'];
          
@@ -194,9 +224,13 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         }
         $ww = clone($w);
         
-        $w->last_access_dt = $w->sqlValue("NOW()");;
-        //$w->status = 'IN'; // ?? needed?  since it can only get her eif status is in...
+        // Change update to use date() instead of NOW():
+        $w->last_access_dt = date('Y-m-d H:i:s');
         $w->update($ww);
+        
+        // Then store the full object with the timestamp we just set:
+        $_SESSION[__CLASS__][$req['window_id']] = $w->toArray();
+        
          return true;
         
          

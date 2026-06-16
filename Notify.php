@@ -133,6 +133,21 @@ class Pman_Core_Notify extends Pman
     
     var $clear_interval = '1 WEEK'; // how long to clear the old queue of items.
     
+    /**
+     * @var {Array} greylist_defer_domains - domains to defer entirely when greylisting is detected
+     */
+    var $greylist_defer_domains = array('yahoo');
+    
+    /**
+     * @var {Array} deferred_domains - domains that have been flagged as temporarily deferred during this run
+     */
+    var $deferred_domains = array();
+    
+    /**
+     * @var {Array} deferred_notify_ids - notify row ids to defer (id => true), collected during this run
+     */
+    var $deferred_notify_ids = array();
+    
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
@@ -178,10 +193,11 @@ class Pman_Core_Notify extends Pman
    
     function get($r,$opts=array())    
     {
-        
-       // if ($this->database_is_locked()) {
-        //    die("LATER - DATABASE IS LOCKED");
-        //}
+         
+        if ($this->database_is_locked()) {
+            $this->logecho("LATER - DATABASE IS LOCKED");
+            exit;
+        }
         
         
         $this->parseArgs($opts); 
@@ -201,7 +217,29 @@ class Pman_Core_Notify extends Pman
         
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
+
+        $q = DB_DataObject::factory('core_notify_server');
+        $q->setFrom(array(
+            'poolname' => $this->poolname,
+            'hostname' => gethostbyaddr("127.0.1.1"),
+            'is_active' => 1,
+        ));
+        $sids = $q->fetchAll('id');
         
+        // Check if server is disabled or not found (id = 0 means no servers exist)
+        if (empty($this->server->id)) {
+            $this->logecho("Server is disabled or not found - exiting gracefully");
+            exit;
+        }
+        
+        // If server is disabled, reset all unsent notifications for this server
+        if (empty($this->server->is_active)) {
+            $this->logecho("Server is disabled - resetting unsent notifications server_id to 0");
+            $this->server->resetQueueForTable($this->table);
+            $this->logecho("Server is disabled - exiting gracefully");
+            exit;
+        }
+
         $this->server->assignQueues($this);
         
         
@@ -212,7 +250,7 @@ class Pman_Core_Notify extends Pman
             $w->evtype = $this->evtype;
         }
         
-        $w->server_id = $this->server->id;
+        $w->whereAddIn('server_id', $sids, 'int');
 
         
         if (!empty($opts['old'])) {
@@ -267,9 +305,20 @@ class Pman_Core_Notify extends Pman
         }
         
         //echo "BATCH SIZE: ".  count($ar) . "\n";
-       
+        $db_locked = false;
         
         while (true) {
+            if ($this->database_is_locked()) {
+                $this->logecho("LATER - DATABASE IS LOCKED");
+                // Empty the queue and flag database is locked
+                $this->queue = array();
+                $db_locked = true;
+                break; // exit the while loop
+            }
+            
+            // Always check for finished processes first - this allows us to start new ones immediately
+            $this->poolfree();
+            
             // only add if we don't have any queued up..
             if (empty($this->queue) && $w->fetch()) {
                 $this->queue[] = clone($w);
@@ -282,19 +331,29 @@ class Pman_Core_Notify extends Pman
                 $this->logecho("COMPLETED MAIN QUEUE - running maxed out domains");
                 if ($this->domain_queue !== false) {
                     $this->queue  = $this->remainingDomainQueue();
-                     
+                    if (empty($this->queue)) {
+                        // Domain queue was empty, wait longer before rechecking (pool may still be draining)
+                        sleep(5);
+                    }
+                    continue;
+                }
+                // If queue is empty but pool still has running processes, wait for them (longer sleep - nothing to do until pool drains)
+                if (count($this->pool) > 0) {
+                    sleep(5);
                     continue;
                 }
                 break; // nothing more in queue.. and no remaining one
             }
             
-            
-            $p = array_shift($this->queue);
-            if (!$this->poolfree()) {
-                array_unshift($this->queue,$p); /// put it back on..
-                sleep(3);
+            // Check if we have space in the pool before trying to start a new process
+            if (count($this->pool) >= $this->max_pool_size) {
+                // Pool is full, wait a bit and check again
+                sleep(1);
                 continue;
             }
+            
+            $p = array_shift($this->queue);
+            
             // not sure what happesn if person email and to_email is empty!!?
             $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : $p->to_email) : $p->to_email;
             if (empty($email)) {
@@ -302,6 +361,18 @@ class Pman_Core_Notify extends Pman
                 $p->flagDone($ev, '');
                 continue;
             }
+            
+            // Skip domains that have been flagged as temporarily deferred (using substring match)
+            $emailDomain = $this->getDomainFromEmail($email);
+            $matchedPattern = $this->matchesDeferPattern($emailDomain, $this->deferred_domains);
+            if ($matchedPattern !== false) {
+                $this->deferred_notify_ids[$p->id] = true;
+                $this->logecho("SKIPPING - domain {$emailDomain} matches deferred pattern '{$matchedPattern}' - {$email}");
+                continue;
+            }
+
+            /*
+            dont try and get around blacklists at present
             $black = $this->server->isBlacklisted($email);
             if ($black !== false) {
                 $this->logecho("Blacklisted - try giving it to next server");
@@ -316,7 +387,7 @@ class Pman_Core_Notify extends Pman
                 
                 continue;
             }
-             
+            */
             
             if ($this->poolHasDomain($email) > $this->max_to_domain) {
                 
@@ -329,20 +400,21 @@ class Pman_Core_Notify extends Pman
             }
             
             
-            $this->run($p->id,$email);
+            $this->run($p->id, $email, '', 
+                ($p->server_id_interface == '') ? '' : ' (iface:' . $p->server_id_interface . ')'); 
             
             
             
         }
-        $this->logecho("REQUEUING all emails that maxed out:" . count($this->next_queue));
-        if (!empty($this->next_queue)) {
-             
-            foreach($this->next_queue as $p) {
-                if (false === $this->server->updateNotifyToNextServer($p)) {
-                    $p->updateState("????");
-                }
+        // Skip requeuing if database was locked
+       
+        if (!$db_locked && !empty($this->next_queue)) {
+            $this->logecho("REQUEUING all emails that maxed out:" . count($this->next_queue));
+            foreach ($this->next_queue as $p) {
+                $this->server->updateNotifyToNextServer($p);
             }
         }
+         
         
         
         $this->logecho("QUEUE COMPLETE - waiting for pool to end");
@@ -351,9 +423,11 @@ class Pman_Core_Notify extends Pman
             $this->poolfree();
             sleep(3);
         }
-         
         
-        
+        // Defer notify rows collected during this run (greylisted / skipped for deferred domains)
+        if (!empty($this->deferred_notify_ids)) {
+            $this->bulkDeferDomains();
+        }
         
         $this->logecho("DONE");
         exit;
@@ -402,7 +476,7 @@ class Pman_Core_Notify extends Pman
     
      
     
-    function run($id, $email='', $cmdOpts="")
+    function run($id, $email='', $cmdOpts="", $iface = '')
     {
         
         static $renice = false;
@@ -445,9 +519,8 @@ class Pman_Core_Notify extends Pman
         $pipe = array();
         //$this->logecho("call proc_open $cmd");
         
-        
         if ($this->max_pool_size === 1) {
-            $this->logecho("call passthru [{$email}] $cmd");
+            $this->logecho("call passthru [{$email}]{$iface} $cmd");
             passthru($cmd);
             return;
         }
@@ -474,11 +547,12 @@ class Pman_Core_Notify extends Pman
                 'email' => $email,
                 'pipes' => $pipes,
                 'notify_id' => $id,
-                'started' => time()
+                'started' => time(),
+                'iface' => $iface,
             
                 
         );
-        $this->logecho("RUN [{$email}] ({$info['pid']}) $cmd ");
+        $this->logecho("RUN [{$email}] ({$info['pid']}){$iface} $cmd ");
     }
     
     function poolfree()
@@ -488,7 +562,7 @@ class Pman_Core_Notify extends Pman
          
         foreach($this->pool as $p) {
              
-            //echo "CHECK PID: " . $p['pid'] . "\n";
+            // echo "CHECK PID: " . $p['pid'] . "\n";
             
             
             $info =  proc_get_status($p['proc']);
@@ -506,7 +580,7 @@ class Pman_Core_Notify extends Pman
             
                 //if (file_exists('/proc/'.$p['pid'])) {
                 $runtime = time() - $p['started'];
-                //echo "RUNTIME ({$p['pid']}): $runtime\n";
+                // echo "RUNTIME ({$p['pid']}): $runtime\n";
                 if ($runtime > $this->maxruntime) {
                     
                     proc_terminate($p['proc'], 9);
@@ -524,8 +598,12 @@ class Pman_Core_Notify extends Pman
                     if ($this->log_events) {
                         $this->addEvent('NOTIFY', $w, 'TERMINATED - TIMEOUT');
                     }
-                    $w->act_when = date('Y-m-d H:i:s', strtotime("NOW + {$this->try_again_minutes} MINUTES"));
-                    $w->update($ww);
+                    // Only reschedule if notification hasn't been sent yet
+                    $already_sent = !empty($w->sent) && strtotime($w->sent) > strtotime('1500-01-01 00:00:00');
+                    if (!$already_sent) {
+                        $w->act_when = date('Y-m-d H:i:s', strtotime("NOW + {$this->try_again_minutes} MINUTES"));
+                        $w->update($ww);
+                    }
                     
                     continue;
                 }
@@ -534,11 +612,11 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             fclose($p['pipes'][0]);
-            //echo "CLOSING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
+            // echo "CLOSING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             //fclose($p['pipes'][1]);
             
-            proc_close($p['proc']);
-             sleep(1);
+            $exitCode = proc_close($p['proc']);
+             //sleep(1);
             clearstatcache();
             if (file_exists('/proc/'. $p['pid'])) {
                 $this->logecho("proc PID={$p['pid']} still here - trying to wait");
@@ -550,10 +628,27 @@ class Pman_Core_Notify extends Pman
             //    $pool[] = $p;
             //    continue;
             //}
-            $this->logecho("ENDED: ({$p['pid']}) {$p['email']} " .  $p['cmd'] . " : " .
-                (file_exists($p['out']) ?  file_get_contents($p['out']) : "output DELETED?") . " : " .
-                (file_exists($p['oute']) ?  file_get_contents($p['oute']) : "error output DELETED?") . " : "
-            );
+            $output = file_exists($p['out']) ? file_get_contents($p['out']) : '';
+            $outputErr = file_exists($p['oute']) ? file_get_contents($p['oute']) : '';
+            $endMsg = "ENDED: ({$p['pid']}){$p['iface']} {$p['email']} " . $p['cmd'] . " : " . $output;
+            if ($outputErr !== '') {
+                $endMsg .= " : " . $outputErr;
+            }
+            $this->logecho($endMsg);
+            
+            // Check for greylisting with "temporarily deferred" - flag matching pattern for later deferral
+            if (stripos($output, 'GREYLISTED') !== false && stripos($output, 'temporarily deferred') !== false) {
+                $domain = $this->getDomainFromEmail($p['email']);
+                $matchedPattern = $this->matchesDeferPattern($domain, $this->greylist_defer_domains);
+                if ($matchedPattern !== false) {
+                    $this->deferred_notify_ids[$p['notify_id']] = true;
+                    if (!in_array($matchedPattern, $this->deferred_domains)) {
+                        $this->logecho("GREYLISTING DETECTED for {$domain} (matches '{$matchedPattern}') - flagging for deferral");
+                        $this->deferred_domains[] = $matchedPattern;
+                    }
+                }
+            }
+            
             @unlink($p['out']);
             @unlink($p['oute']);
             // at this point we could pop onto the queue the 
@@ -669,5 +764,144 @@ class Pman_Core_Notify extends Pman
     function logecho($str)
     {
         echo date("Y-m-d H:i:s - ") . $str . "\n";
+    }
+    
+    /**
+     * Extract domain from email address
+     * 
+     * @param string $email Email address
+     * @return string Domain in lowercase
+     */
+    function getDomainFromEmail($email)
+    {
+        $parts = explode('@', $email);
+        return strtolower(array_pop($parts));
+    }
+    
+    /**
+     * Check if a domain matches any pattern in a list using substring matching.
+     * E.g., domain "yahoo.com" or "yahoo.com.hk" matches pattern "yahoo"
+     * 
+     * @param string $domain The domain to check
+     * @param array $patterns List of patterns to match against
+     * @return string|false The matching pattern, or false if no match
+     */
+    function matchesDeferPattern($domain, $patterns)
+    {
+        $domain = strtolower($domain);
+        foreach ($patterns as $pattern) {
+            if (strpos($domain, strtolower($pattern)) !== false) {
+                return $pattern;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Defer notify rows collected during this run (greylisted sends and skipped queue items).
+     * Updates by id in chunks (same approach as assignQueues) to avoid wide LIKE scans.
+     * Defers to NOW + 15 minutes and passes to next server.
+     *
+     * @return int Total number of notifications deferred
+     */
+    function bulkDeferDomains()
+    {
+        foreach ($this->next_queue as $p) {
+            $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : '') : $p->to_email;
+            if ($this->matchesDeferPattern($this->getDomainFromEmail($email), $this->deferred_domains) !== false) {
+                $this->deferred_notify_ids[$p->id] = true;
+            }
+        }
+        if ($this->domain_queue !== false) {
+            foreach ($this->domain_queue as $dom => $ar) {
+                if ($this->matchesDeferPattern($dom, $this->deferred_domains) === false) {
+                    continue;
+                }
+                foreach ($ar as $p) {
+                    $this->deferred_notify_ids[$p->id] = true;
+                }
+            }
+        }
+        
+        if (empty($this->deferred_notify_ids)) {
+            return 0;
+        }
+        
+        $ids = array_keys($this->deferred_notify_ids);
+        $deferTime = date('Y-m-d H:i:s', strtotime('NOW + 15 MINUTES'));
+        $nextServerId = (int) $this->getNextServerId();
+        $serverId = (int) $this->server->id;
+        $totalCount = 0;
+        $chunkSize = 500;
+        
+        foreach (array_chunk($ids, $chunkSize) as $chunk) {
+            $countQuery = DB_DataObject::factory($this->table);
+            $countQuery->whereAddIn('id', $chunk, 'int');
+            $countQuery->server_id = $serverId;
+            $countQuery->whereAdd("
+                (sent < '1970-01-01' OR sent IS NULL)
+                AND act_when < NOW()
+                AND act_start > NOW() - INTERVAL 14 DAY
+            ");
+            $count = $countQuery->count();
+            if ($count < 1) {
+                continue;
+            }
+            
+            $idList = implode(',', $chunk);
+            $notify = DB_DataObject::factory($this->table);
+            $notify->query("
+                UPDATE
+                    {$this->table}
+                SET
+                    server_id = {$nextServerId},
+                    act_when = '{$deferTime}'
+                WHERE
+                    id IN ({$idList})
+                    AND server_id = {$serverId}
+                    AND (sent < '1970-01-01' OR sent IS NULL)
+                    AND act_when < NOW()
+                    AND act_start > NOW() - INTERVAL 14 DAY
+            ");
+            $totalCount += $count;
+        }
+        
+        if ($totalCount > 0) {
+            $this->logecho("GREYLISTED DEFER: Deferred {$totalCount} notification(s) by id to {$deferTime} (server_id: {$nextServerId})");
+        } else {
+            $this->logecho("GREYLISTED DEFER: No pending notifications to defer for collected ids");
+        }
+        
+        return $totalCount;
+    }
+    
+    /**
+     * Get the next available server ID for deferral.
+     * Similar logic to updateNotifyToNextServer but returns just the server ID.
+     * Falls back to current server if no other servers available.
+     * 
+     * @return int Server ID
+     */
+    function getNextServerId()
+    {
+        $servers = $this->server->availableServers();
+        
+        if (empty($servers) || count($servers) < 2) {
+            // No other servers, use current server
+            return $this->server->id;
+        }
+        
+        // Find current server position
+        $start = 0;
+        foreach ($servers as $i => $s) {
+            if ($s->id == $this->server->id) {
+                $start = $i;
+                break;
+            }
+        }
+        
+        // Get next server (cycle to beginning if at end)
+        $nextIndex = ($start + 1) % count($servers);
+        return $servers[$nextIndex]->id;
     }
 }

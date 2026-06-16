@@ -35,17 +35,25 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         if(!empty($q['search']['filename'])){
             $this->whereAdd("
-                $tn.filename LIKE '%{$this->escape($q['search']['filename'])}%' OR $tn.title LIKE '%{$this->escape($q['search']['filename'])}%'
+                $tn.filename LIKE '%{$this->escape($q['search']['filename'])}%' 
+                OR 
+                $tn.title LIKE '%{$this->escape($q['search']['filename'])}%'
             ");
         }
 
         if(!empty($q['_to_base64']) && !empty($q['image_id'])) {
-            $i = DB_DataObject::factory("Images");
+            $i = DB_DataObject::factory($tn);
             $i->get($q['image_id']);
             $roo->jok($i->toBase64());
         }
-        
 
+        if(!empty($q['query']['min_width'])) {
+            $this->whereAdd("{$tn}.width >= " . intval($q['query']['min_width']));
+        }
+
+        if(!empty($q['query']['min_height'])) {
+            $this->whereAdd("{$tn}.height >= " . intval($q['query']['min_height']));
+        }
     }
     
     function checkPerm($lvl, $au)
@@ -233,9 +241,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         clearstatcache();
         $ret =  file_exists(self::staticGetStoreName($o));
-        if (!$ret) {
-            return self::staticCanFix($o);
-        }
+        // if (!$ret) {
+        //     return self::staticCanFix($o);
+        // }
         return $ret;
     }
 
@@ -244,51 +252,40 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      * this tries to fix it.
      *
      */
-    function canFix() 
-    {
-        return self::staticCanFix($this);
-    }
+    // function canFix() 
+    // {
+    //     return self::staticCanFix($this);
+    // }
 
-    static function staticCanFix($o)
-    {
-        // look for the image in the folder, with matching id.
-        // this is problematic..
-        $fn = self::staticGetStoreName($o);
-        clearstatcache();
-        if (file_exists($fn)) {
-            
-            if (file_exists($fn . '-really-missing')) {
-                unlink($fn . '-really-missing');
-                return false;
-            }
-            
-            return true;
-        }
-        
-        if (file_exists($fn . '-really-missing')) {
-            return false;
-        }
-        if (!file_exists(dirname($fn))) {
-            return false;
-        }
-        foreach( scandir(dirname($fn)) as $n) {
-            if (empty($n) || $n[0] == '.') {
-                continue;
-            }
-            $bits = explode('-', $n);
-            if ($bits[0] != $o->id) {
-                continue;
-            }
-            if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
-                continue;
-            }
-            copy(dirname($fn). '/'.  $n, $fn);
-            clearstatcache();
-            return true;
-        }
-        // fixme - flag it as bad
-        touch($fn . '-really-missing');
-    }
+    // static function staticCanFix($o)
+    // {
+    //     // look for the image in the folder, with matching id.
+    //     $fn = self::staticGetStoreName($o);
+    //     clearstatcache();
+    //     if (file_exists($fn)) {
+    //         return true;
+    //     }
+    //     
+    //     if (!file_exists(dirname($fn))) {
+    //         return false;
+    //     }
+    //     foreach( scandir(dirname($fn)) as $n) {
+    //         if (empty($n) || $n[0] == '.') {
+    //             continue;
+    //         }
+    //         $bits = explode('-', $n);
+    //         if ($bits[0] != $o->id) {
+    //             continue;
+    //         }
+    //         if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
+    //             continue;
+    //         }
+    //         copy(dirname($fn). '/'.  $n, $fn);
+    //         clearstatcache();
+    //         return true;
+    //     }
+    //     return false;
+    // }
     
     
     /**
@@ -632,12 +629,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         //$size = max(100, (int) $size);
         //$size = min(1024, (int) $size);
         // the size should 200x150 to convert
-        $sizear = preg_split('/(x|c)/', $size);
+        $sizear = preg_split('/(x|c|q)/', $size);
         if(!isset($sizear[1])){
             $sizear[1] =   0; // 0x with '0' is a box? why
         }
         
-        $size = implode(strpos($size,'c') > -1 ? 'c' : 'x', $sizear);
+        $size = implode(strpos($size,'c') > -1 ? 'c' : (strpos($size,'q') > -1 ? 'q' : 'x'), $sizear);
 //        print_r($size);
         $fc = $this->toFileConvert();
 //        print_r($size);
