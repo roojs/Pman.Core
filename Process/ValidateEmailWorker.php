@@ -33,8 +33,9 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 continue;
             }
             $ip = gethostbyname($s->helo);
-            $this->jerr('ip: ' . $ip . ' helo: ' . $s->helo . ' remote: ' . $remote);
+            var_dump('ip: ' . $ip . ' helo: ' . $s->helo . ' remote: ' . $remote);
             if ($ip != $s->helo && $ip == $remote) {
+                die('a');
                 // return true;
             }
         }
