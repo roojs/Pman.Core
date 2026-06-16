@@ -126,7 +126,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
                 }
             }
 
-            var_dump($workerUrl);
+            $this->errorlog('workerUrl: ' . $workerUrl);
             die('test');
 
             $this->sendSSE('progress', array(
