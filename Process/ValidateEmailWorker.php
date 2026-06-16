@@ -17,12 +17,27 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
             $this->jerr('access denied');
         }
 
-        $ns = DB_DataObject::factory('core_notify_server');
-        if (!$ns->isAllowedInternalCaller('core')) {
+        if (empty($_SERVER['REMOTE_ADDR'])) {
             $this->jerr('access denied');
         }
 
-        return true;
+        $remote = $_SERVER['REMOTE_ADDR'];
+        if ($remote == '127.0.0.1' || $remote == '::1') {
+            return true;
+        }
+
+        $ns = DB_DataObject::factory('core_notify_server');
+        $ns->poolname = 'core';
+        foreach ($ns->availableServers() as $s) {
+            if (empty($s->hostname)) {
+                continue;
+            }
+            $ip = gethostbyname($s->hostname);
+            if ($ip != $s->hostname && $ip == $remote) {
+                return true;
+            }
+        }
+        $this->jerr('access denied');
     }
 
     function get($request = '', $opts = array(), $isRedirect = false)
