@@ -29,11 +29,11 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         $ns = DB_DataObject::factory('core_notify_server');
         $ns->poolname = 'core';
         foreach ($ns->availableServers() as $s) {
-            if (empty($s->hostname)) {
+            if (empty($s->helo)) {
                 continue;
             }
-            $ip = gethostbyname($s->hostname);
-            if ($ip != $s->hostname && $ip == $remote) {
+            $ip = gethostbyname($s->helo);
+            if ($ip != $s->helo && $ip == $remote) {
                 return true;
             }
         }
