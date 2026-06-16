@@ -65,16 +65,6 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
         curl_close($ch);
         curl_multi_close($mh);
 
-        if ($curlErr !== '') {
-            return array('ok' => null, 'error' => 'Validation request failed: ' . $curlErr);
-        }
-        if ($httpCode != 200) {
-            return array('ok' => null, 'error' => 'Validation request failed (HTTP ' . $httpCode . ')');
-        }
-        if (trim($body) === '') {
-            return array('ok' => null, 'error' => 'Validation request failed: empty response');
-        }
-
         $res = json_decode(trim($body), true);
         if(
             !is_array($res) || 
@@ -82,7 +72,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
             empty($res['data']['type']) || 
             !in_array($res['data']['type'], array('email_fail', 'email_ok'))
         ) {
-            return array('ok' => null, 'error' => 'Invalid response from worker');
+            $this->jerr('Invalid response from worker: ' . $body);
         }
         $row = $res['data'];
 
@@ -110,9 +100,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
         }
 
         $results = array();
-        $poolname = 'core';
-        $localhostWorkerUrl = 'http://localhost' . $this->baseURL . '/Core/Process/ValidateEmailWorker';
-        $notifyServer = DB_DataObject::factory('core_notify_server');
+        $workerPath = $this->baseURL . '/Core/Process/ValidateEmailWorker';
 
         foreach ($jobs as $idx => $jobRow) {
             $field = $jobRow['field'];
@@ -121,17 +109,19 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
             $jobError = '';
             $okRow = null;
 
-            $workerUrl = $localhostWorkerUrl;
-            $workerHostLabel = 'localhost';
+            $workerUrl = 'http://localhost' . $workerPath;
             $dar = explode('@', $email);
             $dom = strtolower(array_pop($dar));
             $cd = DB_DataObject::factory('core_domain');
             if ($cd->get('domain', $dom)) {
-                $server = $notifyServer->findServerForDomain($cd->id, $poolname);
-                if ($server) {
-                    $workerUrl = $notifyServer->workerUrlForServer($server, $this->baseURL, $this, $poolname);
-                    if ($workerUrl !== $localhostWorkerUrl) {
-                        $workerHostLabel = $server->hostname;
+                $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
+                $ipv6->selectAdd();
+                $ipv6->selectAdd('INET6_NTOA(ipv6_addr) as ipv6_addr_str');
+                $ipv6->domain_id = $cd->id;
+                if ($ipv6->find(true)) {
+                    $server = $ipv6->findServerFromIpv6('core');
+                    if ($server && $server->id != DB_DataObject::factory('core_notify_server')->getCurrent($this, true, 'core')->id) {
+                        $workerUrl = 'https://' . $server->helo . $workerPath;
                     }
                 }
             }
@@ -139,7 +129,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
             $this->sendSSE('progress', array(
                 'total' => $total * $childTimeout,
                 'progress' => ($idx + 1) / $total * 100,
-                'message' => 'Validating email (' . $email . ') on ' . $workerHostLabel . ' - ' . round($childTimeout) . ' seconds left'
+                'message' => 'Validating email (' . $email . ') on ' . parse_url($workerUrl, PHP_URL_HOST) . ' - ' . round($childTimeout) . ' seconds left'
             ));
 
             $workerResult = $this->runWorkerHttp(
@@ -154,7 +144,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
                     $total,
                     $idx,
                     $email,
-                    $workerHostLabel
+                    $workerUrl
                 ) {
                     if (microtime(true) - $lastHeartbeat < $heartbeatEvery) {
                         return;
@@ -163,7 +153,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
                     $this->sendSSE('progress', array(
                         'total' => $total * $childTimeout,
                         'progress' => ($elapsed + $idx * $childTimeout) / ($total * $childTimeout) * 100,
-                        'message' => 'Validating email (' . $email . ') on ' . $workerHostLabel . ' - ' . round($childTimeout - $elapsed) . ' seconds left'
+                        'message' => 'Validating email (' . $email . ') on ' . parse_url($workerUrl, PHP_URL_HOST) . ' - ' . round($childTimeout - $elapsed) . ' seconds left'
                     ));
                 }
             );
