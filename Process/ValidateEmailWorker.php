@@ -22,9 +22,8 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         }
 
         $remote = $_SERVER['REMOTE_ADDR'];
-        $this->jerr($remote);
         if ($remote == '127.0.0.1' || $remote == '::1') {
-            return true;
+            // return true;
         }
 
         $ns = DB_DataObject::factory('core_notify_server');
