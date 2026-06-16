@@ -120,14 +120,10 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
                 if ($ipv6->find(true)) {
                     $server = $ipv6->findServerFromIpv6('core');
                     if ($server && $server->id != DB_DataObject::factory('core_notify_server')->getCurrent($this, true, 'core')->id) {
-                        die('aa');
                         $workerUrl = 'http://' . $server->helo . $workerPath;
                     }
                 }
             }
-
-            $this->errorlog('workerUrl: ' . $workerUrl);
-            // die('test');
 
             $this->sendSSE('progress', array(
                 'total' => $total * $childTimeout,
