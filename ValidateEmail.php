@@ -119,8 +119,6 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
                 $ipv6->domain_id = $cd->id;
                 if ($ipv6->find(true)) {
                     $server = $ipv6->findServerFromIpv6('core');
-                    $this->errorlog('server: ' . json_encode($server));
-                    die('test');
                     // if ($server && $server->id != DB_DataObject::factory('core_notify_server')->getCurrent($this, true, 'core')->id) {
                         $workerUrl = 'https://' . $server->helo . $workerPath;
 
