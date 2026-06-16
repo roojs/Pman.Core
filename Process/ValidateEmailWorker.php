@@ -13,6 +13,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 {
     function getAuth()
     {
+        $this->jerr('test');
         if (empty($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] != 'POST') {
             $this->jerr('access denied');
         }
