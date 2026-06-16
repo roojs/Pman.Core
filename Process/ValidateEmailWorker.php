@@ -22,7 +22,7 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
         }
 
         $remote = $_SERVER['REMOTE_ADDR'];
-        var_dump($remote);
+        $this->jerr($remote);
         if ($remote == '127.0.0.1' || $remote == '::1') {
             return true;
         }
