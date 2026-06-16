@@ -196,6 +196,83 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             && $this->hostname == $host
             && ($force || $this->is_active);
     }
+
+    /**
+     * Notify server assigned to a domain via core_notify_server_ipv6, or false.
+     *
+     * @param int $domain_id core_domain.id
+     * @param string $poolname notify pool (default core)
+     * @return Pman_Core_DataObjects_Core_notify_server|false
+     */
+    function findServerForDomain($domain_id, $poolname = 'core')
+    {
+        if (empty($domain_id)) {
+            return false;
+        }
+
+        $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
+        $ipv6->selectAdd();
+        $ipv6->selectAdd('INET6_NTOA(ipv6_addr) as ipv6_addr_str');
+        $ipv6->domain_id = $domain_id;
+        if (!$ipv6->find(true)) {
+            return false;
+        }
+
+        return $ipv6->findServerFromIpv6($poolname);
+    }
+
+    /**
+     * Internal ValidateEmailWorker URL for a notify server (localhost when current host).
+     *
+     * @param object $server core_notify_server row
+     * @param string $baseURL app base URL path
+     * @param object $roo page object for getCurrent()
+     * @param string $poolname notify pool (default core)
+     * @return string
+     */
+    function workerUrlForServer($server, $baseURL, $roo, $poolname = 'core')
+    {
+        $path = $baseURL . '/Core/Process/ValidateEmailWorker';
+        if ($server->id == $this->getCurrent($roo, true, $poolname)->id) {
+            return 'http://localhost' . $path;
+        }
+        return 'http://' . $server->hostname . $path;
+    }
+
+    /**
+     * True when REMOTE_ADDR is loopback or a peer notify server in the pool.
+     *
+     * @param string $poolname notify pool (default core)
+     * @return bool
+     */
+    function isAllowedInternalCaller($poolname = 'core')
+    {
+        if (empty($_SERVER['REMOTE_ADDR'])) {
+            return false;
+        }
+
+        $remote = $_SERVER['REMOTE_ADDR'];
+        if ($remote == '127.0.0.1' || $remote == '::1') {
+            return true;
+        }
+
+        static $allowed = array();
+        if (!isset($allowed[$poolname])) {
+            $allowed[$poolname] = array();
+            $this->poolname = $poolname;
+            foreach ($this->availableServers() as $s) {
+                if (empty($s->hostname)) {
+                    continue;
+                }
+                $ip = gethostbyname($s->hostname);
+                if ($ip != $s->hostname) {
+                    $allowed[$poolname][$ip] = true;
+                }
+            }
+        }
+
+        return !empty($allowed[$poolname][$remote]);
+    }
     
     
     function isFirstServer()

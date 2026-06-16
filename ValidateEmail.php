@@ -3,18 +3,18 @@
 require_once 'Pman/Core/Sse.php';
 
 /**
- * SSE multi-email SMTP validation (one loopback HTTP worker request per address).
+ * SSE multi-email SMTP validation (one HTTP worker request per address; worker may be local or remote notify server).
  * URL: Core/ValidateEmail (POST, FormData; use Roo.form.Action.Sse).
  *
  * Ops: parent SSE may run up to N*90s; Cloudflare/proxy read timeout should allow that.
  * Child worker (Core/Process/ValidateEmailWorker): php-fpm request_terminate_timeout and
- * nginx fastcgi_read_timeout should be >= 90s for loopback requests.
+ * nginx fastcgi_read_timeout should be >= 90s for worker requests (local and inter-server).
  */
 class Pman_Core_ValidateEmail extends Pman_Core_Sse
 {
 
     /**
-     * POST one email to loopback worker; SSE progress while waiting (max $childTimeout s).
+     * POST one email to a worker; SSE progress while waiting (max $childTimeout s).
      *
      * @return array{ok: ?array, error: string}
      */
@@ -65,6 +65,16 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
         curl_close($ch);
         curl_multi_close($mh);
 
+        if ($curlErr !== '') {
+            return array('ok' => null, 'error' => 'Validation request failed: ' . $curlErr);
+        }
+        if ($httpCode != 200) {
+            return array('ok' => null, 'error' => 'Validation request failed (HTTP ' . $httpCode . ')');
+        }
+        if (trim($body) === '') {
+            return array('ok' => null, 'error' => 'Validation request failed: empty response');
+        }
+
         $res = json_decode(trim($body), true);
         if(
             !is_array($res) || 
@@ -72,7 +82,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
             empty($res['data']['type']) || 
             !in_array($res['data']['type'], array('email_fail', 'email_ok'))
         ) {
-            $this->jerr('Invalid response from worker: ' . $body);
+            return array('ok' => null, 'error' => 'Invalid response from worker');
         }
         $row = $res['data'];
 
@@ -100,6 +110,9 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
         }
 
         $results = array();
+        $poolname = 'core';
+        $localhostWorkerUrl = 'http://localhost' . $this->baseURL . '/Core/Process/ValidateEmailWorker';
+        $notifyServer = DB_DataObject::factory('core_notify_server');
 
         foreach ($jobs as $idx => $jobRow) {
             $field = $jobRow['field'];
@@ -108,14 +121,29 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
             $jobError = '';
             $okRow = null;
 
+            $workerUrl = $localhostWorkerUrl;
+            $workerHostLabel = 'localhost';
+            $dar = explode('@', $email);
+            $dom = strtolower(array_pop($dar));
+            $cd = DB_DataObject::factory('core_domain');
+            if ($cd->get('domain', $dom)) {
+                $server = $notifyServer->findServerForDomain($cd->id, $poolname);
+                if ($server) {
+                    $workerUrl = $notifyServer->workerUrlForServer($server, $this->baseURL, $this, $poolname);
+                    if ($workerUrl !== $localhostWorkerUrl) {
+                        $workerHostLabel = $server->hostname;
+                    }
+                }
+            }
+
             $this->sendSSE('progress', array(
                 'total' => $total * $childTimeout,
                 'progress' => ($idx + 1) / $total * 100,
-                'message' => 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left'
+                'message' => 'Validating email (' . $email . ') on ' . $workerHostLabel . ' - ' . round($childTimeout) . ' seconds left'
             ));
 
             $workerResult = $this->runWorkerHttp(
-                'http://localhost' . $this->baseURL . '/Core/Process/ValidateEmailWorker',
+                $workerUrl,
                 $email,
                 $au->id,
                 $childTimeout,
@@ -125,7 +153,8 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
                     $childTimeout,
                     $total,
                     $idx,
-                    $email
+                    $email,
+                    $workerHostLabel
                 ) {
                     if (microtime(true) - $lastHeartbeat < $heartbeatEvery) {
                         return;
@@ -134,7 +163,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
                     $this->sendSSE('progress', array(
                         'total' => $total * $childTimeout,
                         'progress' => ($elapsed + $idx * $childTimeout) / ($total * $childTimeout) * 100,
-                        'message' => 'Validating email (' . $email . ') - ' . round($childTimeout - $elapsed) . ' seconds left'
+                        'message' => 'Validating email (' . $email . ') on ' . $workerHostLabel . ' - ' . round($childTimeout - $elapsed) . ' seconds left'
                     ));
                 }
             );

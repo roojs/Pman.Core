@@ -13,6 +13,15 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
 {
     function getAuth()
     {
+        if (empty($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] != 'POST') {
+            $this->jerr('access denied');
+        }
+
+        $ns = DB_DataObject::factory('core_notify_server');
+        if (!$ns->isAllowedInternalCaller('core')) {
+            $this->jerr('access denied');
+        }
+
         return true;
     }
 
