@@ -33,8 +33,9 @@ class Pman_Core_Process_ValidateEmailWorker extends Pman
                 continue;
             }
             $ip = gethostbyname($s->helo);
+            $this->jerr('ip: ' . $ip . ' helo: ' . $s->helo . ' remote: ' . $remote);
             if ($ip != $s->helo && $ip == $remote) {
-                return true;
+                // return true;
             }
         }
         $this->jerr('access denied');
