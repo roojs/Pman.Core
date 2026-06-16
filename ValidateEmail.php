@@ -59,8 +59,6 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
         } while ($running && $status === CURLM_OK);
 
         $body = curl_multi_getcontent($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $curlErr = curl_error($ch);
         curl_multi_remove_handle($mh, $ch);
         curl_close($ch);
         curl_multi_close($mh);
@@ -72,7 +70,8 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
             empty($res['data']['type']) || 
             !in_array($res['data']['type'], array('email_fail', 'email_ok'))
         ) {
-            $this->jerr('Invalid response from worker: ' . $body);
+            $this->errorlog('Invalid response from worker: ' . $body);
+            return array('ok' => null, 'error' => '');
         }
         $row = $res['data'];
 
