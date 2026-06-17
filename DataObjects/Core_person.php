@@ -308,6 +308,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         // at this point all http auth stuff is done, so we can init session
         
+        
         //die("test init");
        
         
