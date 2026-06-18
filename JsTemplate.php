@@ -101,26 +101,46 @@ class Pman_Core_JsTemplate extends Pman {
     function compile($fn, $name)
     {
         // cached? - check file see if we have cached contents.
-        
-        
+        // Optional first two lines: TAG START: {{  /  TAG END: }}
+        // (stripped before compile). Omit to keep default { ... } tags.
+
         $contents = file_get_contents($fn);
-        $ar = preg_split('/(\{[^\\n}]+})/', $contents, -1, PREG_SPLIT_DELIM_CAPTURE);
-        
-        
-        
-        
+        $tagStart = '{';
+        $tagEnd = '}';
+
+        if (preg_match('/^TAG START:\s*(.+)\r?\nTAG END:\s*(.+)\r?\n/', $contents, $m)) {
+            $tagStart = $m[1];
+            $tagEnd = $m[2];
+            $contents = substr($contents, strlen($m[0]));
+        }
+
+        $startQ = preg_quote($tagStart, '/');
+        $endQ = preg_quote($tagEnd, '/');
+        if (strlen($tagEnd) === 1) {
+            $pattern = '/(' . $startQ . '[^\\n' . preg_quote($tagEnd[0], '/') . ']+' . $endQ . ')/';
+        } else {
+            $pattern = '/(' . $startQ . '(?:(?!' . $endQ . ')[^\\n])+?' . $endQ . ')/';
+        }
+
+        $ar = preg_split($pattern, $contents, -1, PREG_SPLIT_DELIM_CAPTURE);
+
         //echo '<PRE>' . htmlspecialchars(print_r($ar,true));
-        
+
         $out= array();
-        
+
         $head = "$name = function(t)\n{\n    var ret = '';\n\n";
-        
+
         $funcs = array();
         // do not allow nested functions..?
         $fstart = -1;
         $indent = 2;
         $inscript = false;
         $ret = &$out;
+        $tagEndScript = $tagStart . 'end:' . $tagEnd;
+        $tagScript = $tagStart . 'script:' . $tagEnd;
+        $tagStartLen = strlen($tagStart);
+        $tagEndLen = strlen($tagEnd);
+
         foreach($ar as $item) {
             $in = str_repeat("    ", $indent);
             $indent  = max($indent , 1);
@@ -128,47 +148,47 @@ class Pman_Core_JsTemplate extends Pman {
             switch(true) {
                 case (!strlen($item)):
                     continue 2;
-                
-                case ($inscript && ($item != '{end:}')):
+
+                case ($inscript && ($item != $tagEndScript)):
                     $ret[count($ret)-1] .= $item;
                     continue 2;
-                
-                case ($inscript && ($item == '{end:}')):
+
+                case ($inscript && ($item == $tagEndScript)):
                     $inscript = false;
                     continue 2;
-                 
-             
-                case ($item[0] != '{'):
+
+
+                case (substr($item, 0, $tagStartLen) != $tagStart):
                     if (!strlen(trim($item))) {
                         continue 2;
                     }
                     $ret[] = $in . "ret += ". json_encode($item) . ";";
                     continue 2;
-                
-                
-                case ($item == '{script:}'): 
+
+
+                case ($item == $tagScript):
                     $inscript = true;
                      $ret[] = '';
                     continue 2;
-                
-                case ($item[1] == '!'):
-                    $ret[] = $in . substr($item,2,-1) .';';
+
+                case (substr($item, $tagStartLen, 1) == '!'):
+                    $ret[] = $in . substr($item, $tagStartLen + 1, -$tagEndLen) .';';
                     continue 2;
-                
-                
-                case (substr($item,1,3) == 'if('):
-                    $ret[] = $in . substr($item,1,-1) . ' {';
+
+
+                case (substr($item, $tagStartLen, 3) == 'if('):
+                    $ret[] = $in . substr($item, $tagStartLen, -$tagEndLen) . ' {';
                     $indent++;
                     continue 2;
-                
-                case (substr($item,1,5) == 'else:'):
+
+                case (substr($item, $tagStartLen, 5) == 'else:'):
                     $indent--;
                     $in = str_repeat("    ", $indent);
                     $ret[] = $in . "} else { ";
                     $indent++;
                     continue 2;
-                 
-                case (substr($item,1,4) == 'end:'):
+
+                case (substr($item, $tagStartLen, 4) == 'end:'):
                     $indent--;
                     $in = str_repeat("    ", $indent);
                     $ret[] = $in . "}";
@@ -177,45 +197,45 @@ class Pman_Core_JsTemplate extends Pman {
                         $ret = &$out;
                     }
                     continue 2;
-                
-                case (substr($item,1,7) == 'return:'):
+
+                case (substr($item, $tagStartLen, 7) == 'return:'):
                     $ret[] = $in . "return;";
                     continue 2;
-                
-                case (substr($item,1,9) == 'function:'):
+
+                case (substr($item, $tagStartLen, 9) == 'function:'):
                     $fstart = $indent;
                     $indent++;
                     $ret = &$funcs;
-                    $def  = substr($item,10,-1) ;
+                    $def  = substr($item, $tagStartLen + 9, -$tagEndLen) ;
                     list($name,$body) = explode('(', $def, 2);
-                    
-                    
+
+
                     $ret[] = $in . "var $name = function (" .  $body  . '{';
                     continue 2;
-                
+
                 default:
-                    if (substr($item,-3,2) == ':h') {
-                        $ret[] = $in . "ret += ".  substr($item,1,-3) . ';';
+                    $inner = substr($item, $tagStartLen, -$tagEndLen);
+                    if (substr($inner, -2) == ':h') {
+                        $ret[] = $in . "ret += ".  substr($inner, 0, -2) . ';';
                         continue 2;
                     }
-                    if (substr($item,-3,2) == ':b') {
-                        $ret[] = $in . "ret += Roo.util.Format.htmlEncode(".  substr($item,1,-3).').split("\n").join("<br/>\n");';
+                    if (substr($inner, -2) == ':b') {
+                        $ret[] = $in . "ret += Roo.util.Format.htmlEncode(".  substr($inner, 0, -2).').split("\n").join("<br/>\n");';
                         continue 2;
                     }
-                    $ret[] = $in . "ret += Roo.util.Format.htmlEncode(".  substr($item,1,-1).');';
+                    $ret[] = $in . "ret += Roo.util.Format.htmlEncode(".  $inner.');';
                     continue 2;
-                
+
             }
-            
-            
+
+
         }
         $in = str_repeat("    ", $indent);
         $ret[] = $in .  "return ret;\n}\n";
         return $head . implode("\n",$funcs) . "\n\n" .implode("\n",$out) ;
         //echo '<PRE>' . htmlspecialchars(implode("\n",$ret));
-        
-        
-        
+
+
     }
     
     
