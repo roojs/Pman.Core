@@ -406,6 +406,74 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $this->msgid = $msgid;
         $this->event_id = $event->id;
         $this->update($ww);
+
+        // for 'Write Email'
+        if($this->ontable == 'mail_imap_message_user' && $this->evtype == 'MAIL') {
+            $deleteEmail = true;
+
+            $cn = DB_DataObject::factory('core_notify');
+            $cn->setFrom(array(
+                'evtype' => $this->evtype,
+                'ontable' => $this->ontable,
+                'person_id' => $this->person_id,
+                'person_table' => $this->person_table
+            ));
+            foreach($cn->fetchAll() as $n) {
+                // failed
+                if(empty($n->msgid) && $n->event_id > 0 && strtotime($n->act_when) < strtotime("NOW")) {
+                    continue;
+                }
+
+                // some emails are pending / delivered -> keep the email
+                $deleteEmail = false;
+            }
+
+            // fail to send the email to all recipients -> delete the email
+            if($deleteEmail) {
+                $mimu = $this->object();
+
+                // delete the email in 'Outbox'
+                $imap = $mimu->imap();
+                $mimu->folder()->selectMailBox();
+                // also delete the message user
+                $mimu->deleteMessage();
+                $imap->expunge();
+
+                $mim = $mimu->message();
+
+                // delete file refs
+                $mifr  = DB_DataObject::Factory('mail_imap_file_ref');
+                $mifr->query("
+                    DELETE FROM
+                        mail_imap_file_ref
+                    WHERE
+                        msg_id = {$mim->id}
+                ");
+                
+                // delete message actor
+                $mima  = DB_DataObject::Factory('mail_imap_message_actor');
+                $mima->query("
+                    DELETE FROM
+                        mail_imap_message_actor
+                    WHERE
+                        msg_id = {$mim->id}
+                ");
+
+                // delete message refs
+                $mimr = DB_DataObject::Factory('mail_imap_message_ref');
+                $mimr->query("
+                    DELETE FROM
+                        mail_imap_message_ref
+                    WHERE
+                        reply_to_msg_id = {$mim->id}
+                    OR
+                        top_msg_id = {$mim->id}
+                ");
+
+                // delete message
+                $mim->expunge();
+            }
+        }
     }
     
     function flagLater($when)
