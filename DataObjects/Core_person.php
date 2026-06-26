@@ -1043,6 +1043,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
         }
         
+        // AI-filter: in_group_name - Limit to persons in a group whose name exactly matches
         if(!empty($q['in_group_name'])){
             
             $v = $this->escape($q['in_group_name']);
@@ -1060,6 +1061,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 )"
             );
         }
+        // AI-filter: in_group_starts - Limit to persons in a group whose name starts with this value
         if(!empty($q['in_group_starts'])){
             
             $v = $this->escape($q['in_group_starts']);
@@ -1145,12 +1147,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
         }
         
+        // AI-filter: query[name] - Match person name (contains)
         if(!empty($q['query']['name'])){
             $this->whereAdd("
                 {$this->tableName()}.name LIKE '%{$this->escape($q['query']['name'])}%'
             ");
         }
         
+        // AI-filter: query[name_or_email] - Match person name or email (contains)
          if(!empty($q['query']['name_or_email'])){
             $v = $this->escape($q['query']['name_or_email']);
             $this->whereAdd("
@@ -1159,12 +1163,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 {$this->tableName()}.email LIKE '%{$v}%'
             ");
         }
+        // AI-filter: query[name_starts] - Match person name prefix
          if(!empty($q['query']['name_starts'])){
             $this->whereAdd("
                 {$this->tableName()}.name LIKE '{$this->escape($q['query']['name_starts'])}%'
             ");
         }
         
+        // AI-filter: query[search] - Full-text search across name, email, role, phone, remarks, and company
         if (!empty($q['query']['search'])) {
             
             // use our magic search builder...
@@ -1215,7 +1221,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if ($p->count()) {
             $p->autoJoin();
             $pids = $p->projects($au);
-            if (isset($q['query']['project_id'])) {   
+        // AI-filter: query[project_id] - Limit to persons visible on this project id
+            if (isset($q['query']['project_id'])) {
                 $pid = (int)$q['query']['project_id'];
                 if (!in_array($pid, $pids)) {
                     $roo->jerr("Project not in users valid projects");
@@ -1273,6 +1280,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 LENGTH({$this->tableName()}.oath_key) AS length_oath_key
             ");
         }
+        // AI-filter: _with_group_membership - Include group membership columns for the person
         if (isset($q['_with_group_membership'])) {
             $this->selectAddGroupMemberships();
         }
