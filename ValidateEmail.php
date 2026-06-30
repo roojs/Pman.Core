@@ -3,18 +3,18 @@
 require_once 'Pman/Core/Sse.php';
 
 /**
- * SSE multi-email SMTP validation (one loopback HTTP worker request per address).
+ * SSE multi-email SMTP validation (one HTTP worker request per address; worker may be local or remote notify server).
  * URL: Core/ValidateEmail (POST, FormData; use Roo.form.Action.Sse).
  *
  * Ops: parent SSE may run up to N*90s; Cloudflare/proxy read timeout should allow that.
  * Child worker (Core/Process/ValidateEmailWorker): php-fpm request_terminate_timeout and
- * nginx fastcgi_read_timeout should be >= 90s for loopback requests.
+ * nginx fastcgi_read_timeout should be >= 90s for worker requests (local and inter-server).
  */
 class Pman_Core_ValidateEmail extends Pman_Core_Sse
 {
 
     /**
-     * POST one email to loopback worker; SSE progress while waiting (max $childTimeout s).
+     * POST one email to a worker; SSE progress while waiting (max $childTimeout s).
      *
      * @return array{ok: ?array, error: string}
      */
@@ -99,6 +99,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
         }
 
         $results = array();
+        $workerPath = $this->baseURL . '/Core/Process/ValidateEmailWorker';
 
         foreach ($jobs as $idx => $jobRow) {
             $field = $jobRow['field'];
@@ -107,14 +108,31 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
             $jobError = '';
             $okRow = null;
 
+            $workerUrl = 'http://localhost' . $workerPath;
+            $dar = explode('@', $email);
+            $dom = strtolower(array_pop($dar));
+            $cd = DB_DataObject::factory('core_domain');
+            if ($cd->get('domain', $dom)) {
+                $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
+                $ipv6->selectAdd();
+                $ipv6->selectAdd('INET6_NTOA(ipv6_addr) as ipv6_addr_str');
+                $ipv6->domain_id = $cd->id;
+                if ($ipv6->find(true)) {
+                    $server = $ipv6->findServerFromIpv6('core');
+                    if ($server && $server->id != DB_DataObject::factory('core_notify_server')->getCurrent($this, true, 'core')->id) {
+                        $workerUrl = 'https://' . $server->helo . $workerPath;
+                    }
+                }
+            }
+
             $this->sendSSE('progress', array(
                 'total' => $total * $childTimeout,
                 'progress' => ($idx + 1) / $total * 100,
-                'message' => 'Validating email (' . $email . ') - ' . round($childTimeout) . ' seconds left'
+                'message' => 'Validating email (' . $email . ') on ' . parse_url($workerUrl, PHP_URL_HOST) . ' - ' . round($childTimeout) . ' seconds left'
             ));
 
             $workerResult = $this->runWorkerHttp(
-                'http://localhost' . $this->baseURL . '/Core/Process/ValidateEmailWorker',
+                $workerUrl,
                 $email,
                 $au->id,
                 $childTimeout,
@@ -124,7 +142,8 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
                     $childTimeout,
                     $total,
                     $idx,
-                    $email
+                    $email,
+                    $workerUrl
                 ) {
                     if (microtime(true) - $lastHeartbeat < $heartbeatEvery) {
                         return;
@@ -133,7 +152,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
                     $this->sendSSE('progress', array(
                         'total' => $total * $childTimeout,
                         'progress' => ($elapsed + $idx * $childTimeout) / ($total * $childTimeout) * 100,
-                        'message' => 'Validating email (' . $email . ') - ' . round($childTimeout - $elapsed) . ' seconds left'
+                        'message' => 'Validating email (' . $email . ') on ' . parse_url($workerUrl, PHP_URL_HOST) . ' - ' . round($childTimeout - $elapsed) . ' seconds left'
                     ));
                 }
             );
