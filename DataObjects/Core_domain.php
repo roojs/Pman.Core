@@ -183,10 +183,12 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
+        // AI-filter: query[domain] - Match domain name (contains)
         if (!empty($q['query']['domain'])) {
             $this->whereAdd("core_domain.domain like '%{$this->escape($q['query']['domain'])}%'");
         }
 
+        // AI-filter: _status - Filter by MX validity: invalid_mx or valid_mx
         if(!empty($q['_status'])) {
             $badCond = "
                 (
@@ -206,6 +208,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
         }
 
+        // AI-filter: _with_reference_count - Add person_reference_count column and enable reference status filtering
         if(!empty($q['_with_reference_count'])) {
             $this->selectAddPersonReferenceCount();
             if(!empty($q['sort']) && $q['sort'] == 'person_reference_count' && !empty($q['dir'])) {
@@ -213,6 +216,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $this->orderBy("{$q['sort']} $dir");
             }
     
+            // AI-filter: _reference_status - With _with_reference_count: with_references or without_reference
             if(!empty($q['_reference_status'])) {
                 switch($q['_reference_status']) {
                     case 'with_references':

@@ -27,10 +27,12 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
+        // AI-filter: date_from - Return holidays after this date (Format: YYYY-MM-DD)
         if (isset($q['date_from'])) {
             $dt = date("Y-m-d",strtotime($q['date_from']));
             $this->whereAdd("holiday_date > '$dt'");
         }
+        // AI-filter: date_to - Return holidays before this date (Format: YYYY-MM-DD)
         if (isset($q['date_to'])) {
             $dt = date("Y-m-d",strtotime($q['date_to']));
             $this->whereAdd("holiday_date < '$dt'");

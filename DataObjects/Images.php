@@ -222,6 +222,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
 
     static function staticGetStoreName($o)
     {
+        if (empty($o->filename)) {
+            return '';
+        }
         $opts = HTML_FlexyFramework::get()->Pman;
         $fn = preg_replace('/[^a-z0-9\.]+/i', '_', $o->filename);
         return implode( '/', array(
@@ -239,8 +242,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
 
     static function staticExists($o)
     {
+        $path = self::staticGetStoreName($o);
+        if ($path === '') {
+            return false;
+        }
         clearstatcache();
-        $ret =  file_exists(self::staticGetStoreName($o));
+        $ret =  file_exists($path);
         // if (!$ret) {
         //     return self::staticCanFix($o);
         // }

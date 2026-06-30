@@ -164,6 +164,7 @@ class Pman_Core_DataObjects_Core_project_directory extends DB_DataObject
         // otherwise only the project they are involved with..
          
         // can  see - their projects + their personal mail...
+        // AI-filter: project_id_ar - Comma-separated project ids to limit directory rows
         if (!empty($q['project_id_ar'])) {
             // can filter projects!
             $this->whereAddIn('core_project_directory.project_id', explode(',',$q['project_id_ar']), 'int');

@@ -30,6 +30,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             $roo->jnotice("NOPERM", "Only admins can view this");
         }
         
+        // AI-filter: _with_person_data - Join person name and email; optional search name matches person fields
         if (isset($q['_with_person_data'])) {
             $this->_join .= "
                 LEFT JOIN core_person as join_person_id_id ON (join_person_id_id.id=core_person_window.person_id)

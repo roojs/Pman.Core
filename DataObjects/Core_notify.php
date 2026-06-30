@@ -276,6 +276,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
+        // AI-filter: search[email_or_name] - Match recipient name or to_email (contains)
         if(!empty($q['search']['email_or_name'])) {
             $this->whereAdd("
                 join_crm_person_id_id.name LIKE '%" . $this->escape($q['search']['email_or_name']) . "%'
@@ -284,10 +285,13 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             ");
         }
         
+        // AI-filter: search[contains] - Match event remarks (contains)
         if (!empty($q['search']['contains'])) {
             $this->whereAdd("join_event_id_id.remarks LIKE '%".$this->escape($q['search']['contains']) ."%'");
             
         }
+        // AI-filter: ontable - Factory name of the related record table to join onto onid
+        // AI-filter: _skip_ontable_join - Set to 1 to skip joining the ontable target table
         if (empty($q['_skip_ontable_join']) && isset($q['ontable']) && !in_array($q['ontable'], array('Person', 'Events',  'core_watch'))) {
             // this will only work on tables not joined to ours.
             
@@ -308,10 +312,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             "; 
             $this->selectAs($d, 'core_notify_%s');
         } 
+        // AI-filter: query[person_id_name] - Match sender person name prefix
         if (!empty($q['query']['person_id_name']) ) {
             $this->whereAdd( "join_person_id_id.name LIKE '{$this->escape($q['query']['person_id_name'])}%'");
              
         }
+        // AI-filter: query[status] - Delivery status: SUCCESS, FAILED, PENDING, OPENED, or ALL
          if (!empty($q['query']['status'])) {
             switch ($q['query']['status']) {
                 
@@ -338,6 +344,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             }
         }
         
+        // AI-filter: _evtype_align - Add evtype_align column from core_enum Core.NotifyType
         if(!empty($q['_evtype_align'])){
             $this->selectAdd("
                 (SELECT
@@ -354,12 +361,14 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             ");
         }
         
+        // AI-filter: from - Minimum act_when datetime (Format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS)
         if(!empty($q['from'])){
             $this->whereAdd("
                 act_when >= '{$q['from']}'
             ");
         }
         
+        // AI-filter: to - Maximum act_when datetime (Format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS)
         if(!empty($q['to'])){
             $this->whereAdd("
                 act_when <= '{$q['to']}'
