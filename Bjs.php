@@ -219,18 +219,20 @@ class Pman_Core_Bjs
                 $this->urls[] = strtolower($tableName);
             }
         }
-        if ($propType == 'Roo.form.Form'
-            && preg_match_all("/\\/Roo\\/([a-zA-Z0-9_]+)(?:\\.php)?/", $this->getNodeProp($node, 'url'), $m)
-        ) {
-            foreach ($m[1] as $table) {
-                $this->urls[] = strtolower($table);
+        if ($propType == 'Roo.form.Form') {
+            $url = $this->getNodeProp($node, 'url');
+            if ($url && preg_match_all("/\\/Roo\\/([a-zA-Z0-9_]+)(?:\\.php)?/", $url, $m)) {
+                foreach ($m[1] as $table) {
+                    $this->urls[] = strtolower($table);
+                }
             }
         }
-        if ($propType == 'Roo.data.HttpProxy'
-            && preg_match_all("/\\/Roo\\/([a-zA-Z0-9_]+)(?:\\.php)?/", $this->getNodeProp($node, 'url'), $m)
-        ) {
-            foreach ($m[1] as $table) {
-                $this->urls[] = strtolower($table);
+        if ($propType == 'Roo.data.HttpProxy') {
+            $url = $this->getNodeProp($node, 'url');
+            if ($url && preg_match_all("/\\/Roo\\/([a-zA-Z0-9_]+)(?:\\.php)?/", $url, $m)) {
+                foreach ($m[1] as $table) {
+                    $this->urls[] = strtolower($table);
+                }
             }
         }
         if ($propType === 'Roo.grid.ColumnModel') {
