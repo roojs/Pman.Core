@@ -136,7 +136,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             return false;
         }
         
-        $filename = empty($filename) ? $file : $filename;
+        $filename = ($filename === false || 
+            !isset($filename) || !strlen($filename)) ? $file : $filename;
         
         if (empty($this->mimetype)) {
             require_once 'File/MimeType.php';
@@ -172,7 +173,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $this->created = date('Y-m-d H:i:s');
          
         
-        if (empty($this->filename)) {
+        if (!isset($this->filename) || !strlen($this->filename)) {
             $this->filename = basename($filename);
         }
         
@@ -222,7 +223,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
 
     static function staticGetStoreName($o)
     {
-        if (empty($o->filename)) {
+        if (!isset($o->filename) || !strlen( $o->filename)) {
             return '';
         }
         $opts = HTML_FlexyFramework::get()->Pman;
@@ -498,7 +499,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
         }
         
-        $this->filename = empty($this->filename) ? 
+        $this->filename = (!isset($this->filename) || !strlen($this->filename)) ? 
             $file['name'] : ($this->filename .'.'. $ext); 
         
         
@@ -689,7 +690,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function shorten_name($fn = false)
     {
-        if(empty($this->filename)) {
+        if (!isset($this->filename) || !strlen($this->filename)) {
             return;
         }
         $fn = $fn === false ? $this->filename : $fn;
@@ -962,7 +963,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $this->mimetype = $bits[0];
         }
         static $imgid = 1;
-        if (empty($this->filename)) {
+        if (!isset($this->filename) || !strlen($this->filename)) {
             require_once 'File/MimeType.php';
             $y = new File_MimeType();
             $this->filename = 'image-'.$imgid++.'.'.$y->toExt($this->mimetype);
