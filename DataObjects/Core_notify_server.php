@@ -16,13 +16,75 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     public $poolname;
     public $is_active;
     public $last_send;
-    
-    
+    public $interface;
     
     function  applyFilters($q, $au, $roo)
     {
+        // Add string versions of binary IPv6 fields for the interface
+        $this->selectAdd("INET6_NTOA(ipv6_range_from) as ipv6_range_from_str");
+        $this->selectAdd("INET6_NTOA(ipv6_range_to) as ipv6_range_to_str");
+        
         if (isset($q['_with_queue_size'])) {
             $this->addQueueSize();
+        }
+    }
+
+    function beforeInsert($q, $roo)
+    {
+        if ($this->interface == '') {
+            return;
+        }
+        if ($this->hostname != gethostbyaddr("127.0.1.1")) {
+            $roo->jerr('core_notify_server: hostname must match this machine to set interface'); // match tree
+        }
+        if (!array_key_exists($this->interface, net_get_interfaces())) {
+            $roo->jerr('core_notify_server: invalid interface'); // match tree
+        }
+    }
+
+    function beforeUpdate($old, $q, $roo)
+    {
+        if ($old->interface != $this->interface && $this->interface != '') {
+            if ($this->hostname != gethostbyaddr("127.0.1.1")) {
+                $roo->jerr('core_notify_server: hostname must match this machine to change interface'); // match tree
+            }
+            if (!array_key_exists($this->interface, net_get_interfaces())) {
+                $roo->jerr('core_notify_server: invalid interface'); // match tree
+            }
+        }
+
+        // if any of the ipv6 fields is set, make sure all of them are set
+        if(
+            !empty($q['ipv6_range_from_str'])
+            ||
+            !empty($q['ipv6_range_to_str'])
+            ||
+            !empty($q['ipv6_ptr'])
+            ||
+            !empty($q['ipv6_sender_id'])
+        ) {
+            if(empty($q['ipv6_range_from_str'])) {
+                $roo->jerr("IPv6 range from is required");
+            }
+            if(filter_var($q['ipv6_range_from_str'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+                $roo->jerr("IPv6 range from is not a valid IPv6 address");
+            }
+            if(empty($q['ipv6_range_to_str'])) {
+                $roo->jerr("IPv6 range to is required");
+            }
+            if(filter_var($q['ipv6_range_to_str'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+                $roo->jerr("IPv6 range to is not a valid IPv6 address");
+            }
+            if(empty($q['ipv6_ptr'])) {
+                $roo->jerr("IPv6 ptr is required");
+            }
+            if(empty($q['ipv6_sender_id'])) {
+                $roo->jerr("IPv6 sender is required");
+            }
+            
+            // Convert string to binary for storage using MySQL INET6_ATON
+            $this->ipv6_range_from = $this->sqlValue("INET6_ATON('" . $this->escape($q['ipv6_range_from_str']) . "')");
+            $this->ipv6_range_to = $this->sqlValue("INET6_ATON('" . $this->escape($q['ipv6_range_to_str']) . "')");
         }
     }
     
@@ -75,7 +137,15 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     
     // most services should call this first..
     
-    function getCurrent($notify, $force = false)
+    /**
+     * Get current notify server
+     * 
+     * @param object $roo Normally a notify object, but could also be a roo object
+     * @param bool $force Force fallback to any server if hostname not found
+     * @param string|false $poolname Pool name to use. Required when $roo is a roo object (which doesn't have poolname property)
+     * @return object Core_notify_server instance
+     */
+    function getCurrent($roo, $force = false, $poolname = false)
     {
         static $current = false;;
         
@@ -90,16 +160,17 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         
         
-        $ns->poolname = $notify->poolname;
+        $ns->poolname = ($poolname !== false) ? $poolname : $roo->poolname;
         $ns->is_active = 1;
         $ns->hostname = gethostbyaddr("127.0.1.1");
+        $ns->interface = '';
         $ns->limit(1);
         if (strlen($ns->hostname) && $ns->find(true)) {
             $current = $ns;
             return $ns;
         }
         if (!$force) {
-            $notify->jerr("Server not found for this server hostname 127.0.1.1 - {$ns->hostname} in core_notify_server" );
+            $roo->jerr("Server not found for this server hostname 127.0.1.1 - {$ns->hostname} in core_notify_server" );
         }
         // fallback to any server - if we are using force. (this is so helo will work...)
         
@@ -107,11 +178,23 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         //$ns->is_active = 1; // we allow non active servers if force is used
         $ns->hostname = gethostbyaddr("127.0.1.1");
         if (!strlen($ns->hostname) ||  !$ns->find(true)) {
-            $notify->jerr("Server not found for this server hostname 127.0.1.1 - {$ns->hostname} in core_notify_server" );
+            $roo->jerr("Server not found for this server hostname 127.0.1.1 - {$ns->hostname} in core_notify_server" );
         }
         
         $current = $ns;
         return $ns;
+    }
+
+    /**
+     * True if this loaded row is for the same host/pool (and is_active when !$force) as $roo — not a getCurrent() wrapper.
+     */
+    function isCurrent($roo, $force = false)
+    {
+        $host = gethostbyaddr("127.0.1.1");
+        return strlen($host)
+            && $this->poolname == $roo->poolname
+            && $this->hostname == $host
+            && ($force || $this->is_active);
     }
     
     
@@ -154,6 +237,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         if ($this->id != $ids[0]) {
             return; 
         }
+        
+        // First, assign servers based on IPv6 domain assignments
+        $assignedIPv6Ids = $this->assignQueuesByIPv6Domain($notify);
         foreach($ids as $rn) {
             $up[$rn]  = array();
         }
@@ -175,6 +261,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                     act_start < NOW() +  INTERVAL 3 HOUR 
                     and
                     server_id != {$ids[0]}
+                    " . (!empty($assignedIPv6Ids) ? "and id NOT IN (" . implode(",", $assignedIPv6Ids) . ")" : "") . "
             ");
             return;
         }
@@ -190,6 +277,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 act_start < NOW() +  INTERVAL 3 HOUR 
                 and
                 server_id NOT IN (" . implode(",", $ids) . ")
+                " . (!empty($assignedIPv6Ids) ? "and id NOT IN (" . implode(",", $assignedIPv6Ids) . ")" : "") . "
         ");
         $p->orderBy('act_when asc'); //?
         $total_add = $p->count();
@@ -219,6 +307,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 $in_q[$sid] = 0;
             }
         }
+
         $totalq = 0;
         foreach($in_q as $sid => $n) {
             $totalq += $n;
@@ -232,8 +321,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             if ( $cq > $target_len) {
                 continue;
             }
-            $up[ $sid ] = array_slice($to_add, 0, $target_len - $cq);
+            $up[ $sid ] = array_splice($to_add, 0, $target_len - $cq);
         }
+
         
         // add the reminder evently
         foreach($to_add as $n=>$i) {
@@ -263,6 +353,54 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         DB_DataObject::factory("core_notify_blacklist")->prune();
         
     }
+    
+    /**
+     * Assign servers based on IPv6 domain assignments
+     * If domain_id exists in server_ipv6, set the server_id to the same server
+     * If no domain_id match, leave for normal assignment
+     */
+    function assignQueuesByIPv6Domain($notify)
+    {
+        $assignedIds = array();
+        // Get all pending notifications that have domain_id
+        $p = DB_DataObject::factory($notify->table);
+        $p->whereAdd("
+            sent < '2000-01-01'
+            and
+            event_id = 0
+            and
+            act_start < NOW() + INTERVAL 3 HOUR
+            and
+            domain_id > 0
+        ");
+        
+        $pending_notifications = $p->fetchAll();
+        foreach ($pending_notifications as $notification) {
+            // Check if this domain_id has IPv6 server assignments
+            $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
+            $ipv6->domain_id = $notification->domain_id;
+            $ipv6->selectAdd("INET6_NTOA(ipv6_addr) as ipv6_addr_str");
+            $ipv6_records = $ipv6->fetchAll();
+            
+            if (!empty($ipv6_records)) {
+                // Randomly pick one if multiple exist
+                $selected_ipv6 = $ipv6_records[array_rand($ipv6_records)];
+                
+                // Find the server whose range contains this IPv6 address
+                $serverFromIpv6 = $selected_ipv6->findServerFromIpv6($this->poolname);
+                if ($serverFromIpv6) {
+                    // Assign the IPv6 server regardless of availability status
+                    $update_notification = DB_DataObject::factory($notify->table);
+                    $update_notification->get($notification->id);
+                    $update_notification->server_id = $serverFromIpv6->id;
+                    $update_notification->ipv6_id = $selected_ipv6->id;
+                    $update_notification->update();
+                    $assignedIds[] = $notification->id;
+                }
+            }
+        }
+        return $assignedIds;
+    }
         // called on current server.
 
     function availableServers()
@@ -275,7 +413,16 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
-    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false)
+    /**
+     * Update the notify to the next server
+     * @param object $cn The notify object
+     * @param string $when The when to update the notify
+     * @param bool $allow_same Allow the same server
+     * @param object $server_ipv6 The server ipv6 object
+     * @param array $allMxIpv4s All available ipv4s from the mx hosts
+     * @return bool True if the notify was updated to the next server, false otherwise
+     */
+    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false, $server_ipv6 = false, $allMxIpv4s = false)
     {
         if (!$this->id) {
             return;
@@ -286,6 +433,21 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
         $w = DB_DataObject::factory($cn->tableName());
         $w->get($cn->id);
+
+        // set to ipv6 server if available
+        // update act_when
+        if (!empty($server_ipv6)) {
+            $pp = clone($w);
+
+            $serverFromIpv6 = $server_ipv6->findServerFromIpv6($this->poolname);
+            if($serverFromIpv6 != false) {
+                $w->server_id = $serverFromIpv6->id;
+            }
+            $w->ipv6_id = $server_ipv6->id;
+            $w->act_when = $when === false ? $w->sqlValue('NOW() + INTERVAL 1 MINUTE') : $when;
+            $w->update($pp);
+            return true;
+        }
         
         $servers = $this->availableServers();
         $start = 0;
@@ -299,7 +461,27 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $good = false;
         while ($offset  != $start) {
             $s = $servers[$offset];
-            if (!$s->isBlacklisted($email)) {
+            if ($allMxIpv4s === false) { // this is called from notify where we failed to queue something 
+                $good = $s;
+                break;
+            }
+
+            // check if the server is blacklisted by the email domain
+            $blacklistedByDomain = $s->isBlacklisted($email);
+
+            // also check if the server is blocked by Spamhaus on all MX hosts' IPv4 addresses
+            $blacklistedByAllMxIpv4s = true;
+            foreach($allMxIpv4s as $ip) {
+                if (!$s->isBlacklistedByIp($ip)) {
+                    $blacklistedByAllMxIpv4s = false;
+                    break;
+                }
+            }
+
+            // if the server is blacklisted by the email domain or blocked by Spamhaus on all MX hosts' IPv4 addresses, it is blacklisted
+            $blacklisted = $blacklistedByDomain || $blacklistedByAllMxIpv4s;
+
+            if(!$blacklisted) {
                 $good = $s;
                 break;
             }
@@ -321,6 +503,31 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $w->act_when = $when === false ? $w->sqlValue('NOW() + INTERVAL 5 MINUTE') : $when;
         $w->update($pp);
         return true;
+    }
+
+    /**
+     * Check if this server is blocked by Spamhaus on the given ip
+     * @param string $ip The ip address
+     * @return bool True if the server is blacklisted, false otherwise
+     */
+    function isBlacklistedByIp($ip)
+    {
+        if(!$this->id) {
+            return false;
+        }
+        static $cache = array();
+        if (isset( $cache[$this->id . '-'. $ip])) {
+            return  $cache[$this->id . '-'. $ip];
+        }
+        $bl = DB_DataObject::factory('core_notify_blacklist');
+        $bl->server_id = $this->id;
+        $bl->ip = $bl->sqlValue("INET6_ATON('" . $this->escape($ip) . "')");
+        if ($bl->count()) {
+            $cache[$this->id . '-'. $ip] = true;
+            return true;
+        }
+        $cache[$this->id . '-'. $ip] = false;
+        return false;
     }
     
     
@@ -344,6 +551,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $bl = DB_DataObject::factory('core_notify_blacklist');
         $bl->server_id = $this->id;
         $bl->domain_id = $cd->id;
+        // not blocked by Spamhaus on an IPv4 address
+        $bl->whereAdd("ip = 0x0");
         if ($bl->count()) {
             $cache[$this->id . '-'. $dom] = true;
             return true;
@@ -351,16 +560,30 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         return false; 
     }
-    function initHelo()
+    function initHelo($server_ipv6 = false)
     {
         if (!$this->id) {
             return;
         }
         $ff = HTML_FlexyFramework::get();
-        $ff->Mail['helo'] = $this->helo;
         
+        if (!empty($server_ipv6)) {
+            $serverFromIpv6 = $server_ipv6->findServerFromIpv6($this->poolname);
+            if ($serverFromIpv6 && !empty($serverFromIpv6->ipv6_ptr)) {
+                $ff->Mail['helo'] = $serverFromIpv6->ipv6_ptr;
+                return;
+            }
+        }
+        $ff->Mail['helo'] = $this->helo;
     }
-    function checkSmtpResponse($errmsg, $core_domain)
+    /**
+     * Check if the email is blacklisted
+     * @param string $errmsg The error message from the SMTP server
+     * @param object $core_domain The core_domain object
+     * @param string|false $failedIp The MX host IPv4 address on which the server is blocked by Spamhaus
+     * @return bool True if the email is blacklisted, false otherwise
+     */
+    function checkSmtpResponse($errmsg, $core_domain, $failedIp = false)
     {
         if (!$this->id) {
             return false;
@@ -368,6 +591,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $bl = DB_DataObject::factory('core_notify_blacklist');
         $bl->server_id = $this->id;
         $bl->domain_id = $core_domain->id;
+        if($failedIp) {
+            $bl->ip = $bl->sqlValue("INET6_ATON('" . $this->escape($failedIp) . "')");
+        }
         if ($bl->count()) {
             return true;
         }
@@ -381,6 +607,60 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         return true;
         
     }
+
+    /**
+     * Find a server with ipv6 range and ptr
+     * If current server has ipv6 range and ptr, return it
+     * If no current server has ipv6 range and ptr, return the first server with ipv6 range and ptr
+     * If no server has ipv6 range and ptr, return false
+     * 
+     * @return core_notify_server
+     */
+    function findServerWithIpv6()
+    {
+        $server = DB_DataObject::factory('core_notify_server');
+        $server->whereAdd("
+            ipv6_range_from != 0x0
+            and
+            ipv6_range_to != 0x0
+        ");
+        $server->is_active = 1;
+        $server->limit(1);
+
+        $current = clone($server);
+        $current->hostname = gethostbyaddr("127.0.1.1");
+
+        // if current server has ipv6 range and ptr, return it
+        if($current->find(true)) {
+            return $current;
+        }
+
+        // if no current server has ipv6 range and ptr, return the first server with ipv6 range and ptr
+        if($server->find(true)) {
+            return $server;
+        }
+        return false;
+    }
+
+    /**
+     * Find the smallest unused ipv6 address in the range
+     * If no unused ipv6 address is found, return false
+     * 
+     * @return string|false
+     */
+    function findSmallestUnusedIpv6()
+    {
+        $cns = DB_DataObject::factory('core_notify_server');
+        $cns->selectAdd();
+        $cns->selectAdd("find_smallest_unused_ipv6(core_notify_server.id) as smallest_unused_ipv6");
+        $cns->id = $this->id;
+        if($cns->find(true) && !empty($cns->smallest_unused_ipv6)) {
+            return $cns->smallest_unused_ipv6;
+        }
+        return false;
+    }
+
+
     
     function resetQueueForTable($table)
     {

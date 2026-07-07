@@ -172,7 +172,6 @@ Pman.Dialog.PreviewRowsImport = {
                       });
                   }
               });
-              
           });
           
           // after all validations are done
@@ -181,24 +180,39 @@ Pman.Dialog.PreviewRowsImport = {
               
               var errors = [];
               var errMsg = '';
-              var colIndexToType = {};
+              var failuresByRow = {};
               
               Roo.each(validateTypes, function(vType) {
                   var fails = 0;
                   Roo.each(vType['values'], function(vValue) {
-                      if(vValue['error'] !== false) {
-                          fails++;
-                          errors.push(vValue['error']);
-                          _this.validIndexes.remove(vValue['rowIndex']);
+                      if(!vValue['error']) {
+                          return;
                       }
+                      
+                      fails++;
+                      errors.push(vValue['error']);
+                      _this.validIndexes.remove(vValue['rowIndex']);
+                      var ri = vValue['rowIndex'];
+                      if (typeof(failuresByRow[ri]) == 'undefined') {
+                          failuresByRow[ri] = [];
+                      }
+                      failuresByRow[ri].push(vValue['error']);
                   });
                   
                   errMsg = fails + " " + vType['type'] + " have failed, " + errMsg;
-                  
-                  Roo.each(vType['colIndexes'], function(colIndex) {
-                      colIndexToType[colIndex] = vType['type'];
-                  });
               });
+              
+              var failures = [];
+              for (var ri in failuresByRow) {
+                  if (!failuresByRow.hasOwnProperty(ri)) {
+                      continue;
+                  }
+                  failures.push({
+                      rowIndex: ri * 1,
+                      error: failuresByRow[ri].join('   ---   ')
+                  });
+              }
+              _this.importFailures = failures;
               
               
               if(errors.length) {
@@ -221,10 +235,11 @@ Pman.Dialog.PreviewRowsImport = {
                               new Pman.Download({
                                   newWindow :  true,
                                   url : _this.data.url,
-                                  method : 'GET',
+                                  method : 'POST',
                                   params: {
                                       'fileId': _this.data.fileId,
-                                      'validateTypes': Roo.encode(colIndexToType)
+                                      'failures': Roo.encode(_this.importFailures),
+                                      '_download_failed_contacts': 1
                                   }
                               });
                               return;
@@ -272,6 +287,7 @@ Pman.Dialog.PreviewRowsImport = {
           var validateTypeIndex = 0;
           var validateValueIndex = 0;
           
+          
           // validate a value
           var validateValue = function() {
               // validation is done
@@ -284,7 +300,8 @@ Pman.Dialog.PreviewRowsImport = {
               var vValues = vType['values'];
               
               // validation of values with this type is done
-              if(validateValueIndex == vValues.length) {
+              // email validation is done in validateEmail before
+              if(validateTypes[validateTypeIndex]['type'] == 'email' || validateValueIndex == vValues.length) {
                   // validate values with the next type
                   validateTypeIndex ++;
                   // reset
@@ -337,6 +354,47 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
+          var validateEmail = function() {
+              var jobs = [];
+              Roo.each(validateTypes[typeToIndex['email']]['values'], function(email, index) {
+                  jobs.push({field: 'email_' + index, email: email['value']});
+              });
+              if (!jobs.length) {
+                  validateValue();
+                  return;
+              }
+              var fd = new FormData();
+              fd.append('validate_email_jobs', JSON.stringify(jobs));
+              Roo.MessageBox.progress('Validating', 'Checking email addresses…');
+              var sse = new Roo.form.Action.Sse();
+              sse.on('error', function(s, data) {
+                  Roo.MessageBox.hide();
+                  Roo.MessageBox.alert('Error', (data && data.errorMsg) ? data.errorMsg : 'Validation failed');
+              });
+              sse.on('complete', function(s, res) {
+                  Object.entries(res.data).forEach(function(entry) {
+                      var vValue = validateTypes[typeToIndex['email']]['values'][entry[0].split('_')[1]];
+                      var rec = _this.grid.dataSource.getAt(vValue['rowIndex']);
+                      if(typeof(entry[1].error) !== 'undefined' && entry[1].error !== '') {
+                          vValue['error'] = entry[1].error;
+                          if(rec) {
+                              rec.set('valid', '');
+                          }
+                      }
+                      else {
+                          if(rec) {
+                              rec.set(vValue['col'] + '_valid', true);
+                          }
+                      }
+                  });
+                  validateValue();
+              });
+              sse.on('fetcherror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
+              sse.on('readerror', function(s, err) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', String(err)); });
+              sse.on('parseerror', function(s, t) { Roo.MessageBox.hide(); Roo.MessageBox.alert('Error', 'Bad response from server'); });
+              sse.start(baseURL + '/Core/ValidateEmail', fd);
+          };
+          
           Roo.MessageBox.progress("Validation", "Starting");
           
           new Pman.Request({
@@ -367,7 +425,7 @@ Pman.Dialog.PreviewRowsImport = {
                   });
                   
                   // start validation
-                  validateValue();
+                  validateEmail();
               }
           });
       }

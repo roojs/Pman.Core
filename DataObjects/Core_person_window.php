@@ -30,6 +30,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             $roo->jnotice("NOPERM", "Only admins can view this");
         }
         
+        // AI-filter: _with_person_data - Join person name and email; optional search name matches person fields
         if (isset($q['_with_person_data'])) {
             $this->_join .= "
                 LEFT JOIN core_person as join_person_id_id ON (join_person_id_id.id=core_person_window.person_id)
@@ -86,6 +87,11 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     ###END_AUTOCODE
     function register($user, $req)
     {
+        static $done = false;
+        if ($done) {
+            return;
+        }
+        
         if (empty($req['window_id']) )   { // we don't do any checks on no window data.
             return;
         }
@@ -108,6 +114,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             $w->ip = $this->ip_lookup();
             $w->user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
             $w->update($ww);
+            $done = true;
             return; /// already registered?
         }
         
@@ -118,6 +125,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $w->user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
         $w->status = 'IN';
         $w->insert();
+        $done = true;
     }
   
     

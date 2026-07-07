@@ -1261,6 +1261,9 @@ class Pman_Core_UpdateDatabase extends Pman
             echo "Running : {$fn}\n";
             require_once $fn;
             $c = new $cls();
+            if (method_exists($c, 'run')) {
+                $c->run();
+            }
             
         }
         

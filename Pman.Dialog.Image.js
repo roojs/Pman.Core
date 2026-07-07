@@ -66,10 +66,11 @@ Pman.Dialog.Image = {
                 ts : Math.random()
             }
         });
-        _this.dialog.haveProgress = 0; // set to show..
-        _this.dialog.uploadProgress.defer(1000, _this.dialog);
         
-        _this.form.findField('imageUpload').el.un('change', _this.dialog.uploadCallback);
+        if (!_this.data.useSSE) {
+            _this.dialog.haveProgress = 0; // set to show..
+            _this.dialog.uploadProgress.defer(1000, _this.dialog);
+        }
     },
     uploadComplete : false,
     uploadProgress : function()
@@ -133,7 +134,8 @@ Pman.Dialog.Image = {
     listeners : {
      show : function (_self)
       {
-          _this.form.findField('imageUpload').el.on('change', _self.uploadCallback);
+          _this.form.findField('imageUpload').el.un('change', _this.dialog.uploadCallback);
+          _this.form.findField('imageUpload').el.on('change', _this.dialog.uploadCallback);
           _this.form.findField('imageUpload').el.dom.click();
           _this.dialog.hide();
       
@@ -200,6 +202,7 @@ Pman.Dialog.Image = {
                     ts : Math.random()
                 }
             });
+            
             _this.dialog.haveProgress = 0; // set to show..
             _this.dialog.uploadProgress.defer(1000, _this.dialog);
         
@@ -247,6 +250,7 @@ Pman.Dialog.Image = {
                   
                   this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php';
                   this.el.dom.action = this.url;
+                  this.useSSE = _this.data.useSSE || false;
                   if (typeof(_this.data.timeout) != 'undefined') {
                       this.timeout = _this.data.timeout;
                   }
@@ -282,6 +286,10 @@ Pman.Dialog.Image = {
           },
          actionfailed : function (_self, act)
           {
+              if(typeof(_this.data.actionFailed) === 'function') {
+                  _this.data.actionFailed(_this.dialog, _self, act);
+                  return;
+              }
              
              
               _this.dialog.uploadComplete = true;

@@ -39,20 +39,24 @@ Pman.Login =  new Roo.util.Observable({
     logging_out : false,
     
     checkConnection : false, // the Roo.data.Connection for checking if still authenticated.
+    authCheckPaused : false, // pause auth checks during long-running SSE operations
     
     onLoad : function() // called on page load...
     {
         // load 
         // exclude chrome extensions. - this only works on https (crypto is not available in http - except localhost
         var has_crypto = document.location.protocol == 'https:' || (
-            document.location.protocol == 'http:'  && document.location.hostname == 'localhost'    
+            document.location.protocol == 'http:'  && document.location.hostname == 'localhost'
         );
-        if (Pman.Login.window_id === false && has_crypto) {
-            // persitant in windows..
+        if (Pman.Login.window_id === false) {
             Pman.Login.window_id = window.sessionStorage.getItem('windowid');
             if (!Pman.Login.window_id) {
-                Pman.Login.window_id = crypto.randomUUID();
-                window.sessionStorage.setItem('windowid', Pman.Login.window_id);               
+                if (has_crypto && typeof crypto !== 'undefined' && crypto.randomUUID) {
+                    Pman.Login.window_id = crypto.randomUUID();
+                } else {
+                    Pman.Login.window_id = 'ext-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+                }
+                window.sessionStorage.setItem('windowid', Pman.Login.window_id);
             }
         }
         
@@ -61,6 +65,16 @@ Pman.Login =  new Roo.util.Observable({
             Roo.get('loading').remove();
         }
         this.switchLang('en');
+
+        
+        Roo.form.Action.Sse.onBegin(function () {
+            Pman.Login.authCheckPaused = true;
+
+        });
+        Roo.form.Action.Sse.onEnd(function () {
+            Pman.Login.authCheckPaused = false;
+        });
+       
        
         // inital check if we are logged in..
         // if we are - then it will load the page,
@@ -146,6 +160,9 @@ Pman.Login =  new Roo.util.Observable({
     {
         if (Pman.Login.logging_out) {
             return; // don't keep rechecking if we are already about to log out.
+        }
+        if (Pman.Login.authCheckPaused) {
+            return; // skip auth check during long-running SSE operations
         }
         
         if (again) { // could be undefined..
@@ -400,6 +417,7 @@ Pman.Login =  new Roo.util.Observable({
             formLabel('password', "Password"+':');
             formLabel('username', "Email Address"+':');
             formLabel('lang', "Language"+':');
+            formLabel('remember_username', "Remember me"+':');
             Pman.Dialog.Login.dialog.setTitle("Login");
             Pman.Dialog.Login.dialog.buttons[0].setText("Forgot Password");
             Pman.Dialog.Login.dialog.buttons[1].setText("Login");

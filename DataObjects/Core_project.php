@@ -43,7 +43,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
         
         
         $pmids = array();
-        $pd = DB_DataObject::factory('ProjectDirectory');
+        $pd = DB_DataObject::factory('core_project_directory');
         $pd->project_id = $this->id;
         $pd->company_id = $c->id;
         $pd->ispm = 1;
@@ -91,11 +91,13 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
+        // AI-filter: _show_deleted - Set to 1 to include soft-deleted projects (deleted_by != 0)
         if (empty($q['_show_deleted']) && empty($q['_is_update_request'])) {
             $this->whereAdd('core_project.deleted_by = 0');
         }
         
         $tn = $this->tableName();
+        // AI-filter: query[project_search] - Match project code prefix, name, or client name (contains)
         if (!empty($q['query']['project_search'])) {
             $s = $this->escape($q['query']['project_search']);
             $this->whereAdd(" ({$tn}.code LIKE '$s%')
@@ -106,6 +108,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
                 ");
         }
         // types of project to list ... - default is only the open ones...
+        // AI-filter: query[project_indaterange] - Project date scope: A (all), C (current/open), O (closed)
         if (!empty($q['query']['project_indaterange'])) {
             switch($q['query']['project_indaterange']) {
                 case 'A': // all
@@ -119,6 +122,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
                }
         }
         
+        // AI-filter: query[project_filter] - Project type codes (comma-separated); default P,N,U; use ALL for every type
         if (empty($q['_is_update_request']) &&
             
             (empty($q['query']['project_filter'])  || $q['query']['project_filter'] != 'ALL')) {
@@ -144,7 +148,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
             $prjs = $pr->fetchAll('id');
             
             //DB_DataObject::debugLevel(1);
-            $pd = DB_DataObject::factory('ProjectDirectory');
+            $pd = DB_DataObject::factory('core_project_directory');
             $pd->joinAdd(DB_DataObject::factory($tn), 'LEFT');
             $pd->whereAdd("{$tn}.type NOT IN ('N','X')");
             $pd->person_id = $au->id;

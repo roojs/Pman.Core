@@ -287,10 +287,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             //setcookie('Pman.timeout', -1, time() + (30*60), '/');
             return false;
         }
-        
         // http basic auth..
         $u = DB_DataObject::factory($this->tableName());
-        
         if (empty($ff->disable_http_auth)  // http auth requests should not have this...
             &&
             !empty($_SERVER['PHP_AUTH_USER']) 
@@ -368,6 +366,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     join_user_id_id.email = '" . $member->escape($ff->Pman['local_autoauth']) . "'
                 ");
             }
+
             if($member->find(true)){
                 $default_admin = DB_DataObject::factory($this->tableName());
                 $default_admin->autoJoin();
@@ -814,9 +813,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         foreach( $this->settings() as $k=>$v) {
             $ret['core_person_settings['. $k .']'] = $v;
         }
+
+        if (!empty($request['_with_group_ids'])) {
+            $ret['group_ids'] = implode(',', DB_DataObject::factory('core_group_member')->listGroupMembership($this));
+        }
     
         return $ret;
     }
+
     //   ----------PERMS------  ----------------
     function getPerms() 
     {
@@ -977,7 +981,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             // must be internal and not current user (need for distribution list)
             // user has a projectdirectory entry and role is not blank.
             //DB_DataObject::DebugLevel(1);
-            $pd = DB_DataObject::factory('ProjectDirectory');
+            $pd = DB_DataObject::factory('core_project_directory');
             $pd->whereAdd("role != ''");
             $pd->selectAdd();
             $pd->selectAdd('distinct(person_id) as person_id');
@@ -1039,6 +1043,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
         }
         
+        // AI-filter: in_group_name - Limit to persons in a group whose name exactly matches
         if(!empty($q['in_group_name'])){
             
             $v = $this->escape($q['in_group_name']);
@@ -1056,6 +1061,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 )"
             );
         }
+        // AI-filter: in_group_starts - Limit to persons in a group whose name starts with this value
         if(!empty($q['in_group_starts'])){
             
             $v = $this->escape($q['in_group_starts']);
@@ -1098,7 +1104,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
 
             if ( $q['query']['not_in_directory'] > -1 && $q['company_id'] > 0) {
-                $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
+                $tn_pd = DB_DataObject::Factory('core_project_directory')->tableName();
                 // can list current - so that it does not break!!!
                 $this->whereAdd("$tn_p.id NOT IN 
                     ( SELECT distinct person_id FROM $tn_pd WHERE
@@ -1114,7 +1120,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             // specific to project directory which is single comp. login
             //
-            $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
+            $tn_pd = DB_DataObject::Factory('core_project_directory')->tableName();
                 // can list current - so that it does not break!!!
             $this->whereAdd("$tn_p.id IN 
                     ( SELECT distinct person_id FROM $tn_pd WHERE
@@ -1127,9 +1133,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (!empty($q['query']['project_member_of'])) {
                // this is also a flag to return if they are a member..
             //DB_DataObject::debugLevel(1);
-            $do = DB_DataObject::factory('ProjectDirectory');
+            $do = DB_DataObject::factory('core_project_directory');
             $do->project_id = $q['query']['project_member_of'];
-            $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
+            $tn_pd = DB_DataObject::Factory('core_project_directory')->tableName();
             $this->joinAdd($do,array('joinType' => 'LEFT', 'useWhereAsOn' => true));
             $this->selectAdd("IF($tn_pd.id IS NULL, 0,  $tn_pd.id )  as is_member");
                 
@@ -1141,12 +1147,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
         }
         
+        // AI-filter: query[name] - Match person name (contains)
         if(!empty($q['query']['name'])){
             $this->whereAdd("
                 {$this->tableName()}.name LIKE '%{$this->escape($q['query']['name'])}%'
             ");
         }
         
+        // AI-filter: query[name_or_email] - Match person name or email (contains)
          if(!empty($q['query']['name_or_email'])){
             $v = $this->escape($q['query']['name_or_email']);
             $this->whereAdd("
@@ -1155,12 +1163,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 {$this->tableName()}.email LIKE '%{$v}%'
             ");
         }
+        // AI-filter: query[name_starts] - Match person name prefix
          if(!empty($q['query']['name_starts'])){
             $this->whereAdd("
                 {$this->tableName()}.name LIKE '{$this->escape($q['query']['name_starts'])}%'
             ");
         }
         
+        // AI-filter: query[search] - Full-text search across name, email, role, phone, remarks, and company
         if (!empty($q['query']['search'])) {
             
             // use our magic search builder...
@@ -1183,9 +1193,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 }
             }
             
-            
-            
-            
             $str =  $x->toSQL(array(
                 'default' => $props,
                 'map' => array(
@@ -1193,10 +1200,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     //'country' => 'Clipping.country',
                     //  'media' => 'Clipping.media_name',
                 ),
+                'phone' => array($tn_p . ".phone"),
                 'escape' => array($this->getDatabaseConnection(), 'escapeSimple'), /// pear db or mdb object..
 
             ));
-            
             
             $this->whereAdd($str); /*
                         $tn_p.name LIKE '%$s%'  OR
@@ -1209,12 +1216,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         // project directory rules -- this may distrupt things.
-        $p = DB_DataObject::factory('ProjectDirectory');
+        $p = DB_DataObject::factory('core_project_directory');
         // if project directories are set up, then we can apply project query rules..
         if ($p->count()) {
             $p->autoJoin();
             $pids = $p->projects($au);
-            if (isset($q['query']['project_id'])) {   
+        // AI-filter: query[project_id] - Limit to persons visible on this project id
+            if (isset($q['query']['project_id'])) {
                 $pid = (int)$q['query']['project_id'];
                 if (!in_array($pid, $pids)) {
                     $roo->jerr("Project not in users valid projects");
@@ -1249,7 +1257,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 $roo->jerr("permssion denied to query state of ticket");
             }
             
-            $p = DB_DataObject::factory('ProjectDirectory');
+            $p = DB_DataObject::factory('core_project_directory');
             $pids = array($t->project_id);
            
             $peps = $p->people($pids);
@@ -1272,6 +1280,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 LENGTH({$this->tableName()}.oath_key) AS length_oath_key
             ");
         }
+        // AI-filter: _with_group_membership - Include group membership columns for the person
         if (isset($q['_with_group_membership'])) {
             $this->selectAddGroupMemberships();
         }
@@ -1530,7 +1539,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $this->login();
         }
         if (!empty($req['project_id_addto'])) {
-            $pd = DB_DataObject::factory('ProjectDirectory');
+            $pd = DB_DataObject::factory('core_project_directory');
             $pd->project_id = $req['project_id_addto'];
             $pd->person_id = $this->id; 
             $pd->ispm =0;
@@ -1541,12 +1550,18 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (!empty($req['core_person_settings'])) {
             $this->updateSettings($req['core_person_settings'], $roo);
         }
+        if (isset($req['group_ids'])) {
+            DB_DataObject::factory('core_group_member')->syncGroupIds($this, $req['group_ids'], $roo);
+        }
     }
     
     function onUpdate($old, $req,$roo, $event)
     {
         if (!empty($req['core_person_settings'])) {
             $this->updateSettings($req['core_person_settings'], $roo);
+        }
+        if (isset($req['group_ids'])) {
+            DB_DataObject::factory('core_group_member')->syncGroupIds($this, $req['group_ids'], $roo);
         }
     }
     
