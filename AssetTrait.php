@@ -3,8 +3,6 @@
 
 trait Pman_Core_AssetTrait {
     
-    
-    
      /**
      * usage in template
      * {outputJavascriptDir(#Hydra#,#Hydra.js",#.......#)}
@@ -87,7 +85,12 @@ trait Pman_Core_AssetTrait {
         
         $smod = str_replace('/','.',$path);
         
-        $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-'.md5(serialize($arfiles)) .'.js';
+        $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-'.md5(serialize(
+            is_file(realpath($dir) . '/.git/refs/heads/master')
+                ? array_merge($arfiles, array(
+                    '.git' => file_get_contents(realpath($dir) . '/.git/refs/heads/master')))
+                : $arfiles
+        )) .'.js';
          
         
         
@@ -244,7 +247,14 @@ trait Pman_Core_AssetTrait {
         
         $smod = str_replace('/','.',$path);
         
-        $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-'.md5(serialize(array($this->baseURL, $arfiles))) .'.css';
+        $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-'.md5(serialize(
+            is_file(realpath($dir) . '/.git/refs/heads/master')
+                ? array(
+                    $this->baseURL,
+                    $arfiles,
+                    file_get_contents(realpath($dir) . '/.git/refs/heads/master'))
+                : array($this->baseURL, $arfiles)
+        )) .'.css';
          
         $asset = $ff->project == 'Pman' ? '/Core/Asset/css/' : '/Asset/css/';
         

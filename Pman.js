@@ -253,44 +253,20 @@ Pman = new Roo.Document(
             tbl.setAttribute('width', '100%');
         }
         
-        if (Pman.hasPerm('Core.ChangePassword','S')) {
-            
-            lotb.add(
-                new Roo.Toolbar.Fill(), 
-         
-                {
-                    text: "Change Password",
-                    cls: 'x-btn-text-icon',
-                    icon: rootURL + '/Pman/templates/images/change-password.gif',
-                    handler : function(){
-                        Pman.PasswordChange.show({});
-                    }
-                }, '-'
-            );
-        }     
-            
-        if (this.topMenuItems.length) {
-            
-            Roo.each(this.topMenuItems, function (mi) {
-                lotb.add(mi);
-            });
-            lotb.add('-');
-        }
-        
-        
+        lotb.add(new Roo.Toolbar.Fill());
         
         if (this.subMenuItems.length) {
             
             this.subMenuItems.sort(function (a,b) {
                 return a.seqid > b.seqid ? 1 : -1;
             });
-            // chop off last seperator.
-            // since we always add it.. just chop of last item
-            this.subMenuItems.pop(); 
+            if (this.subMenuItems[this.subMenuItems.length - 1] instanceof Roo.menu.Separator) {
+                this.subMenuItems.pop();
+            }
             
             var btn = new Roo.Toolbar.Button( 
                 {
-                    text: "Add New Item",
+                    text: "Manage",
                     cls: 'x-btn-text-icon',
                     icon: Roo.rootURL + 'images/default/dd/drop-add.gif',
                     menu : {
@@ -301,6 +277,20 @@ Pman = new Roo.Document(
             this.pulldownMenu = btn.menu;
             lotb.add(btn, '-');
             
+        }
+        
+        if (Pman.hasPerm('Core.ChangePassword','S')) {
+            
+            lotb.add(
+                {
+                    text: "Change Password",
+                    cls: 'x-btn-text-icon',
+                    icon: rootURL + '/Pman/templates/images/change-password.gif',
+                    handler : function(){
+                        Pman.PasswordChange.show({});
+                    }
+                }, '-'
+            );
         }
        
         lotb.add(
