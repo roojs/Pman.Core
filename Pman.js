@@ -260,7 +260,8 @@ Pman = new Roo.Document(
             this.subMenuItems.sort(function (a,b) {
                 return a.seqid > b.seqid ? 1 : -1;
             });
-            if (this.subMenuItems[this.subMenuItems.length - 1] instanceof Roo.menu.Separator) {
+            if (this.subMenuItems[this.subMenuItems.length - 1] 
+                    instanceof Roo.menu.Separator) {
                 this.subMenuItems.pop();
             }
             
