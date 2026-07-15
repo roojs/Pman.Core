@@ -250,7 +250,8 @@ class Pman_Core_Notify extends Pman
             $w->evtype = $this->evtype;
         }
         
-        $w->whereAddIn('server_id', $sids, 'int');
+        // qualify: autoJoin brings in core_domain which also has server_id
+        $w->whereAddIn('core_notify.server_id', $sids, 'int');
 
         
         if (!empty($opts['old'])) {
