@@ -251,7 +251,8 @@ class Pman_Core_Notify extends Pman
         }
         
         // qualify: autoJoin brings in core_domain which also has server_id
-        $w->whereAddIn('core_notify.server_id', $sids, 'int');
+        // use $this->table (core_notify or pressrelease_notify etc.)
+        $w->whereAddIn($this->table . '.server_id', $sids, 'int');
 
         
         if (!empty($opts['old'])) {
