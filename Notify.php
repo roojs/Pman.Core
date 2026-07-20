@@ -588,7 +588,9 @@ class Pman_Core_Notify extends Pman
                     //fclose($p['pipes'][1]);
                     fclose($p['pipes'][0]);
                     
-                    $this->logecho("TERMINATING: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . file_get_contents($p['out']) . " : " . file_get_contents($p['oute']));
+                    $output = file_exists($p['out']) ? file_get_contents($p['out']) : '';
+                    $outputErr = file_exists($p['oute']) ? file_get_contents($p['oute']) : '';
+                    $this->logecho("TERMINATING: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . $output . " : " . $outputErr);
                     @unlink($p['out']);
                     @unlink($p['oute']);
                     
