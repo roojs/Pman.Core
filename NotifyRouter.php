@@ -161,10 +161,20 @@ class Pman_Core_NotifyRouter
     function mailer()
     {
         if (!isset($this->mailer)) {
+            $ff = HTML_FlexyFramework::get();
+            // max(config|15, size-based up to 300): +15s per 256KB of body
+            $timeout = max(
+                !empty($ff->Core_Notify['smtp_timeout']) ? $ff->Core_Notify['smtp_timeout'] : 15,
+                min(300, 15 + ceil(
+                    (empty($this->notifySend->email['body']) ? 0 : strlen($this->notifySend->email['body']))
+                    / 262144
+                ) * 15)
+            );
+
             $this->mailer = Mail::factory('smtp', array(
                 'host'          => $this->useIpv6 ? '[' . $this->smtpHost . ']' : $this->smtpHost,
                 'localhost'     => $this->heloName(),
-                'timeout'       => 15,
+                'timeout'       => $timeout,
                 'socket_options'=> $this->socketOptions(),
                 'debug'         => 1,
                 'debug_handler' => array($this->notifySend, 'debugHandler'),

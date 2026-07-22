@@ -715,6 +715,9 @@ class Pman_Core_NotifySend extends Pman
             if (isset($this->lastSmtpResponse->userinfo['smtptext'])) {
                 $errmsg=  $this->lastSmtpResponse->userinfo['smtpcode'] . ':' . $this->lastSmtpResponse->userinfo['smtptext'];
             }
+            if (!empty($res->message) && preg_match('/timed out|Failed to write to socket/i', $res->message)) {
+                $errmsg = 'SMTP WRITE TIMEOUT: ' . $res->message;
+            }
             // Check if error message contains spamhaus (case-insensitive)
             // If spamhaus is found, continue current behavior (don't pass to next server)
             $is_spamhaus = stripos($errmsg, 'spam') !== false 
@@ -860,6 +863,11 @@ class Pman_Core_NotifySend extends Pman
             $errmsg=   $this->lastSmtpResponse->userinfo['smtpcode'] . ': ' .$this->lastSmtpResponse->toString();
             if (isset($this->lastSmtpResponse->userinfo['smtptext'])) {
                 $errmsg=  $this->lastSmtpResponse->userinfo['smtpcode'] . ':' . $this->lastSmtpResponse->userinfo['smtptext'];
+            }
+            if (!empty($this->lastSmtpResponse->message)
+                && preg_match('/timed out|Failed to write to socket/i', $this->lastSmtpResponse->message)
+            ) {
+                $errmsg = 'SMTP WRITE TIMEOUT: ' . $this->lastSmtpResponse->message;
             }
 
             // Using our configured route: no spam/ipv6/blacklist updates
