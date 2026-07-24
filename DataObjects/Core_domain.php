@@ -473,6 +473,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 return false; // soft: retry pass 1; accepted as valid if still inconclusive
             }
 
+            if ($res->code == 554 && preg_match('/Relay access denied/i', $errorMessage)) {
+                return "We cannot send email to this person";
+            }
+
             // We don't need to log these errors and don't need to show these errors to the user
             if(
                 $res->code == 553 && preg_match('/User unknown/i', $errorMessage)
@@ -482,12 +486,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
                 ||
                 $res->code == 550 && preg_match('/User unknown/i', $errorMessage)
-                ||
-                $res->code == 554 && preg_match('/Relay access denied/i', $errorMessage)
             ) {
-                if ($res->code == 554 && preg_match('/Relay access denied/i', $errorMessage)) {
-                    return "We cannot send email to this person";
-                }
                 return "This email is invalid - we tested it and it does not exist";
             }
 
