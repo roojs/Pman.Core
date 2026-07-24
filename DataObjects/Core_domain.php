@@ -488,6 +488,11 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 return "This email is invalid - we tested it and it does not exist";
             }
 
+            if ($res->code == -1 && preg_match('/timed out/i', $errorMessage)) {
+                $lastError = 'timed out';
+                continue;
+            }
+
             // Only log errors that aren't known false positives
             // PEAR_Error objects have both ->message property and getMessage() method
             // Using getMessage() method is the standard approach
@@ -496,6 +501,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             );
               
             $lastError = $res->getMessage();
+        }
+
+        if ($lastError === 'timed out') {
+            return "Their email server is not working";
         }
 
         return "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
