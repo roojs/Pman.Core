@@ -489,8 +489,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
 
             if ($res->code == -1 && preg_match('/timed out/i', $errorMessage)) {
-                $lastError = 'timed out';
-                continue;
+                return "Their email server is not working";
             }
 
             // Only log errors that aren't known false positives
@@ -501,10 +500,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             );
               
             $lastError = $res->getMessage();
-        }
-
-        if ($lastError === 'timed out') {
-            return "Their email server is not working";
         }
 
         return "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
