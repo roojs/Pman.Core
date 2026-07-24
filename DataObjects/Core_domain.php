@@ -482,8 +482,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
                 ||
                 $res->code == 550 && preg_match('/User unknown/i', $errorMessage)
-                ||
-                $res->code == 550 && preg_match('/No Such User Here/i', $errorMessage)
+                // ||
+                // $res->code == 550 && preg_match('/No Such User Here/i', $errorMessage)
                 ||
                 $res->code == 554 && preg_match('/Relay access denied/i', $errorMessage)
             ) {
