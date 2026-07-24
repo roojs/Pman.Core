@@ -442,12 +442,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 return false; // soft: retry pass 1; accepted as valid if still inconclusive
             }
 
-            // Check for SMTP error 452 (out of storage space)
-            if (in_array($res->code, array( 452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
-                // Don't need to log error for out of storage space
-                return "The email address is over quota - which probably means its a dead email address - " .
-                "we don't add these as we would just get rejections - you should contact this user before adding " .
-                "and see if they have another email address";
+            // Out of storage (452/552/555) — soft: retry pass 1; accepted as valid if still inconclusive
+            if (in_array($res->code, array(452, 552, 555)) && preg_match('/out of storage/i', $errorMessage)) {
+                return false;
             }
             
             // Check for SMTP error 550 with Spamhaus failure
