@@ -90,7 +90,7 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
         $au = $this->getAuthUser();
         $jobs = json_decode($_POST['validate_email_jobs'], true);
         $total = count($jobs);
-        $childTimeout = 10.0;
+        $childTimeout = 100.0;
         $heartbeatEvery = 1.0;
 
         $ff = HTML_FlexyFramework::get();
