@@ -569,7 +569,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $mailer = Mail::factory('smtp', array(
             'host'    => $mx,
             'localhost' => $ff->Mail['helo'],
-            'timeout' => 90,
+            'timeout' => 5,
             'socket_options' => $socket_options,
             'test' => true
         ));
