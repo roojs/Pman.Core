@@ -6,9 +6,9 @@ require_once 'Pman/Core/Sse.php';
  * SSE multi-email SMTP validation (one HTTP worker request per address; worker may be local or remote notify server).
  * URL: Core/ValidateEmail (POST, FormData; use Roo.form.Action.Sse).
  *
- * Ops: parent SSE may run up to N*90s; Cloudflare/proxy read timeout should allow that.
+ * Ops: parent SSE may run up to N*100s; Cloudflare/proxy read timeout should allow that.
  * Child worker (Core/Process/ValidateEmailWorker): php-fpm request_terminate_timeout and
- * nginx fastcgi_read_timeout should be >= 90s for worker requests (local and inter-server).
+ * nginx fastcgi_read_timeout should be >= 100s for worker requests (local and inter-server).
  */
 class Pman_Core_ValidateEmail extends Pman_Core_Sse
 {
