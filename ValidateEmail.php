@@ -48,7 +48,6 @@ class Pman_Core_ValidateEmail extends Pman_Core_Sse
                 curl_multi_remove_handle($mh, $ch);
                 curl_close($ch);
                 curl_multi_close($mh);
-                $this->errorlog('Validation timed out: ' . $email);
                 return array('ok' => null, 'error' => 'Validation timed out: ' . $email);
             }
 
