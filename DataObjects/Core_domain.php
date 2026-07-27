@@ -489,7 +489,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
 
             if($res->code == 554 && preg_match('/Relay access denied/i', $errorMessage)) {
-                return "This email is invalid - we tested it and it does not exist";
+                return "We cannot send email to this person";
             }
 
             if ($res->code == -1 && preg_match('/timed out/i', $errorMessage)) {
