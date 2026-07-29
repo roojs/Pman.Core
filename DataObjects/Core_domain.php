@@ -444,7 +444,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
 
             // Check for SMTP error 452 (out of storage space)
-            if (in_array($res->code, array( 452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
+            if (in_array($res->code, array( 452, 555, 552)) && preg_match('/out of storage/i', $errorMessage)) {
                 // Don't need to log error for out of storage space
                 return "The email address is over quota - which probably means its a dead email address - " .
                 "we don't add these as we would just get rejections - you should contact this user before adding " .
@@ -483,8 +483,18 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
                 ||
                 $res->code == 550 && preg_match('/User unknown/i', $errorMessage)
+                ||
+                $res->code == 550 && preg_match('/No Such User Here/i', $errorMessage)
             ) {
                 return "This email is invalid - we tested it and it does not exist";
+            }
+
+            if($res->code == 554 && preg_match('/Relay access denied/i', $errorMessage)) {
+                return "We cannot send email to this person";
+            }
+
+            if ($res->code == -1 && preg_match('/timed out/i', $errorMessage)) {
+                return "Their email server is not working";
             }
 
             // Only log errors that aren't known false positives
