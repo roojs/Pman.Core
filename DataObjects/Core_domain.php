@@ -136,7 +136,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     function hasValidMx($domain)
     {
         if(!checkdnsrr($domain, 'MX')) {
-            return false;
+            // SMTP fallback when no MX: deliver to the domain's A/AAAA
+            return checkdnsrr($domain, 'A') || checkdnsrr($domain, 'AAAA');
         }
 
         $mx_records = array();
