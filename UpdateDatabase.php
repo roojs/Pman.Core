@@ -138,6 +138,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     var $opts = false;
     var $disabled = array();
+    var $views = array();
     
     
     var $cli = false;
@@ -551,6 +552,16 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->fixMysqlInnodb(); /// run once 
         
         echo "Import MYSQL :: $dir\n";
+
+        if (empty($this->views)) {
+            $dbo = DB_DataObject::factory('core_enum');
+            if (is_a($dbo, 'PDO_DataObject')) {
+                $this->views = $dbo->generator()->introspection()->getListOf('views');
+            } else {
+                $db = $dbo->getDatabaseConnection();
+                $this->views = $db->getListOf('views');
+            }
+        }
         
         
         require_once 'System.php';
@@ -587,6 +598,11 @@ class Pman_Core_UpdateDatabase extends Pman
                     continue;
                 }
                 if (!empty($this->opts['only-module-sql-table']) && basename($fn) != $this->opts['only-module-sql-table'].'.sql') {
+                    continue;
+                }
+                $tbl = preg_replace('/\.sql$/', '', basename($fn));
+                if (in_array($tbl, $this->views)) {
+                    echo "Skip $tbl = view (not BASE TABLE)\n";
                     continue;
                 }
                         
