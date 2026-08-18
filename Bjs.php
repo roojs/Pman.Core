@@ -59,9 +59,6 @@ class Pman_Core_Bjs
 
     function addFieldDetail($name, $o, $xtype, &$scope = null)
     {
-        if ($this->propTruthy($o, 'disabled') || $this->propTruthy($o, 'readOnly')) {
-            return;
-        }
         $detail = array(
             'name' => $name,
             'label' => $this->fieldLabel($name, $this->prop($o, 'fieldLabel')),
@@ -280,12 +277,6 @@ class Pman_Core_Bjs
             $fieldObj = new stdClass();
             if ($fieldLabel !== null) {
                 $fieldObj->{'String fieldLabel'} = $fieldLabel;
-            }
-            if ($this->getNodeProp($node, 'disabled')) {
-                $fieldObj->disabled = true;
-            }
-            if ($this->getNodeProp($node, 'readOnly')) {
-                $fieldObj->readOnly = true;
             }
             switch ($type) {
                 case 'ComboBox':
