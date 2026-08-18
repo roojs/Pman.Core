@@ -187,6 +187,7 @@ class Pman_Core_Bjs
                     break;
 
                 case 'Input':
+                case 'TextField':
                 case 'TextArea':
                 case 'CheckBox':
                 case 'DateField':
