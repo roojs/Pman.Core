@@ -59,6 +59,9 @@ class Pman_Core_Bjs
 
     function addFieldDetail($name, $o, $xtype, &$scope = null)
     {
+        if ($this->propTruthy($o, 'disabled') || $this->propTruthy($o, 'readOnly')) {
+            return;
+        }
         $detail = array(
             'name' => $name,
             'label' => $this->fieldLabel($name, $this->prop($o, 'fieldLabel')),
@@ -174,6 +177,7 @@ class Pman_Core_Bjs
                     break;
 
                 case 'ComboBox':
+                case 'ComboBoxArray':
                     if ($xns != 'Roo.form') {
                         break;
                     }
@@ -198,6 +202,7 @@ class Pman_Core_Bjs
                 case 'Hidden':
                 case 'Password':
                 case 'Checkbox':
+                case 'HtmlEditor':
                     if ($xns != 'Roo.form' || !($name = $this->prop($o, 'name'))) {
                         break;
                     }
@@ -276,6 +281,12 @@ class Pman_Core_Bjs
             if ($fieldLabel !== null) {
                 $fieldObj->{'String fieldLabel'} = $fieldLabel;
             }
+            if ($this->getNodeProp($node, 'disabled')) {
+                $fieldObj->disabled = true;
+            }
+            if ($this->getNodeProp($node, 'readOnly')) {
+                $fieldObj->readOnly = true;
+            }
             switch ($type) {
                 case 'ComboBox':
                     if ($hiddenName = $this->getNodeProp($node, 'hiddenName')) {
@@ -294,6 +305,13 @@ class Pman_Core_Bjs
                     }
                     break;
                 case 'ComboBoxArray':
+                    if ($hiddenName = $this->getNodeProp($node, 'hiddenName')) {
+                        $this->addFieldDetail($hiddenName, $fieldObj, $type, $scope);
+                    }
+                    if ($name = $this->getNodeProp($node, 'name')) {
+                        $this->addFieldDetail($name, $fieldObj, $type, $scope);
+                    }
+                    break;
                 case 'Row':
                 case 'FieldSet':
                 case 'Form':
