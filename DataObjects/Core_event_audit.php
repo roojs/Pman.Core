@@ -19,6 +19,17 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+
+    function applyFilters($q, $au, $roo)
+    {
+        if ($au->hasPerm('Admin.Admin_Tab', 'S')) {
+            return;
+        }
+        $ev = DB_DataObject::factory('events');
+        $this->whereAdd(
+            'event_id IN (SELECT id FROM ' . $ev->tableName() . " WHERE person_id = {$au->id})"
+        );
+    }
     
     /**
      * get the value, 

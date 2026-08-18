@@ -37,6 +37,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     function applyFilters($q, $au ,$roo)
     {
         $tn = $this->tableName();
+        if (!$au->hasPerm('Admin.Admin_Tab', 'S')) {
+            $this->whereAdd("{$tn}.person_id = {$au->id}");
+        }
         // if not empty on_table
         
         if(!empty($q['person_table'])){

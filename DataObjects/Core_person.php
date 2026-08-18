@@ -810,6 +810,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function toRooSingleArray($authUser, $request)  
     {
         $ret = $this->toArray();
+        $ret['passwd'] = '';
+        $ret['oath_key'] = '';
         foreach( $this->settings() as $k=>$v) {
             $ret['core_person_settings['. $k .']'] = $v;
         }
@@ -1285,6 +1287,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $this->selectAddGroupMemberships();
         }
         
+    }
+
+    function toRooArray($req)
+    {
+        $ret = $this->toArray();
+        $ret['passwd'] = '';
+        $ret['oath_key'] = '';
+        return $ret;
     }
     
     function selectAddGroupMemberships()
