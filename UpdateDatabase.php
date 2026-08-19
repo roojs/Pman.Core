@@ -9,7 +9,8 @@
  *  and {MODULE}/{dbtype}/XXX.sql (SHARED or translable)
  *
  * sql/modules.ini may list optional = MTrack,Other
- * {Module}.{table}.sql is skipped when that module is not enabled.
+ * Table sql files whose names start with those modules plus underscore
+ * (mtrack_repos.sql) are skipped when that module is not enabled.
  *
  */
 
@@ -503,16 +504,16 @@ class Pman_Core_UpdateDatabase extends Pman
         if (file_exists($dir . '/modules.ini')) {
             $ini = parse_ini_file($dir . '/modules.ini');
             if (!empty($ini['optional'])) {
-                $optional = implode('|', array_diff(
+                $optional = strtolower(implode('|', array_diff(
                     preg_split('/\s*,\s*/', $ini['optional']),
                     $this->modulesList()
-                ));
+                )));
             }
         }
         
         foreach($files as $bfn) {
 
-            if ($optional != '' && preg_match('/^(' . $optional . ')\./', basename($bfn))) {
+            if ($optional != '' && preg_match('/^(' . $optional . ')_/i', basename($bfn))) {
                 echo "Skip " . basename($bfn) . " — optional module not enabled\n";
                 continue;
             }
@@ -600,16 +601,16 @@ class Pman_Core_UpdateDatabase extends Pman
         if (file_exists($dir . '/modules.ini')) {
             $ini = parse_ini_file($dir . '/modules.ini');
             if (!empty($ini['optional'])) {
-                $optional = implode('|', array_diff(
+                $optional = strtolower(implode('|', array_diff(
                     preg_split('/\s*,\s*/', $ini['optional']),
                     $this->modulesList()
-                ));
+                )));
             }
         }
        
         foreach($files as $fn) {
                  
-                if ($optional != '' && preg_match('/^(' . $optional . ')\./', basename($fn))) {
+                if ($optional != '' && preg_match('/^(' . $optional . ')_/i', basename($fn))) {
                     echo "Skip " . basename($fn) . " — optional module not enabled\n";
                     continue;
                 }
