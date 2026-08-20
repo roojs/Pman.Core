@@ -105,6 +105,9 @@ Pman.Dialog.CoreProject = {
     modal : true,
     resizable : false,
     setStylesheets : function() {
+        if (!_this.hasCms) {
+            return;
+        }
         var sheets = [];
         sheets.push(rootURL + '/Pman/Cms/templates/undoreset.css');
         if (typeof(uiConfig) !== 'undefined' && typeof(uiConfig.cms_css) != 'undefined') {
@@ -122,6 +125,9 @@ Pman.Dialog.CoreProject = {
                         sheets.push(s.replace('{rootURL}', rootURL));
                     });
                 }
+                if (!_this.form1) {
+                    return;
+                }
                 var ed = _this.form1.findField('cms_overview_html');
                 if (!ed) {
                     return;
@@ -136,7 +142,35 @@ Pman.Dialog.CoreProject = {
     listeners : {
      show : function (_self)
       {
-          _this.centerLayoutPanel.getLayout().getRegion('south').showPanel(0);
+          _this.hasCms = (typeof(AppModules) != 'undefined') &&
+              (',' + AppModules + ',').indexOf(',Cms,') > -1;
+          if (!_this.hasCms) {
+              if (_this.cmsColumn && _this.cmsColumn.el) {
+                  _this.cmsColumn.el.setDisplayed(false);
+              }
+              if (_this.imagesBtn) {
+                  _this.imagesBtn.hide();
+              }
+              try {
+                  _this.centerLayoutPanel.getLayout().getRegion('south').hide(true);
+              } catch (e) {}
+              try {
+                  _this.dialog.getLayout().getRegion('east').hide(true);
+              } catch (e) {}
+              this.resizeTo(470, 450);
+              this.center();
+              return;
+          }
+          if (_this.cmsColumn && _this.cmsColumn.el) {
+              _this.cmsColumn.el.setDisplayed(true);
+          }
+          if (_this.imagesBtn) {
+              _this.imagesBtn.show();
+          }
+          try {
+              _this.centerLayoutPanel.getLayout().getRegion('south').show(true);
+              _this.centerLayoutPanel.getLayout().getRegion('south').showPanel(0);
+          } catch (e) {}
           var w = Roo.lib.Dom.getViewWidth();
           var h = Roo.lib.Dom.getViewHeight();
           this.resizeTo(w - 50, h - 50);
@@ -203,9 +237,11 @@ Pman.Dialog.CoreProject = {
        click : function (_self, e)
         {
             _this.dialog.el.mask("Saving");
-            _this.form1.findField('cms_overview_html').syncValue();
-            if (_this.metaJsonBox) {
-                _this.form.findField('cms_meta_json').setValue(_this.metaJsonBox.getValue());
+            if (_this.hasCms && _this.form1) {
+                _this.form1.findField('cms_overview_html').syncValue();
+                if (_this.metaJsonBox) {
+                    _this.form.findField('cms_meta_json').setValue(_this.metaJsonBox.getValue());
+                }
             }
             _this.form.doAction("submit");
         }
@@ -300,6 +336,10 @@ Pman.Dialog.CoreProject = {
                   } else {
                       _this.panel.region.collapse();
                   }
+              },
+             render : function (_self)
+              {
+                  _this.imagesBtn = _self;
               }
             },
             xns : Roo.Toolbar,
@@ -317,13 +357,17 @@ Pman.Dialog.CoreProject = {
             actioncomplete : function(_self,action)
              {
                  if (action.type == 'setdata') {
-                     this.addForm(_this.form1);
-                     _this.dialog.setStylesheets();
+                     if (_this.hasCms && _this.form1) {
+                         this.addForm(_this.form1);
+                         _this.dialog.setStylesheets();
+                     }
                      if (_this.data.id) {
                         _this.dialog.el.mask("Loading");
                         this.load({ method: 'GET', params: { '_id' : _this.data.id }});
                     } else {
-                        this.findField('cms_active').setValue(1);
+                        if (_this.hasCms) {
+                            this.findField('cms_active').setValue(1);
+                        }
                         var od = new Date();
                         od.setDate(1);
                         this.findField('open_date').setValue(od);
@@ -337,19 +381,21 @@ Pman.Dialog.CoreProject = {
                  if (action.type == 'load') {
                      _this.dialog.el.unmask();
                      var d = action.result.data;
-                     this.findField('cms_platforms').setValue(Roo.decode(d.cms_platforms_list || '[]'));
-                     var tags = Roo.decode(d.cms_tags_list || '[]');
-                     Roo.each(tags, function(t) {
-                         t.id = t.page_id;
-                         t.title = t.page_id_title;
-                     });
-                     this.findField('cms_tag_ids').setValue(tags);
-                     if (_this.metaJsonBox) {
-                         _this.metaJsonBox.setValue(d.cms_meta_json || '');
-                     }
-                     _this.dialog.setStylesheets();
-                     if (_this.grid) {
-                         _this.grid.getDataSource().load();
+                     if (_this.hasCms) {
+                         this.findField('cms_platforms').setValue(Roo.decode(d.cms_platforms_list || '[]'));
+                         var tags = Roo.decode(d.cms_tags_list || '[]');
+                         Roo.each(tags, function(t) {
+                             t.id = t.page_id;
+                             t.title = t.page_id_title;
+                         });
+                         this.findField('cms_tag_ids').setValue(tags);
+                         if (_this.metaJsonBox) {
+                             _this.metaJsonBox.setValue(d.cms_meta_json || '');
+                         }
+                         _this.dialog.setStylesheets();
+                         if (_this.grid) {
+                             _this.grid.getDataSource().load();
+                         }
                      }
                      return;
                  }
@@ -378,7 +424,7 @@ Pman.Dialog.CoreProject = {
            items  : [
             {
              xtype : 'Column',
-             width : 370,
+             width : 480,
              xns : Roo.form,
              '|xns' : 'Roo.form',
              items  : [
@@ -553,6 +599,7 @@ Pman.Dialog.CoreProject = {
               {
                xtype : 'FieldSet',
                legend : _this._strings['1a11b1adc359c03db0ca798a00e2632c'] /* Opened */,
+               style : 'width:340px;',
                xns : Roo.form,
                '|xns' : 'Roo.form',
                items  : [
@@ -632,6 +679,12 @@ Pman.Dialog.CoreProject = {
             {
              xtype : 'Column',
              width : 420,
+             listeners : {
+              render : function (_self)
+               {
+                   _this.cmsColumn = _self;
+               }
+             },
              xns : Roo.form,
              '|xns' : 'Roo.form',
              items  : [
