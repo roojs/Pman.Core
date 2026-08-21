@@ -49,7 +49,6 @@ Pman.Dialog.CoreProject = {
  _named_strings : {
   'client_id_name_emptyText' : '99b344c8ae43e3e7213862b8f35c4e51' /* Select Company */ ,
   'client_id_name_fieldLabel' : '577d7068826de925ea2aec01dbadf5e4' /* Client */ ,
-  'cms_meta_json_editor_fieldLabel' : 'bcf3f8775a521d487bf32f87529f9f28' /* Metadata (JSON) */ ,
   'type_desc_emptyText' : 'b5b20a9df20ea61c1cc0485f5e83891e' /* Select Project Type */ ,
   'type_desc_fieldLabel' : '245fe794333c2b0d5c513129b346b93f' /* Project Type */ ,
   'client_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
@@ -69,6 +68,7 @@ Pman.Dialog.CoreProject = {
   'cms_slug_fieldLabel' : '0c908588520b3ef787bce443fc2b507c' /* Slug */ ,
   'team_id_name_emptyText' : 'ab83ccde6764ca581702f38d79834615' /* Select Team */ ,
   'open_by_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  'cms_meta_json_fieldLabel' : 'bcf3f8775a521d487bf32f87529f9f28' /* Metadata (JSON) */ ,
   'cms_tag_ids_name_fieldLabel' : '189f63f277cd73395561651753563065' /* Tags */ ,
   'type_desc_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ 
  },
@@ -239,9 +239,6 @@ Pman.Dialog.CoreProject = {
             _this.dialog.el.mask("Saving");
             if (_this.hasCms && _this.form1) {
                 _this.form1.findField('cms_overview_html').syncValue();
-                if (_this.metaJsonBox) {
-                    _this.form.findField('cms_meta_json').setValue(_this.metaJsonBox.getValue());
-                }
             }
             _this.form.doAction("submit");
         }
@@ -359,6 +356,9 @@ Pman.Dialog.CoreProject = {
                  if (action.type == 'setdata') {
                      if (_this.hasCms && _this.form1) {
                          this.addForm(_this.form1);
+                         if (_this.metaForm) {
+                             this.addForm(_this.metaForm);
+                         }
                          _this.dialog.setStylesheets();
                      }
                      if (_this.data.id) {
@@ -389,8 +389,8 @@ Pman.Dialog.CoreProject = {
                              t.title = t.page_id_title;
                          });
                          this.findField('cms_tag_ids').setValue(tags);
-                         if (_this.metaJsonBox) {
-                             _this.metaJsonBox.setValue(d.cms_meta_json || '');
+                         if (_this.metaForm) {
+                             _this.metaForm.findField('cms_meta_json').setValue(d.cms_meta_json || '');
                          }
                          _this.dialog.setStylesheets();
                          if (_this.grid) {
@@ -665,12 +665,6 @@ Pman.Dialog.CoreProject = {
               {
                xtype : 'Hidden',
                name : 'id',
-               xns : Roo.form,
-               '|xns' : 'Roo.form'
-              },
-              {
-               xtype : 'Hidden',
-               name : 'cms_meta_json',
                xns : Roo.form,
                '|xns' : 'Roo.form'
               }
@@ -1049,6 +1043,7 @@ Pman.Dialog.CoreProject = {
            labelAlign : 'top',
            method : 'POST',
            style : 'margin:10px;',
+           url : baseURL + '/Roo/core_project',
            listeners : {
             rendered : function (form)
              {
@@ -1062,16 +1057,12 @@ Pman.Dialog.CoreProject = {
              xtype : 'TextArea',
              fieldLabel : _this._strings['bcf3f8775a521d487bf32f87529f9f28'] /* Metadata (JSON) */,
              height : 280,
-             name : 'cms_meta_json_editor',
+             name : 'cms_meta_json',
              width : 550,
              listeners : {
               render : function (_self)
                {
                    _this.metaJsonBox = _self;
-                   var v = _this.form ? _this.form.findField('cms_meta_json').getValue() : '';
-                   if (v) {
-                       _self.setValue(v);
-                   }
                }
              },
              xns : Roo.form,

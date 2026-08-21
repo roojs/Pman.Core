@@ -294,16 +294,15 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             !empty($_SERVER['PHP_AUTH_USER']) 
             &&
             !empty($_SERVER['PHP_AUTH_PW'])
-            &&
-            $u->get('email', $_SERVER['PHP_AUTH_USER'])
-            &&
-            $u->checkPassword($_SERVER['PHP_AUTH_PW'])
            ) {
-            // logged in via http auth
-            // http auth will not need session... 
-            //$_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($u);
-            self::$authUser = $u;
-            return true; 
+            $u->authUserName($_SERVER['PHP_AUTH_USER']);
+            if ($u->count() == 1 && $u->find(true) && $u->checkPassword($_SERVER['PHP_AUTH_PW'])) {
+                // logged in via http auth
+                // http auth will not need session... 
+                //$_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($u);
+                self::$authUser = $u;
+                return true;
+            }
         }
         
         // at this point all http auth stuff is done, so we can init session

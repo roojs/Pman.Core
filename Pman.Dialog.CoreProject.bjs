@@ -251,6 +251,9 @@
                                                     "    if (action.type == 'setdata') {",
                                                     "        if (_this.hasCms && _this.form1) {",
                                                     "            this.addForm(_this.form1);",
+                                                    "            if (_this.metaForm) {",
+                                                    "                this.addForm(_this.metaForm);",
+                                                    "            }",
                                                     "            _this.dialog.setStylesheets();",
                                                     "        }",
                                                     "        if (_this.data.id) {",
@@ -281,8 +284,8 @@
                                                     "                t.title = t.page_id_title;",
                                                     "            });",
                                                     "            this.findField('cms_tag_ids').setValue(tags);",
-                                                    "            if (_this.metaJsonBox) {",
-                                                    "                _this.metaJsonBox.setValue(d.cms_meta_json || '');",
+                                                    "            if (_this.metaForm) {",
+                                                    "                _this.metaForm.findField('cms_meta_json').setValue(d.cms_meta_json || '');",
                                                     "            }",
                                                     "            _this.dialog.setStylesheets();",
                                                     "            if (_this.grid) {",
@@ -565,11 +568,6 @@
                                                         },
                                                         {
                                                             "name": "id",
-                                                            "$ xns": "Roo.form",
-                                                            "xtype": "Hidden"
-                                                        },
-                                                        {
-                                                            "name": "cms_meta_json",
                                                             "$ xns": "Roo.form",
                                                             "xtype": "Hidden"
                                                         }
@@ -986,19 +984,16 @@
                                                             "function (_self)",
                                                             "{",
                                                             "    _this.metaJsonBox = _self;",
-                                                            "    var v = _this.form ? _this.form.findField('cms_meta_json').getValue() : '';",
-                                                            "    if (v) {",
-                                                            "        _self.setValue(v);",
-                                                            "    }",
                                                             "}"
                                                         ]
                                                     },
-                                                    "name": "cms_meta_json_editor",
+                                                    "name": "cms_meta_json",
                                                     "width": 550,
                                                     "xtype": "TextArea",
                                                     "$ xns": "Roo.form"
                                                 }
-                                            ]
+                                            ],
+                                            "$ url": "baseURL + '/Roo/core_project'"
                                         }
                                     ]
                                 }
@@ -1182,9 +1177,6 @@
                             "    _this.dialog.el.mask(\"Saving\");",
                             "    if (_this.hasCms && _this.form1) {",
                             "        _this.form1.findField('cms_overview_html').syncValue();",
-                            "        if (_this.metaJsonBox) {",
-                            "            _this.form.findField('cms_meta_json').setValue(_this.metaJsonBox.getValue());",
-                            "        }",
                             "    }",
                             "    _this.form.doAction(\"submit\");",
                             "}"
