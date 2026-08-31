@@ -20,7 +20,30 @@ Roo.XComponent.on('beforebuild', function(e) {
 
 Roo.XComponent.on('buildcomplete',  
     function() {
-        Pman.building = false;   
+        Pman.building = false;
+
+        if (Pman.boot) {
+            Pman.layout.getRegion('north').el.dom.style.display = 'none';
+            Pman.layout.getRegion('center').el.dom.style.display = 'none';
+            Pman.layout.endUpdate();
+            Pman.finalize();
+
+            var parts = Pman.boot.split('.');
+            var obj = window;
+            for (var i = 0; i < parts.length; i++) {
+                obj = obj[parts[i]];
+                if (!obj) {
+                    Roo.log(['Pman.boot path not found', Pman.boot]);
+                    Pman.fireEvent('load', this);
+                    return;
+                }
+            }
+            obj.show({});
+
+            Pman.fireEvent('load', this);
+            return;
+        }
+
         Pman.layout.getRegion('center').showPanel(0);
         Pman.layout.endUpdate(); 
         Pman.addTopToolbar();  
@@ -54,6 +77,11 @@ Pman = new Roo.Document(
     
     
     buildCompleted : false, // flag to say if we are building interface..
+    /**
+     * Full JS path from ?boot= when allowlisted in uiConfig.bootAllow, else ''.
+     * When set, buildcomplete skips the tab shell and calls path.show({}).
+     */
+    boot : '',
     events : {
         'beforeload' : true, // fired after page ready, before module building.
         'load' : true, // fired after module building
@@ -144,6 +172,21 @@ Pman = new Roo.Document(
         }
         if (Roo.get('loading-mask')) {
             Roo.get('loading-mask').show();
+        }
+
+        this.boot = '';
+        var m = (location.search.match(/[?&]boot=([^&]*)/) || [])[1];
+        if (m) {
+            var want = decodeURIComponent(m.replace(/\+/g, ' '));
+            if (typeof(uiConfig) != 'undefined') {
+                if (uiConfig) {
+                    if (uiConfig.bootAllow) {
+                        if (uiConfig.bootAllow.indexOf(want) > -1) {
+                            this.boot = want;
+                        }
+                    }
+                }
+            }
         }
         
      
@@ -790,6 +833,13 @@ Pman = new Roo.Document(
     
     xbeforebuild : function(obj)
     {
+        if (Pman.boot) {
+            if (obj.region === 'center') {
+                obj.disabled = true;
+                return;
+            }
+        }
+
         if (typeof(obj.part) != 'undefined')  {
            
             if (!obj.part[1].length) {
