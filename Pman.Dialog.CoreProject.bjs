@@ -45,6 +45,9 @@
                 "            if (!ed) {",
                 "                return;",
                 "            }",
+                "            if (ed.editorcore) {",
+                "                ed.editorcore.bodyCls = 'roojscom r-project-body';",
+                "            }",
                 "            ed.removeStylesheets();",
                 "            ed.setStylesheets(sheets);",
                 "        }",
@@ -815,6 +818,7 @@
                                                     "$ xns": "Roo.form",
                                                     "items": [
                                                         {
+                                                            "bodyCls": "roojscom r-project-body",
                                                             "fieldLabel": "Overview",
                                                             "height": 150,
                                                             "name": "cms_overview_html",

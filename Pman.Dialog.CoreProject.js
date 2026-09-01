@@ -132,6 +132,9 @@ Pman.Dialog.CoreProject = {
                 if (!ed) {
                     return;
                 }
+                if (ed.editorcore) {
+                    ed.editorcore.bodyCls = 'roojscom r-project-body';
+                }
                 ed.removeStylesheets();
                 ed.setStylesheets(sheets);
             }
@@ -903,6 +906,7 @@ Pman.Dialog.CoreProject = {
              items  : [
               {
                xtype : 'HtmlEditor',
+               bodyCls : 'roojscom r-project-body',
                fieldLabel : _this._strings['3b878279a04dc47d60932cb294d96259'] /* Overview */,
                height : 150,
                name : 'cms_overview_html',
