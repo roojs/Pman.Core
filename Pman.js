@@ -38,9 +38,8 @@ Roo.XComponent.on('buildcomplete',
                     return;
                 }
             }
-            obj.show({});
-
             Pman.fireEvent('load', this);
+            obj.show({});
             return;
         }
 
@@ -79,7 +78,7 @@ Pman = new Roo.Document(
     buildCompleted : false, // flag to say if we are building interface..
     /**
      * Full JS path from ?boot= when allowlisted in uiConfig.bootAllow, else ''.
-     * When set, buildcomplete skips the tab shell and calls path.show({}).
+     * When set, buildcomplete skips the tab shell, fires load, then calls path.show({}).
      */
     boot : '',
     events : {
