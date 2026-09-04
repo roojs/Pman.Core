@@ -55,7 +55,6 @@ Pman.Dialog.CoreProject = {
   'cms_active_boxLabel' : '64f860745b1f9242aa562fb18111b6f2' /* Active on site */ ,
   'code_fieldLabel' : 'ca0dbad92a874b2f69b549293387925e' /* Code */ ,
   'cms_hero_blurb_fieldLabel' : '3bd2771ecc7ec940003d82863c818cb4' /* Hero blurb */ ,
-  'cms_platforms_name_fieldLabel' : 'ed49a36c4fd547e5e2ace11bef4f21cf' /* Platforms */ ,
   'cms_overview_html_fieldLabel' : '3b878279a04dc47d60932cb294d96259' /* Overview */ ,
   'name_fieldLabel' : '8e3a42158ee70b67cf55b33e2789a9e5' /* Project Name */ ,
   'team_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
@@ -69,6 +68,7 @@ Pman.Dialog.CoreProject = {
   'team_id_name_emptyText' : 'ab83ccde6764ca581702f38d79834615' /* Select Team */ ,
   'open_by_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'cms_meta_json_fieldLabel' : 'bcf3f8775a521d487bf32f87529f9f28' /* Metadata (JSON) */ ,
+  'cms_category_ids_name_fieldLabel' : 'ed49a36c4fd547e5e2ace11bef4f21cf' /* Platforms */ ,
   'cms_tag_ids_name_fieldLabel' : '189f63f277cd73395561651753563065' /* Tags */ ,
   'type_desc_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ 
  },
@@ -385,12 +385,19 @@ Pman.Dialog.CoreProject = {
                      _this.dialog.el.unmask();
                      var d = action.result.data;
                      if (_this.hasCms) {
-                         this.findField('cms_platforms').setValue(Roo.decode(d.cms_platforms_list || '[]'));
-                         var tags = Roo.decode(d.cms_tags_list || '[]');
-                         Roo.each(tags, function(t) {
+                         var tagRows = Roo.decode(d.cms_tags_list || '[]');
+                         var platforms = [];
+                         var tags = [];
+                         Roo.each(tagRows, function(t) {
                              t.id = t.page_id;
                              t.title = t.page_id_title;
+                             if (t.link_role == 'category') {
+                                 platforms.push(t);
+                             } else {
+                                 tags.push(t);
+                             }
                          });
+                         this.findField('cms_category_ids').setValue(platforms);
                          this.findField('cms_tag_ids').setValue(tags);
                          if (_this.metaForm) {
                              _this.metaForm.findField('cms_meta_json').setValue(d.cms_meta_json || '');
@@ -738,8 +745,8 @@ Pman.Dialog.CoreProject = {
                 {
                  xtype : 'ComboBoxArray',
                  fieldLabel : _this._strings['ed49a36c4fd547e5e2ace11bef4f21cf'] /* Platforms */,
-                 hiddenName : 'cms_platforms',
-                 name : 'cms_platforms_name',
+                 hiddenName : 'cms_category_ids',
+                 name : 'cms_category_ids_name',
                  width : 250,
                  xns : Roo.form,
                  '|xns' : 'Roo.form',
@@ -747,44 +754,32 @@ Pman.Dialog.CoreProject = {
                   xtype : 'ComboBox',
                   allowBlank : true,
                   alwaysQuery : true,
-                  displayField : 'display_name',
+                  displayField : 'title',
                   editable : true,
                   emptyText : _this._strings['ceab4b6639642ee9542291d28434c780'] /* Select platform */,
                   forceSelection : true,
-                  listWidth : 250,
+                  listWidth : 400,
                   loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
                   minChars : 2,
-                  queryParam : 'query[search]',
+                  pageSize : 40,
+                  queryParam : 'search[name]',
                   selectOnFocus : true,
-                  tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b></div>',
+                  tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> <i>{page_link}</i></div>',
                   triggerAction : 'all',
                   valueField : 'id',
                   width : 235,
-                  listeners : {
-                   add : function (_self)
-                    {
-                        var cba = _this.form.findField('cms_platforms');
-                        Pman.Dialog.CoreEnum.show({
-                            id: 0,
-                            etype: 'cms_platform'
-                        }, function(data) {
-                            if (!data || !data.id) {
-                                return;
-                            }
-                            cba.addItem(data);
-                        });
-                    }
-                  },
                   xns : Roo.form,
                   '|xns' : 'Roo.form',
                   store : {
                    xtype : 'Store',
                    remoteSort : true,
-                   sortInfo : { direction : 'ASC', field: 'seqid' },
+                   sortInfo : { field: 'title', direction: 'ASC' },
                    listeners : {
                     beforeload : function (_self, o){
                          o.params = o.params || {};
-                         o.params.etype = 'cms_platform';
+                         o.params['search[page_link_no_empty]'] = 1;
+                         o.params._page_type = 'category';
+                         o.params._parent_page_link = 'platform';
                      }
                    },
                    xns : Roo.data,
@@ -792,7 +787,7 @@ Pman.Dialog.CoreProject = {
                    proxy : {
                     xtype : 'HttpProxy',
                     method : 'GET',
-                    url : baseURL + '/Roo/core_enum',
+                    url : baseURL + '/Roo/cms_page',
                     xns : Roo.data,
                     '|xns' : 'Roo.data'
                    },
