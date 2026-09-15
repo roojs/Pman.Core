@@ -25,6 +25,9 @@ Roo.XComponent.on('buildcomplete',
         if (Pman.boot) {
             Pman.layout.getRegion('north').el.dom.style.display = 'none';
             Pman.layout.getRegion('center').el.dom.style.display = 'none';
+            var south = Pman.layout.getRegion('south');
+            south.config.collapsible = false;
+            south.hide();
             Pman.layout.endUpdate();
             Pman.finalize();
 
@@ -833,7 +836,7 @@ Pman = new Roo.Document(
     xbeforebuild : function(obj)
     {
         if (Pman.boot) {
-            if (obj.region === 'center') {
+            if (obj.region === 'center' || obj.region === 'south') {
                 obj.disabled = true;
                 return;
             }
