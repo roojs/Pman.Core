@@ -1094,12 +1094,15 @@ Pman.Dialog.CoreProject = {
        autoExpandColumn : 'filename',
        loadMask : true,
        listeners : {
-        render : function() {
-             _this.grid = this;
-         },
-        rowdblclick : function (_self, rowIndex, e)
+        celldblclick : function (_self, rowIndex, columnIndex, e)
          {
              var rd = _this.grid.getDataSource().getAt(rowIndex);
+             if (columnIndex > 0) {
+                 Pman.Dialog.CoreImageEdit.show(rd.data, function () {
+                     _this.grid.getDataSource().load();
+                 });
+                 return;
+             }
              var editor = _this.form1.findField('cms_overview_html').editorcore;
              var sn = editor.getSelectedNode();
              var bl = sn ? Roo.htmleditor.Block.factory(sn) : false;
@@ -1117,6 +1120,9 @@ Pman.Dialog.CoreProject = {
              var fig = new Roo.htmleditor.BlockFigure(cfg);
              editor.insertAtCursor(fig.toHTML());
              editor.owner.fireEvent('editorevent', editor, false);
+         },
+        render : function() {
+             _this.grid = this;
          }
        },
        xns : Roo.grid,
@@ -1202,9 +1208,15 @@ Pman.Dialog.CoreProject = {
          xtype : 'ColumnModel',
          dataIndex : 'id',
          header : _this._strings['d41d8cd98f00b204e9800998ecf8427e'] /*  */,
-         renderer : function(v,x,r) { return String.format('<img src="{0}/Images/Thumb/100/{1}/{2}" height="100">', baseURL, v, r.data.filename); },
+         renderer : function(v,x,r) {
+             var src = String.format('{0}/Images/{1}/{2}', baseURL, v, r.data.filename);
+             if (r.data.mimetype != 'image/svg+xml') {
+                 src = String.format('{0}/Images/Thumb/150/{1}/{2}', baseURL, v, r.data.filename);
+             }
+             return String.format('<img src="{0}" width="150">', src);
+         },
          sortable : false,
-         width : 75,
+         width : 150,
          xns : Roo.grid,
          '|xns' : 'Roo.grid'
         },
@@ -1212,7 +1224,14 @@ Pman.Dialog.CoreProject = {
          xtype : 'ColumnModel',
          dataIndex : 'filename',
          header : _this._strings['1351017ac6423911223bc19a8cb7c653'] /* Filename */,
-         renderer : function(v) { return String.format('{0}', v); },
+         renderer : function(v, x, r) {
+             var type = r.data.imgtype || 'IMAGE';
+             var name = r.data.title || '';
+             if (name) {
+                 return String.format('{0}<br/>{1}<br/>{2}', name, type, v);
+             }
+             return String.format('{0}<br/>{1}', type, v);
+         },
          width : 140,
          xns : Roo.grid,
          '|xns' : 'Roo.grid'
