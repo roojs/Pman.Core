@@ -23,6 +23,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     public $active;
     public $bcc_group_id;
     public $test_class;
+    public $preheader;                       // varchar(255) not_null default '' — inbox preview text
      
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
@@ -308,6 +309,21 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             }
             
             $this->plaintext = str_replace("{unsubscribe_link}", $unsubscribe, empty($this->plaintext) ? '' : $this->plaintext);
+        }
+
+        if (!empty($this->preheader)) {
+            $body = $doc->getElementsByTagName('body')->item(0);
+            if ($body) {
+                $div = $doc->createElement('div');
+                $div->setAttribute('style', 'display:none;max-height:0;overflow:hidden;mso-hide:all;');
+                $div->appendChild($doc->createTextNode($this->preheader));
+                if ($body->firstChild) {
+                    $body->insertBefore($div, $body->firstChild);
+                }
+                if (!$body->firstChild || $body->firstChild !== $div) {
+                    $body->appendChild($div);
+                }
+            }
         }
         
         
