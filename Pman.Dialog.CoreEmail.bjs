@@ -589,6 +589,21 @@
                   {
                    "$ xns" : "Roo.form",
                    "allowBlank" : true,
+                   "emptyText" : "Shown under the subject in the inbox",
+                   "fieldLabel" : "Preview text",
+                   "name" : "preheader",
+                   "width" : 600,
+                   "xtype" : "TextField"
+                  }
+                 ],
+                 "xtype" : "Row"
+                },
+                {
+                 "$ xns" : "Roo.form",
+                 "items" : [
+                  {
+                   "$ xns" : "Roo.form",
+                   "allowBlank" : true,
                    "alwaysQuery" : true,
                    "displayField" : "name",
                    "editable" : true,

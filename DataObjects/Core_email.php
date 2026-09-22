@@ -317,11 +317,11 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                 $div = $doc->createElement('div');
                 $div->setAttribute('style', 'display:none;max-height:0;overflow:hidden;mso-hide:all;');
                 $div->appendChild($doc->createTextNode($this->preheader));
-                if ($body->firstChild) {
-                    $body->insertBefore($div, $body->firstChild);
-                }
-                if (!$body->firstChild || $body->firstChild !== $div) {
+                if (!$body->firstChild) {
                     $body->appendChild($div);
+                }
+                if ($body->firstChild !== $div) {
+                    $body->insertBefore($div, $body->firstChild);
                 }
             }
         }
@@ -558,6 +558,11 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $random_hash = md5(date('r', time()));
         
         $this->cachedImages();
+
+        $plaintext = empty($this->plaintext) ? '' : $this->plaintext;
+        if (!empty($this->preheader)) {
+            $plaintext = $this->preheader . "\n\n" . $plaintext;
+        }
         
         $fh = fopen($cachePath, 'w');
 
@@ -579,7 +584,7 @@ Content-Type: multipart/alternative; boundary=alt-{$random_hash}
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-{$this->plaintext}
+{$plaintext}
 
 ");
         fclose($fh);
