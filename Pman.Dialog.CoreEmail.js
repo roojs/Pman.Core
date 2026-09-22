@@ -45,11 +45,13 @@ Pman.Dialog.CoreEmail = {
   'b20a8b77b05d53b4e695738731400c85' :"Mailout Name",
   '2c466a2c159463f1d9ef5a7b57b52827' :"Select BCC Group",
   '5da618e8e4b89c66fe86e32cdafde142' :"From",
+  '377ab6b6469a667a1709c0997fad1b72' :"Preview text",
+  '527ea5285bad103a10a7abce77870ac0' :"Shown under the subject in the inbox",
   'b78a3223503896721cca1303f776159b' :"Title",
   '16d2b386b2034b9488996466aaae0b57' :"History",
   '4d9ab534f975539d57689c68f5f1fd38' :"Select unsubscribe group",
-  '6c95f468940d0f7b821a200aed9142c1' :"Daily Email Limit",
   '308f2757bfc9ce92fb00ff93fdffd279' :"Images / Attachments",
+  '6c95f468940d0f7b821a200aed9142c1' :"Daily Email Limit",
   '1351017ac6423911223bc19a8cb7c653' :"Filename",
   'c9cc8cce247e49bae79f15173ce97354' :"Save",
   '5feb9bf3c03b32635135006cbacb9542' :"Insert Field",
@@ -76,6 +78,8 @@ Pman.Dialog.CoreEmail = {
   'from_email_combo_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'bcc_group_id_name_fieldLabel' : '68b00d723d37122f64da8d9939f836f0' /* BCC Group */ ,
   'subject_fieldLabel' : 'c7892ebbb139886662c6f2fc8c450710' /* Subject */ ,
+  'preheader_emptyText' : '527ea5285bad103a10a7abce77870ac0' /* Shown under the subject in the inbox */ ,
+  'preheader_fieldLabel' : '377ab6b6469a667a1709c0997fad1b72' /* Preview text */ ,
   'unsubscribe_mailing_list_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'test_class_fieldLabel' : 'b337c8a67244afb6551ee1f8f9717676' /* Test Class <BR/> (for system reference only) */ 
  },
@@ -1010,6 +1014,23 @@ Pman.Dialog.CoreEmail = {
                    xns : Roo.data,
                    '|xns' : 'Roo.data'
                   }
+                 }
+                ]
+               },
+               {
+                xtype : 'Row',
+                xns : Roo.form,
+                '|xns' : 'Roo.form',
+                items  : [
+                 {
+                  xtype : 'TextField',
+                  allowBlank : true,
+                  emptyText : _this._strings['527ea5285bad103a10a7abce77870ac0'] /* Shown under the subject in the inbox */,
+                  fieldLabel : _this._strings['377ab6b6469a667a1709c0997fad1b72'] /* Preview text */,
+                  name : 'preheader',
+                  width : 600,
+                  xns : Roo.form,
+                  '|xns' : 'Roo.form'
                  }
                 ]
                },
