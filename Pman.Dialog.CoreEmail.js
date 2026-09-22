@@ -370,6 +370,7 @@ Pman.Dialog.CoreEmail = {
                                   if(email.emailId == _this.form.findField('stripo_id').getValue()) {
                                       _this.form.findField('subject').setValue(email.title);
                                       _this.form.findField('name').setValue((new Date(email.updatedTime)).format('d M y') + ' - ' + email.title);
+                                      _this.form.findField('preheader').setValue(email.preheader || '');
                                   }
                               });
                               deleteImages();
