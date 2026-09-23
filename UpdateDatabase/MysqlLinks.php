@@ -41,6 +41,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
     var $dburl;
     var $schema;
     var $links = array();
+    var $views = array();
     var $debug = false;
     
     function run()
@@ -49,6 +50,10 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
        
         foreach(array_keys($this->schema) as $table) {
             if (preg_match('/__keys$/', $table)) {
+                continue;
+            }
+            if (in_array($table, $this->views)) {
+                echo "Skip $table = view (not BASE TABLE)\n";
                 continue;
             }
             $this->updateTableComment($table);
@@ -67,6 +72,9 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             
         foreach(array_keys($this->schema) as $table) {
             if (preg_match('/__keys$/', $table)) {
+                continue;
+            }
+            if (in_array($table, $this->views)) {
                 continue;
             }
             $this->createDeleteTrigger($table);
@@ -122,9 +130,17 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 
             }
         }
-         
+
+        $dbo = DB_DataObject::factory('core_enum');
+        if (is_a($dbo, 'PDO_DataObject')) {
+            $this->views = $dbo->generator()->introspection()->getListOf('views');
+        } else {
+            $db = $dbo->getDatabaseConnection();
+            $this->views = $db->getListOf('views');
+        }
         
     }
+
     function updateTableComment($tbl)
     {
         if (!isset($this->schema[$tbl])) {

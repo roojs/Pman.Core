@@ -37,6 +37,13 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     function applyFilters($q, $au ,$roo)
     {
         $tn = $this->tableName();
+        // Object history (Events grid on a record) must include portal / other-user rows.
+        // Unscoped list stays own-person unless Admin tab.
+        if (empty($q['on_id']) && empty($q['_related_on_id'])
+            && !$au->hasPerm('Admin.Admin_Tab', 'S')
+        ) {
+            $this->whereAdd("{$tn}.person_id = {$au->id}");
+        }
         // if not empty on_table
         
         if(!empty($q['person_table'])){

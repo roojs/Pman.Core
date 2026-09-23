@@ -3,7 +3,7 @@
  * Internal HTTP worker: one email SMTP validation (POST from Core/ValidateEmail).
  * POST: email, auth_user_id.
  *
- * Ops: php-fpm request_terminate_timeout and nginx fastcgi_read_timeout should be >= 90s
+ * Ops: php-fpm request_terminate_timeout and nginx fastcgi_read_timeout should be >= 100s
  * for this route (see ValidateEmail parent).
  */
 

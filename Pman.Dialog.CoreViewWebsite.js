@@ -63,6 +63,14 @@ Pman.Dialog.CoreViewWebsite = {
               return;
           }
           
+          // relative: true — app path under baseURL (LLM must set this for app pages).
+          if (_this.data.relative) {
+              if (String(url).charAt(0) !== '/') {
+                  url = '/' + url;
+              }
+              url = baseURL + url;
+          }
+          
           _this.websiteViewPanel.setContent('Loading...');
           
           _this.dialog.setTitle('View URL: ' + url);

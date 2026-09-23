@@ -1,0 +1,26 @@
+TAG START: {{
+TAG END: }}
+Core / admin — staff accounts vs contact records.
+
+### Create a staff user (back-office login)
+
+**User asks:** create a user, new staff account, add login, reset password access, grant permissions, Users and Passwords.
+
+**Do not open:** `CorePersonContact` ("Edit / Create Contact Details") or Hebe **`Contacts`** ("Add / Edit Contacts" on `member_address`). Those are contact-detail forms, not staff account administration.
+
+1. **`describe_ui_component`** on **`AdminPerson`** — staff account form on `core_person` (password, groups, active flag).
+2. **`show_dialog`** — `name: AdminPerson`, `args: { id: 0 }` for a new account (set `company_id` from the current user's company if required).
+3. Tell the user to complete password and group membership on the **Staff Details** / **Groups** tabs and **Save**.
+
+The **Users and Passwords** screen is **`Admin/Permissions`** (GroupMgr: pick a permission group, then add members). That tab is not in the UI catalog — use **`AdminPerson`** for the create/edit form.
+
+### External / client contact (CRM-style)
+
+**User asks:** add a contact person at a company, client contact details (not a staff login, not a club member address).
+
+1. **`describe_ui_component`** on **`CorePersonContact`** — external contact on `core_person` linked to company/office.
+2. **`show_dialog`** — `name: CorePersonContact`, `args: { id: 0 }` or `{ id: N }` to edit.
+
+### Do not confuse with club member correspondence (Hebe)
+
+Member bills, email, tel, and postal address are on **`member_address`**, edited via the **Member** dialog or Hebe **`Contacts`** dialog — not `AdminPerson` or `CorePersonContact`. See **Hebe** data hints for member lookup and correspondence.

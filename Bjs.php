@@ -8,7 +8,7 @@
  * - BJS v3 format: top-level "tree" with node-type, prop-type, children, prop-name, prop-val.
  *
  * Extracts $this->fields (form field names) and $this->cols (grid column model objects).
- * Also $this->urls, $this->fieldDetails, $this->titles, $this->tabs for UI catalog.
+ * Also $this->urls, $this->fieldDetails, $this->titles, $this->tabs, $this->forms for UI catalog.
  */
 class Pman_Core_Bjs
 {
@@ -19,6 +19,8 @@ class Pman_Core_Bjs
     var $fieldDetails = array();
     var $titles = array();
     var $tabs = array();
+    var $forms = array();
+    var $formStack = array();
     var $fieldTabPaths = array();
     var $tabPathsSeen = array();
 
@@ -47,29 +49,37 @@ class Pman_Core_Bjs
         return $tables;
     }
 
-    function addTableUrl($table, &$scope = null)
+    function addTableUrl($table, &$scope = false)
     {
         $table = strtolower($table);
-        if ($scope !== null) {
+        if ($scope) {
             $scope['urls'][] = $table;
             return;
         }
         $this->urls[] = $table;
     }
 
-    function addFieldDetail($name, $o, $xtype, &$scope = null)
+    function addFieldDetail($name, $o, $xtype, &$scope = false)
     {
+        $label = $this->prop($o, 'fieldLabel');
+        if (!$label) {
+            $label = $this->prop($o, 'boxLabel');
+        }
         $detail = array(
             'name' => $name,
-            'label' => $this->fieldLabel($name, $this->prop($o, 'fieldLabel')),
+            'label' => $this->fieldLabel($name, $label),
             'type' => $xtype,
         );
-        if ($scope !== null) {
+        if ($scope) {
             $scope['fields'][$name] = $detail;
-            return;
+        } else {
+            $this->fields[] = $name;
+            $this->fieldDetails[$name] = $detail;
         }
-        $this->fields[] = $name;
-        $this->fieldDetails[$name] = $detail;
+        if (!empty($this->formStack)) {
+            $fp = $this->formStack[count($this->formStack) - 1];
+            $this->forms[$fp]['fields'][$name] = $detail;
+        }
     }
 
     function prop($o, $name)
@@ -123,15 +133,32 @@ class Pman_Core_Bjs
         return $fname;
     }
 
-    function walkItems($items, &$scope = null)
+    function walkItems($items, &$scope = false, $pathParts = array())
     {
         if (!$items || !is_array($items)) {
             return;
         }
 
         foreach ($items as $o) {
+            $parts = $pathParts;
+            $region = $this->prop($o, 'region');
+            if ($region) {
+                $region = strtolower($region);
+                if (empty($parts) || $parts[count($parts) - 1] != $region) {
+                    $parts[] = $region;
+                }
+            } else {
+                $layoutProp = $this->prop($o, 'prop');
+                if (in_array($layoutProp, array('center', 'south', 'north', 'east', 'west'), true)
+                    && (empty($parts) || $parts[count($parts) - 1] != $layoutProp)
+                ) {
+                    $parts[] = $layoutProp;
+                }
+            }
+
             $xtype = $this->prop($o, 'xtype');
             $xns = $this->prop($o, 'xns');
+            $openedForm = false;
 
             switch ($xtype) {
                 case 'LayoutDialog':
@@ -156,6 +183,32 @@ class Pman_Core_Bjs
                     foreach ($this->tablesFromRooUrl($this->prop($o, 'url')) as $table) {
                         $this->addTableUrl($table, $scope);
                     }
+                    if ($scope) {
+                        break;
+                    }
+                    $seg = $this->prop($o, 'name');
+                    if (!$seg) {
+                        $seg = $this->prop($o, 'prop');
+                    }
+                    if (!$seg || in_array($seg, array('center', 'south', 'north', 'east', 'west', 'layout'), true)) {
+                        $seg = 'form';
+                    }
+                    $formParts = $parts;
+                    $formParts[] = $seg;
+                    $formPath = '/' . implode('/', $formParts);
+                    $base = $formPath;
+                    $n = 2;
+                    while (isset($this->forms[$formPath])) {
+                        $formPath = $base . '-' . $n;
+                        $n++;
+                    }
+                    $this->forms[$formPath] = array(
+                        'path' => $formPath,
+                        'fields' => array(),
+                        'urls' => $this->tablesFromRooUrl($this->prop($o, 'url')),
+                    );
+                    $this->formStack[] = $formPath;
+                    $openedForm = true;
                     break;
 
                 case 'HttpProxy':
@@ -168,12 +221,13 @@ class Pman_Core_Bjs
                     break;
 
                 case 'ColumnModel':
-                    if ($scope === null) {
+                    if (!$scope) {
                         $this->cols[] = $o;
                     }
                     break;
 
                 case 'ComboBox':
+                case 'ComboBoxArray':
                     if ($xns != 'Roo.form') {
                         break;
                     }
@@ -187,6 +241,7 @@ class Pman_Core_Bjs
                     break;
 
                 case 'Input':
+                case 'TextField':
                 case 'TextArea':
                 case 'CheckBox':
                 case 'DateField':
@@ -197,6 +252,7 @@ class Pman_Core_Bjs
                 case 'Hidden':
                 case 'Password':
                 case 'Checkbox':
+                case 'HtmlEditor':
                     if ($xns != 'Roo.form' || !($name = $this->prop($o, 'name'))) {
                         break;
                     }
@@ -216,7 +272,7 @@ class Pman_Core_Bjs
                     break;
             }
 
-            if ($scope !== null) {
+            if ($scope) {
                 if ($xtype == 'Form' && $xns == 'Roo.form') {
                     $scope['hasForm'] = true;
                 }
@@ -226,19 +282,40 @@ class Pman_Core_Bjs
             }
 
             if (!empty($o->items)) {
-                $this->walkItems($o->items, $scope);
+                $this->walkItems($o->items, $scope, $parts);
+            }
+            if ($openedForm) {
+                $fp = array_pop($this->formStack);
+                $this->forms[$fp]['fields'] = array_values($this->forms[$fp]['fields']);
+                $this->forms[$fp]['urls'] = array_values(array_unique($this->forms[$fp]['urls']));
             }
         }
     }
 
-    function walkTreeV3($node, &$scope = null)
+    function walkTreeV3($node, &$scope = false, $pathParts = array())
     {
         if (!is_object($node)) {
             return;
         }
         $propType = isset($node->{'prop-type'}) ? $node->{'prop-type'} : '';
+        $parts = $pathParts;
+        $openedForm = false;
 
-        if ($scope === null && ($propType == 'Roo.LayoutDialog' || $propType == 'Roo.NestedLayoutPanel')) {
+        $region = $this->getNodeProp($node, 'region');
+        if ($region) {
+            $region = strtolower($region);
+            if (empty($parts) || $parts[count($parts) - 1] != $region) {
+                $parts[] = $region;
+            }
+        }
+        $propName = isset($node->{'prop-name'}) ? $node->{'prop-name'} : '';
+        if (in_array($propName, array('center', 'south', 'north', 'east', 'west'), true)) {
+            if (empty($parts) || $parts[count($parts) - 1] != $propName) {
+                $parts[] = $propName;
+            }
+        }
+
+        if (!$scope && ($propType == 'Roo.LayoutDialog' || $propType == 'Roo.NestedLayoutPanel')) {
             $title = $this->getNodeProp($node, 'title');
             if ($title && $title[0] != '{') {
                 $this->titles[] = $title;
@@ -254,12 +331,39 @@ class Pman_Core_Bjs
                 $this->addTableUrl($table, $scope);
             }
         }
+        if ($propType == 'Roo.form.Form' && !$scope) {
+            $seg = $this->getNodeProp($node, 'name');
+            if (!$seg && $propName
+                && !in_array($propName, array('center', 'south', 'north', 'east', 'west', 'layout'), true)
+            ) {
+                $seg = $propName;
+            }
+            if (!$seg) {
+                $seg = 'form';
+            }
+            $formParts = $parts;
+            $formParts[] = $seg;
+            $formPath = '/' . implode('/', $formParts);
+            $base = $formPath;
+            $n = 2;
+            while (isset($this->forms[$formPath])) {
+                $formPath = $base . '-' . $n;
+                $n++;
+            }
+            $this->forms[$formPath] = array(
+                'path' => $formPath,
+                'fields' => array(),
+                'urls' => $this->tablesFromRooUrl($this->getNodeProp($node, 'url')),
+            );
+            $this->formStack[] = $formPath;
+            $openedForm = true;
+        }
         if ($propType == 'Roo.data.HttpProxy') {
             foreach ($this->tablesFromRooUrl($this->getNodeProp($node, 'url')) as $table) {
                 $this->addTableUrl($table, $scope);
             }
         }
-        if ($scope === null && $propType === 'Roo.grid.ColumnModel') {
+        if (!$scope && $propType === 'Roo.grid.ColumnModel') {
             $col = new stdClass();
             $col->dataIndex = $this->getNodeProp($node, 'dataIndex');
             $col->header = $this->getNodeProp($node, 'header');
@@ -271,6 +375,9 @@ class Pman_Core_Bjs
         if (strpos($propType, 'Roo.form.') === 0) {
             $type = str_replace('Roo.form.', '', $propType);
             $fieldLabel = $this->getNodeProp($node, 'fieldLabel');
+            if (!$fieldLabel) {
+                $fieldLabel = $this->getNodeProp($node, 'boxLabel');
+            }
             $fieldObj = new stdClass();
             if ($fieldLabel !== null) {
                 $fieldObj->{'String fieldLabel'} = $fieldLabel;
@@ -293,6 +400,13 @@ class Pman_Core_Bjs
                     }
                     break;
                 case 'ComboBoxArray':
+                    if ($hiddenName = $this->getNodeProp($node, 'hiddenName')) {
+                        $this->addFieldDetail($hiddenName, $fieldObj, $type, $scope);
+                    }
+                    if ($name = $this->getNodeProp($node, 'name')) {
+                        $this->addFieldDetail($name, $fieldObj, $type, $scope);
+                    }
+                    break;
                 case 'Row':
                 case 'FieldSet':
                 case 'Form':
@@ -305,7 +419,7 @@ class Pman_Core_Bjs
             }
         }
 
-        if ($scope !== null) {
+        if ($scope) {
             if ($propType == 'Roo.form.Form') {
                 $scope['hasForm'] = true;
             }
@@ -316,8 +430,13 @@ class Pman_Core_Bjs
 
         if (!empty($node->children) && is_array($node->children)) {
             foreach ($node->children as $child) {
-                $this->walkTreeV3($child, $scope);
+                $this->walkTreeV3($child, $scope, $parts);
             }
+        }
+        if ($openedForm) {
+            $fp = array_pop($this->formStack);
+            $this->forms[$fp]['fields'] = array_values($this->forms[$fp]['fields']);
+            $this->forms[$fp]['urls'] = array_values(array_unique($this->forms[$fp]['urls']));
         }
     }
 

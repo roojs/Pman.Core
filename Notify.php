@@ -250,7 +250,9 @@ class Pman_Core_Notify extends Pman
             $w->evtype = $this->evtype;
         }
         
-        $w->whereAddIn('server_id', $sids, 'int');
+        // qualify: autoJoin brings in core_domain which also has server_id
+        // use $this->table (core_notify or pressrelease_notify etc.)
+        $w->whereAddIn($this->table . '.server_id', $sids, 'int');
 
         
         if (!empty($opts['old'])) {
@@ -587,7 +589,9 @@ class Pman_Core_Notify extends Pman
                     //fclose($p['pipes'][1]);
                     fclose($p['pipes'][0]);
                     
-                    $this->logecho("TERMINATING: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . file_get_contents($p['out']) . " : " . file_get_contents($p['oute']));
+                    $output = file_exists($p['out']) ? file_get_contents($p['out']) : '';
+                    $outputErr = file_exists($p['oute']) ? file_get_contents($p['oute']) : '';
+                    $this->logecho("TERMINATING: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . $output . " : " . $outputErr);
                     @unlink($p['out']);
                     @unlink($p['oute']);
                     

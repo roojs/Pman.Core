@@ -418,7 +418,7 @@ Pman.Login =  new Roo.util.Observable({
             formLabel('username', "Email Address"+':');
             formLabel('lang', "Language"+':');
             formLabel('remember_username', "Remember me"+':');
-            Pman.Dialog.Login.dialog.setTitle("Login");
+            Pman.Dialog.Login.dialog.setTitle('Log into ' + appName);
             Pman.Dialog.Login.dialog.buttons[0].setText("Forgot Password");
             Pman.Dialog.Login.dialog.buttons[1].setText("Login");
         }

@@ -191,6 +191,11 @@ class Pman_Core_Images extends Pman
            //print_r($img);           die("HERE");
             $this->imgErr("image has been removed or deleted.",$s);
         }
+
+        if ($this->thumb && $img->mimetype == 'image/svg+xml') {
+            $this->thumb = false;
+            $this->as_mimetype = false;
+        }
         
         if($this->is_local) {
             return $this->serve($img);
