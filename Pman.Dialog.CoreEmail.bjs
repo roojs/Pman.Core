@@ -541,69 +541,10 @@
                    "valueField" : "id",
                    "width" : 300,
                    "xtype" : "ComboBox"
-                  }
-                 ],
-                 "xtype" : "Row"
-                },
-                {
-                 "$ xns" : "Roo.form",
-                 "items" : [
-                  {
-                   "$ xns" : "Roo.form",
-                   "allowBlank" : false,
-                   "fieldLabel" : "Subject",
-                   "name" : "subject",
-                   "width" : 600,
-                   "xtype" : "TextField"
                   },
                   {
                    "$ xns" : "Roo.form",
-                   "allowBlank" : false,
-                   "displayField" : "title",
-                   "editable" : false,
-                   "fieldLabel" : "Language",
-                   "hiddenName" : "language",
-                   "items" : [
-                    {
-                     "$ fields" : "['code', 'title']",
-                     "$ xns" : "Roo.data",
-                     "* prop" : "store",
-                     "xtype" : "SimpleStore",
-                     "| data" : "(function() {return typeof(Pman) == 'object'  ? Pman.I18n.simpleStoreData('l') : []})()"
-                    }
-                   ],
-                   "listWidth" : 200,
-                   "mode" : "local",
-                   "name" : "language_name",
-                   "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>",
-                   "triggerAction" : "all",
-                   "valueField" : "code",
-                   "width" : 200,
-                   "xtype" : "ComboBox"
-                  }
-                 ],
-                 "xtype" : "Row"
-                },
-                {
-                 "$ xns" : "Roo.form",
-                 "items" : [
-                  {
-                   "$ xns" : "Roo.form",
-                   "allowBlank" : true,
-                   "emptyText" : "Shown under the subject in the inbox",
-                   "fieldLabel" : "Preview text",
-                   "name" : "preheader",
-                   "width" : 600,
-                   "xtype" : "TextField"
-                  }
-                 ],
-                 "xtype" : "Row"
-                },
-                {
-                 "$ xns" : "Roo.form",
-                 "items" : [
-                  {
-                   "$ xns" : "Roo.form",
+                   "String actionMode" : "fieldEl",
                    "allowBlank" : true,
                    "alwaysQuery" : true,
                    "displayField" : "name",
@@ -676,6 +617,60 @@
                    "valueField" : "id",
                    "width" : 300,
                    "xtype" : "ComboBox"
+                  }
+                 ],
+                 "xtype" : "Row"
+                },
+                {
+                 "$ xns" : "Roo.form",
+                 "items" : [
+                  {
+                   "$ xns" : "Roo.form",
+                   "allowBlank" : false,
+                   "fieldLabel" : "Subject",
+                   "name" : "subject",
+                   "width" : 600,
+                   "xtype" : "TextField"
+                  },
+                  {
+                   "$ xns" : "Roo.form",
+                   "allowBlank" : false,
+                   "displayField" : "title",
+                   "editable" : false,
+                   "fieldLabel" : "Language",
+                   "hiddenName" : "language",
+                   "items" : [
+                    {
+                     "$ fields" : "['code', 'title']",
+                     "$ xns" : "Roo.data",
+                     "* prop" : "store",
+                     "xtype" : "SimpleStore",
+                     "| data" : "(function() {return typeof(Pman) == 'object'  ? Pman.I18n.simpleStoreData('l') : []})()"
+                    }
+                   ],
+                   "listWidth" : 200,
+                   "mode" : "local",
+                   "name" : "language_name",
+                   "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>",
+                   "triggerAction" : "all",
+                   "valueField" : "code",
+                   "width" : 200,
+                   "xtype" : "ComboBox"
+                  }
+                 ],
+                 "xtype" : "Row"
+                },
+                {
+                 "$ xns" : "Roo.form",
+                 "items" : [
+                  {
+                   "$ xns" : "Roo.form",
+                   "allowBlank" : true,
+                   "emptyText" : "Shown under the subject in the inbox",
+                   "fieldLabel" : "Preview text",
+                   "name" : "preheader",
+                   "width" : 600,
+                   "xtype" : "TextField"
                   }
                  ],
                  "xtype" : "Row"
