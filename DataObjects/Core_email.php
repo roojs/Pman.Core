@@ -316,7 +316,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             if ($body) {
                 $div = $doc->createElement('div');
                 $div->setAttribute('style', 'display:none;max-height:0;overflow:hidden;mso-hide:all;');
-                $div->appendChild($doc->createTextNode($this->preheader));
+                // pad so short preheaders do not pull the first body words into the inbox snippet
+                $div->appendChild($doc->createTextNode(
+                    $this->preheader . str_repeat("\xC2\xA0\xE2\x80\x8C", 100)
+                ));
                 if (!$body->firstChild) {
                     $body->appendChild($div);
                 }
