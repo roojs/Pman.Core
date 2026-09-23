@@ -77,10 +77,10 @@ Pman.Dialog.CoreEmail = {
   'bcc_group_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'from_email_combo_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'bcc_group_id_name_fieldLabel' : '68b00d723d37122f64da8d9939f836f0' /* BCC Group */ ,
+  'unsubscribe_mailing_list_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'subject_fieldLabel' : 'c7892ebbb139886662c6f2fc8c450710' /* Subject */ ,
   'preheader_emptyText' : '527ea5285bad103a10a7abce77870ac0' /* Shown under the subject in the inbox */ ,
   'preheader_fieldLabel' : '377ab6b6469a667a1709c0997fad1b72' /* Preview text */ ,
-  'unsubscribe_mailing_list_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'test_class_fieldLabel' : 'b337c8a67244afb6551ee1f8f9717676' /* Test Class <BR/> (for system reference only) */ 
  },
 
@@ -975,73 +975,10 @@ Pman.Dialog.CoreEmail = {
                     '|xns' : 'Roo.data'
                    }
                   }
-                 }
-                ]
-               },
-               {
-                xtype : 'Row',
-                xns : Roo.form,
-                '|xns' : 'Roo.form',
-                items  : [
-                 {
-                  xtype : 'TextField',
-                  allowBlank : false,
-                  fieldLabel : _this._strings['c7892ebbb139886662c6f2fc8c450710'] /* Subject */,
-                  name : 'subject',
-                  width : 600,
-                  xns : Roo.form,
-                  '|xns' : 'Roo.form'
                  },
                  {
                   xtype : 'ComboBox',
-                  allowBlank : false,
-                  displayField : 'title',
-                  editable : false,
-                  fieldLabel : _this._strings['4994a8ffeba4ac3140beb89e8d41f174'] /* Language */,
-                  hiddenName : 'language',
-                  listWidth : 200,
-                  mode : 'local',
-                  name : 'language_name',
-                  tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>',
-                  triggerAction : 'all',
-                  valueField : 'code',
-                  width : 200,
-                  xns : Roo.form,
-                  '|xns' : 'Roo.form',
-                  store : {
-                   xtype : 'SimpleStore',
-                   data : (function() {return typeof(Pman) == 'object'  ? Pman.I18n.simpleStoreData('l') : []})(),
-                   fields : ['code', 'title'],
-                   xns : Roo.data,
-                   '|xns' : 'Roo.data'
-                  }
-                 }
-                ]
-               },
-               {
-                xtype : 'Row',
-                xns : Roo.form,
-                '|xns' : 'Roo.form',
-                items  : [
-                 {
-                  xtype : 'TextField',
-                  allowBlank : true,
-                  emptyText : _this._strings['527ea5285bad103a10a7abce77870ac0'] /* Shown under the subject in the inbox */,
-                  fieldLabel : _this._strings['377ab6b6469a667a1709c0997fad1b72'] /* Preview text */,
-                  name : 'preheader',
-                  width : 600,
-                  xns : Roo.form,
-                  '|xns' : 'Roo.form'
-                 }
-                ]
-               },
-               {
-                xtype : 'Row',
-                xns : Roo.form,
-                '|xns' : 'Roo.form',
-                items  : [
-                 {
-                  xtype : 'ComboBox',
+                  actionMode : 'fieldEl',
                   allowBlank : true,
                   alwaysQuery : true,
                   displayField : 'name',
@@ -1105,6 +1042,63 @@ Pman.Dialog.CoreEmail = {
                     '|xns' : 'Roo.data'
                    }
                   }
+                 }
+                ]
+               },
+               {
+                xtype : 'Row',
+                xns : Roo.form,
+                '|xns' : 'Roo.form',
+                items  : [
+                 {
+                  xtype : 'TextField',
+                  allowBlank : false,
+                  fieldLabel : _this._strings['c7892ebbb139886662c6f2fc8c450710'] /* Subject */,
+                  name : 'subject',
+                  width : 600,
+                  xns : Roo.form,
+                  '|xns' : 'Roo.form'
+                 },
+                 {
+                  xtype : 'ComboBox',
+                  allowBlank : false,
+                  displayField : 'title',
+                  editable : false,
+                  fieldLabel : _this._strings['4994a8ffeba4ac3140beb89e8d41f174'] /* Language */,
+                  hiddenName : 'language',
+                  listWidth : 200,
+                  mode : 'local',
+                  name : 'language_name',
+                  tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>',
+                  triggerAction : 'all',
+                  valueField : 'code',
+                  width : 200,
+                  xns : Roo.form,
+                  '|xns' : 'Roo.form',
+                  store : {
+                   xtype : 'SimpleStore',
+                   data : (function() {return typeof(Pman) == 'object'  ? Pman.I18n.simpleStoreData('l') : []})(),
+                   fields : ['code', 'title'],
+                   xns : Roo.data,
+                   '|xns' : 'Roo.data'
+                  }
+                 }
+                ]
+               },
+               {
+                xtype : 'Row',
+                xns : Roo.form,
+                '|xns' : 'Roo.form',
+                items  : [
+                 {
+                  xtype : 'TextField',
+                  allowBlank : true,
+                  emptyText : _this._strings['527ea5285bad103a10a7abce77870ac0'] /* Shown under the subject in the inbox */,
+                  fieldLabel : _this._strings['377ab6b6469a667a1709c0997fad1b72'] /* Preview text */,
+                  name : 'preheader',
+                  width : 600,
+                  xns : Roo.form,
+                  '|xns' : 'Roo.form'
                  }
                 ]
                },
