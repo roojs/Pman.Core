@@ -9,10 +9,11 @@ Pman.Dialog.CoreEmail = {
  _strings : {
   'e44b145bd8b49b06e0ad2ced1ad56466' :"Plain Text",
   '2f26e35d61be90501e099089dc533638' :"Select Images",
-  'f2a6c498fb90ee345d997f888fce3b18' :"Delete",
   'b357b524e740bc85b9790a0712d84a30' :"Email address",
   '962b90039a542a29cedd51d87a9f28a1' :"Html Editor",
+  'f2a6c498fb90ee345d997f888fce3b18' :"Delete",
   '28690be026c0bb9003aa58e45e5662ca' :"Enabled - will be sent out",
+  '8b818b77db36ca56d111e2fe82bb3967' :"Unsubscribe group",
   '31fde7b05ac8952dacf4af8a704074ec' :"Preview",
   'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   '231bc72756b5e6de492aaaa1577f61b1' :"Remarks",
@@ -44,11 +45,14 @@ Pman.Dialog.CoreEmail = {
   'b20a8b77b05d53b4e695738731400c85' :"Mailout Name",
   '2c466a2c159463f1d9ef5a7b57b52827' :"Select BCC Group",
   '5da618e8e4b89c66fe86e32cdafde142' :"From",
+  '377ab6b6469a667a1709c0997fad1b72' :"Preview text",
+  '527ea5285bad103a10a7abce77870ac0' :"Shown under the subject in the inbox",
   'b78a3223503896721cca1303f776159b' :"Title",
   '16d2b386b2034b9488996466aaae0b57' :"History",
-  '1351017ac6423911223bc19a8cb7c653' :"Filename",
-  '6c95f468940d0f7b821a200aed9142c1' :"Daily Email Limit",
+  '4d9ab534f975539d57689c68f5f1fd38' :"Select unsubscribe group",
   '308f2757bfc9ce92fb00ff93fdffd279' :"Images / Attachments",
+  '6c95f468940d0f7b821a200aed9142c1' :"Daily Email Limit",
+  '1351017ac6423911223bc19a8cb7c653' :"Filename",
   'c9cc8cce247e49bae79f15173ce97354' :"Save",
   '5feb9bf3c03b32635135006cbacb9542' :"Insert Field",
   '4c2a8fe7eaf24721cc7a9f0175115bd4' :"Message",
@@ -64,13 +68,19 @@ Pman.Dialog.CoreEmail = {
   'language_name_fieldLabel' : '4994a8ffeba4ac3140beb89e8d41f174' /* Language */ ,
   'from_email_text_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
   'daily_email_limit_fieldLabel' : '6c95f468940d0f7b821a200aed9142c1' /* Daily Email Limit */ ,
+  'unsubscribe_mailing_list_id_name_emptyText' : '4d9ab534f975539d57689c68f5f1fd38' /* Select unsubscribe group */ ,
+  'unsubscribe_mailing_list_id_name_fieldLabel' : '8b818b77db36ca56d111e2fe82bb3967' /* Unsubscribe group */ ,
   'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ ,
+  'unsubscribe_mailing_list_id_name_qtip' : '4d9ab534f975539d57689c68f5f1fd38' /* Select unsubscribe group */ ,
   'from_name_fieldLabel' : '5da618e8e4b89c66fe86e32cdafde142' /* From */ ,
   'from_email_combo_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
   'bcc_group_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'from_email_combo_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'bcc_group_id_name_fieldLabel' : '68b00d723d37122f64da8d9939f836f0' /* BCC Group */ ,
+  'unsubscribe_mailing_list_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'subject_fieldLabel' : 'c7892ebbb139886662c6f2fc8c450710' /* Subject */ ,
+  'preheader_emptyText' : '527ea5285bad103a10a7abce77870ac0' /* Shown under the subject in the inbox */ ,
+  'preheader_fieldLabel' : '377ab6b6469a667a1709c0997fad1b72' /* Preview text */ ,
   'test_class_fieldLabel' : 'b337c8a67244afb6551ee1f8f9717676' /* Test Class <BR/> (for system reference only) */ 
  },
 
@@ -360,6 +370,7 @@ Pman.Dialog.CoreEmail = {
                                   if(email.emailId == _this.form.findField('stripo_id').getValue()) {
                                       _this.form.findField('subject').setValue(email.title);
                                       _this.form.findField('name').setValue((new Date(email.updatedTime)).format('d M y') + ' - ' + email.title);
+                                      _this.form.findField('preheader').setValue(email.preheader || '');
                                   }
                               });
                               deleteImages();
@@ -603,6 +614,8 @@ Pman.Dialog.CoreEmail = {
                         _this.dailyEmailLimit.show();
                         _this.dailyEmailLimit.allowBlank = false;
                         _this.testClass.show();
+                        _this.unsubscribeGroup.hide();
+                        _this.unsubscribeGroup.allowBlank = true;
                         
                         
                           if (typeof(_this.data._fields) != 'undefined') {
@@ -617,6 +630,8 @@ Pman.Dialog.CoreEmail = {
                             _this.dailyEmailLimit.allowBlank = true;
                             // hide test class for crm mailing list message
                             _this.testClass.hide();
+                            _this.unsubscribeGroup.show();
+                            _this.unsubscribeGroup.allowBlank = false;
                         }
                             
                         if(_this.data.id*1 > 0){
@@ -672,6 +687,22 @@ Pman.Dialog.CoreEmail = {
                             }
                             _this.sendBtn.show();
                             _this.sendTestBtn.show();
+                            var groupId = action.result.data.unsubscribe_mailing_list_id;
+                            if (groupId * 1) {
+                                new Pman.Request({
+                                    url : baseURL + '/Roo/Crm_mailing_list.php',
+                                    method : 'GET',
+                                    params : {
+                                        _id : groupId
+                                    },
+                                    success : function(res) {
+                                        if (!res.data || !res.data.name) {
+                                            return;
+                                        }
+                                        _this.unsubscribeGroup.setFromData(res.data);
+                                    }
+                                });
+                            }
                         }
                         
                         return;
@@ -944,6 +975,73 @@ Pman.Dialog.CoreEmail = {
                     '|xns' : 'Roo.data'
                    }
                   }
+                 },
+                 {
+                  xtype : 'ComboBox',
+                  actionMode : 'fieldEl',
+                  allowBlank : true,
+                  alwaysQuery : true,
+                  displayField : 'name',
+                  editable : true,
+                  emptyText : _this._strings['4d9ab534f975539d57689c68f5f1fd38'] /* Select unsubscribe group */,
+                  fieldLabel : _this._strings['8b818b77db36ca56d111e2fe82bb3967'] /* Unsubscribe group */,
+                  forceSelection : true,
+                  hiddenName : 'unsubscribe_mailing_list_id',
+                  listWidth : 300,
+                  loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
+                  minChars : 0,
+                  name : 'unsubscribe_mailing_list_id_name',
+                  pageSize : 20,
+                  qtip : _this._strings['4d9ab534f975539d57689c68f5f1fd38'] /* Select unsubscribe group */,
+                  queryParam : 'search[name]',
+                  selectOnFocus : true,
+                  tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>',
+                  triggerAction : 'all',
+                  typeAhead : false,
+                  valueField : 'id',
+                  width : 300,
+                  listeners : {
+                   render : function (_self)
+                    {
+                        _this.unsubscribeGroup = _self;
+                        _self.hide();
+                        _self.allowBlank = true;
+                    }
+                  },
+                  xns : Roo.form,
+                  '|xns' : 'Roo.form',
+                  store : {
+                   xtype : 'Store',
+                   remoteSort : true,
+                   sortInfo : { direction : 'ASC', field: 'name' },
+                   listeners : {
+                    beforeload : function (_self, o){
+                         o.params = o.params || {};
+                         o.params._unsubscribe_groups = 1;
+                     }
+                   },
+                   xns : Roo.data,
+                   '|xns' : 'Roo.data',
+                   proxy : {
+                    xtype : 'HttpProxy',
+                    method : 'GET',
+                    url : baseURL + '/Roo/Crm_mailing_list.php',
+                    xns : Roo.data,
+                    '|xns' : 'Roo.data'
+                   },
+                   reader : {
+                    xtype : 'JsonReader',
+                    fields : [ 
+                        {"name":"id","type":"int"},
+                        {"name":"name","type":"string"}
+                    ],
+                    id : 'id',
+                    root : 'data',
+                    totalProperty : 'total',
+                    xns : Roo.data,
+                    '|xns' : 'Roo.data'
+                   }
+                  }
                  }
                 ]
                },
@@ -984,6 +1082,23 @@ Pman.Dialog.CoreEmail = {
                    xns : Roo.data,
                    '|xns' : 'Roo.data'
                   }
+                 }
+                ]
+               },
+               {
+                xtype : 'Row',
+                xns : Roo.form,
+                '|xns' : 'Roo.form',
+                items  : [
+                 {
+                  xtype : 'TextField',
+                  allowBlank : true,
+                  emptyText : _this._strings['527ea5285bad103a10a7abce77870ac0'] /* Shown under the subject in the inbox */,
+                  fieldLabel : _this._strings['377ab6b6469a667a1709c0997fad1b72'] /* Preview text */,
+                  name : 'preheader',
+                  width : 600,
+                  xns : Roo.form,
+                  '|xns' : 'Roo.form'
                  }
                 ]
                },
