@@ -7,6 +7,7 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreImageEdit = {
 
  _strings : {
+  'e64df1d7c22b9638f084ce8a4aff3ff3' :"Target URL",
   'a9da081df4fba9b50b97fd23e6e6cb68' :"Image Preview",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
@@ -21,6 +22,7 @@ Pman.Dialog.CoreImageEdit = {
   'imgtype_qtip' : 'c3e2419b6452ebc5c84b0074ece90a02' /* Select Image type */ ,
   'title_fieldLabel' : 'f6295847b54e1e61e3daa57fa41ab74a' /* Name / description */ ,
   'filename_fieldLabel' : 'a9da081df4fba9b50b97fd23e6e6cb68' /* Image Preview */ ,
+  'linkurl_fieldLabel' : 'e64df1d7c22b9638f084ce8a4aff3ff3' /* Target URL */ ,
   'imgtype_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'imgtype_emptyText' : 'c3e2419b6452ebc5c84b0074ece90a02' /* Select Image type */ 
  },
@@ -233,6 +235,15 @@ Pman.Dialog.CoreImageEdit = {
             fieldLabel : _this._strings['f6295847b54e1e61e3daa57fa41ab74a'] /* Name / description */,
             height : 80,
             name : 'title',
+            width : 300,
+            xns : Roo.form,
+            '|xns' : 'Roo.form'
+           },
+           {
+            xtype : 'TextField',
+            allowBlank : true,
+            fieldLabel : _this._strings['e64df1d7c22b9638f084ce8a4aff3ff3'] /* Target URL */,
+            name : 'linkurl',
             width : 300,
             xns : Roo.form,
             '|xns' : 'Roo.form'

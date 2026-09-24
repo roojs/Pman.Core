@@ -118,6 +118,14 @@
            "name" : "title",
            "width" : 300,
            "xtype" : "TextArea"
+          },
+          {
+           "$ xns" : "Roo.form",
+           "allowBlank" : true,
+           "fieldLabel" : "Target URL",
+           "name" : "linkurl",
+           "width" : 300,
+           "xtype" : "TextField"
           }
          ],
          "labelAlign" : "top",
