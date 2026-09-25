@@ -41,10 +41,12 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     function applyFilters($q, $au, $roo)
     {
 
+        // AI-filter: query[name_starts] - Match group name prefix
         if (!empty($q['query']['name_starts'])) {
             $v = $this->escape($q['query']['name_starts']);
             $this->whereAdd("{$this->tableName()}.name like '{$v}%'");
         }
+        // AI-filter: query[name_contains] - Match group name (contains)
         if (!empty($q['query']['name_contains'])) {
             $v = $this->escape($q['query']['name_contains']);
             $this->whereAdd("{$this->tableName()}.name like '%{$v}%'");
@@ -59,6 +61,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             }
         }
         
+        // AI-filter: _is_in_group - Add is_in_group column for this person id (shows membership in each group row)
         if(!empty($q['_is_in_group'])){
             $this->selectAdd("
                 COALESCE((

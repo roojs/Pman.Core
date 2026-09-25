@@ -37,6 +37,13 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     function applyFilters($q, $au ,$roo)
     {
         $tn = $this->tableName();
+        // Object history (Events grid on a record) must include portal / other-user rows.
+        // Unscoped list stays own-person unless Admin tab.
+        if (empty($q['on_id']) && empty($q['_related_on_id'])
+            && !$au->hasPerm('Admin.Admin_Tab', 'S')
+        ) {
+            $this->whereAdd("{$tn}.person_id = {$au->id}");
+        }
         // if not empty on_table
         
         if(!empty($q['person_table'])){
@@ -82,10 +89,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         
         
+        // AI-filter: query[from] - Minimum event_when date (Format: YYYY-MM-DD)
         if (!empty($q['query']['from'])) {
             $dt = date('Y-m-d' , strtotime($q['query']['from']));
             $this->whereAdd(" {$tn}.event_when >=  '$dt' ");
         }
+        // AI-filter: query[to] - Maximum event_when date (Format: YYYY-MM-DD)
         if (!empty($q['query']['to'])) {
             $dt = date('Y-m-d' , strtotime($q['query']['to']));
             $this->whereAdd(" {$tn}.event_when <=  '$dt' ");
@@ -245,11 +254,13 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             //$this->autoJoinExtra();
         }
         
+        // AI-filter: query[action] - Filter by action string (partial match)
         if(!empty($q['query']['action'])) {
             $act = $this->escape($q['query']['action']);
             $this->whereAdd("Events.action LIKE '%{$act}%'");
         }
         
+        // AI-filter: query[on_table] - Filter by related on_table name (partial match)
         if(!empty($q['query']['on_table'])) {
             $tnb = $this->escape($q['query']['on_table']);
             $this->whereAdd("Events.on_table LIKE '%{$tnb}%'");

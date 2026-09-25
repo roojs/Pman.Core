@@ -61,6 +61,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         $x->comptype= 'OWNER';
         $x->find(true);
 
+        // AI-filter: query[company_project_id] - Limit to companies on these project ids (comma-separated)
         if (!empty($q['query']['company_project_id'])) {
             $add = '';
             if (!empty($q['query']['company_include_self'])) {
@@ -88,6 +89,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             ) $add" );
              
         }
+        // AI-filter: query[comptype] - Limit to comptype values (comma-separated names)
         if (!empty($q['query']['comptype'])) {
            
             $this->whereAddIn($tn.'.comptype', explode(',', $q['query']['comptype']), 'string');
@@ -96,6 +98,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         
         // depricated - should be moved to module specific (texon afair)
         
+        // AI-filter: query[province] - Match province prefix
          if (!empty($q['query']['province'])) {
              $prov = $this->escape($q['query']['province']);
             $this->whereAdd("province LIKE '$prov%'");
@@ -117,6 +120,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             ");
         }
         
+        // AI-filter: query[name] - Match company name (contains); search[name] is equivalent
         if(!empty($q['query']['name']) || !empty($q['search']['name'])){
             
             $s = (!empty($q['query']['name'])) ? $this->escape($q['query']['name']) : $this->escape($q['search']['name']);
@@ -126,6 +130,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             ");
         }
         
+        // AI-filter: query[name_starts] - Match company name prefix; search[name_starts] is equivalent
         if(!empty($q['query']['name_starts']) || !empty($q['search']['name_starts'])){
             
             $s = (!empty($q['query']['name_starts'])) ? $this->escape($q['query']['name_starts']) : $this->escape($q['search']['name_starts']);

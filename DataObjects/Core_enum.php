@@ -41,6 +41,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 ");
             }
         }
+        // AI-filter: search[display_name] - Match display_name prefix
         if(!empty($q['search']['display_name'])) {
             $name = $this->escape($q['search']['display_name']);
             // ilike on postgres?!?
@@ -50,6 +51,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
 
         }
 
+        // AI-filter: query[search] - Match name or display_name (contains)
         if(!empty($q['query']['search'])) {
             $name = $this->escape($q['query']['search']);
             // ilike on postgres?!?
@@ -59,6 +61,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                     core_enum.display_name LIKE '%{$name}%'
             ");
         }
+        // AI-filter: query[search_begins] - Match name or display_name prefix
         if(!empty($q['query']['search_begins'])) {
             $name = $this->escape($q['query']['search_begins']);
             // ilike on postgres?!?
@@ -69,6 +72,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             ");
         }
 
+        // AI-filter: _etypes - Limit rows to one or more etype values (comma-separated, e.g. crm_action_type)
         if (isset($q['_etypes'])) {
             $this->whereAddIn('core_enum.etype', explode(',', $q['_etypes']), 'string');
         }

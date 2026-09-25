@@ -138,6 +138,7 @@
                "                    if(email.emailId == _this.form.findField('stripo_id').getValue()) {",
                "                        _this.form.findField('subject').setValue(email.title);",
                "                        _this.form.findField('name').setValue((new Date(email.updatedTime)).format('d M y') + ' - ' + email.title);",
+               "                        _this.form.findField('preheader').setValue(email.preheader || '');",
                "                    }",
                "                });",
                "                deleteImages();",
@@ -540,6 +541,82 @@
                    "valueField" : "id",
                    "width" : 300,
                    "xtype" : "ComboBox"
+                  },
+                  {
+                   "$ xns" : "Roo.form",
+                   "String actionMode" : "fieldEl",
+                   "allowBlank" : true,
+                   "alwaysQuery" : true,
+                   "displayField" : "name",
+                   "editable" : true,
+                   "emptyText" : "Select unsubscribe group",
+                   "fieldLabel" : "Unsubscribe group",
+                   "forceSelection" : true,
+                   "hiddenName" : "unsubscribe_mailing_list_id",
+                   "items" : [
+                    {
+                     "$ sortInfo" : "{ direction : 'ASC', field: 'name' }",
+                     "$ xns" : "Roo.data",
+                     "* prop" : "store",
+                     "items" : [
+                      {
+                       "$ url" : "baseURL + '/Roo/Crm_mailing_list.php'",
+                       "$ xns" : "Roo.data",
+                       "* prop" : "proxy",
+                       "method" : "GET",
+                       "xtype" : "HttpProxy"
+                      },
+                      {
+                       "$ fields" : [
+                        "[ ",
+                        "    {\"name\":\"id\",\"type\":\"int\"},",
+                        "    {\"name\":\"name\",\"type\":\"string\"}",
+                        "]"
+                       ],
+                       "$ xns" : "Roo.data",
+                       "* prop" : "reader",
+                       "id" : "id",
+                       "root" : "data",
+                       "totalProperty" : "total",
+                       "xtype" : "JsonReader"
+                      }
+                     ],
+                     "listeners" : {
+                      "|beforeload" : [
+                       "function (_self, o){",
+                       "    o.params = o.params || {};",
+                       "    o.params._unsubscribe_groups = 1;",
+                       "}"
+                      ]
+                     },
+                     "remoteSort" : true,
+                     "xtype" : "Store"
+                    }
+                   ],
+                   "listWidth" : 300,
+                   "listeners" : {
+                    "render" : [
+                     "function (_self)",
+                     "{",
+                     "    _this.unsubscribeGroup = _self;",
+                     "    _self.hide();",
+                     "    _self.allowBlank = true;",
+                     "}"
+                    ]
+                   },
+                   "loadingText" : "Searching...",
+                   "minChars" : 0,
+                   "name" : "unsubscribe_mailing_list_id_name",
+                   "pageSize" : 20,
+                   "qtip" : "Select unsubscribe group",
+                   "queryParam" : "search[name]",
+                   "selectOnFocus" : true,
+                   "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
+                   "triggerAction" : "all",
+                   "typeAhead" : false,
+                   "valueField" : "id",
+                   "width" : 300,
+                   "xtype" : "ComboBox"
                   }
                  ],
                  "xtype" : "Row"
@@ -579,6 +656,21 @@
                    "valueField" : "code",
                    "width" : 200,
                    "xtype" : "ComboBox"
+                  }
+                 ],
+                 "xtype" : "Row"
+                },
+                {
+                 "$ xns" : "Roo.form",
+                 "items" : [
+                  {
+                   "$ xns" : "Roo.form",
+                   "allowBlank" : true,
+                   "emptyText" : "Shown under the subject in the inbox",
+                   "fieldLabel" : "Preview text",
+                   "name" : "preheader",
+                   "width" : 600,
+                   "xtype" : "TextField"
                   }
                  ],
                  "xtype" : "Row"
@@ -1131,6 +1223,8 @@
                  "        _this.dailyEmailLimit.show();",
                  "        _this.dailyEmailLimit.allowBlank = false;",
                  "        _this.testClass.show();",
+                 "        _this.unsubscribeGroup.hide();",
+                 "        _this.unsubscribeGroup.allowBlank = true;",
                  "        ",
                  "        ",
                  "          if (typeof(_this.data._fields) != 'undefined') {",
@@ -1145,6 +1239,8 @@
                  "            _this.dailyEmailLimit.allowBlank = true;",
                  "            // hide test class for crm mailing list message",
                  "            _this.testClass.hide();",
+                 "            _this.unsubscribeGroup.show();",
+                 "            _this.unsubscribeGroup.allowBlank = false;",
                  "        }",
                  "            ",
                  "        if(_this.data.id*1 > 0){",
@@ -1200,6 +1296,22 @@
                  "            }",
                  "            _this.sendBtn.show();",
                  "            _this.sendTestBtn.show();",
+                 "            var groupId = action.result.data.unsubscribe_mailing_list_id;",
+                 "            if (groupId * 1) {",
+                 "                new Pman.Request({",
+                 "                    url : baseURL + '/Roo/Crm_mailing_list.php',",
+                 "                    method : 'GET',",
+                 "                    params : {",
+                 "                        _id : groupId",
+                 "                    },",
+                 "                    success : function(res) {",
+                 "                        if (!res.data || !res.data.name) {",
+                 "                            return;",
+                 "                        }",
+                 "                        _this.unsubscribeGroup.setFromData(res.data);",
+                 "                    }",
+                 "                });",
+                 "            }",
                  "        }",
                  "        ",
                  "        return;",

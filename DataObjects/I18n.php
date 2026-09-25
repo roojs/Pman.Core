@@ -120,6 +120,8 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     
     function applyFilters($q, $au)
     {
+        // AI-filter: inlang - With ltype, trigger i18n database build when no rows exist for this language
+        // AI-filter: ltype - With inlang, trigger i18n database build when no rows exist for this lookup type
         if (isset($q['inlang']) && isset($q['ltype'])) {
             $qc = DB_DataObject::Factory('i18n');
             $qc->setFrom(array(
@@ -143,6 +145,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             ");
         }
         
+        // AI-filter: _as_code_and_title - Add code and title columns for country/language lookup rows
         if (!empty($q['_as_code_and_title'])) {
             $tn = $this->tableName();
             

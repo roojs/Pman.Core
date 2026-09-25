@@ -75,11 +75,17 @@ Pman.Dialog.CorePrintPreview = {
           
           
           if (!_this.data) {
-          // for testing.. should not happen!
-           //   _this.frm.dom.src=  baseURL + '/Cash/Print/1.html';
              return;
           }
           
+          if (typeof(_this.data.title) != 'undefined') {
+              _self.setTitle(_this.data.title);
+          }
+          
+          if (typeof(_this.data.url) != 'undefined') {
+              _this.frm.dom.src = _this.data.url;
+              return;
+          }
       
           if (typeof(_this.data.head) != 'undefined') {
               _this.frm.dom.contentWindow.document.head.innerHTML = _this.data.head;
@@ -88,8 +94,7 @@ Pman.Dialog.CorePrintPreview = {
           if (typeof(_this.data.body) != 'undefined') {
               _this.frm.dom.contentWindow.document.body.innerHTML = _this.data.body;
           }
-          if (typeof(_this.data.title) != 'undefined') {            
-              _self.setTitle(_this.data.title);
+          if (typeof(_this.data.title) != 'undefined') {
               _this.frm.dom.contentWindow.document.title = _this.data.title;
           }
           

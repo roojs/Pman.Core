@@ -237,10 +237,7 @@ class Pman_Core_JsTemplate extends Pman {
 
 
     }
-    
-    
+
+
     
 }
-
-// 
-

@@ -8,6 +8,9 @@
  * b) NEW - {MODULE}/sql/XXX.sql (SHARED or translable)
  *  and {MODULE}/{dbtype}/XXX.sql (SHARED or translable)
  *
+ * sql/modules.ini may list optional = MTrack,Other
+ * Table sql files whose names start with those modules plus underscore
+ * (mtrack_repos.sql) are skipped when that module is not enabled.
  *
  */
 
@@ -138,6 +141,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     var $opts = false;
     var $disabled = array();
+    var $views = array();
     
     
     var $cli = false;
@@ -496,10 +500,23 @@ class Pman_Core_UpdateDatabase extends Pman
         //$lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
         //usort($files, $lsort);
         
+        $optional = '';
+        if (file_exists($dir . '/modules.ini')) {
+            $ini = parse_ini_file($dir . '/modules.ini');
+            if (!empty($ini['optional'])) {
+                $optional = strtolower(implode('|', array_diff(
+                    preg_split('/\s*,\s*/', $ini['optional']),
+                    $this->modulesList()
+                )));
+            }
+        }
         
         foreach($files as $bfn) {
 
-
+            if ($optional != '' && preg_match('/^(' . $optional . ')_/i', basename($bfn))) {
+                echo "Skip " . basename($bfn) . " — optional module not enabled\n";
+                continue;
+            }
             if (preg_match('/migrate/i', basename($bfn))) { // skip migration scripts at present..
                 continue;
             }
@@ -551,6 +568,16 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->fixMysqlInnodb(); /// run once 
         
         echo "Import MYSQL :: $dir\n";
+
+        if (empty($this->views)) {
+            $dbo = DB_DataObject::factory('core_enum');
+            if (is_a($dbo, 'PDO_DataObject')) {
+                $this->views = $dbo->generator()->introspection()->getListOf('views');
+            } else {
+                $db = $dbo->getDatabaseConnection();
+                $this->views = $db->getListOf('views');
+            }
+        }
         
         
         require_once 'System.php';
@@ -570,10 +597,23 @@ class Pman_Core_UpdateDatabase extends Pman
         $files = glob($dir.'/*.sql');
         uksort($files, 'strcasecmp');
         
+        $optional = '';
+        if (file_exists($dir . '/modules.ini')) {
+            $ini = parse_ini_file($dir . '/modules.ini');
+            if (!empty($ini['optional'])) {
+                $optional = strtolower(implode('|', array_diff(
+                    preg_split('/\s*,\s*/', $ini['optional']),
+                    $this->modulesList()
+                )));
+            }
+        }
        
         foreach($files as $fn) {
-                
                  
+                if ($optional != '' && preg_match('/^(' . $optional . ')_/i', basename($fn))) {
+                    echo "Skip " . basename($fn) . " — optional module not enabled\n";
+                    continue;
+                }
                 if (preg_match('/migrate/i', basename($fn))) { // skip migration scripts at present..
                     continue;
                 }
@@ -587,6 +627,11 @@ class Pman_Core_UpdateDatabase extends Pman
                     continue;
                 }
                 if (!empty($this->opts['only-module-sql-table']) && basename($fn) != $this->opts['only-module-sql-table'].'.sql') {
+                    continue;
+                }
+                $tbl = preg_replace('/\.sql$/', '', basename($fn));
+                if (in_array($tbl, $this->views)) {
+                    echo "Skip $tbl = view (not BASE TABLE)\n";
                     continue;
                 }
                         

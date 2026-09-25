@@ -674,14 +674,21 @@ class Pman_Core_NotifySend extends Pman
                     
                 }
                 
+                // BCC does not follow NotifyRouter (no MX / Core_Notify.routes).
+                // Currently it uses $ff->Mail (authenticated SMTP via Mail config),
+                // which is often fine for in-tenant archive addresses. Eventually
+                // this should use the same routing rules as the primary send;
+                // not implemented yet.
                 if (!empty($this->email['bcc'])) {
                     $cmailer = Mail::factory('smtp', isset($ff->Mail) ? $ff->Mail : array() );
                     $this->email['headers']['Subject'] = "(CC): " . $this->email['headers']['Subject'];
-                    $res = $cmailer->send($this->email['bcc'],  $this->email['headers'], $this->email['body']);
+                    $bcc_list = $this->email['bcc'];
+                    $res = $cmailer->send($bcc_list,  $this->email['headers'], $this->email['body']);
+                    $bcc_log = is_array($bcc_list) ? implode(', ', $bcc_list) : $bcc_list;
                     if (!$res || is_a($res, 'PEAR_Error')) {
-                        echo "could not send bcc..\n";
+                        echo "could not send bcc to {$bcc_log}..\n";
                     } else {
-                        echo "Sent BCC to {$this->email['bcc']}\n";
+                        echo "Sent BCC to {$bcc_log}\n";
                     }
                 }
 
@@ -714,6 +721,9 @@ class Pman_Core_NotifySend extends Pman
             $errmsg=   $this->lastSmtpResponse->userinfo['smtpcode'] . ': ' .$this->lastSmtpResponse->toString();
             if (isset($this->lastSmtpResponse->userinfo['smtptext'])) {
                 $errmsg=  $this->lastSmtpResponse->userinfo['smtpcode'] . ':' . $this->lastSmtpResponse->userinfo['smtptext'];
+            }
+            if (!empty($res->message) && preg_match('/timed out|Failed to write to socket/i', $res->message)) {
+                $errmsg = 'SMTP WRITE TIMEOUT: ' . $res->message;
             }
             // Check if error message contains spamhaus (case-insensitive)
             // If spamhaus is found, continue current behavior (don't pass to next server)
@@ -860,6 +870,11 @@ class Pman_Core_NotifySend extends Pman
             $errmsg=   $this->lastSmtpResponse->userinfo['smtpcode'] . ': ' .$this->lastSmtpResponse->toString();
             if (isset($this->lastSmtpResponse->userinfo['smtptext'])) {
                 $errmsg=  $this->lastSmtpResponse->userinfo['smtpcode'] . ':' . $this->lastSmtpResponse->userinfo['smtptext'];
+            }
+            if (!empty($this->lastSmtpResponse->message)
+                && preg_match('/timed out|Failed to write to socket/i', $this->lastSmtpResponse->message)
+            ) {
+                $errmsg = 'SMTP WRITE TIMEOUT: ' . $this->lastSmtpResponse->message;
             }
 
             // Using our configured route: no spam/ipv6/blacklist updates

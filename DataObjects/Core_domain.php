@@ -136,7 +136,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     function hasValidMx($domain)
     {
         if(!checkdnsrr($domain, 'MX')) {
-            return false;
+            // SMTP fallback when no MX: deliver to the domain's A/AAAA
+            return checkdnsrr($domain, 'A') || checkdnsrr($domain, 'AAAA');
         }
 
         $mx_records = array();
@@ -183,10 +184,12 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
+        // AI-filter: query[domain] - Match domain name (contains)
         if (!empty($q['query']['domain'])) {
             $this->whereAdd("core_domain.domain like '%{$this->escape($q['query']['domain'])}%'");
         }
 
+        // AI-filter: _status - Filter by MX validity: invalid_mx or valid_mx
         if(!empty($q['_status'])) {
             $badCond = "
                 (
@@ -206,6 +209,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
         }
 
+        // AI-filter: _with_reference_count - Add person_reference_count column and enable reference status filtering
         if(!empty($q['_with_reference_count'])) {
             $this->selectAddPersonReferenceCount();
             if(!empty($q['sort']) && $q['sort'] == 'person_reference_count' && !empty($q['dir'])) {
@@ -213,6 +217,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $this->orderBy("{$q['sort']} $dir");
             }
     
+            // AI-filter: _reference_status - With _with_reference_count: with_references or without_reference
             if(!empty($q['_reference_status'])) {
                 switch($q['_reference_status']) {
                     case 'with_references':
@@ -439,7 +444,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
 
             // Check for SMTP error 452 (out of storage space)
-            if (in_array($res->code, array( 452, 555)) && preg_match('/out of storage/i', $errorMessage)) {
+            if (in_array($res->code, array( 452, 555, 552)) && preg_match('/out of storage/i', $errorMessage)) {
                 // Don't need to log error for out of storage space
                 return "The email address is over quota - which probably means its a dead email address - " .
                 "we don't add these as we would just get rejections - you should contact this user before adding " .
@@ -478,8 +483,18 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
                 ||
                 $res->code == 550 && preg_match('/User unknown/i', $errorMessage)
+                ||
+                $res->code == 550 && preg_match('/No Such User Here/i', $errorMessage)
             ) {
                 return "This email is invalid - we tested it and it does not exist";
+            }
+
+            if($res->code == 554 && preg_match('/Relay access denied/i', $errorMessage)) {
+                return "We cannot send email to this person";
+            }
+
+            if ($res->code == -1 && preg_match('/timed out/i', $errorMessage)) {
+                return "Their email server is not working";
             }
 
             // Only log errors that aren't known false positives

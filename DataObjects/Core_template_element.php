@@ -25,6 +25,7 @@ class Pman_Core_DataObjects_Core_template_element  extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
+        // AI-filter: _core_page_id - Limit template elements to the template used by this core_page id
         if (isset($q['_core_page_id'] )) {
             if (empty($q['_core_page_id'] )) {
                 $this->whereAdd('1=0');

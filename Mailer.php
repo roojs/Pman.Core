@@ -328,8 +328,11 @@ class Pman_Core_Mailer {
        
         
         // add bcc if necessary..
+        // top-level $this->bcc, or contents['bcc'] from Core_email bcc_group expansion
         if (!empty($this->bcc)) {
            $ret['bcc'] = $this->bcc;
+        } else if (!empty($this->contents['bcc'])) {
+           $ret['bcc'] = $this->contents['bcc'];
         }
         return $ret;
     }

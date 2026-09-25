@@ -23,6 +23,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     public $active;
     public $bcc_group_id;
     public $test_class;
+    public $preheader;                       // varchar(255) not_null default '' — inbox preview text
      
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
@@ -309,6 +310,24 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             
             $this->plaintext = str_replace("{unsubscribe_link}", $unsubscribe, empty($this->plaintext) ? '' : $this->plaintext);
         }
+
+        if (!empty($this->preheader)) {
+            $body = $doc->getElementsByTagName('body')->item(0);
+            if ($body) {
+                $div = $doc->createElement('div');
+                $div->setAttribute('style', 'display:none;max-height:0;overflow:hidden;mso-hide:all;');
+                // pad so short preheaders do not pull the first body words into the inbox snippet
+                $div->appendChild($doc->createTextNode(
+                    $this->preheader . str_repeat("\xC2\xA0\xE2\x80\x8C", 100)
+                ));
+                if (!$body->firstChild) {
+                    $body->appendChild($div);
+                }
+                if ($body->firstChild !== $div) {
+                    $body->insertBefore($div, $body->firstChild);
+                }
+            }
+        }
         
         
         $this->bodytext = $doc->saveHTML();
@@ -542,6 +561,11 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $random_hash = md5(date('r', time()));
         
         $this->cachedImages();
+
+        $plaintext = empty($this->plaintext) ? '' : $this->plaintext;
+        if (!empty($this->preheader)) {
+            $plaintext = $this->preheader . "\n\n" . $plaintext;
+        }
         
         $fh = fopen($cachePath, 'w');
 
@@ -563,7 +587,7 @@ Content-Type: multipart/alternative; boundary=alt-{$random_hash}
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-{$this->plaintext}
+{$plaintext}
 
 ");
         fclose($fh);

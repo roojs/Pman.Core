@@ -1,0 +1,246 @@
+{
+ "items" : [
+  {
+   "$ xns" : "Roo",
+   "background" : true,
+   "closable" : false,
+   "collapsible" : false,
+   "height" : 320,
+   "items" : [
+    {
+     "$ xns" : "Roo",
+     "* prop" : "center",
+     "titlebar" : false,
+     "xtype" : "LayoutRegion"
+    },
+    {
+     "$ xns" : "Roo",
+     "background" : true,
+     "fitToFrame" : true,
+     "items" : [
+      {
+       "$ url" : "baseURL + '/Roo/Images'",
+       "$ xns" : "Roo.form",
+       "items" : [
+        {
+         "$ xns" : "Roo.form",
+         "items" : [
+          {
+           "$ renderer" : [
+            "function(v)",
+            "{",
+            "    var src = String.format('{0}/Images/{1}/{2}', baseURL, _this.data.id, _this.data.filename);",
+            "    if (_this.data.mimetype != 'image/svg+xml') {",
+            "        src = String.format('{0}/Images/Thumb/150/{1}/{2}', baseURL, _this.data.id, _this.data.filename);",
+            "    }",
+            "    return String.format('<img src=\"{0}\" width=\"150\">', src);",
+            "}"
+           ],
+           "$ xns" : "Roo.form",
+           "fieldLabel" : "Image Preview",
+           "name" : "filename",
+           "readOnly" : true,
+           "width" : 180,
+           "xtype" : "DisplayImage"
+          }
+         ],
+         "labelAlign" : "top",
+         "width" : 200,
+         "xtype" : "Column"
+        },
+        {
+         "$ xns" : "Roo.form",
+         "items" : [
+          {
+           "$ xns" : "Roo.form",
+           "alwaysQuery" : true,
+           "displayField" : "name",
+           "editable" : false,
+           "emptyText" : "Select Image type",
+           "fieldLabel" : "Type",
+           "forceSelection" : true,
+           "items" : [
+            {
+             "$ sortInfo" : "{ direction : 'ASC', field: 'name' }",
+             "$ xns" : "Roo.data",
+             "* prop" : "store",
+             "items" : [
+              {
+               "$ url" : "baseURL + '/Roo/core_enum'",
+               "$ xns" : "Roo.data",
+               "* prop" : "proxy",
+               "method" : "GET",
+               "xtype" : "HttpProxy"
+              },
+              {
+               "$ fields" : "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"}]",
+               "$ xns" : "Roo.data",
+               "* prop" : "reader",
+               "id" : "id",
+               "root" : "data",
+               "totalProperty" : "total",
+               "xtype" : "JsonReader"
+              }
+             ],
+             "listeners" : {
+              "|beforeload" : [
+               "function (_self, o){",
+               "    o.params = o.params || {};",
+               "    o.params.etype = 'Image Types';",
+               "    o.params.active = 1;",
+               "}"
+              ]
+             },
+             "remoteSort" : true,
+             "xtype" : "Store"
+            }
+           ],
+           "listWidth" : 300,
+           "loadingText" : "Searching...",
+           "minChars" : 0,
+           "name" : "imgtype",
+           "pageSize" : 20,
+           "qtip" : "Select Image type",
+           "queryParam" : "query[name]",
+           "selectOnFocus" : true,
+           "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b></div>",
+           "triggerAction" : "all",
+           "typeAhead" : true,
+           "valueField" : "name",
+           "width" : 300,
+           "xtype" : "ComboBox"
+          },
+          {
+           "$ xns" : "Roo.form",
+           "allowBlank" : true,
+           "fieldLabel" : "Name / description",
+           "height" : 80,
+           "name" : "title",
+           "width" : 300,
+           "xtype" : "TextArea"
+          },
+          {
+           "$ xns" : "Roo.form",
+           "allowBlank" : true,
+           "fieldLabel" : "Target URL",
+           "name" : "linkurl",
+           "width" : 300,
+           "xtype" : "TextField"
+          }
+         ],
+         "labelAlign" : "top",
+         "width" : 320,
+         "xtype" : "Column"
+        },
+        {
+         "$ xns" : "Roo.form",
+         "name" : "id",
+         "xtype" : "Hidden"
+        }
+       ],
+       "listeners" : {
+        "|actioncomplete" : [
+         "function (_s, action)",
+         "{",
+         "    if (action.type == 'setdata') {",
+         "        if (!_this.form.findField('imgtype').getValue()) {",
+         "            _this.form.findField('imgtype').setValue('IMAGE');",
+         "        }",
+         "        return;",
+         "    }",
+         "    if (action.type == 'submit') {",
+         "        _this.dialog.el.unmask();",
+         "        _this.dialog.hide();",
+         "        if (_this.callback) {",
+         "            _this.callback.call(_this, _this.form.getValues());",
+         "        }",
+         "        _this.form.reset();",
+         "        return;",
+         "    }",
+         "}"
+        ],
+        "|actionfailed" : [
+         "function (_self, action)",
+         "{",
+         "    _this.dialog.el.unmask();",
+         "    Pman.standardActionFailed(_self, action);",
+         "}"
+        ],
+        "|rendered" : [
+         "function (_self)",
+         "{",
+         "    _this.form = _self;",
+         "}"
+        ]
+       },
+       "method" : "POST",
+       "style" : "margin: 5px",
+       "xtype" : "Form"
+      }
+     ],
+     "region" : "center",
+     "xtype" : "ContentPanel"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "|click" : [
+       "function()",
+       "{",
+       "    _this.form.reset();",
+       "    _this.dialog.hide();",
+       "}"
+      ]
+     },
+     "text" : "Cancel",
+     "xtype" : "Button"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "|click" : [
+       "function()",
+       "{",
+       "    _this.dialog.el.mask('Saving');",
+       "    _this.form.doAction('submit');",
+       "}"
+      ]
+     },
+     "text" : "OK",
+     "xtype" : "Button"
+    }
+   ],
+   "modal" : true,
+   "resizable" : false,
+   "title" : "Edit Image Details",
+   "width" : 580,
+   "xtype" : "LayoutDialog"
+  }
+ ],
+ "modOrder" : "001",
+ "name" : "Pman.Dialog.CoreImageEdit",
+ "named_strings" : {
+  "filename_fieldLabel" : "a9da081df4fba9b50b97fd23e6e6cb68",
+  "imgtype_emptyText" : "c3e2419b6452ebc5c84b0074ece90a02",
+  "imgtype_fieldLabel" : "a1fa27779242b4902f7ae3bdd5c6d508",
+  "imgtype_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "imgtype_qtip" : "c3e2419b6452ebc5c84b0074ece90a02",
+  "title_fieldLabel" : "7c3b4e2a1d9f08c65b47a0e1d2c3b4a5"
+ },
+ "parent" : "",
+ "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreImageEdit.bjs",
+ "permname" : "",
+ "strings" : {
+  "1243daf593fa297e07ab03bf06d925af" : "Searching...",
+  "7c3b4e2a1d9f08c65b47a0e1d2c3b4a5" : "Name / description",
+  "96ad0de89f69ffcba7e7caf33f8a0c06" : "Edit Image Details",
+  "a1fa27779242b4902f7ae3bdd5c6d508" : "Type",
+  "a9da081df4fba9b50b97fd23e6e6cb68" : "Image Preview",
+  "c3e2419b6452ebc5c84b0074ece90a02" : "Select Image type",
+  "e0aa021e21dddbd6d8cecec71e9cf564" : "OK",
+  "ea4788705e6873b424c65e91c2846b19" : "Cancel"
+ },
+ "title" : "Core Image Edit"
+}
