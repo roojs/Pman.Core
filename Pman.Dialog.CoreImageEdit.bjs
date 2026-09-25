@@ -33,9 +33,27 @@
             "    if (_this.data.mimetype != 'image/svg+xml') {",
             "        src = String.format('{0}/Images/Thumb/150/{1}/{2}', baseURL, _this.data.id, _this.data.filename);",
             "    }",
-            "    return String.format('<img src=\"{0}\" width=\"150\">', src);",
+            "    return String.format('<img src=\"{0}\" width=\"150\" style=\"cursor:pointer\" title=\"Double-click to download\">', src);",
             "}"
            ],
+           "listeners" : {
+            "|render" : [
+             "function (field)",
+             "{",
+             "    if (field._imagePreviewDbl) {",
+             "        field.viewEl.un('dblclick', field._imagePreviewDbl);",
+             "    }",
+             "    field._imagePreviewDbl = function () {",
+             "        if (!_this.data || !_this.data.id) {",
+             "            return;",
+             "        }",
+             "        var url = String.format('{0}/Images/Download/{1}/{2}', baseURL, _this.data.id, _this.data.filename);",
+             "        new Pman.Download({ url: url });",
+             "    };",
+             "    field.viewEl.on('dblclick', field._imagePreviewDbl);",
+             "}"
+            ]
+           },
            "$ xns" : "Roo.form",
            "fieldLabel" : "Image Preview",
            "name" : "filename",
