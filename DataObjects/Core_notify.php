@@ -403,7 +403,8 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
         return true;
     }
-    // Delivery log row. Callers still use addEvent() until they are switched over.
+    // Delivery log in both tables. Returns the Events row so flagDone() can still set event_id.
+    // core_notify_event_id is set here when the target notify row has an id.
     function logDelivery($act, $obj = false, $remarks = '')
     {
         $ff = HTML_FlexyFramework::get();
@@ -411,45 +412,39 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             return;
         }
 
-        $au = $ff->page->getAuthUser();
-        if ($ff->cli) {
-            $au = false;
-        }
-
-        $e = DB_DataObject::factory('core_notify_event');
-        $e->action = $act;
-        $e->event_when = date('Y-m-d H:i:s');
-        $e->on_table = $obj ? $obj->tableName() : '';
-        $pk = $obj ? $obj->keys() : false;
-        $e->on_id = $obj && $pk ? $obj->{$pk[0]} : 0;
-
-        $rem = array();
-        if ($obj && method_exists($obj, 'toEventString')) {
-            $es = $obj->toEventString();
-            if ($es !== false) {
-                $rem[] = $es;
-            }
-        }
-        if (!empty($remarks)) {
-            $rem[] = $remarks;
-        }
-        $e->remarks = implode(' : ', $rem);
-
-        $e->person_name = $au && !empty($au->name) ? $au->name : '';
-        $e->person_table = $au ? $au->tableName() : '';
-        $e->person_id = ($au && !empty($au->id)) ? $au->pid() : 0;
-        $e->ipaddr = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'cli';
-        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $e->ipaddr = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        }
-
-        $e->insert();
+        $ev = DB_DataObject::factory('Events');
+        $ev->init($act, $obj, $remarks);
+        $ev->event_when = date('Y-m-d H:i:s');
+        $ev->insert();
 
         $wa = DB_DataObject::factory('core_watch');
         if (method_exists($wa, 'notifyEvent')) {
-            $wa->notifyEvent($e);
+            $wa->notifyEvent($ev);
         }
-        return $e;
+        $ev->onInsert(isset($_REQUEST) ? $_REQUEST : array(), $ff->page);
+
+        $e = DB_DataObject::factory('core_notify_event');
+        $e->setFrom(array(
+            'action' => $ev->action,
+            'event_when' => $ev->event_when,
+            'on_table' => $ev->on_table,
+            'on_id' => $ev->on_id,
+            'remarks' => $ev->remarks,
+            'person_name' => $ev->person_name,
+            'person_table' => $ev->person_table,
+            'person_id' => $ev->person_id,
+            'ipaddr' => $ev->ipaddr,
+        ));
+        $e->insert();
+
+        $notify = ($obj && $obj->tableName() == 'core_notify') ? $obj : $this;
+        if (!empty($notify->id)) {
+            $old = clone($notify);
+            $notify->core_notify_event_id = $e->id;
+            $notify->update($old);
+        }
+
+        return $ev;
     }
 
     // after called do not rely on content as it includes NOW()
