@@ -403,6 +403,55 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
         return true;
     }
+    // Delivery log row. Callers still use addEvent() until they are switched over.
+    function logDelivery($act, $obj = false, $remarks = '')
+    {
+        $ff = HTML_FlexyFramework::get();
+        if (!empty($ff->Pman['disable_events'])) {
+            return;
+        }
+
+        $au = $ff->page->getAuthUser();
+        if ($ff->cli) {
+            $au = false;
+        }
+
+        $e = DB_DataObject::factory('core_notify_event');
+        $e->action = $act;
+        $e->event_when = date('Y-m-d H:i:s');
+        $e->on_table = $obj ? $obj->tableName() : '';
+        $pk = $obj ? $obj->keys() : false;
+        $e->on_id = $obj && $pk ? $obj->{$pk[0]} : 0;
+
+        $rem = array();
+        if ($obj && method_exists($obj, 'toEventString')) {
+            $es = $obj->toEventString();
+            if ($es !== false) {
+                $rem[] = $es;
+            }
+        }
+        if (!empty($remarks)) {
+            $rem[] = $remarks;
+        }
+        $e->remarks = implode(' : ', $rem);
+
+        $e->person_name = $au && !empty($au->name) ? $au->name : '';
+        $e->person_table = $au ? $au->tableName() : '';
+        $e->person_id = ($au && !empty($au->id)) ? $au->pid() : 0;
+        $e->ipaddr = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'cli';
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $e->ipaddr = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+
+        $e->insert();
+
+        $wa = DB_DataObject::factory('core_watch');
+        if (method_exists($wa, 'notifyEvent')) {
+            $wa->notifyEvent($e);
+        }
+        return $e;
+    }
+
     // after called do not rely on content as it includes NOW()
     function flagDone($event,$msgid)
     {
