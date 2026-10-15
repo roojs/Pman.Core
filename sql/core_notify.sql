@@ -73,3 +73,6 @@ ALTER TABLE core_notify ADD INDEX lookup_trigger_person_id (trigger_person_id);
 ALTER TABLE core_notify ADD   INDEX lookup_reject (person_id, reject_match_id, event_id);
 
 ALTER TABLE core_notify ADD INDEX lookup_email_id (email_id);
+
+ALTER TABLE core_notify ADD COLUMN core_notify_event_id BIGINT NOT NULL DEFAULT 0;
+ALTER TABLE core_notify_archive ADD COLUMN core_notify_event_id BIGINT NOT NULL DEFAULT 0;

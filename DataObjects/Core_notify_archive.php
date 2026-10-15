@@ -31,6 +31,7 @@ class Pman_Core_DataObjects_Core_notify_archive extends DB_DataObject
     public $language;
     public $email_id;
     public $ipv6_id;
+    public $core_notify_event_id;       // bigint
 
 
     function archive($months)

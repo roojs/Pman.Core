@@ -45,7 +45,8 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     public $person_table;
     public $to_email;
     public $language;
- 
+    public $core_notify_event_id;       // bigint
+
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
 
