@@ -403,25 +403,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
         return true;
     }
-    // Delivery log in both tables. Returns the Events row so flagDone() can still set event_id.
-    // core_notify_event_id is set here when the target notify row has an id.
-    function logDelivery($act, $obj = false, $remarks = '')
+    // Copy an Events row from addEvent() into core_notify_event. Does not write Events.
+    function logDelivery($ev)
     {
-        $ff = HTML_FlexyFramework::get();
-        if (!empty($ff->Pman['disable_events'])) {
+        if (empty($ev) || empty($ev->id)) {
             return;
         }
-
-        $ev = DB_DataObject::factory('Events');
-        $ev->init($act, $obj, $remarks);
-        $ev->event_when = date('Y-m-d H:i:s');
-        $ev->insert();
-
-        $wa = DB_DataObject::factory('core_watch');
-        if (method_exists($wa, 'notifyEvent')) {
-            $wa->notifyEvent($ev);
-        }
-        $ev->onInsert(isset($_REQUEST) ? $_REQUEST : array(), $ff->page);
 
         $e = DB_DataObject::factory('core_notify_event');
         $e->setFrom(array(
@@ -437,14 +424,13 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         ));
         $e->insert();
 
-        $notify = ($obj && $obj->tableName() == 'core_notify') ? $obj : $this;
-        if (!empty($notify->id)) {
-            $old = clone($notify);
-            $notify->core_notify_event_id = $e->id;
-            $notify->update($old);
+        if (!empty($this->id)) {
+            $old = clone($this);
+            $this->core_notify_event_id = $e->id;
+            $this->update($old);
         }
 
-        return $ev;
+        return $e;
     }
 
     // after called do not rely on content as it includes NOW()
