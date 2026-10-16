@@ -360,7 +360,8 @@ class Pman_Core_Notify extends Pman
             $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : $p->to_email) : $p->to_email;
             if (empty($email)) {
                 $ev = $this->addEvent('NOTIFYFAIL', $p,   "Notification event cleared (email is empty)" );
-                $p->flagDone($ev, '');
+                $nev = $p->logDelivery('NOTIFYFAIL', $p,   "Notification event cleared (email is empty)" );
+                $p->flagDone($ev, '', $nev);
                 continue;
             }
             
@@ -601,6 +602,7 @@ class Pman_Core_Notify extends Pman
                     $ww = clone($w);
                     if ($this->log_events) {
                         $this->addEvent('NOTIFY', $w, 'TERMINATED - TIMEOUT');
+                        $w->logDelivery('NOTIFY', $w, 'TERMINATED - TIMEOUT');
                     }
                     // Only reschedule if notification hasn't been sent yet
                     $already_sent = !empty($w->sent) && strtotime($w->sent) > strtotime('1500-01-01 00:00:00');
