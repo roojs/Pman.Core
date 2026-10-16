@@ -564,6 +564,7 @@ class Pman_Core_NotifySend extends Pman
             // only retry for 1 day if the MX issue..
             if ($retry < 240) {
                 $this->addEvent('NOTIFY', $this->notify, 'MX LOOKUP FAILED ' . $this->emailDomain->domain );
+                $this->notify->logDelivery('NOTIFY', $this->notify, 'MX LOOKUP FAILED ' . $this->emailDomain->domain );
                 $this->notify->flagLater(date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES')));
                 $this->errorHandler('GREYLISTED', "MX LOOKUP FAILED " . $this->emailDomain->domain);
             }
@@ -758,6 +759,7 @@ class Pman_Core_NotifySend extends Pman
                     $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
                 }
                 $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLISTED - ' . $errmsg);
+                $this->notify->logDelivery('NOTIFY', $this->notify, 'GREYLISTED - ' . $errmsg);
                 
                 // For 452 "out of storage" errors, wait 12 hours before retrying
                 $actual_retry_when = $this->retryWhen;
@@ -809,6 +811,7 @@ class Pman_Core_NotifySend extends Pman
         $this->server_ipv6 = $server_ipv6;
         $this->debug("IPv6: Setup successful, will retry");
         $this->addEvent('NOTIFY', $this->notify, "GREYLISTED - {$errmsg}");
+        $this->notify->logDelivery('NOTIFY', $this->notify, "GREYLISTED - {$errmsg}");
         $this->server->updateNotifyToNextServer($this->notify, $this->retryWhen, true, $this->server_ipv6, Pman_Core_NotifyRouter::$all_mx_ipv4s);
         $this->errorHandler('GREYLISTED', "Retry in next server at {$this->retryWhen} - Error: {$errmsg}");
     }
@@ -846,6 +849,7 @@ class Pman_Core_NotifySend extends Pman
             $ev = $this->addEvent('NOTIFY', $this->notify,
                 'GREYLIST - All Hosts Blacklisted: ' . $this->notify->to_email .
                 ' - Error: ' . $this->getLastEventRemarksForNotify());
+            $this->notify->logDelivery('NOTIFY', $this->notify, $ev->remarks);
             $this->server->updateNotifyToNextServer(
                 $this->notify,
                 date('Y-m-d H:i:s', strtotime('NOW + 12 HOURS')),
@@ -1000,6 +1004,7 @@ class Pman_Core_NotifySend extends Pman
             // try next server
             if($shouldRetry) {
                 $ev = $this->addEvent('NOTIFY', $this->notify, 'GREYLISTED - ' . $errmsg);
+                $this->notify->logDelivery('NOTIFY', $this->notify, 'GREYLISTED - ' . $errmsg);
                 // Pass ALL MX IPs (not just validIps) so other servers can be properly checked
                 // An IP that blocks server X might not block server Y
                 $this->server->updateNotifyToNextServer($this->notify,
@@ -1029,6 +1034,7 @@ class Pman_Core_NotifySend extends Pman
             $remarks .= ' - ' . $this->lastSmtpResponse->getMessage();
         }
         $ev = $this->addEvent('NOTIFY', $this->notify, $remarks);
+        $this->notify->logDelivery('NOTIFY', $this->notify, $remarks);
         // Minimum 60 min retry when no host could be contacted — no need to rush
         $retryWhen = strtotime($this->retryWhen) < strtotime('NOW + 60 MINUTES')
             ? date('Y-m-d H:i:s', strtotime('NOW + 60 MINUTES'))
