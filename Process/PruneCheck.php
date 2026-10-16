@@ -16,7 +16,7 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
     static $cli_desc = "Core Prune Check -- Nagios monitoring for Core pruning backlog";
     static $cli_opts = array(
         'table' => array(
-            'desc' => 'Specific table to check (core_notify, Events, Events_duplicates)',
+            'desc' => 'Specific table to check (core_notify, core_notify_event, Events, Events_duplicates)',
             'default' => '',
             'short' => 't',
         ),
@@ -114,7 +114,24 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
             'prunable_records_per_run' => 100000
         );
     }
-    
+
+    /**
+     * Check core_notify_event rows old enough to drop with the notify archive.
+     */
+    function check_core_notify_event()
+    {
+        $e = DB_DataObject::factory('core_notify_event');
+        $old = DB_DataObject::factory('core_notify_event');
+        $old->whereAdd("event_when < NOW() - INTERVAL {$this->opts['months']} MONTH");
+
+        $this->results['core_notify_event'] = array(
+            'table' => 'core_notify_event',
+            'total_records' => $e->count(),
+            'prunable_records' => $old->count(),
+            'prunable_records_per_run' => 100000
+        );
+    }
+
     /**
      * Check Events table pruning status (for archiving)
      */

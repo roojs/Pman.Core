@@ -105,31 +105,31 @@ class Pman_Core_Prune extends Pman
     {
         /// deletes events on 'NOTIFY' that are dupes..
         // and when notify sent is also there..
-        $f = DB_DataObject::Factory('Events');
-        $f->selectAdd();
-        $f->selectAdd("on_id, on_table, min(id) as min_id, max(id) as max_id, count(*) as mm");
-        $f->whereAdd("action in( 'NOTIFY', 'NOTIFYSENT') and event_when < NOW() - INTERVAL 1 WEEK");
-        $f->groupBy('on_id, on_table');
-        $f->having("mm > 1");
-        $f->orderBy('mm desc') ;
-        $f->limit(10000);
-        $ar = $f->fetchAll();
+        foreach (array('Events', 'core_notify_event') as $tn) {
+            $f = DB_DataObject::Factory($tn);
+            $f->selectAdd();
+            $f->selectAdd("on_id, on_table, min(id) as min_id, max(id) as max_id, count(*) as mm");
+            $f->whereAdd("action in( 'NOTIFY', 'NOTIFYSENT') and event_when < NOW() - INTERVAL 1 WEEK");
+            $f->groupBy('on_id, on_table');
+            $f->having("mm > 1");
+            $f->orderBy('mm desc') ;
+            $f->limit(10000);
+            $ar = $f->fetchAll();
 
-        foreach($ar as $f) {
-            
-            $q = DB_DataObject::Factory('Events');
-            $q->query("DELETE FROM Events where
-                  action = 'NOTIFY'
-                  AND
-                  on_id = {$f->on_id}
-                  AND
-                  on_table = '{$q->escape($f->on_table)}'
-                  AND
-                  id != {$f->min_id} 
-                  
-            ");
+            foreach($ar as $f) {
+                $q = DB_DataObject::Factory($tn);
+                $q->query("DELETE FROM {$tn} where
+                      action = 'NOTIFY'
+                      AND
+                      on_id = {$f->on_id}
+                      AND
+                      on_table = '{$q->escape($f->on_table)}'
+                      AND
+                      id != {$f->min_id}
+
+                ");
+            }
         }
-        
     }
         // clean up archiver 
     

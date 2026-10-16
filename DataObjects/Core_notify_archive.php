@@ -52,6 +52,10 @@ class Pman_Core_DataObjects_Core_notify_archive extends DB_DataObject
         $pe = DB_DataObject::factory('core_notify');
         $pe->whereAddIn('id', $ids , 'int');
         $eids = array_unique($pe->fetchAll('event_id'));
+
+        $pe = DB_DataObject::factory('core_notify');
+        $pe->whereAddIn('id', $ids , 'int');
+        $neids = array_unique($pe->fetchAll('core_notify_event_id'));
                       
         
         
@@ -85,23 +89,49 @@ class Pman_Core_DataObjects_Core_notify_archive extends DB_DataObject
              ");
              
      
-        // looping seems to be far quicker than IN() or any other version..
-        foreach($ids as $eid) {     
-            $p->query("                        
-                      DELETE FROM  
-                          Events 
-                      WHERE   
-                          id = {$eid}
-            ");
-        }
-                   
         $p->query("                        
                   DELETE FROM  
                       core_notify                        
                   WHERE
                       id in (" . implode(',', $ids) . ")
-              ");       
-                    
+              ");
+
+        // clearOld stores one Events id on many notifies. This batch is already
+        // gone, so skip an id that a remaining notify still has in event_id.
+        $p->query("
+              DELETE FROM
+                  Events
+              WHERE
+                  id IN (" . implode(',', $eids) . ")
+                  AND
+                  id NOT IN (
+                      SELECT event_id FROM core_notify
+                      WHERE event_id IN (" . implode(',', $eids) . ")
+                  )
+          ");
+
+        $p->query("
+              REPLACE INTO
+                  core_notify_event_archive
+              SELECT * FROM
+                  core_notify_event
+              WHERE
+                  id IN (" . implode(',', $neids) . ")
+          ");
+
+        // Same share as Events: one core_notify_event id on many notifies.
+        $p->query("
+              DELETE FROM
+                  core_notify_event
+              WHERE
+                  id IN (" . implode(',', $neids) . ")
+                  AND
+                  id NOT IN (
+                      SELECT core_notify_event_id FROM core_notify
+                      WHERE core_notify_event_id IN (" . implode(',', $neids) . ")
+                  )
+          ");
+
         $p->query("COMMIT");
         
         
