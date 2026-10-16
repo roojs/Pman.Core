@@ -479,6 +479,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         // this is a hard bounce so we add a counter onto the failed record.
         // do we add an event? - guess so..
         $ev = $roo->addEvent('NOTIFYBOUNCE', $cn, "Found imap bounce {$msg->id}" );
+        $cn->logDelivery('NOTIFYBOUNCE', $cn, "Found imap bounce {$msg->id}");
         $old = clone($cn);
         $cn->event_id = $ev->id;
          
