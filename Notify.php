@@ -739,6 +739,7 @@ class Pman_Core_Notify extends Pman
            // $p->limit(1000);
             if ($p->count()) {
                 $ev = $this->addEvent('NOTIFY', false, "RETRY TIME EXCEEDED");
+                $nev = DB_DataObject::factory('core_notify')->logDelivery('NOTIFY', false, "RETRY TIME EXCEEDED");
                 $p = DB_DataObject::factory($this->table);
                 $p->query("
                     UPDATE
@@ -746,7 +747,8 @@ class Pman_Core_Notify extends Pman
                     SET
                         sent = NOW(),
                         msgid = '',
-                        event_id = {$ev->id}
+                        event_id = {$ev->id},
+                        core_notify_event_id = {$nev->id}
                     WHERE
                         sent < '2000-01-01'
                         and
