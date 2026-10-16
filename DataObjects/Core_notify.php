@@ -403,24 +403,29 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
         return true;
     }
-    // Copy an Events row from addEvent() into core_notify_event. Does not write Events.
-    function logDelivery($ev)
+    // Same arguments as addEvent(). Writes core_notify_event only.
+    function logDelivery($act, $obj = false, $remarks = '')
     {
-        if (empty($ev) || empty($ev->id)) {
+        $ff = HTML_FlexyFramework::get();
+        if (!empty($ff->Pman['disable_events'])) {
             return;
         }
 
+        $draft = DB_DataObject::factory('Events');
+        $draft->init($act, $obj, $remarks);
+        $draft->event_when = date('Y-m-d H:i:s');
+
         $e = DB_DataObject::factory('core_notify_event');
         $e->setFrom(array(
-            'action' => $ev->action,
-            'event_when' => $ev->event_when,
-            'on_table' => $ev->on_table,
-            'on_id' => $ev->on_id,
-            'remarks' => $ev->remarks,
-            'person_name' => $ev->person_name,
-            'person_table' => $ev->person_table,
-            'person_id' => $ev->person_id,
-            'ipaddr' => $ev->ipaddr,
+            'action' => $draft->action,
+            'event_when' => $draft->event_when,
+            'on_table' => $draft->on_table,
+            'on_id' => $draft->on_id,
+            'remarks' => $draft->remarks,
+            'person_name' => $draft->person_name,
+            'person_table' => $draft->person_table,
+            'person_id' => $draft->person_id,
+            'ipaddr' => $draft->ipaddr,
         ));
         $e->insert();
 
