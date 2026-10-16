@@ -429,17 +429,11 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         ));
         $e->insert();
 
-        if (!empty($this->id)) {
-            $old = clone($this);
-            $this->core_notify_event_id = $e->id;
-            $this->update($old);
-        }
-
         return $e;
     }
 
     // after called do not rely on content as it includes NOW()
-    function flagDone($event,$msgid)
+    function flagDone($event, $msgid, $coreNotifyEvent = false)
     {
         $ww = clone($this);
         // Only modify act_when if notification hasn't been sent yet
@@ -450,6 +444,9 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $this->sent = empty($this->sent) || strtotime($this->sent) < 1 ? $this->sqlValue('NOW()') :$this->sent; // do not update if sent.....
         $this->msgid = $msgid;
         $this->event_id = $event->id;
+        if ($coreNotifyEvent) {
+            $this->core_notify_event_id = $coreNotifyEvent->id;
+        }
         $this->update($ww);
     }
     
@@ -479,9 +476,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         // this is a hard bounce so we add a counter onto the failed record.
         // do we add an event? - guess so..
         $ev = $roo->addEvent('NOTIFYBOUNCE', $cn, "Found imap bounce {$msg->id}" );
-        $cn->logDelivery('NOTIFYBOUNCE', $cn, "Found imap bounce {$msg->id}");
+        $nev = $cn->logDelivery('NOTIFYBOUNCE', $cn, "Found imap bounce {$msg->id}");
         $old = clone($cn);
         $cn->event_id = $ev->id;
+        if (!empty($nev)) {
+            $cn->core_notify_event_id = $nev->id;
+        }
          
         if($res['match'] !== false) {
             $cn->reject_match_id = $res['match']->id;  // this will trigger fails begin updated..
