@@ -391,13 +391,17 @@ class Pman_Core_NotifySend extends Pman
             if($notifyTable->find(true) && $lastEvent->get($notifyTable->event_id)) {
                 $ev = $lastEvent;
                 $nev = DB_DataObject::factory('core_notify_event');
-                $nev->get($notifyTable->core_notify_event_id);
+                if (!$nev->get($notifyTable->core_notify_event_id)) {
+                    $nev = false;
+                }
             } else {
                 $ev = $this->addEvent('NOTIFY', $this->notify, "Notification event cleared (user has to many failures)" );;
                 $nev = $this->notify->logDelivery('NOTIFY', $this->notify, "Notification event cleared (user has to many failures)" );
             }
             $this->notify->flagDone($ev, '');
-            $this->notify->linkNotifyEvent($nev);
+            if ($nev) {
+                $this->notify->linkNotifyEvent($nev);
+            }
             $this->errorHandler('SENDFAIL', $ev->remarks);
         }
         
