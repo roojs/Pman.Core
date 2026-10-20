@@ -433,7 +433,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     }
 
     // after called do not rely on content as it includes NOW()
-    function flagDone($event, $msgid, $coreNotifyEvent = false)
+    function flagDone($event, $msgid)
     {
         $ww = clone($this);
         // Only modify act_when if notification hasn't been sent yet
@@ -444,9 +444,14 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $this->sent = empty($this->sent) || strtotime($this->sent) < 1 ? $this->sqlValue('NOW()') :$this->sent; // do not update if sent.....
         $this->msgid = $msgid;
         $this->event_id = $event->id;
-        if ($coreNotifyEvent) {
-            $this->core_notify_event_id = $coreNotifyEvent->id;
-        }
+        $this->update($ww);
+    }
+
+    // Separate from flagDone until the Events read switch.
+    function linkNotifyEvent($coreNotifyEvent)
+    {
+        $ww = clone($this);
+        $this->core_notify_event_id = $coreNotifyEvent->id;
         $this->update($ww);
     }
     

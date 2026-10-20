@@ -361,7 +361,8 @@ class Pman_Core_Notify extends Pman
             if (empty($email)) {
                 $ev = $this->addEvent('NOTIFYFAIL', $p,   "Notification event cleared (email is empty)" );
                 $nev = $p->logDelivery('NOTIFYFAIL', $p,   "Notification event cleared (email is empty)" );
-                $p->flagDone($ev, '', $nev);
+                $p->flagDone($ev, '');
+                $p->linkNotifyEvent($nev);
                 continue;
             }
             

@@ -342,6 +342,17 @@ class Pman_Core_NotifySend extends Pman
         if (!$this->force && $cev->count()) {
             $cev->find(true);
             $this->notify->flagDone($cev, $cev->action == 'NOTIFYSENT' ? 'alreadysent' : '');
+            $nev = DB_DataObject::factory('core_notify_event');
+            $nev->setFrom(array(
+                'on_table' => $cev->on_table,
+                'on_id' => $cev->on_id,
+                'action' => $cev->action,
+            ));
+            $nev->orderBy('id DESC');
+            $nev->limit(1);
+            if ($nev->find(true)) {
+                $this->notify->linkNotifyEvent($nev);
+            }
             $this->errorHandler('SENDFAIL',  $cev->action . " (fix old) ".  $cev->remarks);
         }
         
@@ -349,7 +360,8 @@ class Pman_Core_NotifySend extends Pman
         if ($this->notifyObject === false)  {
             $ev = $this->addEvent('NOTIFY', $this->notify,   "Notification event cleared (underlying object does not exist)" );
             $nev = $this->notify->logDelivery('NOTIFY', $this->notify,   "Notification event cleared (underlying object does not exist)" );
-            $this->notify->flagDone($ev, '', $nev);
+            $this->notify->flagDone($ev, '');
+            $this->notify->linkNotifyEvent($nev);
             $this->errorHandler('SENDFAIL',   $ev->remarks);
         }
 
@@ -357,7 +369,8 @@ class Pman_Core_NotifySend extends Pman
         if (isset($p->active) && empty($p->active)) {
             $ev = $this->addEvent('NOTIFY', $this->notify, "Notification event cleared (not user not active any more)" );;
             $nev = $this->notify->logDelivery('NOTIFY', $this->notify, "Notification event cleared (not user not active any more)" );
-             $this->notify->flagDone($ev, '', $nev);
+            $this->notify->flagDone($ev, '');
+            $this->notify->linkNotifyEvent($nev);
             $this->errorHandler('SENDFAIL',   $ev->remarks);
         }
 
@@ -383,7 +396,8 @@ class Pman_Core_NotifySend extends Pman
                 $ev = $this->addEvent('NOTIFY', $this->notify, "Notification event cleared (user has to many failures)" );;
                 $nev = $this->notify->logDelivery('NOTIFY', $this->notify, "Notification event cleared (user has to many failures)" );
             }
-            $this->notify->flagDone($ev, '', $nev);
+            $this->notify->flagDone($ev, '');
+            $this->notify->linkNotifyEvent($nev);
             $this->errorHandler('SENDFAIL', $ev->remarks);
         }
         
@@ -414,14 +428,16 @@ class Pman_Core_NotifySend extends Pman
         if($this->notify->reachEmailLimit()) {
             $ev = $this->addEvent('NOTIFY', $this->notify, "Notification event cleared (reach email limit)" );
             $nev = $this->notify->logDelivery('NOTIFY', $this->notify, "Notification event cleared (reach email limit)" );
-            $this->notify->flagDone($ev, '', $nev);
+            $this->notify->flagDone($ev, '');
+            $this->notify->linkNotifyEvent($nev);
             $this->errorHandler('SENDFAIL', $ev->remarks);
         }
          
         if ($this->email === true)  {
             $ev = $this->addEvent('NOTIFY', $this->notify, "Notification event cleared (not required any more) - toEmail=true" );;
             $nev = $this->notify->logDelivery('NOTIFY', $this->notify, "Notification event cleared (not required any more) - toEmail=true" );
-            $this->notify->flagDone($ev, '', $nev);
+            $this->notify->flagDone($ev, '');
+            $this->notify->linkNotifyEvent($nev);
             $this->errorHandler('SENDFAIL',  $ev->remarks);
         }
 
@@ -440,7 +456,8 @@ class Pman_Core_NotifySend extends Pman
             // object returned 'false' - it does not know how to send it..
             $ev = $this->addEvent('NOTIFYFAIL', $this->notify, isset($this->email['error'])  ? $this->email['error'] : "INTERNAL ERROR  - We can not handle " . $this->notify->ontable); 
             $nev = $this->notify->logDelivery('NOTIFYFAIL', $this->notify, isset($this->email['error'])  ? $this->email['error'] : "INTERNAL ERROR  - We can not handle " . $this->notify->ontable);
-            $this->notify->flagDone($ev, '', $nev);
+            $this->notify->flagDone($ev, '');
+            $this->notify->linkNotifyEvent($nev);
             $this->errorHandler('SENDFAIL',   $ev->remarks);
         }
         
@@ -518,7 +535,8 @@ class Pman_Core_NotifySend extends Pman
             $p->updateFails(isset($this->notify->field) ? $this->notify->field : 'email', $p::BAD_EMAIL_FAILS);
             $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "INVALID ADDRESS: " . $this->notify->to_email);
             $nev = $this->notify->logDelivery('NOTIFYFAIL', $this->notify, "INVALID ADDRESS: " . $this->notify->to_email);
-            $this->notify->flagDone($ev, '', $nev);
+            $this->notify->flagDone($ev, '');
+            $this->notify->linkNotifyEvent($nev);
             $this->errorHandler('SENDFAIL', $ev->remarks);
         }
 
@@ -532,7 +550,8 @@ class Pman_Core_NotifySend extends Pman
         if (!$this->useRoute && !$this->emailDomain->has_mx && strtotime($this->emailDomain->mx_updated) > strtotime('now - 5 day')) {
             $ev = $this->addEvent('NOTIFYBADMX', $this->notify, "BAD ADDRESS - BAD DOMAIN - ". $this->notify->to_email );
             $nev = $this->notify->logDelivery('NOTIFYBADMX', $this->notify, "BAD ADDRESS - BAD DOMAIN - ". $this->notify->to_email );
-            $this->notify->flagDone($ev, '', $nev);
+            $this->notify->flagDone($ev, '');
+            $this->notify->linkNotifyEvent($nev);
             $this->errorHandler('SENDFAIL', $ev->remarks);
         }
 
@@ -570,14 +589,16 @@ class Pman_Core_NotifySend extends Pman
             }
             $ev = $this->addEvent('NOTIFYBADMX', $this->notify, "BAD ADDRESS - BAD DOMAIN - ". $this->notify->to_email );
             $nev = $this->notify->logDelivery('NOTIFYBADMX', $this->notify, "BAD ADDRESS - BAD DOMAIN - ". $this->notify->to_email );
-            $this->notify->flagDone($ev, '', $nev);
+            $this->notify->flagDone($ev, '');
+            $this->notify->linkNotifyEvent($nev);
             $this->errorHandler('SENDFAIL', $ev->remarks);
         }
 
         if (!$this->force && strtotime($this->notify->act_start) <  strtotime('NOW - 8 DAY')) {
             $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "BAD ADDRESS - GIVE UP - ". $this->notify->to_email );
             $nev = $this->notify->logDelivery('NOTIFYFAIL', $this->notify, "BAD ADDRESS - GIVE UP - ". $this->notify->to_email );
-            $this->notify->flagDone($ev, '', $nev);
+            $this->notify->flagDone($ev, '');
+            $this->notify->linkNotifyEvent($nev);
             $this->errorHandler('SENDFAIL',   $ev->remarks);
         }
         
@@ -680,7 +701,8 @@ class Pman_Core_NotifySend extends Pman
                 
                 $ev->writeEventLog($this->debug_str);
                  
-                $this->notify->flagDone($ev, $this->email['headers']['Message-Id'], $nev);
+                $this->notify->flagDone($ev, $this->email['headers']['Message-Id']);
+                $this->notify->linkNotifyEvent($nev);
                  
                 // enable cc in notify..
                 if (!empty($this->email['headers']['Cc'])) {
@@ -803,7 +825,8 @@ class Pman_Core_NotifySend extends Pman
             $domain = $this->emailDomain->domain;
             $ev = $this->addEvent('NOTIFYFAIL', $this->notify, "No IPv6 FOUND for {$domain} - all ipv4 are blacklisted");
             $nev = $this->notify->logDelivery('NOTIFYFAIL', $this->notify, "No IPv6 FOUND for {$domain} - all ipv4 are blacklisted");
-            $this->notify->flagDone($ev, '', $nev);
+            $this->notify->flagDone($ev, '');
+            $this->notify->linkNotifyEvent($nev);
             $this->errorHandler('SENDFAIL', $ev->remarks);
             return;
         }
@@ -882,7 +905,8 @@ class Pman_Core_NotifySend extends Pman
             
             $ev = $this->addEvent('NOTIFYFAIL', $this->notify,  "RETRY TIME EXCEEDED - " .  $errmsg);
             $nev = $this->notify->logDelivery('NOTIFYFAIL', $this->notify,  "RETRY TIME EXCEEDED - " .  $errmsg);
-            $this->notify->flagDone($ev, '', $nev);
+            $this->notify->flagDone($ev, '');
+            $this->notify->linkNotifyEvent($nev);
             $this->errorHandler('SENDFAIL',  $ev->remarks);
         }
         
@@ -902,7 +926,8 @@ class Pman_Core_NotifySend extends Pman
             if ($this->useRoute) {
                 $ev = $this->addEvent('NOTIFYBOUNCE', $this->notify, ($this->fail ? "FAILED - " : "") . $errmsg);
                 $nev = $this->notify->logDelivery('NOTIFYBOUNCE', $this->notify, ($this->fail ? "FAILED - " : "") . $errmsg);
-                $this->notify->flagDone($ev, '', $nev);
+                $this->notify->flagDone($ev, '');
+                $this->notify->linkNotifyEvent($nev);
                 if (method_exists($this->notify, 'matchReject')) {
                     $this->notify->matchReject($errmsg);
                 }
@@ -1020,7 +1045,8 @@ class Pman_Core_NotifySend extends Pman
             // mark as failed
             $ev = $this->addEvent('NOTIFYBOUNCE', $this->notify, ($this->fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
             $nev = $this->notify->logDelivery('NOTIFYBOUNCE', $this->notify, ($this->fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
-            $this->notify->flagDone($ev, '', $nev);
+            $this->notify->flagDone($ev, '');
+            $this->notify->linkNotifyEvent($nev);
             if (method_exists($this->notify, 'matchReject')) {
                 $this->notify->matchReject($errmsg);
             }
