@@ -484,9 +484,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $nev = $cn->logDelivery('NOTIFYBOUNCE', $cn, "Found imap bounce {$msg->id}");
         $old = clone($cn);
         $cn->event_id = $ev->id;
-        if (!empty($nev)) {
-            $cn->core_notify_event_id = $nev->id;
-        }
+        $cn->core_notify_event_id = $nev->id;
          
         if($res['match'] !== false) {
             $cn->reject_match_id = $res['match']->id;  // this will trigger fails begin updated..
