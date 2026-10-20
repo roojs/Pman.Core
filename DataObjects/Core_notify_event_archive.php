@@ -20,6 +20,7 @@ class Pman_Core_DataObjects_Core_notify_event_archive extends DB_DataObject
     public $person_name;                   // varchar(128) not_null
     public $ipaddr;                        // varchar(16) not_null
     public $remarks;                       // text
+    public $dupe_id;                       // int not_null
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE

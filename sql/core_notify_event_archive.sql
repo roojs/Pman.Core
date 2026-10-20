@@ -9,6 +9,7 @@ CREATE TABLE core_notify_event_archive (
   person_name VARCHAR(128) NOT NULL DEFAULT '',
   ipaddr VARCHAR(16) NOT NULL DEFAULT '',
   remarks TEXT,
+  dupe_id INT NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
   INDEX lookup (on_id, action, event_when)
 );

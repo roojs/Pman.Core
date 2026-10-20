@@ -87,6 +87,15 @@ class Pman_Core_DataObjects_Core_notify_archive extends DB_DataObject
                   id 
                  IN   (". implode(',', $eids) . ")
              ");
+
+        $p->query("
+             REPLACE INTO
+                 core_notify_event_archive
+             SELECT * FROM
+                 core_notify_event
+             WHERE
+                 id IN (" . implode(',', $neids) . ")
+         ");
              
      
         $p->query("                        
@@ -108,15 +117,6 @@ class Pman_Core_DataObjects_Core_notify_archive extends DB_DataObject
                       SELECT event_id FROM core_notify
                       WHERE event_id IN (" . implode(',', $eids) . ")
                   )
-          ");
-
-        $p->query("
-              REPLACE INTO
-                  core_notify_event_archive
-              SELECT * FROM
-                  core_notify_event
-              WHERE
-                  id IN (" . implode(',', $neids) . ")
           ");
 
         // Same share as Events: one core_notify_event id on many notifies.
