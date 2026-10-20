@@ -916,50 +916,66 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 var vt = '60';
                 var vf = false;
-                var xlstype = cols[col].getAttribute('xls:type');
+                var xlstype = (cols[col].getAttribute('xls:type') || '').toLowerCase();
+                var rawFormat = cols[col].getAttribute('xls:floatformat')
+                    || cols[col].getAttribute('xls:dateformat')
+                    || cols[col].getAttribute('xls:format')
+                    || '';
+                var formatKey = String(rawFormat).toLowerCase();
+                var namedFormats = {
+                    numbervalue: '#,##0.##',
+                    dollarvalue: '"US$"#,##0.00',
+                    percent: '0.00%',
+                    dotteddate: 'd"."m"."yyyy'
+                };
+                var vfExplicit = namedFormats[formatKey] || false;
+                if (!vfExplicit && rawFormat && formatKey != 'greyhead' && formatKey != 'greybg') {
+                    vfExplicit = rawFormat;
+                }
                 switch(xlstype) {
                     case 'int':
-                        vt = 30; // int!!!!
-                    
+                        vt = 30;
+                        vf = vfExplicit || '#,##0';
                         break;
-                        
                     case 'float':
-                        vt = 40; // float!!!!
-                        if (cols[col].getAttribute('xls:floatformat')) {
-                            vf = cols[col].getAttribute('xls:floatformat');
-                        }
+                    case 'number':
+                        vt = 40;
+                        vf = vfExplicit || '#,##0.##';
                         break;
-                        
                     case 'date':
                         vt = 40;
-                        //ValueFormat="d/m/yyyy" 38635  
-                        var vf = this.dateFormat;
-                        if (cols[col].getAttribute('xls:dateformat')) {
-                            vf= cols[col].getAttribute('xls:dateformat');
-                        }
-                        
-                       
-                        
+                        vf = vfExplicit || this.dateFormat;
                         break;
-                    
                     default:
-                       
                         break;
                 }
-               
+
                 if (!cols[col].childNodes[0].nodeValue) {
-                   
                     continue;
                 }
                 if (!cols[col].childNodes[0].nodeValue.replace(/^\s*|\s*$/g,"").length) {
-                  
                     continue;
                 }
-                // strip me.!
                 var cell_value_text = cleanHTML(cols[col].childNodes[0].nodeValue);
-       
-                if (cols[col].getAttribute('xls:percent')) {
-                    cell_value_text = '' + ((cell_value_text * 1) / 100);
+
+                if (cols[col].getAttribute('xls:formula')) {
+                    var s = cols[col].getAttribute('xls:formula');
+                    vt = '';
+                    cell_value_text = s.replace(/#row#/g,(row + yoff + 1));
+                } else if ((vt == 30 || vt == 40) && xlstype != 'date') {
+                    var numText = String(cell_value_text).replace(/^\s+|\s+$/g, '');
+                    numText = numText.replace(/^US\$|^\$/i, '');
+                    numText = numText.replace(/,/g, '');
+                    numText = numText.replace(/\s/g, '');
+                    if (!/^-?\d+(\.\d+)?$/.test(numText)) {
+                        vt = '60';
+                        vf = false;
+                    } else {
+                        if (cols[col].getAttribute('xls:percent')) {
+                            numText = '' + ((numText * 1) / 100);
+                        }
+                        cell_value_text = numText;
+                    }
                 }
 
                 if (cell_value_text.length && (vt == 40) && xlstype == 'date') {
@@ -968,13 +984,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     cell_value_text = '' + Math.round((cur.getTime() - Date.UTC(1899,11,30)) / (24 * 60 * 60 * 1000));
                 }
 
-                
-                
-                if (cols[col].getAttribute('xls:formula')) {
-                    var s = cols[col].getAttribute('xls:formula');
-                    vt = '';
-                    cell_value_text = s.replace(/#row#/g,(row + yoff + 1));
-                }
                 this.set({ r: row + yoff, c : realcol + xoff }, cell_value_text, vt, vf);
                  
                   
