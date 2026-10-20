@@ -16,7 +16,7 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
     static $cli_desc = "Core Prune Check -- Nagios monitoring for Core pruning backlog";
     static $cli_opts = array(
         'table' => array(
-            'desc' => 'Specific table to check (core_notify, core_notify_event, Events, Events_duplicates)',
+            'desc' => 'Specific table to check (core_notify, Events, Events_duplicates)',
             'default' => '',
             'short' => 't',
         ),
@@ -99,35 +99,28 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
         $cn = DB_DataObject::factory('core_notify');
         $cn_old = DB_DataObject::factory('core_notify');
         $events = DB_DataObject::factory('Events');
+        $notifyEvents = DB_DataObject::factory('core_notify_event');
         
+        $cn_old->selectAdd();
+        $cn_old->selectAdd('event_id, core_notify_event_id');
         $cn_old->whereAdd("act_when < NOW() - INTERVAL {$this->opts['months']} MONTH");
         $cn_old->limit(1000000); // 10x more records to prune than events
-        $prunable_event_ids = $cn_old->fetchAll( 'event_id');
+        $prunable_event_ids = array();
+        $prunable_notify_event_ids = array();
+        foreach ($cn_old->fetchAll() as $row) {
+            $prunable_event_ids[] = $row->event_id;
+            $prunable_notify_event_ids[] = $row->core_notify_event_id;
+        }
         
         $events->whereAddIn('id', $prunable_event_ids, 'int');
+        $notifyEvents->whereAddIn('id', $prunable_notify_event_ids, 'int');
 
         $this->results['core_notify'] = array(
             'table' => 'core_notify',
             'total_records' => $cn->count(),
             'prunable_records' => count($prunable_event_ids),
             'prunable_event_records' => $events->count(),
-            'prunable_records_per_run' => 100000
-        );
-    }
-
-    /**
-     * Check core_notify_event rows old enough to drop with the notify archive.
-     */
-    function check_core_notify_event()
-    {
-        $e = DB_DataObject::factory('core_notify_event');
-        $old = DB_DataObject::factory('core_notify_event');
-        $old->whereAdd("event_when < NOW() - INTERVAL {$this->opts['months']} MONTH");
-
-        $this->results['core_notify_event'] = array(
-            'table' => 'core_notify_event',
-            'total_records' => $e->count(),
-            'prunable_records' => $old->count(),
+            'prunable_notify_event_records' => $notifyEvents->count(),
             'prunable_records_per_run' => 100000
         );
     }
@@ -222,6 +215,13 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
                     "-------- %s: %d prunable event records",
                     $table,
                     $result['prunable_event_records']
+                );
+            }
+            if(isset($result['prunable_notify_event_records'])){
+                $status_messages[] = sprintf(
+                    "-------- %s: %d prunable notify event records",
+                    $table,
+                    $result['prunable_notify_event_records']
                 );
             }
         }
