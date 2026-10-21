@@ -946,6 +946,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         vt = 40;
                         vf = vfExplicit || this.dateFormat;
                         break;
+                    case 'tryint':
+                        vt = 30;
+                        vf = '0';
+                        break;
                     default:
                         break;
                 }
@@ -962,6 +966,14 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     var s = cols[col].getAttribute('xls:formula');
                     vt = '';
                     cell_value_text = s.replace(/#row#/g,(row + yoff + 1));
+                } else if (xlstype == 'tryint') {
+                    var tryText = String(cell_value_text).replace(/^\s+|\s+$/g, '');
+                    if (!/^(0|[1-9][0-9]*)$/.test(tryText)) {
+                        vt = '60';
+                        vf = false;
+                    } else {
+                        cell_value_text = tryText;
+                    }
                 } else if ((vt == 30 || vt == 40) && xlstype != 'date') {
                     var numText = String(cell_value_text).replace(/^\s+|\s+$/g, '');
                     numText = numText.replace(/^US\$|^\$/i, '');
