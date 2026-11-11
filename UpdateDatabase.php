@@ -165,6 +165,14 @@ class Pman_Core_UpdateDatabase extends Pman
             'description' => '9.1 Management System Password Reset',
             'template_dir' => '/Pman/Core/templates/mail/'
  
+        ),
+        'ADMIN_LOGIN_CODE' => array(
+            'bcc_group' => 'Empty Group',
+            'test_class' => 'Pman/Core/DataObjects/Core_person',
+            'to_group' => '',
+            'active' => 1,
+            'description' => '9.3 Management System Login Code',
+            'template_dir' => '/Pman/Core/templates/mail/'
         )
     );
     

@@ -20,7 +20,9 @@ require_once 'Pman/Core/Auth/State.php';
 
 class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 { 
-    
+    var $person;
+    var $loginCode;
+    var $rcpts;
     
     function get($v, $opts= array())
     {
@@ -76,10 +78,9 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             $this->jerror('LOGIN-BAD'. $this->event_suffix,'Account disabled');
         }
         
-        if(!empty($u->oath_key) && empty($_REQUEST['oath_password'])){
-            $this->jerror('LOGIN-2FA'. $this->event_suffix,'Your account requires Two-Factor Authentication');
-        }
-        
+        $oauthWhitelist = empty($ff->Pman['oauth_whitelist']) ? array() : $ff->Pman['oauth_whitelist'];
+        $oauthEmailCode = !isset($ff->Pman['oauth_email_code']) ? true : $ff->Pman['oauth_email_code'];
+
         // check if config allows non-owner passwords.
         // auth_company = "OWNER" // auth_company = "CLIENT" or blank for all?
         // perhaps it should support arrays..
@@ -91,16 +92,9 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             $this->jerror('LOGIN-BAD'. $this->event_suffix, 'You typed the wrong Username or Password  (2)'); // - " . htmlspecialchars(print_r($_POST,true))."'");
             exit;
         }
-        
-        if(
-            !empty($u->oath_key) &&
-            (
-            empty($_REQUEST['oath_password']) ||
-            !$u->checkTwoFactorAuthentication($_REQUEST['oath_password'])
-            )
-        ) {
-            $this->jerror('LOGIN-BAD'. $this->event_suffix, 'You typed the wrong Username or Password  (3)');
-            exit;
+
+        if (!in_array($ip, $oauthWhitelist)) {
+            $this->requireLoginCode($u, $oauthEmailCode);
         }
         
         $this->ip_checking();
@@ -134,6 +128,108 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $this->returnUser($u); // in state..
          
+    }
+
+    function requireLoginCode($u, $oauthEmailCode)
+    {
+        if (empty($u->oath_key)) {
+            $this->jnotice(
+                'LOGIN-OFFICE' . $this->event_suffix,
+                'You are trying to access outside the office. Please contact an admin to set up two-factor.'
+            );
+            exit;
+        }
+
+        $pending = empty($_SESSION['Pman_Core_Auth_Login']['email_code']) ? array() : $_SESSION['Pman_Core_Auth_Login']['email_code'];
+        $submitted = isset($_REQUEST['oath_password']) ? trim($_REQUEST['oath_password']) : '';
+        $pendingOk = (
+            !empty($pending['person_id']) &&
+            $pending['person_id'] == $u->id &&
+            !empty($pending['expires']) &&
+            $pending['expires'] >= time() &&
+            $pending['tries'] < 5
+        );
+
+        if ($submitted !== '') {
+            $emailOk = (
+                $oauthEmailCode &&
+                $pendingOk &&
+                !empty($pending['code']) &&
+                $submitted === $pending['code']
+            );
+            if ($emailOk || $u->checkTwoFactorAuthentication($submitted)) {
+                unset($_SESSION['Pman_Core_Auth_Login']['email_code']);
+                return;
+            }
+            if (!$pendingOk) {
+                $this->jnotice('LOGIN-BAD' . $this->event_suffix, 'You typed the wrong Username or Password  (3)');
+                exit;
+            }
+            $pending['tries'] = $pending['tries'] + 1;
+            $_SESSION['Pman_Core_Auth_Login']['email_code'] = $pending;
+            if ($pending['tries'] >= 5) {
+                $this->jnotice('LOGIN-2FA-LOCK' . $this->event_suffix, 'Too many tries. Reload the page to start again.');
+                exit;
+            }
+            $this->jnotice('LOGIN-BAD' . $this->event_suffix, 'You typed the wrong Username or Password  (3)');
+            exit;
+        }
+
+        if (!$oauthEmailCode) {
+            if (!$pendingOk) {
+                $_SESSION['Pman_Core_Auth_Login']['email_code'] = array(
+                    'person_id' => $u->id,
+                    'code' => '',
+                    'expires' => time() + 300,
+                    'tries' => 0,
+                );
+            }
+            $this->jnotice('LOGIN-2FA' . $this->event_suffix, 'Use your authenticator app to find a code, and enter it here.');
+            exit;
+        }
+
+        if ($pendingOk && !empty($pending['code'])) {
+            $this->jnotice('LOGIN-2FA-EMAIL' . $this->event_suffix, 'We have sent a login code to your email. Check your email and enter the code from there.');
+            exit;
+        }
+
+        require_once 'System.php';
+        $oathtool = System::which('oathtool');
+        $code = '';
+        if ($oathtool) {
+            $cmd = "{$oathtool} --totp --base32 " . escapeshellarg($u->oath_key);
+            $code = trim(exec($cmd));
+        }
+        if ($code === '') {
+            $this->jerror('LOGIN-2FA' . $this->event_suffix, 'Two-factor authentication is not available. Contact an admin.');
+            exit;
+        }
+        $this->person = $u;
+        $this->loginCode = $code;
+        $this->rcpts = $u->getEmailFrom();
+        $cm = DB_DataObject::factory('core_email');
+        if (!$cm->get('name', 'ADMIN_LOGIN_CODE') || !$cm->active) {
+            $this->jerror('LOGIN-2FA' . $this->event_suffix, 'Login code email is not set up. Contact an admin.');
+            exit;
+        }
+        $mailer = $cm->toMailer($this, false);
+        if (is_a($mailer, 'PEAR_Error')) {
+            $this->jerror('LOGIN-2FA' . $this->event_suffix, $mailer->getMessage());
+            exit;
+        }
+        $sent = $mailer->send();
+        if (is_a($sent, 'PEAR_Error')) {
+            $this->jerror('LOGIN-2FA' . $this->event_suffix, $sent->getMessage());
+            exit;
+        }
+        $_SESSION['Pman_Core_Auth_Login']['email_code'] = array(
+            'person_id' => $u->id,
+            'code' => $code,
+            'expires' => time() + 300,
+            'tries' => 0,
+        );
+        $this->jnotice('LOGIN-2FA-EMAIL' . $this->event_suffix, 'We have sent a login code to your email. Check your email and enter the code from there.');
+        exit;
     }
     
     function ip_checking()

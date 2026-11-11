@@ -297,6 +297,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
            ) {
             $u->authUserName($_SERVER['PHP_AUTH_USER']);
             if ($u->count() == 1 && $u->find(true) && $u->checkPassword($_SERVER['PHP_AUTH_PW'])) {
+                $oauthWhitelist = empty($ff->Pman['oauth_whitelist']) ? array() : $ff->Pman['oauth_whitelist'];
+                if (!in_array(DB_DataObject::factory('core_person_window')->ip_lookup(), $oauthWhitelist)) {
+                    $this->_auth_error = 'LOGIN-OFFICE';
+                    return false;
+                }
                 // logged in via http auth
                 // http auth will not need session... 
                 //$_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($u);
