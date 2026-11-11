@@ -93,7 +93,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             exit;
         }
 
-        if (!in_array($ip, $oauthWhitelist)) {
+        if (!empty($oauthWhitelist) && !in_array($ip, $oauthWhitelist)) {
             $this->requireLoginCode($u, $oauthEmailCode);
         }
         
