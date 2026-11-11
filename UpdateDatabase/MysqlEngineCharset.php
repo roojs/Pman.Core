@@ -98,7 +98,13 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
                 continue;
             }
             
-            if($ce->csname == 'utf8' && $ce->collatename == 'utf8_general_ci'){
+            // MySQL 8 reports the utf8 alias as utf8mb3 / utf8mb3_general_ci.
+            $cs = strtolower($ce->csname);
+            $col = strtolower($ce->collatename);
+            if (
+                in_array($cs, array('utf8', 'utf8mb3'), true) &&
+                in_array($col, array('utf8_general_ci', 'utf8mb3_general_ci'), true)
+            ) {
                 echo "utf8: SKIP $tbl\n";
                 continue;
             }

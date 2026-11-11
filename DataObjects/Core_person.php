@@ -961,6 +961,29 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $roo->jerr('_invalid_auth_code');
         }
         
+        // force_oath_key_store writes the pending key with no matching code.
+        // The person will receive login codes by email and does not confirm an app.
+        if(!empty($q['force_oath_key_store'])) {
+            $person = DB_DataObject::factory('core_person');
+            $person->get($q['id']);
+            $o = clone($person);
+            if (empty($_SESSION[__CLASS__]['oath'][$person->id])) {
+                $roo->jerr('No authenticator key is waiting to be saved.');
+            }
+            $person->oath_key = $_SESSION[__CLASS__]['oath'][$person->id];
+            $person->update($o);
+            unset($_SESSION[__CLASS__]['oath'][$person->id]);
+            $roo->jok('DONE');
+        }
+        
+        // Setup was cancelled. Drop the pending key. It was never saved.
+        if(!empty($q['oath_key_discard'])) {
+            if (!empty($_SESSION[__CLASS__]['oath'][$q['id']])) {
+                unset($_SESSION[__CLASS__]['oath'][$q['id']]);
+            }
+            $roo->jok('DONE');
+        }
+        
         if(!empty($q['oath_key_disable'])) {
             $person = DB_DataObject::factory('core_person');
             $person->get($q['id']);
@@ -1787,6 +1810,15 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         return $content;
     }
+
+    static function test_ADMIN_LOGIN_CODE($pg, $to)
+    {
+        return array(
+            'loginCode' => '123456',
+            'rcpts' => $to->email,
+        );
+    }
+
     function bulkUpdatePasswords($data, $roo)
     {
         
