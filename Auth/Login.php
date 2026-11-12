@@ -98,7 +98,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             $recent->ip = $ip;
             $recent->whereAdd('login_dt > NOW() - INTERVAL 24 HOUR');
             $recent->limit(1);
-            if ($ip === '' || !$recent->find(true)) {
+            if ($ip == '' || !$recent->find(true)) {
                 $this->requireLoginCode($u, $oauthEmailCode);
             }
         }
