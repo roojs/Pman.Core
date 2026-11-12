@@ -137,7 +137,7 @@ trait Pman_Core_RooTrait {
             }
             
         } else if (!$x->get($id)) {
-            $this->jerr("selectSingle: no such record ($id)");
+            $this->jnotice('NO-SUCH-RECORD', "selectSingle: no such record ($id)");
         }
         
         // ignore perms if comming from update/insert - as it's already done...
