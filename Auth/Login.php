@@ -93,8 +93,14 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             exit;
         }
 
-        if (!empty($oauthWhitelist) && !in_array($ip, $oauthWhitelist)) {
-            $this->requireLoginCode($u, $oauthEmailCode);
+        if (!empty($oauthWhitelist) && !in_array($ip, $oauthWhitelist, true)) {
+            $recent = DB_DataObject::factory('core_person_window');
+            $recent->ip = $ip;
+            $recent->whereAdd('login_dt > NOW() - INTERVAL 24 HOUR');
+            $recent->limit(1);
+            if ($ip === '' || !$recent->find(true)) {
+                $this->requireLoginCode($u, $oauthEmailCode);
+            }
         }
         
         $this->ip_checking();
